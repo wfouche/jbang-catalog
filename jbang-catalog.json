@@ -1,6 +1,9 @@
 {
   "catalogs": {},
   "aliases": {
+    "asciidoc": {
+      "script-ref": "scripts/asciidoc.java"
+    },
     "wrk2": {
       "script-ref": "io.hyperfoil:hyperfoil-cli:0.27.1",
       "dependencies": [
