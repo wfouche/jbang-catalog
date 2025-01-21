@@ -3,6 +3,9 @@
   "aliases": {
     "asciidoc": {
       "script-ref": "scripts/asciidoc.java"
+    },
+    "kwrk": {
+      "script-ref": "scripts/kwrk.kt"
     }
   },
   "templates": {}
