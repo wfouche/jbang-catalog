@@ -157,7 +157,7 @@ class KwrkCli : CliktCommand() {
     private val p_threads by option("--threads").default("2")
     private val p_duration by option("--duration").default("30")
     private val p_repeat by option("--repeat").default("3")
-    private val p_url by option("--url").default("http://localhost:7070")
+    private val p_url by option("--url").default("https://jsonplaceholder.typicode.com/posts/1")
     override fun run() {
         var jsonc = benchmarkConfig
 
