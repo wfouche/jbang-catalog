@@ -1,0 +1,1 @@
+jbang asciidoc@wfouche asciidoc_test_document.adoc
