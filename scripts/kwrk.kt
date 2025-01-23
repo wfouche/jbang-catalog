@@ -31,7 +31,6 @@ val benchmarkConfig:String = """
         "user_class": "HttpUser",
         "user_params": {
             "baseURI": "__P_URL__",
-            //"baseURI": "https://jsonplaceholder.typicode.com",
             "connectTimeoutMillis": 500,
             "readTimeoutMillis": 2000,
             "debug": false
@@ -40,24 +39,6 @@ val benchmarkConfig:String = """
             "0": "onStart",  // Init
             "1": "GET:url",
             "99": "onStop"   // Shutdown
-        }
-    },
-    // Workflows using Markov chains
-    "workflows": {
-        "api-user": {
-            "-": {
-                "1": 0.40,
-                "3": 0.60
-            },
-            "1": {
-                "2": 1.0
-            },
-            "2": {
-                "-": 1.0
-            },
-            "3": {
-                "-": 1.0
-            }
         }
     },
     // Benchmarks
@@ -83,11 +64,7 @@ val benchmarkConfig:String = """
         },
         "onStop": {
             "save_stats": false,
-            "scenario_actions": [
-                {
-                    "id": 99
-                }
-            ]
+            "scenario_actions": [ {"id": 99} ]
         }
     },
     // Contexts
@@ -107,9 +84,7 @@ class HttpUser(userId: Int, threadId: Int) : TulipUser(userId, threadId) {
     override fun onStart(): Boolean {
         // Initialize the shared RestClient object only once
         if (userId == 0) {
-            logger.info("Kotlin")
-            logger.info("Initializing static data")
-            logger.info(getUserParamValue("baseURI"))
+            //logger.info(getUserParamValue("baseURI"))
             val connectTimeout = getUserParamValue("connectTimeoutMillis").toInt()
             val readTimeout = getUserParamValue("readTimeoutMillis").toInt()
             val factory = SimpleClientHttpRequestFactory().apply {
@@ -157,7 +132,7 @@ class KwrkCli : CliktCommand() {
     private val p_threads by option("--threads").default("2")
     private val p_duration by option("--duration").default("30")
     private val p_repeat by option("--repeat").default("3")
-    private val p_url by option("--url").default("https://jsonplaceholder.typicode.com/posts/1")
+    private val p_url by option("--url").default("http://localhost:7070")
     override fun run() {
         var jsonc = benchmarkConfig
 
@@ -168,22 +143,13 @@ class KwrkCli : CliktCommand() {
         jsonc = jsonc.replace("__P_URL__", p_url)
 
         println("kwrk arguments:")
-        println("  --rate = ${p_rate}")
-        println("  --threads = ${p_threads}")
-        println("  --duration = ${p_duration}")
-        println("  --repeat = ${p_repeat}")
-        println("  --url = ${p_url}")
+        println("  --rate ${p_rate}")
+        println("  --threads ${p_threads}")
+        println("  --duration ${p_duration}")
+        println("  --repeat ${p_repeat}")
+        println("  --url ${p_url}")
 
         TulipApi.runTulip(jsonc)
-
-        println("")
-        println("kwrk arguments:")
-        println("  --rate = ${p_rate}")
-        println("  --threads = ${p_threads}")
-        println("  --duration = ${p_duration}")
-        println("  --repeat = ${p_repeat}")
-        println("  --url = ${p_url}")
-
     }
 }
 
