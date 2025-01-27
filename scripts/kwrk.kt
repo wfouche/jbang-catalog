@@ -26,8 +26,8 @@ val benchmarkConfig:String = """
     // Actions
     "actions": {
         "description": "kwrk",
-        "output_filename": "benchmark_output.json",
-        "report_filename": "benchmark_report.html",
+        "output_filename": "kwrk_output.json",
+        "report_filename": "kwrk_report.html",
         "user_class": "HttpUser",
         "user_params": {
             "baseURI": "__P_URL__",
