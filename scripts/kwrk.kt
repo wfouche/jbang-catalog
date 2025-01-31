@@ -36,7 +36,7 @@ val benchmarkConfig:String = """
             "debug": false
         },
         "user_actions": {
-            "1": "GET:url",
+            "1": "GET:url"
         }
     },
     // Benchmarks
