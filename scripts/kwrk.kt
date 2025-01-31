@@ -1,7 +1,7 @@
 ///usr/bin/env jbang "$0" "$@" ; exit $?
 //DEPS com.github.ajalt.clikt:clikt-jvm:5.0.1
 //DEPS io.github.wfouche.tulip:tulip-runtime:2.1.5
-//DEPS org.springframework.boot:spring-boot-starter-web:3.4.1
+//DEPS org.springframework.boot:spring-boot-starter-web:3.4.2
 //DEPS org.slf4j:slf4j-api:2.0.16
 //DEPS ch.qos.logback:logback-core:1.5.16
 //DEPS ch.qos.logback:logback-classic:1.5.16
@@ -36,9 +36,7 @@ val benchmarkConfig:String = """
             "debug": false
         },
         "user_actions": {
-            "0": "onStart",  // Init
             "1": "GET:url",
-            "99": "onStop"   // Shutdown
         }
     },
     // Benchmarks
@@ -59,12 +57,12 @@ val benchmarkConfig:String = """
                 "pre_warmup_duration": 10,
                 "warmup_duration": 5,
                 "benchmark_duration": __P_DURATION__,
-                "benchmark_repeat_count": __P_REPEAT__
+                "benchmark_iterations": __P_REPEAT__
             }
         },
         "onStop": {
             "save_stats": false,
-            "scenario_actions": [ {"id": 99} ]
+            "scenario_actions": [ {"id": 100} ]
         }
     },
     // Contexts
