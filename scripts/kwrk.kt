@@ -1,6 +1,6 @@
 ///usr/bin/env jbang "$0" "$@" ; exit $?
 //DEPS com.github.ajalt.clikt:clikt-jvm:5.0.1
-//DEPS io.github.wfouche.tulip:tulip-runtime:2.1.4
+//DEPS io.github.wfouche.tulip:tulip-runtime:2.1.5
 //DEPS org.springframework.boot:spring-boot-starter-web:3.4.2
 //DEPS org.slf4j:slf4j-api:2.0.16
 //DEPS ch.qos.logback:logback-core:1.5.16
@@ -59,7 +59,7 @@ val benchmarkConfig:String = """
                 "pre_warmup_duration": 10,
                 "warmup_duration": 5,
                 "benchmark_duration": __P_DURATION__,
-                "benchmark_repeat_count": __P_REPEAT__
+                "benchmark_iterations": __P_REPEAT__
             }
         },
         "onStop": {
@@ -71,7 +71,7 @@ val benchmarkConfig:String = """
     "contexts": {
         "Context-1": {
             "enabled": true,
-            "num_users": __P_THREADS__,
+            "num_users": 1024,
             "num_threads": __P_THREADS__
         }
     }
@@ -132,7 +132,7 @@ class KwrkCli : CliktCommand() {
     private val p_threads by option("--threads").default("2")
     private val p_duration by option("--duration").default("30")
     private val p_repeat by option("--repeat").default("3")
-    private val p_url by option("--url").default("http://localhost:7070")
+    private val p_url by option("--url").default("http://jsonplaceholder.typicode.com/posts/1")
     override fun run() {
         var jsonc = benchmarkConfig
 
