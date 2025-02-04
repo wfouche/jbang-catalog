@@ -26,8 +26,8 @@ val benchmarkConfig:String = """
     // Actions
     "actions": {
         "description": "kwrk",
-        "output_filename": "benchmark_output.json",
-        "report_filename": "benchmark_report.html",
+        "output_filename": "kwrk_output.json",
+        "report_filename": "kwrk_report.html",
         "user_class": "HttpUser",
         "user_params": {
             "baseURI": "__P_URL__",
@@ -36,9 +36,7 @@ val benchmarkConfig:String = """
             "debug": false
         },
         "user_actions": {
-            "0": "onStart",  // Init
-            "1": "GET:url",
-            "99": "onStop"   // Shutdown
+            "1": "GET:url"
         }
     },
     // Benchmarks
@@ -64,7 +62,7 @@ val benchmarkConfig:String = """
         },
         "onStop": {
             "save_stats": false,
-            "scenario_actions": [ {"id": 99} ]
+            "scenario_actions": [ {"id": 100} ]
         }
     },
     // Contexts
