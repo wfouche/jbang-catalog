@@ -7,8 +7,8 @@
     "kwrk": {
       "script-ref": "scripts/kwrk.kt"
     },
-    "tulip-cli": {
-      "script-ref": "scripts/tulip-cli.kt"
+    "tulipcli": {
+      "script-ref": "scripts/kwrk.kt"
     }
   },
   "templates": {}
