@@ -477,7 +477,7 @@ val groovyUser = """
             try {
                 int id = ThreadLocalRandom.current().nextInt(100) + 1
                 String rsp = restClient.get()
-                    .uri("/posts/${'$'}{id}")
+                    .uri("/posts/{id}", id)
                     .retrieve()
                     .body(String.class)
                 rc = (rsp != null && rsp.length() > 2)
@@ -493,7 +493,7 @@ val groovyUser = """
             try {
                 int id = ThreadLocalRandom.current().nextInt(500) + 1
                 String rsp = restClient.get()
-                    .uri("/comments/${'$'}{id}")
+                    .uri("/comments/{id}", id)
                     .retrieve()
                     .body(String.class)
                 rc = (rsp != null && rsp.length() > 2)
@@ -509,7 +509,7 @@ val groovyUser = """
             try {
                 int id = ThreadLocalRandom.current().nextInt(200) + 1
                 String rsp = restClient.get()
-                    .uri("/todos/${'$'}{id}")
+                    .uri("/todos/{id}", id)
                     .retrieve()
                     .body(String.class)
                 rc = (rsp != null && rsp.length() > 2)
