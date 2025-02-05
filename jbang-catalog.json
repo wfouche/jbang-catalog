@@ -7,7 +7,7 @@
     "kwrk": {
       "script-ref": "scripts/kwrk.kt"
     },
-    "kwrk2": {
+    "tulip-cli": {
       "script-ref": "scripts/asciidoc.java"
     }
   },
