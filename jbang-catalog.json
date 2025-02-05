@@ -8,7 +8,7 @@
       "script-ref": "scripts/kwrk.kt"
     },
     "kwrk2": {
-      "script-ref": "scripts/kwrk.kt"
+      "script-ref": "scripts/asciidoc.java"
     }
   },
   "templates": {}
