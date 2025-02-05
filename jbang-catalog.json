@@ -6,6 +6,9 @@
     },
     "kwrk": {
       "script-ref": "scripts/kwrk.kt"
+    },
+    "tulip-cli": {
+      "script-ref": "scripts/tulip-cli.kt"
     }
   },
   "templates": {}
