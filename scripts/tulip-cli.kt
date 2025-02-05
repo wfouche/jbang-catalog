@@ -1,7 +1,7 @@
 ///usr/bin/env jbang "$0" "$@" ; exit $?
 //DEPS io.github.wfouche.tulip:tulip-runtime:2.1.5
 //JAVA 21
-//KOTLIN 2.1.10
+//KOTLIN 2.0.21
 
 import io.github.wfouche.tulip.api.TulipApi.VERSION
 import java.io.FileWriter
