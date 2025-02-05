@@ -632,7 +632,6 @@ val scalaUser: String = """
 
 val runBenchShJava: String = """
     #!/bin/bash
-    # jbang io.github.wfouche.tulip:tulip-runtime:__TULIP_VERSION__ Java
     rm -f benchmark_report.html
     export JBANG_JAVA_OPTIONS="__TULIP_JAVA_OPTIONS__"
     jbang run io/tulip/App.java
@@ -644,7 +643,6 @@ val runBenchShJava: String = """
 """.trimIndent()
 
 val runBenchCmdJava: String = """
-    REM jbang io.github.wfouche.tulip:tulip-runtime:__TULIP_VERSION__ Java
     if exist benchmark_report.htmlgis del benchmark_report.html
     set JBANG_JAVA_OPTIONS=__TULIP_JAVA_OPTIONS__
     call jbang run io\tulip\App.java
@@ -660,7 +658,6 @@ val runBenchCmdJava: String = """
 
 val runBenchShKotlin: String = """
     #!/bin/bash
-    # jbang io.github.wfouche.tulip:tulip-runtime:__TULIP_VERSION__ Kotlin
     rm -f benchmark_report.html
     export JBANG_JAVA_OPTIONS="__TULIP_JAVA_OPTIONS__"
     jbang run io/tulip/App.kt
@@ -672,7 +669,6 @@ val runBenchShKotlin: String = """
 """.trimIndent()
 
 val runBenchCmdKotlin: String = """
-    REM jbang io.github.wfouche.tulip:tulip-runtime:__TULIP_VERSION__ Kotlin
     if exist benchmark_report.html del benchmark_report.html
     set JBANG_JAVA_OPTIONS=__TULIP_JAVA_OPTIONS__
     call jbang run io\tulip\App.kt
@@ -688,7 +684,6 @@ val runBenchCmdKotlin: String = """
 
 val runBenchShGroovy: String = """
     #!/bin/bash
-    # jbang io.github.wfouche.tulip:tulip-runtime:__TULIP_VERSION__ Groovy
     rm -f benchmark_report.html
     export JBANG_JAVA_OPTIONS="__TULIP_JAVA_OPTIONS__"
     jbang run io/tulip/App.groovy
@@ -700,7 +695,6 @@ val runBenchShGroovy: String = """
 """.trimIndent()
 
 val runBenchCmdGroovy: String = """
-    REM jbang io.github.wfouche.tulip:tulip-runtime:__TULIP_VERSION__ Groovy
     if exist benchmark_report.html del benchmark_report.html
     set JBANG_JAVA_OPTIONS=__TULIP_JAVA_OPTIONS__
     call jbang run io\tulip\App.groovy
@@ -716,7 +710,6 @@ val runBenchCmdGroovy: String = """
 
 val runBenchShScala: String = """
     #!/bin/bash
-    # jbang io.github.wfouche.tulip:tulip-runtime:__TULIP_VERSION__ Scala
     rm -f benchmark_report.html
     scala-cli io/tulip/App.scala io/tulip/HttpUser.scala
     echo ""
@@ -726,7 +719,6 @@ val runBenchShScala: String = """
 """.trimIndent()
 
 val runBenchCmdScala: String = """
-    REM jbang io.github.wfouche.tulip:tulip-runtime:__TULIP_VERSION__ Scala
     if exist benchmark_report.html del benchmark_report.html
     scala-cli io\tulip\App.scala io\tulip\HttpUser.scala
     @echo off
@@ -740,7 +732,6 @@ val runBenchCmdScala: String = """
 
 fun main(args: Array<String>) {
 
-    // jbang io.github.wfouche.tulip:tulip-runtime:<version>
     var lang: String = "Java"
     var protocol: String = "http"
     val method: String = "GET"
