@@ -643,7 +643,7 @@ val runBenchShJava: String = """
 """.trimIndent()
 
 val runBenchCmdJava: String = """
-    if exist benchmark_report.htmlgis del benchmark_report.html
+    if exist benchmark_report.html del benchmark_report.html
     set JBANG_JAVA_OPTIONS=__TULIP_JAVA_OPTIONS__
     call jbang run io\tulip\App.java
     @echo off
