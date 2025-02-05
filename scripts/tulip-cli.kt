@@ -376,7 +376,7 @@ val kotlinUser: String = """
             val id: Int = ThreadLocalRandom.current().nextInt(100)+1
             return try {
                 val rsp: String? = restClient.get()
-                    .uri("/posts/${'$'}{id}")
+                    .uri("/posts/{id}", id)
                     .retrieve()
                     .body(String::class.java)
                 //Postcondition
@@ -391,7 +391,7 @@ val kotlinUser: String = """
             val id: Int = ThreadLocalRandom.current().nextInt(500)+1
             return try {
                 val rsp: String? = restClient.get()
-                    .uri("/comments/${'$'}{id}")
+                    .uri("/comments/{id}", id)
                     .retrieve()
                     .body(String::class.java)
                 //Postcondition
@@ -406,7 +406,7 @@ val kotlinUser: String = """
             val id: Int = ThreadLocalRandom.current().nextInt(200)+1
             return try {
                 val rsp: String? = restClient.get()
-                    .uri("/todos/${'$'}{id}")
+                    .uri("/todos/{id}", id)
                     .retrieve()
                     .body(String::class.java)
                 //Postcondition
