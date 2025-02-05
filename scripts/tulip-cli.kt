@@ -762,9 +762,9 @@ fun main(args: Array<String>) {
     }
 
     if (lang == "Scala") {
-        println("Tulip: creating a " + lang + " benchmark with Scala-CLI support")
+        println("tulip-cli: creating a " + lang + " benchmark with Scala-CLI support")
     } else {
-        println("Tulip: creating a " + lang + " benchmark with JBang support")
+        println("tulip-cli: creating a " + lang + " benchmark with JBang support")
     }
 
     var avgAPS: String = "10.0"
