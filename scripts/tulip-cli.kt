@@ -4,6 +4,7 @@
 //KOTLIN 2.0.21
 
 import io.github.wfouche.tulip.api.TulipApi.VERSION
+import io.github.wfouche.tulip.api.TulipApi.NUM_ACTIONS
 import java.io.FileWriter
 import java.io.IOException
 import java.nio.file.Files
@@ -125,7 +126,7 @@ var benchmarkConfig: String = """
         },
         "onStop": {
             "save_stats": false,
-            "scenario_actions": [ {"id": 100} ]
+            "scenario_actions": [ {"id": __ONSTOP_ID__} ]
         }
     },
     // Contexts
@@ -315,7 +316,6 @@ val javaUser: String = """
             return rc;
         }
     
-        // Action 100
         public boolean onStop() {
             return true;
         }
@@ -416,7 +416,6 @@ val kotlinUser: String = """
             }
         }
     
-        // Action 100
         override fun onStop(): Boolean {
             return true
         }
@@ -519,7 +518,6 @@ val groovyUser = """
             return rc
         }
     
-        // Action 100
         boolean onStop() {
             return true
         }
@@ -616,7 +614,6 @@ val scalaUser: String = """
         }
       }
     
-      // Action 100
       override def onStop(): Boolean = true
     }
     
@@ -732,6 +729,7 @@ val runBenchCmdScala: String = """
 
 fun main(args: Array<String>) {
 
+    val osid: String = "${NUM_ACTIONS-1}"
     var lang: String = "Java"
     var protocol: String = "http"
     val method: String = "GET"
@@ -791,7 +789,8 @@ fun main(args: Array<String>) {
                 .replace("__AVG_APS__", avgAPS)
                 .replace("__BASE_URL__", baseURL)
                 .replace("__PROTOCOL__", protocol)
-                .replace("__METHOD__", method), false
+                .replace("__METHOD__", method)
+                .replace("__ONSTOP_ID__", osid), false
         )
         writeToFile(
             path + "App.java",
@@ -837,7 +836,8 @@ fun main(args: Array<String>) {
                 .replace("__AVG_APS__", avgAPS)
                 .replace("__BASE_URL__", baseURL)
                 .replace("__PROTOCOL__", protocol)
-                .replace("__METHOD__", method), false
+                .replace("__METHOD__", method)
+                .replace("__ONSTOP_ID__", osid), false
         )
         writeToFile(
             path + "App.kt",
@@ -883,7 +883,8 @@ fun main(args: Array<String>) {
                 .replace("__AVG_APS__", avgAPS)
                 .replace("__BASE_URL__", baseURL)
                 .replace("__PROTOCOL__", protocol)
-                .replace("__METHOD__", method), false
+                .replace("__METHOD__", method)
+                .replace("__ONSTOP_ID__", osid), false
         )
         writeToFile(
             path + "App.groovy",
@@ -929,7 +930,8 @@ fun main(args: Array<String>) {
                 .replace("__AVG_APS__", avgAPS)
                 .replace("__BASE_URL__", baseURL)
                 .replace("__PROTOCOL__", protocol)
-                .replace("__METHOD__", method), false
+                .replace("__METHOD__", method)
+                .replace("__ONSTOP_ID__", osid), false
         )
         writeToFile(
             path + "App.scala",
