@@ -30,8 +30,7 @@ var benchmarkConfig: String = """
         "user_class": "io.tulip.HttpUser",
         "user_params": {
             "protocol": "__PROTOCOL__",
-            "baseURL": "__BASE_URL__",
-            "method": "__METHOD__",
+            "host": "__HOST__",
             "connectTimeoutMillis": 500,
             "readTimeoutMillis": 2000,
             "debug": true
@@ -254,7 +253,7 @@ val javaUser: String = """
                 var factory = new SimpleClientHttpRequestFactory();
                 factory.setConnectTimeout(connectTimeout);
                 factory.setReadTimeout(readTimeout);
-                var url = getUserParamValue("protocol") + "://" + getUserParamValue("baseURL");
+                var url = getUserParamValue("protocol") + "://" + getUserParamValue("host");
                 restClient = RestClient.builder()
                     .requestFactory(factory)
                     .baseUrl(url)
@@ -357,7 +356,7 @@ val kotlinUser: String = """
                     setConnectTimeout(connectTimeout)
                     setReadTimeout(readTimeout)
                 }
-                val url = getUserParamValue("protocol") + "://" + getUserParamValue("baseURL")
+                val url = getUserParamValue("protocol") + "://" + getUserParamValue("host")
                 restClient = RestClient.builder()
                     .requestFactory(factory)
                     .baseUrl(url)
@@ -456,7 +455,7 @@ val groovyUser = """
                 def factory = new SimpleClientHttpRequestFactory()
                 factory.setConnectTimeout(connectTimeout)
                 factory.setReadTimeout(readTimeout)
-                def url = getUserParamValue("protocol") + "://" + getUserParamValue("baseURL")
+                def url = getUserParamValue("protocol") + "://" + getUserParamValue("host")
                 restClient = RestClient.builder()
                     .requestFactory(factory)
                     .baseUrl(url)
@@ -558,7 +557,7 @@ val scalaUser: String = """
           val factory = new SimpleClientHttpRequestFactory()
           factory.setConnectTimeout(connectTimeout)
           factory.setReadTimeout(readTimeout)
-          val url = getUserParamValue("protocol") + "://" + getUserParamValue("baseURL")
+          val url = getUserParamValue("protocol") + "://" + getUserParamValue("host")
           restClient = RestClient.builder()
             .requestFactory(factory)
             .baseUrl(url)
@@ -740,7 +739,6 @@ fun main(args: Array<String>) {
     val osid: String = "${NUM_ACTIONS-1}"
     var lang: String = "Java"
     var protocol: String = "http"
-    val method: String = "GET"
     val TULIP_JAVA_OPTIONS: String =
         if (java.lang.System.getenv("TULIP_JAVA_OPTIONS") != null) java.lang.System.getenv("TULIP_JAVA_OPTIONS") else "-server -Xms2g -Xmx2g -XX:+UseZGC -XX:+ZGenerational"
 
@@ -782,9 +780,9 @@ fun main(args: Array<String>) {
         protocol = args.get(3)
     }
 
-    var baseURL: String = "jsonplaceholder.typicode.com"
+    var host: String = "jsonplaceholder.typicode.com"
     if (args.size > 4) {
-        baseURL = args.get(4)
+        host = args.get(4)
     }
 
     val path: String = "io/tulip/"
@@ -795,9 +793,8 @@ fun main(args: Array<String>) {
             benchmarkConfig.trimStart()
                 .replace("__TULIP_LANG__", lang)
                 .replace("__AVG_APS__", avgAPS)
-                .replace("__BASE_URL__", baseURL)
+                .replace("__HOST__", host)
                 .replace("__PROTOCOL__", protocol)
-                .replace("__METHOD__", method)
                 .replace("__ONSTOP_ID__", osid), false
         )
         writeToFile(
@@ -842,9 +839,8 @@ fun main(args: Array<String>) {
             benchmarkConfig.trimStart()
                 .replace("__TULIP_LANG__", lang)
                 .replace("__AVG_APS__", avgAPS)
-                .replace("__BASE_URL__", baseURL)
+                .replace("__HOST__", host)
                 .replace("__PROTOCOL__", protocol)
-                .replace("__METHOD__", method)
                 .replace("__ONSTOP_ID__", osid), false
         )
         writeToFile(
@@ -889,9 +885,8 @@ fun main(args: Array<String>) {
             benchmarkConfig.trimStart()
                 .replace("__TULIP_LANG__", lang)
                 .replace("__AVG_APS__", avgAPS)
-                .replace("__BASE_URL__", baseURL)
+                .replace("__HOST__", host)
                 .replace("__PROTOCOL__", protocol)
-                .replace("__METHOD__", method)
                 .replace("__ONSTOP_ID__", osid), false
         )
         writeToFile(
@@ -936,9 +931,8 @@ fun main(args: Array<String>) {
             benchmarkConfig.trimStart()
                 .replace("__TULIP_LANG__", lang)
                 .replace("__AVG_APS__", avgAPS)
-                .replace("__BASE_URL__", baseURL)
+                .replace("__HOST__", host)
                 .replace("__PROTOCOL__", protocol)
-                .replace("__METHOD__", method)
                 .replace("__ONSTOP_ID__", osid), false
         )
         writeToFile(
