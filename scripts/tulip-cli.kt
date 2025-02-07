@@ -640,6 +640,7 @@ val runBenchShJava: String = """
     lynx -dump -width 205 benchmark_report.html
     #jbang run asciidoc@wfouche benchmark_config.adoc
     #jbang export fatjar io/tulip/App.java
+    
 """.trimIndent()
 
 val runBenchCmdJava: String = """
@@ -654,6 +655,7 @@ val runBenchCmdJava: String = """
     REM jbang run asciidoc@wfouche benchmark_config.adoc
     REM start benchmark_config.html
     REM jbang export fatjar io\tulip\App.java
+    
 """.trimIndent()
 
 val runBenchShKotlin: String = """
@@ -666,6 +668,7 @@ val runBenchShKotlin: String = """
     lynx -dump -width 205 benchmark_report.html
     #jbang run asciidoc@wfouche benchmark_config.adoc
     #jbang export fatjar io/tulip/App.kt
+    
 """.trimIndent()
 
 val runBenchCmdKotlin: String = """
@@ -679,7 +682,8 @@ val runBenchCmdKotlin: String = """
     start benchmark_report.html
     REM jbang run asciidoc@wfouche benchmark_config.adoc
     REM start benchmark_config.html
-    REM jbang export fatjar io\tulip\App.kt            
+    REM jbang export fatjar io\tulip\App.kt
+    
 """.trimIndent()
 
 val runBenchShGroovy: String = """
@@ -691,7 +695,8 @@ val runBenchShGroovy: String = """
     #w3m -dump -cols 205 benchmark_report.html
     lynx -dump -width 205 benchmark_report.html
     #jbang run asciidoc@wfouche benchmark_config.adoc
-    #jbang export fatjar io/tulip/App.groovy\    
+    #jbang export fatjar io/tulip/App.groovy
+    
 """.trimIndent()
 
 val runBenchCmdGroovy: String = """
@@ -705,7 +710,8 @@ val runBenchCmdGroovy: String = """
     start benchmark_report.html
     REM jbang run asciidoc@wfouche benchmark_config.adoc
     REM start benchmark_config.html
-    REM jbang export fatjar io\tulip\App.groovy    
+    REM jbang export fatjar io\tulip\App.groovy
+    
 """.trimIndent()
 
 val runBenchShScala: String = """
@@ -715,7 +721,8 @@ val runBenchShScala: String = """
     echo ""
     #w3m -dump -cols 205 benchmark_report.html
     lynx -dump -width 205 benchmark_report.html
-    #jbang run asciidoc@wfouche benchmark_config.adoc            
+    #jbang run asciidoc@wfouche benchmark_config.adoc
+    
 """.trimIndent()
 
 val runBenchCmdScala: String = """
@@ -727,7 +734,8 @@ val runBenchCmdScala: String = """
     REM lynx.exe -dump -width 205 benchmark_report.html
     start benchmark_report.html
     REM jbang asciidoc@wfouche benchmark_config.adoc
-    REM start benchmark_config.html            
+    REM start benchmark_config.html
+    
 """.trimIndent()
 
 fun main(args: Array<String>) {
