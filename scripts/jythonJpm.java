@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.BufferedReader;
 
-public class jython 
+public class jythonJpm
 {
 
     public static void main(String[] args) throws IOException, InterruptedException  {
