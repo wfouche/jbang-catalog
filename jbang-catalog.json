@@ -5,7 +5,7 @@
       "script-ref": "scripts/asciidoc.java"
     },
     "jython-jpm": {
-      "script-ref": "scripts/jythonJpm.java"
+      "script-ref": "scripts/JythonJpm.java"
     },
     "kwrk": {
       "script-ref": "scripts/kwrk.kt"
