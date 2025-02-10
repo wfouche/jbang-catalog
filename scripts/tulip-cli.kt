@@ -772,11 +772,9 @@ val JythonJava: String = """
     import org.python.util.jython;
 
     public class Jython {
-
         public static void main(String... args) {
             jython.main(args);
         }
-
     }
 
 """.trimIndent()
@@ -796,13 +794,13 @@ val JythonBenchmark: String = """
         def onStart(self):
             return True
 
-        def action1():
+        def action1(self):
             return True
 
-        def action2():
+        def action2(self):
             return True
 
-        def action3():
+        def action3(self):
             return True
 
         def onStop(self):
