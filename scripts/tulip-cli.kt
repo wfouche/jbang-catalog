@@ -734,6 +734,89 @@ val runBenchCmdScala: String = """
     
 """.trimIndent()
 
+val runBenchShJython: String = """
+    #!/bin/bash
+    rm -f benchmark_report.html
+    export JBANG_JAVA_OPTIONS="__TULIP_JAVA_OPTIONS__"
+    jbang run Jython.java benchmark.py
+    echo ""
+    #w3m -dump -cols 205 benchmark_report.html
+    lynx -dump -width 205 benchmark_report.html
+    #jbang run asciidoc@wfouche benchmark_config.adoc
+    #jbang export fatjar io/tulip/App.groovy
+    
+""".trimIndent()
+
+val runBenchCmdJython: String = """
+    if exist benchmark_report.html del benchmark_report.html
+    set JBANG_JAVA_OPTIONS=__TULIP_JAVA_OPTIONS__
+    call jbang run Jython.java benchmark.py
+    @echo off
+    echo.
+    REM call w3m.exe -dump -cols 205 benchmark_report.html
+    REM lynx.exe -dump -width 205 benchmark_report.html
+    start benchmark_report.html
+    REM jbang run asciidoc@wfouche benchmark_config.adoc
+    REM start benchmark_config.html
+    REM jbang export fatjar io\tulip\App.groovy
+    
+""".trimIndent()
+
+val JythonJava: String = """
+    ///usr/bin/env jbang "${'$'}0" "${'$'}@" ; exit ${'$'}?
+
+    //DEPS org.python:jython-standalone:2.7.4
+    //DEPS io.github.wfouche.tulip:tulip-runtime:__TULIP_VERSION__
+    //JAVA 21
+
+    import org.python.util.jython;
+
+    public class Jython {
+
+        public static void main(String... args) {
+            jython.main(args);
+        }
+
+    }
+
+""".trimIndent()
+
+val JythonBenchmark: String = """
+    from __future__ import print_function
+
+    import io.github.wfouche.tulip.api.TulipUser as TulipUser
+    import io.github.wfouche.tulip.api.TulipUserFactory as TulipUserFactory
+    import io.github.wfouche.tulip.api.TulipApi as TulipApi
+
+    class HttpUser(TulipUser):
+
+        def __init__(self, userId, threadId):
+            TulipUser.__init__(self, userId, threadId)
+
+        def onStart(self):
+            return True
+
+        def action1():
+            return True
+
+        def action2():
+            return True
+
+        def action3():
+            return True
+
+        def onStop(self):
+            return True
+
+    class UserFactory(TulipUserFactory):
+
+        def getUser(self, userId, className, threadId):
+            return HttpUser(userId, threadId)
+
+    TulipApi.runTulip("benchmark_config.jsonc", UserFactory())
+
+""".trimIndent()
+
 fun main(args: Array<String>) {
 
     val osid: String = "${NUM_ACTIONS-1}"
@@ -759,6 +842,7 @@ fun main(args: Array<String>) {
     list.add("Kotlin")
     list.add("Groovy")
     list.add("Scala")
+    list.add("Jython")
     if (list.contains(lang)) {
         lang = lang
     } else {
@@ -968,6 +1052,54 @@ fun main(args: Array<String>) {
                 .replace("__TULIP_VERSION__", VERSION),
             false
         )
+    }
+
+    if (lang == "Jython") {
+
+        writeToFile(
+            "benchmark_config.jsonc",
+            benchmarkConfig.trimStart()
+                .replace("__TULIP_LANG__", lang)
+                .replace("__AVG_APS__", avgAPS)
+                .replace("__HOST__", host)
+                .replace("__PROTOCOL__", protocol)
+                .replace("__ONSTOP_ID__", osid), false
+        )
+
+        writeToFile(
+            "Jython.java",
+            JythonJava
+                .replace("__TULIP_VERSION__", VERSION),
+            false
+        )
+
+        writeToFile(
+            "benchmark.py",
+            JythonBenchmark,
+            false
+        )
+
+        writeToFile(
+            "run_bench.sh",
+            runBenchShJython
+                .replace("__TULIP_JAVA_OPTIONS__", TULIP_JAVA_OPTIONS), false
+        )
+        if (java.lang.System.getProperty("os.name").lowercase().contains("windows")) {
+            // pass
+        } else {
+            try {
+                val cmdArray: Array<String> = arrayOf("chmod", "u+x", "run_bench.sh")
+                java.lang.Runtime.getRuntime().exec(cmdArray)
+            } catch (e: IOException) {
+                // pass
+            }
+        }
+        writeToFile(
+            "run_bench.cmd",
+            runBenchCmdJython
+                .replace("__TULIP_JAVA_OPTIONS__", TULIP_JAVA_OPTIONS), false
+        )
+
     }
 
 }
