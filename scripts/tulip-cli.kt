@@ -776,7 +776,7 @@ val JythonJava: String = """
     import org.python.util.jython;
     
     public class Jython {
-        public static void main(String... args) {
+        public static void main(String[] args) {
             jython.main(args);
         }
     }
