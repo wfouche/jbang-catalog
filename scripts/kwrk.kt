@@ -46,7 +46,7 @@ val benchmarkConfig:String = """
          "HTTP": {
             "enabled": true,
             "aps_rate": __P_RATE__,
-            "worker_thread_queue_size": __P_QSIZE__
+            "worker_thread_queue_size": __P_QSIZE__,
             "scenario_actions": [
                 {
                     "id": 1
