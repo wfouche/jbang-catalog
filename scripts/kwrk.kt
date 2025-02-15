@@ -25,7 +25,6 @@ import java.io.File
 import java.io.BufferedWriter
 import java.io.FileWriter
 
-
 val benchmarkConfig:String = """
 {
     "actions": {
@@ -181,10 +180,12 @@ class KwrkCli : CliktCommand() {
         new_lines.add("  <td>__P_RATE__</th>".replace("__P_RATE__", p_rate))
         new_lines.add("</tr>")
 
-        new_lines.add("<tr>")
-        new_lines.add("  <td>qsize</th>")
-        new_lines.add("  <td>__P_QSIZE__</th>".replace("__P_QSIZE__", p_qsize))
-        new_lines.add("</tr>")
+        if (p_qsize != 0) {
+            new_lines.add("<tr>")
+            new_lines.add("  <td>qsize</th>")
+            new_lines.add("  <td>__P_QSIZE__</th>".replace("__P_QSIZE__", p_qsize))
+            new_lines.add("</tr>")
+        }
 
         new_lines.add("<tr>")
         new_lines.add("  <td>threads</th>")
