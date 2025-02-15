@@ -23,23 +23,21 @@ import com.github.ajalt.clikt.parameters.options.option
 
 val benchmarkConfig:String = """
 {
-    // Actions
     "actions": {
         "description": "kwrk",
         "output_filename": "kwrk_output.json",
         "report_filename": "kwrk_report.html",
         "user_class": "HttpUser",
         "user_params": {
-            "baseURI": "__P_URL__",
+            "url": "__P_URL__",
             "connectTimeoutMillis": 500,
             "readTimeoutMillis": 2000,
-            "debug": false
+            "report_data": "rate,__P_RATE__|threads,__P_THREADS|duration,__P_DURATION__|iterations,__P_ITERATIONS__|url,__P_URL__"
         },
         "user_actions": {
             "1": "GET:url"
         }
     },
-    // Benchmarks
     "benchmarks": {
         "onStart": {
             "save_stats": false,
@@ -57,7 +55,7 @@ val benchmarkConfig:String = """
                 "pre_warmup_duration": 10,
                 "warmup_duration": 5,
                 "benchmark_duration": __P_DURATION__,
-                "benchmark_iterations": __P_REPEAT__
+                "benchmark_iterations": __P_ITERATIONS__
             }
         },
         "onStop": {
@@ -65,7 +63,6 @@ val benchmarkConfig:String = """
             "scenario_actions": [ {"id": 100} ]
         }
     },
-    // Contexts
     "contexts": {
         "Context-1": {
             "enabled": true,
@@ -82,7 +79,6 @@ class HttpUser(userId: Int, threadId: Int) : TulipUser(userId, threadId) {
     override fun onStart(): Boolean {
         // Initialize the shared RestClient object only once
         if (userId == 0) {
-            //logger.info(getUserParamValue("baseURI"))
             val connectTimeout = getUserParamValue("connectTimeoutMillis").toInt()
             val readTimeout = getUserParamValue("readTimeoutMillis").toInt()
             val factory = SimpleClientHttpRequestFactory().apply {
@@ -91,10 +87,8 @@ class HttpUser(userId: Int, threadId: Int) : TulipUser(userId, threadId) {
             }
             restClient = RestClient.builder()
                 .requestFactory(factory)
-                .baseUrl(getUserParamValue("baseURI"))
+                .baseUrl(getUserParamValue("url"))
                 .build()
-            //debug = getUserParamValue("debug").toBoolean()
-            //logger.info("debug = " + debug)
         }
         return true
     }
@@ -113,7 +107,7 @@ class HttpUser(userId: Int, threadId: Int) : TulipUser(userId, threadId) {
         }
     }
 
-    // Action 99
+    // Action 100
     override fun onStop(): Boolean {
         return true
     }
@@ -129,25 +123,25 @@ class KwrkCli : CliktCommand() {
     private val p_rate by option("--rate").default("5.0")
     private val p_threads by option("--threads").default("2")
     private val p_duration by option("--duration").default("30")
-    private val p_repeat by option("--repeat").default("3")
+    private val p_iterations by option("--iterations").default("3")
     private val p_url by option("--url").default("http://jsonplaceholder.typicode.com/posts/1")
     override fun run() {
-        var jsonc = benchmarkConfig
+        var json = benchmarkConfig
 
-        jsonc = jsonc.replace("__P_RATE__", p_rate)
-        jsonc = jsonc.replace("__P_THREADS__", p_threads)
-        jsonc = jsonc.replace("__P_DURATION__", p_duration)
-        jsonc = jsonc.replace("__P_REPEAT__", p_repeat)
-        jsonc = jsonc.replace("__P_URL__", p_url)
+        json = json.replace("__P_RATE__", p_rate)
+        json = json.replace("__P_THREADS__", p_threads)
+        json = json.replace("__P_DURATION__", p_duration)
+        json = json.replace("__P_ITERATIONS__", p_iterations)
+        json = json.replace("__P_URL__", p_url)
 
         println("kwrk arguments:")
         println("  --rate ${p_rate}")
         println("  --threads ${p_threads}")
         println("  --duration ${p_duration}")
-        println("  --repeat ${p_repeat}")
+        println("  --iterations ${p_iterations}")
         println("  --url ${p_url}")
 
-        TulipApi.runTulip(jsonc)
+        TulipApi.runTulip(json)
     }
 }
 
