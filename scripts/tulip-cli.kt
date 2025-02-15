@@ -22,7 +22,6 @@ fun writeToFile(path: String, content: String, append: Boolean) {
 
 var benchmarkConfig: String = """
 {
-    // Actions
     "actions": {
         "description": "Spring RestClient Benchmark [__TULIP_LANG__]",
         "output_filename": "benchmark_output.json",
@@ -41,7 +40,6 @@ var benchmarkConfig: String = """
             "3": "GET:todos"
         }
     },
-    // Workflows using Markov chains
     "workflows": {
         "api-user": {
             "-": {
@@ -59,7 +57,6 @@ var benchmarkConfig: String = """
             }
         }
     },
-    // Benchmarks
     "benchmarks": {
         "onStart": {
             "save_stats": false,
@@ -128,7 +125,6 @@ var benchmarkConfig: String = """
             "scenario_actions": [ {"id": __ONSTOP_ID__} ]
         }
     },
-    // Contexts
     "contexts": {
         "Context-1": {
             "enabled": true,
@@ -155,7 +151,7 @@ val javaApp: String = """
     
     public class App {
        public static void main(String[] args) {
-          TulipApi.runTulip("benchmark_config.jsonc");
+          TulipApi.runTulip("benchmark_config.json");
        }
     }
 """.trimIndent()
@@ -176,7 +172,7 @@ val kotlinApp: String = """
     import io.github.wfouche.tulip.api.TulipApi
     
     fun main(args: Array<String>) {
-        TulipApi.runTulip("benchmark_config.jsonc")
+        TulipApi.runTulip("benchmark_config.json")
     }
 """.trimIndent()
 
@@ -197,7 +193,7 @@ val groovyApp: String = """
     
     class App {
         static void main(String[] args) {
-            TulipApi.runTulip("benchmark_config.jsonc")
+            TulipApi.runTulip("benchmark_config.json")
         }
     }
 """.trimIndent()
@@ -221,7 +217,7 @@ val scalaApp: String = """
     
     object App {
       def main(args: Array[String]): Unit = {
-        TulipApi.runTulip("benchmark_config.jsonc")
+        TulipApi.runTulip("benchmark_config.json")
       }
     }
 """.trimIndent()
@@ -854,7 +850,7 @@ val JythonBenchmark: String = """
         def getUser(self, userId, className, threadId):
             return HttpUser(userId, threadId)
     
-    TulipApi.runTulip("benchmark_config.jsonc", UserFactory())
+    TulipApi.runTulip("benchmark_config.json", UserFactory())
 
 """.trimIndent()
 
@@ -914,7 +910,7 @@ fun main(args: Array<String>) {
     if (lang == "Java") {
         Files.createDirectories(Paths.get(path))
         writeToFile(
-            "benchmark_config.jsonc",
+            "benchmark_config.json",
             benchmarkConfig.trimStart()
                 .replace("__TULIP_LANG__", lang)
                 .replace("__AVG_APS__", avgAPS)
@@ -960,7 +956,7 @@ fun main(args: Array<String>) {
     if (lang == "Kotlin") {
         Files.createDirectories(Paths.get(path))
         writeToFile(
-            "benchmark_config.jsonc",
+            "benchmark_config.json",
             benchmarkConfig.trimStart()
                 .replace("__TULIP_LANG__", lang)
                 .replace("__AVG_APS__", avgAPS)
@@ -1006,7 +1002,7 @@ fun main(args: Array<String>) {
     if (lang == "Groovy") {
         Files.createDirectories(Paths.get(path))
         writeToFile(
-            "benchmark_config.jsonc",
+            "benchmark_config.json",
             benchmarkConfig.trimStart()
                 .replace("__TULIP_LANG__", lang)
                 .replace("__AVG_APS__", avgAPS)
@@ -1052,7 +1048,7 @@ fun main(args: Array<String>) {
     if (lang == "Scala") {
         Files.createDirectories(Paths.get(path))
         writeToFile(
-            "benchmark_config.jsonc",
+            "benchmark_config.json",
             benchmarkConfig.trimStart()
                 .replace("__TULIP_LANG__", lang)
                 .replace("__AVG_APS__", avgAPS)
@@ -1098,7 +1094,7 @@ fun main(args: Array<String>) {
     if (lang == "Jython") {
 
         writeToFile(
-            "benchmark_config.jsonc",
+            "benchmark_config.json",
             benchmarkConfig.trimStart()
                 .replace("__TULIP_LANG__", lang)
                 .replace("__AVG_APS__", avgAPS)
