@@ -32,7 +32,7 @@ val benchmarkConfig:String = """
             "url": "__P_URL__",
             "connectTimeoutMillis": 500,
             "readTimeoutMillis": 2000,
-            "report_data": "rate,__P_RATE__|threads,__P_THREADS|duration,__P_DURATION__|iterations,__P_ITERATIONS__|url,__P_URL__"
+            "report_data": "rate,__P_RATE__|qsize,__P_QSIZE__|threads,__P_THREADS__|duration,__P_DURATION__|iterations,__P_ITERATIONS__|url,__P_URL__"
         },
         "user_actions": {
             "1": "GET:url"
@@ -46,6 +46,7 @@ val benchmarkConfig:String = """
          "HTTP": {
             "enabled": true,
             "aps_rate": __P_RATE__,
+            "worker_thread_queue_size": __P_QSIZE__
             "scenario_actions": [
                 {
                     "id": 1
@@ -121,6 +122,7 @@ class HttpUser(userId: Int, threadId: Int) : TulipUser(userId, threadId) {
 
 class KwrkCli : CliktCommand() {
     private val p_rate by option("--rate").default("5.0")
+    private val p_qsize by option("--qsize").default("0")
     private val p_threads by option("--threads").default("2")
     private val p_duration by option("--duration").default("30")
     private val p_iterations by option("--iterations").default("3")
@@ -129,6 +131,7 @@ class KwrkCli : CliktCommand() {
         var json = benchmarkConfig
 
         json = json.replace("__P_RATE__", p_rate)
+        json = json.replace("__P_QSIZE__", p_qsize)
         json = json.replace("__P_THREADS__", p_threads)
         json = json.replace("__P_DURATION__", p_duration)
         json = json.replace("__P_ITERATIONS__", p_iterations)
