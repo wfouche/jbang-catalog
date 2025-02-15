@@ -121,6 +121,7 @@ class HttpUser(userId: Int, threadId: Int) : TulipUser(userId, threadId) {
 }
 
 class KwrkCli : CliktCommand() {
+    private val p_debug by option("--debug").default("false")
     private val p_rate by option("--rate").default("5.0")
     private val p_qsize by option("--qsize").default("0")
     private val p_threads by option("--threads").default("2")
@@ -137,13 +138,11 @@ class KwrkCli : CliktCommand() {
         json = json.replace("__P_ITERATIONS__", p_iterations)
         json = json.replace("__P_URL__", p_url)
 
-        println("kwrk arguments:")
-        println("  --rate ${p_rate}")
-        println("  --threads ${p_threads}")
-        println("  --duration ${p_duration}")
-        println("  --iterations ${p_iterations}")
-        println("  --url ${p_url}")
-
+        if (p_debug == "true") {
+            println("")
+            println(json)
+            println("")
+        }
         TulipApi.runTulip(json)
     }
 }
