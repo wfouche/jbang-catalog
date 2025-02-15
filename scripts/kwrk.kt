@@ -69,7 +69,7 @@ val benchmarkConfig:String = """
     "contexts": {
         "Context-1": {
             "enabled": true,
-            "num_users": 1024,
+            "num_users": __P_THREADS__,
             "num_threads": __P_THREADS__
         }
     }
