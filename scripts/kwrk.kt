@@ -20,6 +20,11 @@ import org.slf4j.LoggerFactory
 import com.github.ajalt.clikt.core.*
 import com.github.ajalt.clikt.parameters.options.default
 import com.github.ajalt.clikt.parameters.options.option
+import kotlin.io.path.*
+import java.io.File
+import java.io.BufferedWriter
+import java.io.FileWriter
+
 
 val benchmarkConfig:String = """
 {
@@ -143,7 +148,68 @@ class KwrkCli : CliktCommand() {
             println(json)
             println("")
         }
+
         TulipApi.runTulip(json)
+
+        val old_lines: List<String> = File("kwrk_report.html").readLines()
+        val new_lines: MutableList<String> = mutableListOf()
+        var i = 0
+        for (line in old_lines) {
+            if (i == old_lines.size-2) {
+                break
+            }
+            new_lines.add(line)
+            i += 1
+        }
+        //println(old_lines.size)
+        //println(new_lines.size)
+        new_lines.add("<h3>Benchmark Parameters</h3>")
+        new_lines.add("<table style=\"width:40%\">")
+
+        new_lines.add("<tr>")
+        new_lines.add("  <th>name</th>")
+        new_lines.add("  <th>value</th>")
+        new_lines.add("</tr>")
+
+        new_lines.add("<tr>")
+        new_lines.add("  <td>url</th>")
+        new_lines.add("  <td>__P_URL__</th>".replace("__P_URL__", p_url))
+        new_lines.add("</tr>")
+
+        new_lines.add("<tr>")
+        new_lines.add("  <td>rate</th>")
+        new_lines.add("  <td>__P_RATE__</th>".replace("__P_RATE__", p_rate))
+        new_lines.add("</tr>")
+
+        new_lines.add("<tr>")
+        new_lines.add("  <td>qsize</th>")
+        new_lines.add("  <td>__P_QSIZE__</th>".replace("__P_QSIZE__", p_qsize))
+        new_lines.add("</tr>")
+
+        new_lines.add("<tr>")
+        new_lines.add("  <td>threads</th>")
+        new_lines.add("  <td>__P_THREADS__</th>".replace("__P_THREADS__", p_threads))
+        new_lines.add("</tr>")
+
+        new_lines.add("<tr>")
+        new_lines.add("  <td>duration</th>")
+        new_lines.add("  <td>__P_DURATION__</th>".replace("__P_DURATION__", p_duration))
+        new_lines.add("</tr>")
+
+        new_lines.add("<tr>")
+        new_lines.add("  <td>iterations</th>")
+        new_lines.add("  <td>__P_ITERATIONS__</th>".replace("__P_ITERATIONS__", p_iterations))
+        new_lines.add("</tr>")
+
+        new_lines.add("</table>")
+        new_lines.add("</body>")
+        new_lines.add("</html>")
+
+        val br: BufferedWriter = BufferedWriter(FileWriter("kwrk_report.html"))
+        for (str in new_lines) {
+            br.write(str + java.lang.System.lineSeparator())
+        }
+        br.close()
     }
 }
 
