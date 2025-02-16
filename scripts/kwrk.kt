@@ -202,6 +202,18 @@ class KwrkCli : CliktCommand() {
         new_lines.add("  <td>__P_ITERATIONS__</th>".replace("__P_ITERATIONS__", p_iterations))
         new_lines.add("</tr>")
 
+        val env: String? = System.getenv("JBANG_JAVA_OPTIONS=")
+        val java_options: String
+        if (env != null) {
+            java_options = env
+        } else {
+            java_options = ""
+        }
+        new_lines.add("<tr>")
+        new_lines.add("  <td>JBANG_JAVA_OPTIONS</th>")
+        new_lines.add("  <td>${java_options}</th>")
+        new_lines.add("</tr>")
+
         new_lines.add("</table>")
         new_lines.add("</body>")
         new_lines.add("</html>")
