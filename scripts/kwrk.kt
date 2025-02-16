@@ -196,7 +196,7 @@ class KwrkCli : CliktCommand() {
 
         new_lines.add("<tr>")
         new_lines.add("  <td>duration</th>")
-        new_lines.add("  <td>__P_DURATION__</th>".replace("__P_DURATION__", p_duration))
+        new_lines.add("  <td>__P_DURATION__ seconds</th>".replace("__P_DURATION__", p_duration))
         new_lines.add("</tr>")
 
         new_lines.add("<tr>")
@@ -228,23 +228,33 @@ class KwrkCli : CliktCommand() {
         val maximum_memory_jvm: String = "%.3f GB".format(Locale.US, mm/gb1)
 
         new_lines.add("<tr>")
-        new_lines.add("  <td>memory_used_jvm</th>")
+        new_lines.add("  <td>jvm_memory_used</th>")
         new_lines.add("  <td>${memory_used_jvm}</th>")
         new_lines.add("</tr>")
 
         new_lines.add("<tr>")
-        new_lines.add("  <td>free_memory_jvm</th>")
+        new_lines.add("  <td>jvm_free_memory</th>")
         new_lines.add("  <td>${free_memory_jvm}</th>")
         new_lines.add("</tr>")
 
         new_lines.add("<tr>")
-        new_lines.add("  <td>total_memory_jvm</th>")
+        new_lines.add("  <td>jvm_total_memory</th>")
         new_lines.add("  <td>${total_memory_jvm}</th>")
         new_lines.add("</tr>")
 
         new_lines.add("<tr>")
-        new_lines.add("  <td>maximum_memory_jvm</th>")
+        new_lines.add("  <td>jvm_maximum_memory</th>")
         new_lines.add("  <td>${maximum_memory_jvm}</th>")
+        new_lines.add("</tr>")
+
+        new_lines.add("<tr>")
+        new_lines.add("  <td>java.vendor</th>")
+        new_lines.add("  <td>${System.getProperty("java.vendor")}</th>")
+        new_lines.add("</tr>")
+
+        new_lines.add("<tr>")
+        new_lines.add("  <td>java.runtime.version</th>")
+        new_lines.add("  <td>${System.getProperty("java.runtime.version")}</th>")
         new_lines.add("</tr>")
 
         new_lines.add("</table>")
