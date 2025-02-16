@@ -25,6 +25,8 @@ import java.io.File
 import java.io.BufferedWriter
 import java.io.FileWriter
 
+import java.util.Locale
+
 val benchmarkConfig:String = """
 {
     "actions": {
@@ -202,7 +204,7 @@ class KwrkCli : CliktCommand() {
         new_lines.add("  <td>__P_ITERATIONS__</th>".replace("__P_ITERATIONS__", p_iterations))
         new_lines.add("</tr>")
 
-        val env: String? = System.getenv("JBANG_JAVA_OPTIONS=")
+        val env: String? = System.getenv("JBANG_JAVA_OPTIONS")
         val java_options: String
         if (env != null) {
             java_options = env
@@ -212,6 +214,37 @@ class KwrkCli : CliktCommand() {
         new_lines.add("<tr>")
         new_lines.add("  <td>JBANG_JAVA_OPTIONS</th>")
         new_lines.add("  <td>${java_options}</th>")
+        new_lines.add("</tr>")
+
+        val rt = Runtime.getRuntime()
+        val fm = rt.freeMemory()
+        val tm = rt.totalMemory()
+        val mm = rt.maxMemory()
+
+        val gb1 = 1073741824.0
+        val memory_used_jvm: String = "%.3f GB".format(Locale.US, (tm - fm)/gb1)
+        val free_memory_jvm: String = "%.3f GB".format(Locale.US, fm/gb1)
+        val total_memory_jvm: String = "%.3f GB".format(Locale.US, tm/gb1)
+        val maximum_memory_jvm: String = "%.3f GB".format(Locale.US, mm/gb1)
+
+        new_lines.add("<tr>")
+        new_lines.add("  <td>memory_used_jvm</th>")
+        new_lines.add("  <td>${memory_used_jvm}</th>")
+        new_lines.add("</tr>")
+
+        new_lines.add("<tr>")
+        new_lines.add("  <td>free_memory_jvm</th>")
+        new_lines.add("  <td>${free_memory_jvm}</th>")
+        new_lines.add("</tr>")
+
+        new_lines.add("<tr>")
+        new_lines.add("  <td>total_memory_jvm</th>")
+        new_lines.add("  <td>${total_memory_jvm}</th>")
+        new_lines.add("</tr>")
+
+        new_lines.add("<tr>")
+        new_lines.add("  <td>maximum_memory_jvm</th>")
+        new_lines.add("  <td>${maximum_memory_jvm}</th>")
         new_lines.add("</tr>")
 
         new_lines.add("</table>")
