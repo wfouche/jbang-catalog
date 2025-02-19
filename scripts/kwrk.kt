@@ -130,7 +130,7 @@ class HttpUser(userId: Int, threadId: Int) : TulipUser(userId, threadId) {
 
 class KwrkCli : CliktCommand() {
     private val p_debug by option("--debug").default("false")
-    private val p_rate by option("--rate").double().default(5.0)
+    private val p_rate by option("--rps").double().default(5.0)
     private val p_qsize by option("--qsize").int().default(0)
     private val p_threads by option("--threads").int().default(2)
     private val p_duration by option("--duration").int().default(30)
@@ -151,7 +151,7 @@ class KwrkCli : CliktCommand() {
             System.exit(1)
         } else {
             println("kwrk options:")
-            println("  --rate ${p_rate}")
+            println("  --rps ${p_rate}")
             println("  --threads ${p_threads}")
             println("  --duration ${p_duration}")
             println("  --repeat ${p_iterations}")
@@ -192,7 +192,7 @@ class KwrkCli : CliktCommand() {
         new_lines.add("</tr>")
 
         new_lines.add("<tr>")
-        new_lines.add("  <td>rate</th>")
+        new_lines.add("  <td>rps</th>")
         new_lines.add("  <td>__P_RATE__</th>".replace("__P_RATE__", p_rate.toString()))
         new_lines.add("</tr>")
 
