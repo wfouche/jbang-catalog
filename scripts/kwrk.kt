@@ -20,6 +20,8 @@ import org.slf4j.LoggerFactory
 import com.github.ajalt.clikt.core.*
 import com.github.ajalt.clikt.parameters.options.default
 import com.github.ajalt.clikt.parameters.options.option
+import com.github.ajalt.clikt.parameters.types.int
+import com.github.ajalt.clikt.parameters.types.double
 
 import java.io.File
 import java.io.BufferedWriter
@@ -128,21 +130,33 @@ class HttpUser(userId: Int, threadId: Int) : TulipUser(userId, threadId) {
 
 class KwrkCli : CliktCommand() {
     private val p_debug by option("--debug").default("false")
-    private val p_rate by option("--rate").default("5.0")
-    private val p_qsize by option("--qsize").default("0")
-    private val p_threads by option("--threads").default("2")
-    private val p_duration by option("--duration").default("30")
-    private val p_iterations by option("--iterations").default("3")
-    private val p_url by option("--url").default("http://jsonplaceholder.typicode.com/posts/1")
+    private val p_rate by option("--rate").double().default(5.0)
+    private val p_qsize by option("--qsize").int().default(0)
+    private val p_threads by option("--threads").int().default(2)
+    private val p_duration by option("--duration").int().default(30)
+    private val p_iterations by option("--iterations").int().default(3)
+    private val p_url by option("--url").default("--")
     override fun run() {
         var json = benchmarkConfig
 
-        json = json.replace("__P_RATE__", p_rate)
-        json = json.replace("__P_QSIZE__", p_qsize)
-        json = json.replace("__P_THREADS__", p_threads)
-        json = json.replace("__P_DURATION__", p_duration)
-        json = json.replace("__P_ITERATIONS__", p_iterations)
+        json = json.replace("__P_RATE__", p_rate.toString())
+        json = json.replace("__P_QSIZE__", p_qsize.toString())
+        json = json.replace("__P_THREADS__", p_threads.toString())
+        json = json.replace("__P_DURATION__", p_duration.toString())
+        json = json.replace("__P_ITERATIONS__", p_iterations.toString())
         json = json.replace("__P_URL__", p_url)
+
+        if (p_url == "--") {
+            println("url: not defined, please specify a value using the --url option")
+            System.exit(1)
+        } else {
+            println("kwrk options:")
+            println("  --rate ${p_rate}")
+            println("  --threads ${p_threads}")
+            println("  --duration ${p_duration}")
+            println("  --repeat ${p_iterations}")
+            println("  --url ${p_url}")
+        }
 
         if (p_debug == "true") {
             println("")
@@ -174,34 +188,34 @@ class KwrkCli : CliktCommand() {
 
         new_lines.add("<tr>")
         new_lines.add("  <td>url</th>")
-        new_lines.add("  <td>__P_URL__</th>".replace("__P_URL__", p_url))
+        new_lines.add("  <td>__P_URL__</th>".replace("__P_URL__", p_url.toString()))
         new_lines.add("</tr>")
 
         new_lines.add("<tr>")
         new_lines.add("  <td>rate</th>")
-        new_lines.add("  <td>__P_RATE__</th>".replace("__P_RATE__", p_rate))
+        new_lines.add("  <td>__P_RATE__</th>".replace("__P_RATE__", p_rate.toString()))
         new_lines.add("</tr>")
 
-        if (p_qsize != "0") {
+        if (p_qsize != 0) {
             new_lines.add("<tr>")
             new_lines.add("  <td>qsize</th>")
-            new_lines.add("  <td>__P_QSIZE__</th>".replace("__P_QSIZE__", p_qsize))
+            new_lines.add("  <td>__P_QSIZE__</th>".replace("__P_QSIZE__", p_qsize.toString()))
             new_lines.add("</tr>")
         }
 
         new_lines.add("<tr>")
         new_lines.add("  <td>threads</th>")
-        new_lines.add("  <td>__P_THREADS__</th>".replace("__P_THREADS__", p_threads))
+        new_lines.add("  <td>__P_THREADS__</th>".replace("__P_THREADS__", p_threads.toString()))
         new_lines.add("</tr>")
 
         new_lines.add("<tr>")
         new_lines.add("  <td>duration</th>")
-        new_lines.add("  <td>__P_DURATION__ seconds</th>".replace("__P_DURATION__", p_duration))
+        new_lines.add("  <td>__P_DURATION__ seconds</th>".replace("__P_DURATION__", p_duration.toString()))
         new_lines.add("</tr>")
 
         new_lines.add("<tr>")
         new_lines.add("  <td>iterations</th>")
-        new_lines.add("  <td>__P_ITERATIONS__</th>".replace("__P_ITERATIONS__", p_iterations))
+        new_lines.add("  <td>__P_ITERATIONS__</th>".replace("__P_ITERATIONS__", p_iterations.toString()))
         new_lines.add("</tr>")
 
         val env: String? = System.getenv("JBANG_JAVA_OPTIONS")
