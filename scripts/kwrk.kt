@@ -154,7 +154,7 @@ class KwrkCli : CliktCommand() {
             println("  --rps ${p_rate}")
             println("  --threads ${p_threads}")
             println("  --duration ${p_duration}")
-            println("  --repeat ${p_iterations}")
+            println("  --iterations ${p_iterations}")
             println("  --url ${p_url}")
         }
 
