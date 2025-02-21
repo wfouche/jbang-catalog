@@ -224,7 +224,7 @@ val scalaApp: String = """
 
 val javaUser: String = """
     package io.tulip;
-    
+
     import io.github.wfouche.tulip.api.*;
     import java.util.concurrent.ThreadLocalRandom;
     import org.springframework.web.client.RestClient;
@@ -232,13 +232,13 @@ val javaUser: String = """
     import org.springframework.http.client.SimpleClientHttpRequestFactory;
     import org.slf4j.Logger;
     import org.slf4j.LoggerFactory;
-    
+
     public class HttpUser extends TulipUser {
-    
+
         public HttpUser(int userId, int threadId) {
             super(userId, threadId);
         }
-    
+
         public boolean onStart() {
             // Initialize the shared RestClient object only once
             if (getUserId() == 0) {
@@ -262,68 +262,53 @@ val javaUser: String = """
             }
             return true;
         }
-    
+
         // Action 1: GET /posts/{id}
         public boolean action1() {
-            boolean rc;
-            try {
-                int id = ThreadLocalRandom.current().nextInt(100)+1;
-                String rsp = restClient.get()
-                  .uri("/posts/{id}", id)
-                  .retrieve()
-                  .body(String.class);
-                rc = (rsp != null && rsp.length() > 2);
-            } catch (RestClientException e) {
-               rc = false;
-            }
-            return rc;
+            int id = ThreadLocalRandom.current().nextInt(100)+1;
+            return serviceCall("/posts/{id}", id);
         }
-    
+
         // Action 2: GET /comments/{id}
         public boolean action2() {
-            boolean rc;
-            try {
-                int id = ThreadLocalRandom.current().nextInt(500)+1;
-                String rsp = restClient.get()
-                    .uri("/comments/{id}", id)
-                    .retrieve()
-                    .body(String.class);
-                rc = (rsp != null && rsp.length() > 2);
-            } catch (RestClientException e) {
-                rc = false;
-            }
-            return rc;
+            int id = ThreadLocalRandom.current().nextInt(500)+1;
+            return serviceCall("/comments/{id}", id);
         }
-    
+
         // Action 3: GET /todos/{id}
         public boolean action3() {
-            boolean rc;
-            try {
-                int id = ThreadLocalRandom.current().nextInt(200)+1;
-                String rsp = restClient.get()
-                    .uri("/todos/{id}", id)
-                    .retrieve()
-                    .body(String.class);
-                rc = (rsp != null && rsp.length() > 2);
-            } catch (RestClientException e) {
-                rc = false;
-            }
-            return rc;
+            int id = ThreadLocalRandom.current().nextInt(200)+1;
+            return serviceCall("/todos/{id}", id);
         }
-    
+
         public boolean onStop() {
             return true;
         }
-    
+
+        private boolean serviceCall(String uri, int id) {
+            boolean rc;
+            try {
+                String rsp = restClient.get()
+                    .uri(uri, id)
+                    .retrieve()
+                    .body(String.class);
+                rc = (rsp != null && rsp.length() > 2);
+            } catch (RestClientException e) {
+                rc = false;
+            }
+            return rc;
+
+        }
+
         // RestClient object
         private static RestClient restClient;
-    
+
         // Debug flag
         private static boolean debug = false;
-    
-        /// Logger
+
+        // Logger
         private static final Logger logger = LoggerFactory.getLogger(HttpUser.class);
-    
+
     }    
 """.trimIndent()
 
