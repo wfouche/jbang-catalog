@@ -297,7 +297,6 @@ val javaUser: String = """
                 rc = false;
             }
             return rc;
-
         }
 
         // RestClient object
