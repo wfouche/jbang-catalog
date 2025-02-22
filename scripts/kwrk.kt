@@ -61,8 +61,8 @@ val benchmarkConfig:String = """
                 }
             ],
             "time": {
-                "pre_warmup_duration": 10,
-                "warmup_duration": 5,
+                "pre_warmup_duration": __P_WARMUP__,
+                "warmup_duration": __P_WARMUP__,
                 "benchmark_duration": __P_DURATION__,
                 "benchmark_iterations": __P_ITERATIONS__
             }
@@ -155,6 +155,12 @@ class KwrkCli : CliktCommand() {
         json = json.replace("__P_ITERATIONS__", p_iterations.toString())
         json = json.replace("__P_URL__", p_url)
         json = json.replace("__P_HEADER__", p_header)
+
+        var p_warmup = "15"
+        if (p_rate <= 1.0) {
+            p_warmup = "0"
+        }
+        json = json.replace("__P_WARMUP__", p_warmup)
 
         if (p_url == "--") {
             println("url: not defined, please specify a value using the --url option")
