@@ -137,13 +137,14 @@ class HttpUser(userId: Int, threadId: Int) : TulipUser(userId, threadId) {
 
 class KwrkCli : CliktCommand() {
     private val p_debug by option("--debug").default("false")
-    private val p_header by option("--header").default("User-Agent: kwrk")
     private val p_rate by option("--rate").double().default(5.0)
     private val p_qsize by option("--qsize").int().default(0)
     private val p_threads by option("--threads").int().default(2)
     private val p_duration by option("--duration").int().default(30)
     private val p_iterations by option("--iterations").int().default(3)
     private val p_url by option("--url").default("--")
+    private val p_header by option("--header").default("User-Agent: kwrk")
+
     override fun run() {
         var json = benchmarkConfig
 
@@ -165,6 +166,7 @@ class KwrkCli : CliktCommand() {
             println("  --duration ${p_duration}")
             println("  --iterations ${p_iterations}")
             println("  --url ${p_url}")
+            println("  --header ${p_header}")
         }
 
         if (p_debug == "true") {
