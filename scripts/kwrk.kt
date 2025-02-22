@@ -142,8 +142,8 @@ class KwrkCli : CliktCommand() {
     private val p_threads by option("--threads").int().default(2)
     private val p_duration by option("--duration").int().default(30)
     private val p_iterations by option("--iterations").int().default(3)
-    private val p_url by option("--url").default("--")
     private val p_header by option("--header").default("User-Agent: kwrk")
+    private val p_url by option("--url").default("--")
 
     override fun run() {
         var json = benchmarkConfig
@@ -165,8 +165,8 @@ class KwrkCli : CliktCommand() {
             println("  --threads ${p_threads}")
             println("  --duration ${p_duration}")
             println("  --iterations ${p_iterations}")
-            println("  --url ${p_url}")
             println("  --header ${p_header}")
+            println("  --url ${p_url}")
         }
 
         if (p_debug == "true") {
