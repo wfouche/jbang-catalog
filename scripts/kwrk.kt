@@ -38,9 +38,9 @@ val benchmarkConfig:String = """
         "user_class": "HttpUser",
         "user_params": {
             "url": "__P_URL__",
+            "httpHeader": "__P_HEADER__",
             "connectTimeoutMillis": 500,
-            "readTimeoutMillis": 2000,
-            "report_data": "rate,__P_RATE__|qsize,__P_QSIZE__|threads,__P_THREADS__|duration,__P_DURATION__|iterations,__P_ITERATIONS__|url,__P_URL__"
+            "readTimeoutMillis": 2000
         },
         "user_actions": {
             "1": "GET:url"
@@ -98,6 +98,11 @@ class HttpUser(userId: Int, threadId: Int) : TulipUser(userId, threadId) {
                 .requestFactory(factory)
                 .baseUrl(getUserParamValue("url"))
                 .build()
+
+            val h: String = getUserParamValue("httpHeader")
+            val L = h.split(":")
+            http_header_key = L[0].trim()
+            http_header_val = L[1].trim()
         }
         return true
     }
@@ -107,6 +112,7 @@ class HttpUser(userId: Int, threadId: Int) : TulipUser(userId, threadId) {
         return try {
             val rsp: String? = restClient.get()
                 .uri("")
+                .header(http_header_key, http_header_val)
                 .retrieve()
                 .body(String::class.java)
             //Postcondition
@@ -125,12 +131,15 @@ class HttpUser(userId: Int, threadId: Int) : TulipUser(userId, threadId) {
     companion object {
         private lateinit var restClient: RestClient
         private val logger = LoggerFactory.getLogger(HttpUser::class.java)
+        private lateinit var http_header_key: String
+        private lateinit var http_header_val: String
     }
 }
 
 class KwrkCli : CliktCommand() {
     private val p_debug by option("--debug").default("false")
-    private val p_rate by option("--rps").double().default(5.0)
+    private val p_header by option("--header").default("User-Agent: kwrk")
+    private val p_rate by option("--rate").double().default(5.0)
     private val p_qsize by option("--qsize").int().default(0)
     private val p_threads by option("--threads").int().default(2)
     private val p_duration by option("--duration").int().default(30)
@@ -145,13 +154,14 @@ class KwrkCli : CliktCommand() {
         json = json.replace("__P_DURATION__", p_duration.toString())
         json = json.replace("__P_ITERATIONS__", p_iterations.toString())
         json = json.replace("__P_URL__", p_url)
+        json = json.replace("__P_HEADER__", p_header)
 
         if (p_url == "--") {
             println("url: not defined, please specify a value using the --url option")
             System.exit(1)
         } else {
             println("kwrk options:")
-            println("  --rps ${p_rate}")
+            println("  --rate ${p_rate}")
             println("  --threads ${p_threads}")
             println("  --duration ${p_duration}")
             println("  --iterations ${p_iterations}")
@@ -192,7 +202,7 @@ class KwrkCli : CliktCommand() {
         new_lines.add("</tr>")
 
         new_lines.add("<tr>")
-        new_lines.add("  <td>rps</th>")
+        new_lines.add("  <td>rate</th>")
         new_lines.add("  <td>__P_RATE__</th>".replace("__P_RATE__", p_rate.toString()))
         new_lines.add("</tr>")
 
