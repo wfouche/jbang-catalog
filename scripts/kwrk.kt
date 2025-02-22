@@ -158,7 +158,9 @@ class KwrkCli : CliktCommand() {
 
         var p_warmup = "15"
         if (p_rate <= 1.0) {
-            p_warmup = "0"
+            if (p_rate != 0.0) {
+                p_warmup = "0"
+            }
         }
         json = json.replace("__P_WARMUP__", p_warmup)
 
