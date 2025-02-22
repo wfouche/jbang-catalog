@@ -98,7 +98,6 @@ class HttpUser(userId: Int, threadId: Int) : TulipUser(userId, threadId) {
                 .requestFactory(factory)
                 .baseUrl(getUserParamValue("url"))
                 .build()
-
             val h: String = getUserParamValue("httpHeader")
             val L = h.split(":")
             http_header_key = L[0].trim()
