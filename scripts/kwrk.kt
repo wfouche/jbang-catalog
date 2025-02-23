@@ -197,7 +197,7 @@ class KwrkCli : CliktCommand() {
         }
         //println(old_lines.size)
         //println(new_lines.size)
-        new_lines.add("<h3>Benchmark Parameters</h3>")
+        new_lines.add("<h3>Benchmark Options</h3>")
         new_lines.add("<table style=\"width:40%\">")
 
         new_lines.add("<tr>")
