@@ -211,6 +211,11 @@ class KwrkCli : CliktCommand() {
         new_lines.add("</tr>")
 
         new_lines.add("<tr>")
+        new_lines.add("  <td>header</th>")
+        new_lines.add("  <td>__P_HEADER__</th>".replace("__P_HEADER__", p_header.toString()))
+        new_lines.add("</tr>")
+
+        new_lines.add("<tr>")
         new_lines.add("  <td>rate</th>")
         new_lines.add("  <td>__P_RATE__</th>".replace("__P_RATE__", p_rate.toString()))
         new_lines.add("</tr>")
