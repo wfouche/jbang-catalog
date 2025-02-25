@@ -192,6 +192,10 @@ class KwrkCli : CliktCommand() {
             if (i == old_lines.size-2) {
                 break
             }
+            if (line.startsWith("</style>")) {
+                new_lines.add("th:nth-child(n+14) {background-color: #D3D3D3;}")
+                new_lines.add("td:nth-child(n+14) {background-color: #D3D3D3;}")
+            }
             new_lines.add(line)
             i += 1
         }
@@ -251,18 +255,6 @@ class KwrkCli : CliktCommand() {
         new_lines.add("  <th>value</th>")
         new_lines.add("</tr>")
 
-        val env: String? = System.getenv("JBANG_JAVA_OPTIONS")
-        val java_options: String
-        if (env != null) {
-            java_options = env
-        } else {
-            java_options = ""
-        }
-        new_lines.add("<tr>")
-        new_lines.add("  <td>JBANG_JAVA_OPTIONS</th>")
-        new_lines.add("  <td>${java_options}</th>")
-        new_lines.add("</tr>")
-
         val rt = Runtime.getRuntime()
         val fm = rt.freeMemory()
         val tm = rt.totalMemory()
@@ -302,6 +294,18 @@ class KwrkCli : CliktCommand() {
         new_lines.add("<tr>")
         new_lines.add("  <td>java.runtime.version</th>")
         new_lines.add("  <td>${System.getProperty("java.runtime.version")}</th>")
+        new_lines.add("</tr>")
+
+        val env: String? = System.getenv("JBANG_JAVA_OPTIONS")
+        val java_options: String
+        if (env != null) {
+            java_options = env
+        } else {
+            java_options = ""
+        }
+        new_lines.add("<tr>")
+        new_lines.add("  <td>JBANG_JAVA_OPTIONS</th>")
+        new_lines.add("  <td>${java_options}</th>")
         new_lines.add("</tr>")
 
         new_lines.add("</table>")
