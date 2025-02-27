@@ -68,6 +68,7 @@ val benchmarkConfig:String = """
             }
         },
         "onStop": {
+            "enabled": false,
             "save_stats": false,
             "scenario_actions": [ {"id": 100} ]
         }
