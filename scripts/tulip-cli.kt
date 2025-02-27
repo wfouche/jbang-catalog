@@ -138,7 +138,7 @@ var benchmarkConfig: String = """
 val javaApp: String = """
     ///usr/bin/env jbang "${'$'}0" "${'$'}@" ; exit ${'$'}?
     //DEPS io.github.wfouche.tulip:tulip-runtime:__TULIP_VERSION__
-    //DEPS org.springframework.boot:spring-boot-starter-web:3.4.2
+    //DEPS org.springframework.boot:spring-boot-starter-web:3.4.3
     //DEPS org.slf4j:slf4j-api:2.0.16
     //DEPS ch.qos.logback:logback-core:1.5.16
     //DEPS ch.qos.logback:logback-classic:1.5.16
