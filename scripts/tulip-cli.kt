@@ -723,7 +723,6 @@ val runBenchShJython: String = """
     #w3m -dump -cols 205 benchmark_report.html
     lynx -dump -width 205 benchmark_report.html
     #jbang run asciidoc@wfouche benchmark_config.adoc
-    #jbang export fatjar io/tulip/App.groovy
     
 """.trimIndent()
 
@@ -738,7 +737,6 @@ val runBenchCmdJython: String = """
     start benchmark_report.html
     REM jbang run asciidoc@wfouche benchmark_config.adoc
     REM start benchmark_config.html
-    REM jbang export fatjar io\tulip\App.groovy
     
 """.trimIndent()
 
