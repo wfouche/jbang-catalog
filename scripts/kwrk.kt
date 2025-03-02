@@ -141,6 +141,7 @@ class KwrkCli : CliktCommand() {
     private val p_rate by option("--rate").double().default(5.0)
     private val p_qsize by option("--qsize").int().default(0)
     private val p_threads by option("--threads").int().default(2)
+    private val p_warmup by option("--warmup").int().default(15)
     private val p_duration by option("--duration").int().default(30)
     private val p_iterations by option("--iterations").int().default(3)
     private val p_header by option("--header").default("User-Agent: kwrk")
@@ -157,13 +158,13 @@ class KwrkCli : CliktCommand() {
         json = json.replace("__P_URL__", p_url)
         json = json.replace("__P_HEADER__", p_header)
 
-        var p_warmup = "15"
+        var warmup = p_warmup
         if (p_rate <= 1.0) {
             if (p_rate != 0.0) {
-                p_warmup = "0"
+                warmup = 0
             }
         }
-        json = json.replace("__P_WARMUP__", p_warmup)
+        json = json.replace("__P_WARMUP__", warmup.toString())
 
         if (p_url == "--") {
             println("url: not defined, please specify a value using the --url option")
