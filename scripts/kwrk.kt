@@ -239,6 +239,11 @@ class KwrkCli : CliktCommand() {
         new_lines.add("</tr>")
 
         new_lines.add("<tr>")
+        new_lines.add("  <td>warmup</th>")
+        new_lines.add("  <td>__P_WARMUP__ seconds</th>".replace("__P_WARMUP__", warmup.toString()))
+        new_lines.add("</tr>")
+
+        new_lines.add("<tr>")
         new_lines.add("  <td>duration</th>")
         new_lines.add("  <td>__P_DURATION__ seconds</th>".replace("__P_DURATION__", p_duration.toString()))
         new_lines.add("</tr>")
