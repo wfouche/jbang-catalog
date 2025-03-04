@@ -1,7 +1,7 @@
 ///usr/bin/env jbang "$0" "$@" ; exit $?
 //DEPS com.github.ajalt.clikt:clikt-jvm:5.0.1
 //DEPS io.github.wfouche.tulip:tulip-runtime:2.1.5
-//DEPS org.springframework.boot:spring-boot-starter-web:3.4.2
+//DEPS org.springframework.boot:spring-boot-starter-web:3.4.3
 //DEPS org.slf4j:slf4j-api:2.0.16
 //DEPS ch.qos.logback:logback-core:1.5.16
 //DEPS ch.qos.logback:logback-classic:1.5.16
@@ -68,6 +68,7 @@ val benchmarkConfig:String = """
             }
         },
         "onStop": {
+            "enabled": false,
             "save_stats": false,
             "scenario_actions": [ {"id": 100} ]
         }
@@ -140,6 +141,7 @@ class KwrkCli : CliktCommand() {
     private val p_rate by option("--rate").double().default(5.0)
     private val p_qsize by option("--qsize").int().default(0)
     private val p_threads by option("--threads").int().default(2)
+    private val p_warmup by option("--warmup").int().default(15)
     private val p_duration by option("--duration").int().default(30)
     private val p_iterations by option("--iterations").int().default(3)
     private val p_header by option("--header").default("User-Agent: kwrk")
@@ -156,13 +158,13 @@ class KwrkCli : CliktCommand() {
         json = json.replace("__P_URL__", p_url)
         json = json.replace("__P_HEADER__", p_header)
 
-        var p_warmup = "15"
+        var warmup = p_warmup
         if (p_rate <= 1.0) {
             if (p_rate != 0.0) {
-                p_warmup = "0"
+                warmup = 0
             }
         }
-        json = json.replace("__P_WARMUP__", p_warmup)
+        json = json.replace("__P_WARMUP__", warmup.toString())
 
         if (p_url == "--") {
             println("url: not defined, please specify a value using the --url option")
@@ -234,6 +236,11 @@ class KwrkCli : CliktCommand() {
         new_lines.add("<tr>")
         new_lines.add("  <td>threads</th>")
         new_lines.add("  <td>__P_THREADS__</th>".replace("__P_THREADS__", p_threads.toString()))
+        new_lines.add("</tr>")
+
+        new_lines.add("<tr>")
+        new_lines.add("  <td>warmup</th>")
+        new_lines.add("  <td>__P_WARMUP__ seconds</th>".replace("__P_WARMUP__", warmup.toString()))
         new_lines.add("</tr>")
 
         new_lines.add("<tr>")
