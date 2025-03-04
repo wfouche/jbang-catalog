@@ -138,7 +138,7 @@ var benchmarkConfig: String = """
 val javaApp: String = """
     ///usr/bin/env jbang "${'$'}0" "${'$'}@" ; exit ${'$'}?
     //DEPS io.github.wfouche.tulip:tulip-runtime:__TULIP_VERSION__
-    //DEPS org.springframework.boot:spring-boot-starter-web:3.4.2
+    //DEPS org.springframework.boot:spring-boot-starter-web:3.4.3
     //DEPS org.slf4j:slf4j-api:2.0.16
     //DEPS ch.qos.logback:logback-core:1.5.16
     //DEPS ch.qos.logback:logback-classic:1.5.16
@@ -159,7 +159,7 @@ val javaApp: String = """
 val kotlinApp: String = """
     ///usr/bin/env jbang "${'$'}0" "${'$'}@" ; exit ${'$'}?
     //DEPS io.github.wfouche.tulip:tulip-runtime:__TULIP_VERSION__
-    //DEPS org.springframework.boot:spring-boot-starter-web:3.4.2
+    //DEPS org.springframework.boot:spring-boot-starter-web:3.4.3
     //DEPS org.slf4j:slf4j-api:2.0.16
     //DEPS ch.qos.logback:logback-core:1.5.16
     //DEPS ch.qos.logback:logback-classic:1.5.16
@@ -179,13 +179,13 @@ val kotlinApp: String = """
 val groovyApp: String = """
     ///usr/bin/env jbang "${'$'}0" "${'$'}@" ; exit ${'$'}?
     //DEPS io.github.wfouche.tulip:tulip-runtime:__TULIP_VERSION__
-    //DEPS org.springframework.boot:spring-boot-starter-web:3.4.2
+    //DEPS org.springframework.boot:spring-boot-starter-web:3.4.3
     //DEPS org.slf4j:slf4j-api:2.0.16
     //DEPS ch.qos.logback:logback-core:1.5.16
     //DEPS ch.qos.logback:logback-classic:1.5.16
     //SOURCES HttpUser.groovy
     //JAVA 21
-    //GROOVY 4.0.25
+    //GROOVY 4.0.26
     
     package io.tulip
     
@@ -201,7 +201,7 @@ val groovyApp: String = """
 val scalaApp: String = """
     //> using jvm 21
     //> using dep io.github.wfouche.tulip:tulip-runtime:__TULIP_VERSION__
-    //> using dep org.springframework.boot:spring-boot-starter-web:3.4.2
+    //> using dep org.springframework.boot:spring-boot-starter-web:3.4.3
     //> using dep org.slf4j:slf4j-api:2.0.16
     //> using dep ch.qos.logback:logback-core:1.5.16
     //> using dep ch.qos.logback:logback-classic:1.5.16
@@ -747,7 +747,7 @@ val JythonJava: String = """
     
     //DEPS org.python:jython-standalone:2.7.4
     //DEPS io.github.wfouche.tulip:tulip-runtime:2.1.5
-    //DEPS org.springframework.boot:spring-boot-starter-web:3.4.2
+    //DEPS org.springframework.boot:spring-boot-starter-web:3.4.3
     //DEPS org.slf4j:slf4j-api:2.0.16
     //DEPS ch.qos.logback:logback-core:1.5.16
     //DEPS ch.qos.logback:logback-classic:1.5.16
