@@ -888,6 +888,11 @@ fun main(args: Array<String>) {
         host = args.get(4)
     }
 
+    var version: String = VERSION
+    if (args.size > 5) {
+        version = args.get(5)
+    }
+
     val path: String = "io/tulip/"
     if (lang == "Java") {
         Files.createDirectories(Paths.get(path))
@@ -903,7 +908,7 @@ fun main(args: Array<String>) {
         writeToFile(
             path + "App.java",
             javaApp
-                .replace("__TULIP_VERSION__", VERSION),
+                .replace("__TULIP_VERSION__", version),
             false
         )
         writeToFile(
@@ -914,7 +919,7 @@ fun main(args: Array<String>) {
         writeToFile(
             "run_bench.sh",
             runBenchShJava
-                .replace("__TULIP_VERSION__", VERSION)
+                .replace("__TULIP_VERSION__", version)
                 .replace("__TULIP_JAVA_OPTIONS__", TULIP_JAVA_OPTIONS), false
         )
         if (java.lang.System.getProperty("os.name").lowercase().contains("windows")) {
@@ -930,7 +935,7 @@ fun main(args: Array<String>) {
         writeToFile(
             "run_bench.cmd",
             runBenchCmdJava
-                .replace("__TULIP_VERSION__", VERSION)
+                .replace("__TULIP_VERSION__", version)
                 .replace("__TULIP_JAVA_OPTIONS__", TULIP_JAVA_OPTIONS), false
         )
     }
@@ -949,7 +954,7 @@ fun main(args: Array<String>) {
         writeToFile(
             path + "App.kt",
             kotlinApp
-                .replace("__TULIP_VERSION__", VERSION),
+                .replace("__TULIP_VERSION__", version),
             false
         )
         writeToFile(
@@ -960,7 +965,7 @@ fun main(args: Array<String>) {
         writeToFile(
             "run_bench.sh",
             runBenchShKotlin
-                .replace("__TULIP_VERSION__", VERSION)
+                .replace("__TULIP_VERSION__", version)
                 .replace("__TULIP_JAVA_OPTIONS__", TULIP_JAVA_OPTIONS), false
         )
         if (java.lang.System.getProperty("os.name").lowercase().contains("windows")) {
@@ -976,7 +981,7 @@ fun main(args: Array<String>) {
         writeToFile(
             "run_bench.cmd",
             runBenchCmdKotlin
-                .replace("__TULIP_VERSION__", VERSION)
+                .replace("__TULIP_VERSION__", version)
                 .replace("__TULIP_JAVA_OPTIONS__", TULIP_JAVA_OPTIONS), false
         )
     }
@@ -995,7 +1000,7 @@ fun main(args: Array<String>) {
         writeToFile(
             path + "App.groovy",
             groovyApp
-                .replace("__TULIP_VERSION__", VERSION),
+                .replace("__TULIP_VERSION__", version),
             false
         )
         writeToFile(
@@ -1006,7 +1011,7 @@ fun main(args: Array<String>) {
         writeToFile(
             "run_bench.sh",
             runBenchShGroovy
-                .replace("__TULIP_VERSION__", VERSION)
+                .replace("__TULIP_VERSION__", version)
                 .replace("__TULIP_JAVA_OPTIONS__", TULIP_JAVA_OPTIONS), false
         )
         if (java.lang.System.getProperty("os.name").lowercase().contains("windows")) {
@@ -1022,7 +1027,7 @@ fun main(args: Array<String>) {
         writeToFile(
             "run_bench.cmd",
             runBenchCmdGroovy
-                .replace("__TULIP_VERSION__", VERSION)
+                .replace("__TULIP_VERSION__", version)
                 .replace("__TULIP_JAVA_OPTIONS__", TULIP_JAVA_OPTIONS), false
         )
     }
@@ -1041,7 +1046,7 @@ fun main(args: Array<String>) {
         writeToFile(
             path + "App.scala",
             scalaApp
-                .replace("__TULIP_VERSION__", VERSION)
+                .replace("__TULIP_VERSION__", version)
                 .replace("__TULIP_JAVA_OPTIONS__", TULIP_JAVA_OPTIONS), false
         )
         writeToFile(
@@ -1052,7 +1057,7 @@ fun main(args: Array<String>) {
         writeToFile(
             "run_bench.sh",
             runBenchShScala
-                .replace("__TULIP_VERSION__", VERSION),
+                .replace("__TULIP_VERSION__", version),
             false
         )
         if (java.lang.System.getProperty("os.name").lowercase().contains("windows")) {
@@ -1068,7 +1073,7 @@ fun main(args: Array<String>) {
         writeToFile(
             "run_bench.cmd",
             runBenchCmdScala
-                .replace("__TULIP_VERSION__", VERSION),
+                .replace("__TULIP_VERSION__", version),
             false
         )
     }
@@ -1088,7 +1093,7 @@ fun main(args: Array<String>) {
         writeToFile(
             "Jython.java",
             JythonJava
-                .replace("__TULIP_VERSION__", VERSION),
+                .replace("__TULIP_VERSION__", version),
             false
         )
 
