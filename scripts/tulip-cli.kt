@@ -1,5 +1,5 @@
 ///usr/bin/env jbang "$0" "$@" ; exit $?
-//DEPS io.github.wfouche.tulip:tulip-runtime:2.1.5
+//DEPS io.github.wfouche.tulip:tulip-runtime:2.1.6
 //JAVA 21
 //KOTLIN 2.0.21
 
@@ -139,9 +139,9 @@ val javaApp: String = """
     ///usr/bin/env jbang "${'$'}0" "${'$'}@" ; exit ${'$'}?
     //DEPS io.github.wfouche.tulip:tulip-runtime:__TULIP_VERSION__
     //DEPS org.springframework.boot:spring-boot-starter-web:3.4.3
-    //DEPS org.slf4j:slf4j-api:2.0.16
-    //DEPS ch.qos.logback:logback-core:1.5.16
-    //DEPS ch.qos.logback:logback-classic:1.5.16
+    //DEPS org.slf4j:slf4j-api:2.0.17
+    //DEPS ch.qos.logback:logback-core:1.5.17
+    //DEPS ch.qos.logback:logback-classic:1.5.17
     //SOURCES HttpUser.java
     //JAVA 21
     
@@ -160,9 +160,9 @@ val kotlinApp: String = """
     ///usr/bin/env jbang "${'$'}0" "${'$'}@" ; exit ${'$'}?
     //DEPS io.github.wfouche.tulip:tulip-runtime:__TULIP_VERSION__
     //DEPS org.springframework.boot:spring-boot-starter-web:3.4.3
-    //DEPS org.slf4j:slf4j-api:2.0.16
-    //DEPS ch.qos.logback:logback-core:1.5.16
-    //DEPS ch.qos.logback:logback-classic:1.5.16
+    //DEPS org.slf4j:slf4j-api:2.0.17
+    //DEPS ch.qos.logback:logback-core:1.5.17
+    //DEPS ch.qos.logback:logback-classic:1.5.17
     //SOURCES HttpUser.kt
     //JAVA 21
     //KOTLIN 2.0.21
@@ -180,9 +180,9 @@ val groovyApp: String = """
     ///usr/bin/env jbang "${'$'}0" "${'$'}@" ; exit ${'$'}?
     //DEPS io.github.wfouche.tulip:tulip-runtime:__TULIP_VERSION__
     //DEPS org.springframework.boot:spring-boot-starter-web:3.4.3
-    //DEPS org.slf4j:slf4j-api:2.0.16
-    //DEPS ch.qos.logback:logback-core:1.5.16
-    //DEPS ch.qos.logback:logback-classic:1.5.16
+    //DEPS org.slf4j:slf4j-api:2.0.17
+    //DEPS ch.qos.logback:logback-core:1.5.17
+    //DEPS ch.qos.logback:logback-classic:1.5.17
     //SOURCES HttpUser.groovy
     //JAVA 21
     //GROOVY 4.0.26
@@ -202,9 +202,9 @@ val scalaApp: String = """
     //> using jvm 21
     //> using dep io.github.wfouche.tulip:tulip-runtime:__TULIP_VERSION__
     //> using dep org.springframework.boot:spring-boot-starter-web:3.4.3
-    //> using dep org.slf4j:slf4j-api:2.0.16
-    //> using dep ch.qos.logback:logback-core:1.5.16
-    //> using dep ch.qos.logback:logback-classic:1.5.16
+    //> using dep org.slf4j:slf4j-api:2.0.17
+    //> using dep ch.qos.logback:logback-core:1.5.17
+    //> using dep ch.qos.logback:logback-classic:1.5.17
     //> using javaOpt __TULIP_JAVA_OPTIONS__
     //> using repositories m2local
     
@@ -746,9 +746,9 @@ val JythonJava: String = """
     //DEPS org.python:jython-standalone:2.7.4
     //DEPS io.github.wfouche.tulip:tulip-runtime:__TULIP_VERSION__
     //DEPS org.springframework.boot:spring-boot-starter-web:3.4.3
-    //DEPS org.slf4j:slf4j-api:2.0.16
-    //DEPS ch.qos.logback:logback-core:1.5.16
-    //DEPS ch.qos.logback:logback-classic:1.5.16
+    //DEPS org.slf4j:slf4j-api:2.0.17
+    //DEPS ch.qos.logback:logback-core:1.5.17
+    //DEPS ch.qos.logback:logback-classic:1.5.17
     //JAVA 21
     
     import org.python.util.jython;
