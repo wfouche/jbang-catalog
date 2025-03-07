@@ -26,6 +26,9 @@ import com.github.ajalt.clikt.parameters.types.double
 import java.io.File
 import java.io.BufferedWriter
 import java.io.FileWriter
+import java.io.IOException
+import java.nio.file.Files
+import java.nio.file.Paths
 
 import java.util.Locale
 
@@ -82,6 +85,16 @@ val benchmarkConfig:String = """
     }
 }
 """.trim()
+
+fun writeToFile(path: String, content: String, append: Boolean) {
+    try {
+        FileWriter(path, append).use { fileWriter ->
+            fileWriter.write(content)
+        }
+    } catch (e: IOException) {
+        // exception handling ...
+    }
+}
 
 class HttpUser(userId: Int, threadId: Int) : TulipUser(userId, threadId) {
 
@@ -185,7 +198,13 @@ class KwrkCli : CliktCommand() {
             println("")
         }
 
-        TulipApi.runTulip(json)
+        //TulipApi.runTulip(json)
+        writeToFile(
+            "kwrk_config.json",
+            json,
+            false
+        )
+        TulipApi.runTulip("kwrk_config.json")
 
         val old_lines: List<String> = File("kwrk_report.html").readLines()
         val new_lines: MutableList<String> = mutableListOf()
