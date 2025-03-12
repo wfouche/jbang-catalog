@@ -522,47 +522,35 @@ val scalaUser: String = """
     
       // Action 1: GET /posts/{id}
       override def action1(): Boolean = {
-        try {
-          val id = ThreadLocalRandom.current().nextInt(100) + 1
-          val rsp = client.get()
-            .uri("/posts/{id}", id)
-            .retrieve()
-            .body(classOf[String])
-          rsp != null && rsp.length > 2
-        } catch {
-          case _: RestClientException => false
-        }
+        val id = Random.nextInt(100) + 1
+        http_GET("/posts/{id}", id)
       }
     
       // Action 2: GET /comments/{id}
       override def action2(): Boolean = {
-        try {
-          val id = ThreadLocalRandom.current().nextInt(500) + 1
-          val rsp = client.get()
-            .uri("/comments/{id}", id)
-            .retrieve()
-            .body(classOf[String])
-          rsp != null && rsp.length > 2
-        } catch {
-          case _: RestClientException => false
-        }
+        val id = Random.nextInt(500) + 1
+        http_GET("/comments/{id}", id)
       }
     
       // Action 3: GET /todos/{id}
       override def action3(): Boolean = {
-        try {
-          val id = ThreadLocalRandom.current().nextInt(200) + 1
-          val rsp = client.get()
-            .uri("/todos/{id}", id)
-            .retrieve()
-            .body(classOf[String])
-          rsp != null && rsp.length > 2
-        } catch {
-          case _: RestClientException => false
-        }
+        val id = Random.nextInt(200) + 1
+        http_GET("/todos/{id}", id)
       }
     
       override def onStop(): Boolean = true
+      
+      private def http_GET(uri: String, uriVariables: Any*): Boolean = {
+          try {
+            val rsp = client.get()
+              .uri(uri, uriVariables: _*)
+              .retrieve()
+              .body(classOf[String])
+            rsp != null && rsp.length > 2
+          } catch {
+            case _: RestClientException => false
+          }
+      }
     }
     
     // RestClient object
