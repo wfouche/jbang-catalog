@@ -337,7 +337,7 @@ val kotlinUser: String = """
                     setReadTimeout(readTimeout)
                 }
                 val url = getUserParamValue("protocol") + "://" + getUserParamValue("host")
-                restClient = RestClient.builder()
+                client = RestClient.builder()
                     .requestFactory(factory)
                     .baseUrl(url)
                     .build()
@@ -354,7 +354,7 @@ val kotlinUser: String = """
         override fun action1(): Boolean {
             val id: Int = ThreadLocalRandom.current().nextInt(100)+1
             return try {
-                val rsp: String? = restClient.get()
+                val rsp: String? = client.get()
                     .uri("/posts/{id}", id)
                     .retrieve()
                     .body(String::class.java)
@@ -369,7 +369,7 @@ val kotlinUser: String = """
         override fun action2(): Boolean {
             val id: Int = ThreadLocalRandom.current().nextInt(500)+1
             return try {
-                val rsp: String? = restClient.get()
+                val rsp: String? = client.get()
                     .uri("/comments/{id}", id)
                     .retrieve()
                     .body(String::class.java)
@@ -384,7 +384,7 @@ val kotlinUser: String = """
         override fun action3(): Boolean {
             val id: Int = ThreadLocalRandom.current().nextInt(200)+1
             return try {
-                val rsp: String? = restClient.get()
+                val rsp: String? = client.get()
                     .uri("/todos/{id}", id)
                     .retrieve()
                     .body(String::class.java)
@@ -401,7 +401,7 @@ val kotlinUser: String = """
     
         // RestClient object
         companion object {
-            private lateinit var restClient: RestClient
+            private lateinit var client: RestClient
             private var debug: Boolean = false
             private val logger = LoggerFactory.getLogger(HttpUser::class.java)
         }
@@ -436,7 +436,7 @@ val groovyUser = """
                 factory.setConnectTimeout(connectTimeout)
                 factory.setReadTimeout(readTimeout)
                 def url = getUserParamValue("protocol") + "://" + getUserParamValue("host")
-                restClient = RestClient.builder()
+                client = RestClient.builder()
                     .requestFactory(factory)
                     .baseUrl(url)
                     .build()
@@ -454,7 +454,7 @@ val groovyUser = """
             boolean rc
             try {
                 int id = ThreadLocalRandom.current().nextInt(100) + 1
-                String rsp = restClient.get()
+                String rsp = client.get()
                     .uri("/posts/{id}", id)
                     .retrieve()
                     .body(String.class)
@@ -470,7 +470,7 @@ val groovyUser = """
             boolean rc
             try {
                 int id = ThreadLocalRandom.current().nextInt(500) + 1
-                String rsp = restClient.get()
+                String rsp = client.get()
                     .uri("/comments/{id}", id)
                     .retrieve()
                     .body(String.class)
@@ -486,7 +486,7 @@ val groovyUser = """
             boolean rc
             try {
                 int id = ThreadLocalRandom.current().nextInt(200) + 1
-                String rsp = restClient.get()
+                String rsp = client.get()
                     .uri("/todos/{id}", id)
                     .retrieve()
                     .body(String.class)
@@ -502,7 +502,7 @@ val groovyUser = """
         }
     
         // RestClient object
-        static RestClient restClient
+        static RestClient client
     
         // Debug flag
         static boolean debug = false
@@ -538,7 +538,7 @@ val scalaUser: String = """
           factory.setConnectTimeout(connectTimeout)
           factory.setReadTimeout(readTimeout)
           val url = getUserParamValue("protocol") + "://" + getUserParamValue("host")
-          restClient = RestClient.builder()
+          client = RestClient.builder()
             .requestFactory(factory)
             .baseUrl(url)
             .build()
@@ -555,7 +555,7 @@ val scalaUser: String = """
       override def action1(): Boolean = {
         try {
           val id = ThreadLocalRandom.current().nextInt(100) + 1
-          val rsp = restClient.get()
+          val rsp = client.get()
             .uri("/posts/{id}", id)
             .retrieve()
             .body(classOf[String])
@@ -569,7 +569,7 @@ val scalaUser: String = """
       override def action2(): Boolean = {
         try {
           val id = ThreadLocalRandom.current().nextInt(500) + 1
-          val rsp = restClient.get()
+          val rsp = client.get()
             .uri("/comments/{id}", id)
             .retrieve()
             .body(classOf[String])
@@ -583,7 +583,7 @@ val scalaUser: String = """
       override def action3(): Boolean = {
         try {
           val id = ThreadLocalRandom.current().nextInt(200) + 1
-          val rsp = restClient.get()
+          val rsp = client.get()
             .uri("/todos/{id}", id)
             .retrieve()
             .body(classOf[String])
@@ -597,7 +597,7 @@ val scalaUser: String = """
     }
     
     // RestClient object
-    var restClient: RestClient = uninitialized
+    var client: RestClient = uninitialized
     
     // Debug flag
     var debug: Boolean = false
@@ -773,7 +773,7 @@ val JythonBenchmark: String = """
     import java.util.concurrent.ThreadLocalRandom as ThreadLocalRandom
     import java.lang.String
     
-    restClient = None
+    client = None
     
     class HttpUser(TulipUser):
     
@@ -790,15 +790,15 @@ val JythonBenchmark: String = """
                 factory.setConnectTimeout(connectTimeout)
                 factory.setReadTimeout(readTimeout)
                 url = self.getUserParamValue("protocol") + "://" + self.getUserParamValue("host")
-                global restClient
-                restClient = RestClient.builder().requestFactory(factory).baseUrl(url).build()
+                global client
+                client = RestClient.builder().requestFactory(factory).baseUrl(url).build()
             return True
     
         def action1(self):
             rc = False
             try:
                 id = ThreadLocalRandom.current().nextInt(100) + 1
-                rsp = restClient.get().uri("/posts/{id}", id).retrieve().body(java.lang.String)
+                rsp = client.get().uri("/posts/{id}", id).retrieve().body(java.lang.String)
                 rc = (rsp is not None and len(rsp) > 2)
             except RestClientException:
                 pass
@@ -808,7 +808,7 @@ val JythonBenchmark: String = """
             rc = False
             try:
                 id = ThreadLocalRandom.current().nextInt(500) + 1
-                rsp = restClient.get().uri("/comments/{id}", id).retrieve().body(java.lang.String)
+                rsp = client.get().uri("/comments/{id}", id).retrieve().body(java.lang.String)
                 rc = (rsp is not None and len(rsp) > 2)
             except RestClientException:
                 pass
@@ -818,7 +818,7 @@ val JythonBenchmark: String = """
             rc = False
             try:
                 id = ThreadLocalRandom.current().nextInt(200) + 1
-                rsp = restClient.get().uri("/todos/{id}", id).retrieve().body(java.lang.String)
+                rsp = client.get().uri("/todos/{id}", id).retrieve().body(java.lang.String)
                 rc = (rsp is not None and len(rsp) > 2)
             except RestClientException:
                 pass
