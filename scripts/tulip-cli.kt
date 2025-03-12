@@ -522,19 +522,19 @@ val scalaUser: String = """
     
       // Action 1: GET /posts/{id}
       override def action1(): Boolean = {
-        val id = Random.nextInt(100) + 1
+        val id = ThreadLocalRandom.current().nextInt(100) + 1
         http_GET("/posts/{id}", id)
       }
     
       // Action 2: GET /comments/{id}
       override def action2(): Boolean = {
-        val id = Random.nextInt(500) + 1
+        val id = ThreadLocalRandom.current().nextInt(500) + 1
         http_GET("/comments/{id}", id)
       }
     
       // Action 3: GET /todos/{id}
       override def action3(): Boolean = {
-        val id = Random.nextInt(200) + 1
+        val id = ThreadLocalRandom.current().nextInt(200) + 1
         http_GET("/todos/{id}", id)
       }
     
@@ -543,7 +543,7 @@ val scalaUser: String = """
       private def http_GET(uri: String, uriVariables: Any*): Boolean = {
           try {
             val rsp = client.get()
-              .uri(uri, uriVariables: _*)
+              .uri(uri, uriVariables*)
               .retrieve()
               .body(classOf[String])
             rsp != null && rsp.length > 2
