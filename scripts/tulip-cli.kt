@@ -250,7 +250,7 @@ val javaUser: String = """
                 factory.setConnectTimeout(connectTimeout);
                 factory.setReadTimeout(readTimeout);
                 var url = getUserParamValue("protocol") + "://" + getUserParamValue("host");
-                restClient = RestClient.builder()
+                client = RestClient.builder()
                     .requestFactory(factory)
                     .baseUrl(url)
                     .build();
@@ -288,7 +288,7 @@ val javaUser: String = """
         private boolean serviceCall(String uri, int id) {
             boolean rc;
             try {
-                String rsp = restClient.get()
+                String rsp = client.get()
                     .uri(uri, id)
                     .retrieve()
                     .body(String.class);
@@ -300,7 +300,7 @@ val javaUser: String = """
         }
 
         // RestClient object
-        private static RestClient restClient;
+        private static RestClient client;
 
         // Debug flag
         private static boolean debug = false;
