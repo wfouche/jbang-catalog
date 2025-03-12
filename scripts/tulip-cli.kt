@@ -436,43 +436,31 @@ val groovyUser = """
     
         // Action 1: GET /posts/{id}
         boolean action1() {
-            boolean rc
-            try {
-                int id = ThreadLocalRandom.current().nextInt(100) + 1
-                String rsp = client.get()
-                    .uri("/posts/{id}", id)
-                    .retrieve()
-                    .body(String.class)
-                rc = (rsp != null && rsp.length() > 2)
-            } catch (RestClientException e) {
-                rc = false
-            }
-            return rc
+            int id = ThreadLocalRandom.current().nextInt(100) + 1
+            return http_GET("/posts/{id}", id)            
         }
     
         // Action 2: GET /comments/{id}
         boolean action2() {
-            boolean rc
-            try {
-                int id = ThreadLocalRandom.current().nextInt(500) + 1
-                String rsp = client.get()
-                    .uri("/comments/{id}", id)
-                    .retrieve()
-                    .body(String.class)
-                rc = (rsp != null && rsp.length() > 2)
-            } catch (RestClientException e) {
-                rc = false
-            }
-            return rc
+            int id = ThreadLocalRandom.current().nextInt(500) + 1
+            return http_GET("/comments/{id}", id)
         }
     
         // Action 3: GET /todos/{id}
         boolean action3() {
+            int id = ThreadLocalRandom.current().nextInt(200) + 1
+            return http_GET("/todos/{id}", id)
+        }
+    
+        boolean onStop() {
+            return true
+        }
+        
+        private boolean http_GET(String uri, Object... uriVariables) {
             boolean rc
             try {
-                int id = ThreadLocalRandom.current().nextInt(200) + 1
                 String rsp = client.get()
-                    .uri("/todos/{id}", id)
+                    .uri(uri, uriVariables)
                     .retrieve()
                     .body(String.class)
                 rc = (rsp != null && rsp.length() > 2)
@@ -480,10 +468,6 @@ val groovyUser = """
                 rc = false
             }
             return rc
-        }
-    
-        boolean onStop() {
-            return true
         }
     
         // RestClient object
