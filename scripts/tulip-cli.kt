@@ -242,23 +242,29 @@ val javaUser: String = """
         public boolean onStart() {
             // Initialize the shared RestClient object only once
             if (getUserId() == 0) {
-                logger.info("Java");
-                logger.info("Initializing static data");
-                var connectTimeout = Integer.valueOf(getUserParamValue("connectTimeoutMillis"));
-                var readTimeout = Integer.valueOf(getUserParamValue("readTimeoutMillis"));
                 var factory = new SimpleClientHttpRequestFactory();
-                factory.setConnectTimeout(connectTimeout);
-                factory.setReadTimeout(readTimeout);
+    
+                var connectTimeout_ = getUserParamValue("connectTimeoutMillis");
+                if (connectTimeout_.length() > 0) {
+                    factory.setConnectTimeout(Integer.valueOf(connectTimeout_));
+                    logger.info("connectTimeoutMillis=" + connectTimeout_);
+                }
+    
+                var readTimeout_ = getUserParamValue("readTimeoutMillis");
+                if (readTimeout_.length() > 0) {
+                    factory.setReadTimeout(Integer.valueOf(readTimeout_));
+                    logger.info("readTimeoutMillis=" + readTimeout_);
+                }
+    
                 var url = getUserParamValue("protocol") + "://" + getUserParamValue("host");
+                logger.info("url=" + url);
+    
                 client = RestClient.builder()
                     .requestFactory(factory)
                     .baseUrl(url)
                     .build();
+    
                 debug = Boolean.valueOf(getUserParamValue("debug"));
-                logger.info("debug = " + debug);
-                if (debug) {
-                    logger.info(url);
-                }
             }
             return true;
         }
@@ -292,7 +298,7 @@ val javaUser: String = """
                     .uri(uri, uriVariables)
                     .retrieve()
                     .body(String.class);
-                rc = (rsp != null && rsp.length() > 2);
+                rc = (rsp != null && rsp.length() > 0);
             } catch (RestClientException e) {
                 rc = false;
             }
@@ -378,7 +384,7 @@ val kotlinUser: String = """
                     .uri(uri, *uriVariables)
                     .retrieve()
                     .body(String::class.java)
-                rsp != null && rsp.length > 2
+                rsp != null && rsp.length > 0
             } catch (e: RestClientException) {
                 false
             }
@@ -463,7 +469,7 @@ val groovyUser = """
                     .uri(uri, uriVariables)
                     .retrieve()
                     .body(String.class)
-                rc = (rsp != null && rsp.length() > 2)
+                rc = (rsp != null && rsp.length() > 0)
             } catch (RestClientException e) {
                 rc = false
             }
@@ -546,7 +552,7 @@ val scalaUser: String = """
               .uri(uri, uriVariables*)
               .retrieve()
               .body(classOf[String])
-            rsp != null && rsp.length > 2
+            rsp != null && rsp.length > 0
           } catch {
             case _: RestClientException => false
           }
