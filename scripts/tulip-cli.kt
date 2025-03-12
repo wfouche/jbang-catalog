@@ -353,50 +353,35 @@ val kotlinUser: String = """
         // Action 1: GET /posts/{id}
         override fun action1(): Boolean {
             val id: Int = ThreadLocalRandom.current().nextInt(100)+1
-            return try {
-                val rsp: String? = client.get()
-                    .uri("/posts/{id}", id)
-                    .retrieve()
-                    .body(String::class.java)
-                //Postcondition
-                (rsp != null && rsp.length > 2)
-            } catch (e: RestClientException) {
-                false
-            }
+            return http_GET("/posts/{id}", id)
         }
     
         // Action 2: GET /comments/{id}
         override fun action2(): Boolean {
             val id: Int = ThreadLocalRandom.current().nextInt(500)+1
-            return try {
-                val rsp: String? = client.get()
-                    .uri("/comments/{id}", id)
-                    .retrieve()
-                    .body(String::class.java)
-                //Postcondition
-                (rsp != null && rsp.length > 2)
-            } catch (e: RestClientException) {
-                false
-            }
+            return http_GET("/comments/{id}", id)
         }
     
         // Action 3: GET /todos/{id}
         override fun action3(): Boolean {
             val id: Int = ThreadLocalRandom.current().nextInt(200)+1
-            return try {
-                val rsp: String? = client.get()
-                    .uri("/todos/{id}", id)
-                    .retrieve()
-                    .body(String::class.java)
-                //Postcondition
-                (rsp != null && rsp.length > 2)
-            } catch (e: RestClientException) {
-                false
-            }
+            return http_GET("/todos/{id}", id)
         }
     
         override fun onStop(): Boolean {
             return true
+        }
+        
+        private fun http_GET(uri: String, vararg uriVariables: Any): Boolean {
+            return try {
+                val rsp = client.get()
+                    .uri(uri, *uriVariables)
+                    .retrieve()
+                    .body(String::class.java)
+                rsp != null && rsp.length > 2
+            } catch (e: RestClientException) {
+                false
+            }
         }
     
         // RestClient object
