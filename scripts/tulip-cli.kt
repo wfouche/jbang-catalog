@@ -140,8 +140,8 @@ val javaApp: String = """
     //DEPS io.github.wfouche.tulip:tulip-runtime:__TULIP_VERSION__
     //DEPS org.springframework.boot:spring-boot-starter-web:3.4.3
     //DEPS org.slf4j:slf4j-api:2.0.17
-    //DEPS ch.qos.logback:logback-core:1.5.17
-    //DEPS ch.qos.logback:logback-classic:1.5.17
+    //DEPS ch.qos.logback:logback-core:1.5.18
+    //DEPS ch.qos.logback:logback-classic:1.5.18
     //SOURCES HttpUser.java
     //JAVA 21
     
@@ -161,8 +161,8 @@ val kotlinApp: String = """
     //DEPS io.github.wfouche.tulip:tulip-runtime:__TULIP_VERSION__
     //DEPS org.springframework.boot:spring-boot-starter-web:3.4.3
     //DEPS org.slf4j:slf4j-api:2.0.17
-    //DEPS ch.qos.logback:logback-core:1.5.17
-    //DEPS ch.qos.logback:logback-classic:1.5.17
+    //DEPS ch.qos.logback:logback-core:1.5.18
+    //DEPS ch.qos.logback:logback-classic:1.5.18
     //SOURCES HttpUser.kt
     //JAVA 21
     //KOTLIN 2.0.21
@@ -181,8 +181,8 @@ val groovyApp: String = """
     //DEPS io.github.wfouche.tulip:tulip-runtime:__TULIP_VERSION__
     //DEPS org.springframework.boot:spring-boot-starter-web:3.4.3
     //DEPS org.slf4j:slf4j-api:2.0.17
-    //DEPS ch.qos.logback:logback-core:1.5.17
-    //DEPS ch.qos.logback:logback-classic:1.5.17
+    //DEPS ch.qos.logback:logback-core:1.5.18
+    //DEPS ch.qos.logback:logback-classic:1.5.18
     //SOURCES HttpUser.groovy
     //JAVA 21
     //GROOVY 4.0.26
@@ -203,8 +203,8 @@ val scalaApp: String = """
     //> using dep io.github.wfouche.tulip:tulip-runtime:__TULIP_VERSION__
     //> using dep org.springframework.boot:spring-boot-starter-web:3.4.3
     //> using dep org.slf4j:slf4j-api:2.0.17
-    //> using dep ch.qos.logback:logback-core:1.5.17
-    //> using dep ch.qos.logback:logback-classic:1.5.17
+    //> using dep ch.qos.logback:logback-core:1.5.18
+    //> using dep ch.qos.logback:logback-classic:1.5.18
     //> using javaOpt __TULIP_JAVA_OPTIONS__
     //> using repositories m2local
     
@@ -747,8 +747,8 @@ val JythonJava: String = """
     //DEPS io.github.wfouche.tulip:tulip-runtime:__TULIP_VERSION__
     //DEPS org.springframework.boot:spring-boot-starter-web:3.4.3
     //DEPS org.slf4j:slf4j-api:2.0.17
-    //DEPS ch.qos.logback:logback-core:1.5.17
-    //DEPS ch.qos.logback:logback-classic:1.5.17
+    //DEPS ch.qos.logback:logback-core:1.5.18
+    //DEPS ch.qos.logback:logback-classic:1.5.18
     //JAVA 21
     
     import org.python.util.jython;
