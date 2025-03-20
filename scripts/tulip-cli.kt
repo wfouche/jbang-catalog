@@ -242,23 +242,29 @@ val javaUser: String = """
         public boolean onStart() {
             // Initialize the shared RestClient object only once
             if (getUserId() == 0) {
-                logger.info("Java");
-                logger.info("Initializing static data");
-                var connectTimeout = Integer.valueOf(getUserParamValue("connectTimeoutMillis"));
-                var readTimeout = Integer.valueOf(getUserParamValue("readTimeoutMillis"));
                 var factory = new SimpleClientHttpRequestFactory();
-                factory.setConnectTimeout(connectTimeout);
-                factory.setReadTimeout(readTimeout);
+    
+                var connectTimeout_ = getUserParamValue("connectTimeoutMillis");
+                if (connectTimeout_.length() > 0) {
+                    factory.setConnectTimeout(Integer.valueOf(connectTimeout_));
+                    logger.info("connectTimeoutMillis=" + connectTimeout_);
+                }
+    
+                var readTimeout_ = getUserParamValue("readTimeoutMillis");
+                if (readTimeout_.length() > 0) {
+                    factory.setReadTimeout(Integer.valueOf(readTimeout_));
+                    logger.info("readTimeoutMillis=" + readTimeout_);
+                }
+    
                 var url = getUserParamValue("protocol") + "://" + getUserParamValue("host");
+                logger.info("url=" + url);
+    
                 client = RestClient.builder()
                     .requestFactory(factory)
                     .baseUrl(url)
                     .build();
+    
                 debug = Boolean.valueOf(getUserParamValue("debug"));
-                logger.info("debug = " + debug);
-                if (debug) {
-                    logger.info(url);
-                }
             }
             return true;
         }
@@ -266,33 +272,33 @@ val javaUser: String = """
         // Action 1: GET /posts/{id}
         public boolean action1() {
             int id = ThreadLocalRandom.current().nextInt(100)+1;
-            return serviceCall("/posts/{id}", id);
+            return http_GET("/posts/{id}", id);
         }
 
         // Action 2: GET /comments/{id}
         public boolean action2() {
             int id = ThreadLocalRandom.current().nextInt(500)+1;
-            return serviceCall("/comments/{id}", id);
+            return http_GET("/comments/{id}", id);
         }
 
         // Action 3: GET /todos/{id}
         public boolean action3() {
             int id = ThreadLocalRandom.current().nextInt(200)+1;
-            return serviceCall("/todos/{id}", id);
+            return http_GET("/todos/{id}", id);
         }
 
         public boolean onStop() {
             return true;
         }
 
-        private boolean serviceCall(String uri, int id) {
+        private boolean http_GET(String uri, Object... uriVariables) {
             boolean rc;
             try {
                 String rsp = client.get()
-                    .uri(uri, id)
+                    .uri(uri, uriVariables)
                     .retrieve()
                     .body(String.class);
-                rc = (rsp != null && rsp.length() > 2);
+                rc = (rsp != null && rsp.length() > 0);
             } catch (RestClientException e) {
                 rc = false;
             }
@@ -353,50 +359,35 @@ val kotlinUser: String = """
         // Action 1: GET /posts/{id}
         override fun action1(): Boolean {
             val id: Int = ThreadLocalRandom.current().nextInt(100)+1
-            return try {
-                val rsp: String? = client.get()
-                    .uri("/posts/{id}", id)
-                    .retrieve()
-                    .body(String::class.java)
-                //Postcondition
-                (rsp != null && rsp.length > 2)
-            } catch (e: RestClientException) {
-                false
-            }
+            return http_GET("/posts/{id}", id)
         }
     
         // Action 2: GET /comments/{id}
         override fun action2(): Boolean {
             val id: Int = ThreadLocalRandom.current().nextInt(500)+1
-            return try {
-                val rsp: String? = client.get()
-                    .uri("/comments/{id}", id)
-                    .retrieve()
-                    .body(String::class.java)
-                //Postcondition
-                (rsp != null && rsp.length > 2)
-            } catch (e: RestClientException) {
-                false
-            }
+            return http_GET("/comments/{id}", id)
         }
     
         // Action 3: GET /todos/{id}
         override fun action3(): Boolean {
             val id: Int = ThreadLocalRandom.current().nextInt(200)+1
-            return try {
-                val rsp: String? = client.get()
-                    .uri("/todos/{id}", id)
-                    .retrieve()
-                    .body(String::class.java)
-                //Postcondition
-                (rsp != null && rsp.length > 2)
-            } catch (e: RestClientException) {
-                false
-            }
+            return http_GET("/todos/{id}", id)
         }
     
         override fun onStop(): Boolean {
             return true
+        }
+        
+        private fun http_GET(uri: String, vararg uriVariables: Any): Boolean {
+            return try {
+                val rsp = client.get()
+                    .uri(uri, *uriVariables)
+                    .retrieve()
+                    .body(String::class.java)
+                rsp != null && rsp.length > 0
+            } catch (e: RestClientException) {
+                false
+            }
         }
     
         // RestClient object
@@ -451,54 +442,38 @@ val groovyUser = """
     
         // Action 1: GET /posts/{id}
         boolean action1() {
-            boolean rc
-            try {
-                int id = ThreadLocalRandom.current().nextInt(100) + 1
-                String rsp = client.get()
-                    .uri("/posts/{id}", id)
-                    .retrieve()
-                    .body(String.class)
-                rc = (rsp != null && rsp.length() > 2)
-            } catch (RestClientException e) {
-                rc = false
-            }
-            return rc
+            int id = ThreadLocalRandom.current().nextInt(100) + 1
+            return http_GET("/posts/{id}", id)            
         }
     
         // Action 2: GET /comments/{id}
         boolean action2() {
-            boolean rc
-            try {
-                int id = ThreadLocalRandom.current().nextInt(500) + 1
-                String rsp = client.get()
-                    .uri("/comments/{id}", id)
-                    .retrieve()
-                    .body(String.class)
-                rc = (rsp != null && rsp.length() > 2)
-            } catch (RestClientException e) {
-                rc = false
-            }
-            return rc
+            int id = ThreadLocalRandom.current().nextInt(500) + 1
+            return http_GET("/comments/{id}", id)
         }
     
         // Action 3: GET /todos/{id}
         boolean action3() {
-            boolean rc
-            try {
-                int id = ThreadLocalRandom.current().nextInt(200) + 1
-                String rsp = client.get()
-                    .uri("/todos/{id}", id)
-                    .retrieve()
-                    .body(String.class)
-                rc = (rsp != null && rsp.length() > 2)
-            } catch (RestClientException e) {
-                rc = false
-            }
-            return rc
+            int id = ThreadLocalRandom.current().nextInt(200) + 1
+            return http_GET("/todos/{id}", id)
         }
     
         boolean onStop() {
             return true
+        }
+        
+        private boolean http_GET(String uri, Object... uriVariables) {
+            boolean rc
+            try {
+                String rsp = client.get()
+                    .uri(uri, uriVariables)
+                    .retrieve()
+                    .body(String.class)
+                rc = (rsp != null && rsp.length() > 0)
+            } catch (RestClientException e) {
+                rc = false
+            }
+            return rc
         }
     
         // RestClient object
@@ -553,47 +528,35 @@ val scalaUser: String = """
     
       // Action 1: GET /posts/{id}
       override def action1(): Boolean = {
-        try {
-          val id = ThreadLocalRandom.current().nextInt(100) + 1
-          val rsp = client.get()
-            .uri("/posts/{id}", id)
-            .retrieve()
-            .body(classOf[String])
-          rsp != null && rsp.length > 2
-        } catch {
-          case _: RestClientException => false
-        }
+        val id = ThreadLocalRandom.current().nextInt(100) + 1
+        http_GET("/posts/{id}", id)
       }
     
       // Action 2: GET /comments/{id}
       override def action2(): Boolean = {
-        try {
-          val id = ThreadLocalRandom.current().nextInt(500) + 1
-          val rsp = client.get()
-            .uri("/comments/{id}", id)
-            .retrieve()
-            .body(classOf[String])
-          rsp != null && rsp.length > 2
-        } catch {
-          case _: RestClientException => false
-        }
+        val id = ThreadLocalRandom.current().nextInt(500) + 1
+        http_GET("/comments/{id}", id)
       }
     
       // Action 3: GET /todos/{id}
       override def action3(): Boolean = {
-        try {
-          val id = ThreadLocalRandom.current().nextInt(200) + 1
-          val rsp = client.get()
-            .uri("/todos/{id}", id)
-            .retrieve()
-            .body(classOf[String])
-          rsp != null && rsp.length > 2
-        } catch {
-          case _: RestClientException => false
-        }
+        val id = ThreadLocalRandom.current().nextInt(200) + 1
+        http_GET("/todos/{id}", id)
       }
     
       override def onStop(): Boolean = true
+      
+      private def http_GET(uri: String, uriVariables: Any*): Boolean = {
+          try {
+            val rsp = client.get()
+              .uri(uri, uriVariables*)
+              .retrieve()
+              .body(classOf[String])
+            rsp != null && rsp.length > 0
+          } catch {
+            case _: RestClientException => false
+          }
+      }
     }
     
     // RestClient object
