@@ -875,7 +875,7 @@ fun main(args: Array<String>) {
         writeToFile(
             path + "App.java",
             javaApp
-                .replace("__TULIP_VERSION__", version),
+                .replace("__TULIP_VERSION__", version)
                 .replace("__TULIP_JAVA_OPTIONS__", TULIP_JAVA_OPTIONS),
             false
         )
@@ -888,7 +888,8 @@ fun main(args: Array<String>) {
             "run_bench.sh",
             runBenchShJava
                 .replace("__TULIP_VERSION__", version)
-                .replace("__TULIP_JAVA_OPTIONS__", TULIP_JAVA_OPTIONS), false
+                .replace("__TULIP_JAVA_OPTIONS__", TULIP_JAVA_OPTIONS),
+            false
         )
         if (java.lang.System.getProperty("os.name").lowercase().contains("windows")) {
             // pass
@@ -922,7 +923,7 @@ fun main(args: Array<String>) {
         writeToFile(
             path + "App.kt",
             kotlinApp
-                .replace("__TULIP_VERSION__", version),
+                .replace("__TULIP_VERSION__", version)
                 .replace("__TULIP_JAVA_OPTIONS__", TULIP_JAVA_OPTIONS),
             false
         )
@@ -969,7 +970,7 @@ fun main(args: Array<String>) {
         writeToFile(
             path + "App.groovy",
             groovyApp
-                .replace("__TULIP_VERSION__", version),
+                .replace("__TULIP_VERSION__", version)
                 .replace("__TULIP_JAVA_OPTIONS__", TULIP_JAVA_OPTIONS),
             false
         )
@@ -1063,8 +1064,8 @@ fun main(args: Array<String>) {
         writeToFile(
             "Jython.java",
             JythonJava
-                .replace("__TULIP_VERSION__", version),
-                .replace("__TULIP_JAVA_OPTIONS__", TULIP_JAVA_OPTIONS)
+                .replace("__TULIP_VERSION__", version)
+                .replace("__TULIP_JAVA_OPTIONS__", TULIP_JAVA_OPTIONS),
             false
         )
 
