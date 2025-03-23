@@ -144,6 +144,7 @@ val javaApp: String = """
     //DEPS ch.qos.logback:logback-classic:1.5.17
     //SOURCES HttpUser.java
     //JAVA 21
+    //RUNTIME_OPTIONS __TULIP_JAVA_OPTIONS__
     
     package io.tulip;
     
@@ -166,6 +167,7 @@ val kotlinApp: String = """
     //SOURCES HttpUser.kt
     //JAVA 21
     //KOTLIN 2.0.21
+    //RUNTIME_OPTIONS __TULIP_JAVA_OPTIONS__
     
     package io.tulip
     
@@ -186,6 +188,7 @@ val groovyApp: String = """
     //SOURCES HttpUser.groovy
     //JAVA 21
     //GROOVY 4.0.26
+    //RUNTIME_OPTIONS __TULIP_JAVA_OPTIONS__
     
     package io.tulip
     
@@ -572,7 +575,7 @@ val scalaUser: String = """
 val runBenchShJava: String = """
     #!/bin/bash
     rm -f benchmark_report.html
-    export JBANG_JAVA_OPTIONS="__TULIP_JAVA_OPTIONS__"
+    #export JBANG_JAVA_OPTIONS="__TULIP_JAVA_OPTIONS__"
     jbang run io/tulip/App.java
     echo ""
     #w3m -dump -cols 205 benchmark_report.html
@@ -584,7 +587,7 @@ val runBenchShJava: String = """
 
 val runBenchCmdJava: String = """
     if exist benchmark_report.html del benchmark_report.html
-    set JBANG_JAVA_OPTIONS=__TULIP_JAVA_OPTIONS__
+    REM JBANG_JAVA_OPTIONS=__TULIP_JAVA_OPTIONS__
     call jbang run io\tulip\App.java
     @echo off
     echo.
@@ -600,7 +603,7 @@ val runBenchCmdJava: String = """
 val runBenchShKotlin: String = """
     #!/bin/bash
     rm -f benchmark_report.html
-    export JBANG_JAVA_OPTIONS="__TULIP_JAVA_OPTIONS__"
+    #export JBANG_JAVA_OPTIONS="__TULIP_JAVA_OPTIONS__"
     jbang run io/tulip/App.kt
     echo ""
     #w3m -dump -cols 205 benchmark_report.html
@@ -612,7 +615,7 @@ val runBenchShKotlin: String = """
 
 val runBenchCmdKotlin: String = """
     if exist benchmark_report.html del benchmark_report.html
-    set JBANG_JAVA_OPTIONS=__TULIP_JAVA_OPTIONS__
+    REM JBANG_JAVA_OPTIONS=__TULIP_JAVA_OPTIONS__
     call jbang run io\tulip\App.kt
     @echo off
     echo.
@@ -628,7 +631,7 @@ val runBenchCmdKotlin: String = """
 val runBenchShGroovy: String = """
     #!/bin/bash
     rm -f benchmark_report.html
-    export JBANG_JAVA_OPTIONS="__TULIP_JAVA_OPTIONS__"
+    #export JBANG_JAVA_OPTIONS="__TULIP_JAVA_OPTIONS__"
     jbang run io/tulip/App.groovy
     echo ""
     #w3m -dump -cols 205 benchmark_report.html
@@ -640,7 +643,7 @@ val runBenchShGroovy: String = """
 
 val runBenchCmdGroovy: String = """
     if exist benchmark_report.html del benchmark_report.html
-    set JBANG_JAVA_OPTIONS=__TULIP_JAVA_OPTIONS__
+    REM JBANG_JAVA_OPTIONS=__TULIP_JAVA_OPTIONS__
     call jbang run io\tulip\App.groovy
     @echo off
     echo.
@@ -680,7 +683,7 @@ val runBenchCmdScala: String = """
 val runBenchShJython: String = """
     #!/bin/bash
     rm -f benchmark_report.html
-    export JBANG_JAVA_OPTIONS="__TULIP_JAVA_OPTIONS__"
+    #export JBANG_JAVA_OPTIONS="__TULIP_JAVA_OPTIONS__"
     jbang run Jython.java benchmark.py
     echo ""
     #w3m -dump -cols 205 benchmark_report.html
@@ -691,7 +694,7 @@ val runBenchShJython: String = """
 
 val runBenchCmdJython: String = """
     if exist benchmark_report.html del benchmark_report.html
-    set JBANG_JAVA_OPTIONS=__TULIP_JAVA_OPTIONS__
+    REM JBANG_JAVA_OPTIONS=__TULIP_JAVA_OPTIONS__
     call jbang run Jython.java benchmark.py
     @echo off
     echo.
@@ -713,7 +716,8 @@ val JythonJava: String = """
     //DEPS ch.qos.logback:logback-core:1.5.17
     //DEPS ch.qos.logback:logback-classic:1.5.17
     //JAVA 21
-    
+    //RUNTIME_OPTIONS __TULIP_JAVA_OPTIONS__
+        
     import org.python.util.jython;
     
     public class Jython {
@@ -872,6 +876,7 @@ fun main(args: Array<String>) {
             path + "App.java",
             javaApp
                 .replace("__TULIP_VERSION__", version),
+                .replace("__TULIP_JAVA_OPTIONS__", TULIP_JAVA_OPTIONS),
             false
         )
         writeToFile(
@@ -918,6 +923,7 @@ fun main(args: Array<String>) {
             path + "App.kt",
             kotlinApp
                 .replace("__TULIP_VERSION__", version),
+                .replace("__TULIP_JAVA_OPTIONS__", TULIP_JAVA_OPTIONS),
             false
         )
         writeToFile(
@@ -964,6 +970,7 @@ fun main(args: Array<String>) {
             path + "App.groovy",
             groovyApp
                 .replace("__TULIP_VERSION__", version),
+                .replace("__TULIP_JAVA_OPTIONS__", TULIP_JAVA_OPTIONS),
             false
         )
         writeToFile(
@@ -1057,6 +1064,7 @@ fun main(args: Array<String>) {
             "Jython.java",
             JythonJava
                 .replace("__TULIP_VERSION__", version),
+                .replace("__TULIP_JAVA_OPTIONS__", TULIP_JAVA_OPTIONS)
             false
         )
 
