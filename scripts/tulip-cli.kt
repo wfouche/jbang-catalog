@@ -144,8 +144,9 @@ val javaApp: String = """
     //DEPS ch.qos.logback:logback-classic:1.5.18
     //SOURCES HttpUser.java
     //JAVA 21
-    //RUNTIME_OPTIONS __TULIP_JAVA_OPTIONS__
     //PREVIEW
+    //RUNTIME_OPTIONS __TULIP_JAVA_OPTIONS__
+    //COMPILE_OPTIONS -source 21
     
     package io.tulip;
     
