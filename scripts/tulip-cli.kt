@@ -146,7 +146,7 @@ val javaApp: String = """
     //JAVA 21
     //PREVIEW
     //RUNTIME_OPTIONS __TULIP_JAVA_OPTIONS__
-    //COMPILE_OPTIONS -source 21
+    //COMPILE_OPTIONS -g
     
     package io.tulip;
     
