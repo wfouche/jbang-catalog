@@ -170,6 +170,7 @@ val kotlinApp: String = """
     //JAVA 21
     //KOTLIN 2.0.21
     //RUNTIME_OPTIONS __TULIP_JAVA_OPTIONS__
+    //COMPILE_OPTIONS -progressive
     
     package io.tulip
     
@@ -191,7 +192,8 @@ val groovyApp: String = """
     //JAVA 21
     //GROOVY 4.0.26
     //RUNTIME_OPTIONS __TULIP_JAVA_OPTIONS__
-    
+    //COMPILE_OPTIONS --tolerance=5
+
     package io.tulip
     
     import io.github.wfouche.tulip.api.TulipApi
