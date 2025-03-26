@@ -186,15 +186,6 @@ val kotlinApp: String = """
     }
 """.trimIndent()
 
-class App() {
-
-    companion object {
-        @JvmStatic
-        fun main(args: Array<String>) {
-            TulipApi.runTulip("benchmark_config.json")
-        }
-    }
-}
 val groovyApp: String = """
     ///usr/bin/env jbang "${'$'}0" "${'$'}@" ; exit ${'$'}?
     //DEPS io.github.wfouche.tulip:tulip-runtime:__TULIP_VERSION__
