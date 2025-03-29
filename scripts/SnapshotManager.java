@@ -81,11 +81,12 @@ public class SnapshotManager {
 
         // Create the snapshot folder
         String destDir = mainSnapshotDirname + "/" + snapshotId;
-        System.out.println("\nSnapshot folder : " + destDir);
+        System.out.println("\nSnapshot folder:");
+        System.out.println("   " + destDir)
         new File(destDir).mkdir();
 
         // Copy files
-        System.out.println("\nSources files;");
+        System.out.println("\nSources files:");
         List<String> srcFiles = new LinkedList<>();
         srcFiles.add(mainScriptFilename);
         System.out.println("   " + mainScriptFilename);
@@ -101,7 +102,7 @@ public class SnapshotManager {
         }
 
         // Copy files
-        System.out.println("\nSnapshot started.");
+        System.out.println("\nSnapshot started:");
         for (String srcFile : srcFiles) {
             System.out.println("    " + srcFile + " copy " + destDir);
             try {
@@ -123,7 +124,7 @@ public class SnapshotManager {
         }
         sha1HashFile(srcFile, dstFile);
 
-        System.out.println("\nSnapshot files.");
+        System.out.println("\nSnapshot files:");
         String indexFilename = "";
         File destDir_fh = new File(destDir);
         File[] destDirList = destDir_fh.listFiles();
@@ -137,7 +138,7 @@ public class SnapshotManager {
         }
 
         // Display index file
-        System.out.println("\nSnapshot index file.");
+        System.out.println("\nSnapshot index file:");
         System.out.println("   " + indexFilename);
         try (BufferedReader file = new BufferedReader(new FileReader(indexFilename))) {
             String line;
