@@ -82,7 +82,7 @@ public class SnapshotManager {
         // Create the snapshot folder
         String destDir = mainSnapshotDirname + "/" + snapshotId;
         System.out.println("\nSnapshot folder:");
-        System.out.println("   " + destDir)
+        System.out.println("   " + destDir);
         new File(destDir).mkdir();
 
         // Copy files
