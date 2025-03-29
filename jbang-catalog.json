@@ -13,6 +13,9 @@
     "kwrk": {
       "script-ref": "scripts/kwrk.kt"
     },
+    "snapshot-cli": {
+      "script-ref": "scripts/SnapshotManager.java"
+    },
     "tulip-cli": {
       "script-ref": "scripts/tulip-cli.kt"
     }
