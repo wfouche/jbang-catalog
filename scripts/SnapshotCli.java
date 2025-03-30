@@ -20,7 +20,7 @@ public class SnapshotCli {
     private static String appVersion = "__JBANG_SNAPSHOT_ID__/__JBANG_SNAPSHOT_TIMESTAMP__";
 
     private static void displayAppInfo() {
-        String version = "";
+        String version = appVersion;
         if (appVersion.contains("JBANG_SNAPSHOT_ID")) {
             version = "0";
         }
