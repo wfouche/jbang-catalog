@@ -14,7 +14,7 @@ const val appName: String = "tulipt-cli"
 const val appVersion: String = "__JBANG_SNAPSHOT_ID__/__JBANG_SNAPSHOT_TIMESTAMP__"
 
 private fun displayAppInfo() {
-    var version: String = ""
+    var version: String = appVersion
     if (appVersion.contains("JBANG_SNAPSHOT_ID")) {
         version = "0"
     }
