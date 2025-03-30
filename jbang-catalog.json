@@ -10,8 +10,11 @@
     "jython-jpm": {
       "script-ref": "scripts/JythonJpm.java"
     },
-    "kwrk": {
+    "kwrk-dev": {
       "script-ref": "scripts/kwrk.kt"
+    },
+    "kwrk": {
+      "script-ref": "scripts/kwrk/1/kwrk.kt"
     },
     "snapshot-cli-dev": {
       "script-ref": "scripts/SnapshotCli.java"
