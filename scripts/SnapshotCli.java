@@ -9,6 +9,17 @@ import java.util.Arrays;
 
 public class SnapshotCli {
 
+    private static String appName = "snapshot-cli";
+    private static String appVersion = "__JBANG_SNAPSHOT_ID__/__JBANG_SNAPSHOT_TIMESTAMP__";
+
+    private static void displayAppInfo() {
+        String version = "";
+        if (appVersion.contains("JBANG_SNAPSHOT_ID")) {
+            version = "0";
+        }
+        System.out.println(appName + "/" + version);
+    }
+
     private static final String indexFileText = "{\n    \"description\": \"__DESC__\",\n    \"timestamp\": \"__TIMESTAMP__\"\n}\n";
 
     public static void sha1HashFile(String filepath, String outputFilepath) {
@@ -58,6 +69,7 @@ public class SnapshotCli {
         String description = args[1];
         String dateTimestamp = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").format(new Date());
 
+        displayAppInfo();
         System.out.println("\nSource script   : " + mainScriptFilename);
         System.out.println("Description     : " + description);
 
@@ -167,6 +179,32 @@ public class SnapshotCli {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        // Update snapshotted main script file, replace __JBANG_SNAPSHOT_VERSION_INFO__
+        String scriptFilename = destDir + '/' + new File(mainScriptFilename).getName();
+        List<String> lines = new LinkedList<>();
+        try (BufferedReader file = new BufferedReader(new FileReader(scriptFilename))) {
+            String line;
+            String token = "__JBANG_SNAPSHOT_ID__";
+            while ((line = file.readLine()) != null) {
+                if (line.length() > token.length() && line.contains(token)) {
+                    line = line.replace("__JBANG_SNAPSHOT_ID__", snapshotId + "");
+                    line = line.replace("__JBANG_SNAPSHOT_TIMESTAMP__", dateTimestamp);
+                }
+                lines.add(line);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(scriptFilename))) {
+            for (String line : lines) {
+                writer.write(line);
+                writer.newLine(); // Add a newline character after each line
+            }
+        } catch (IOException e) {
+            System.err.println("Error writing to file: " + e.getMessage());
+        }
+
         System.out.println("\nSnapshot done.");
     }
 
