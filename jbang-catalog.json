@@ -16,11 +16,11 @@
     "snapshot-cli": {
       "script-ref": "scripts/SnapshotCli.java"
     },
-    "tulip-cli-dev": {
-      "script-ref": "scripts/tulip-cli.kt"
-    },
     "tulip-cli": {
       "script-ref": "scripts/tulip-cli/1/tulip-cli.kt"
+    },
+    "tulip-cli-dev": {
+      "script-ref": "scripts/tulip-cli.kt"
     }
   },
   "templates": {}
