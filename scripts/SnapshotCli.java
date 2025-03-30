@@ -29,7 +29,7 @@ public class SnapshotCli {
     }
 
     public static List<String> getSources(String scriptFilename) {
-        List<String> sources = new ArrayList<>();
+        List<String> sources = new LinkedList<>();
         try (BufferedReader file = new BufferedReader(new FileReader(scriptFilename))) {
             String line;
             String token = "//SOURCES ";
