@@ -85,12 +85,21 @@ public class SnapshotCli {
         System.out.println("   " + destDir);
         new File(destDir).mkdir();
 
-        // Copy files
-        System.out.println("\nSources files:");
+        // Determine source files
         List<String> srcFiles = new LinkedList<>();
         srcFiles.add(mainScriptFilename);
+        List<String> sources = getSources(mainScriptFilename);
+        if (sources.size() > 0) {
+            System.out.println("\n//SOURCES:");
+            for (String file : sources) {
+                System.out.println("   " + file);
+            }
+        }
+
+        // Display sourced files
+        System.out.println("\nSource files:");
         System.out.println("   " + mainScriptFilename);
-        for (String file : getSources(mainScriptFilename)) {
+        for (String file : sources) {
             String filename;
             if (srcDir != null && srcDir.length() > 0) {
                 filename = Paths.get(srcDir, file).toString();
