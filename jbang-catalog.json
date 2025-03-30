@@ -19,7 +19,7 @@
     "tulip-cli": {
       "script-ref": "scripts/tulip-cli/1/tulip-cli.kt"
     },
-    "tulip-cli-dev": {
+    "tulip-cli:dev": {
       "script-ref": "scripts/tulip-cli.kt"
     }
   },
