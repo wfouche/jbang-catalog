@@ -11,10 +11,10 @@ import java.nio.file.Files
 import java.nio.file.Paths
 
 const val appName: String = "tulipt-cli"
-const val appVersion: String = "2/2025-03-30T20:02:06"
+const val appVersion: String = "2/2025-03-30T20:08:39"
 
 private fun displayAppInfo() {
-    var version: String = ""
+    var version: String = appVersion
     if (appVersion.contains("JBANG_SNAPSHOT_ID")) {
         version = "0"
     }
