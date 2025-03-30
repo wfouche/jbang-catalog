@@ -17,10 +17,10 @@ import com.google.gson.JsonObject;
 public class SnapshotCli {
 
     private static String appName = "snapshot-cli";
-    private static String appVersion = "4/2025-03-30T21:45:15";
+    private static String appVersion = "4/2025-03-30T21:59:19";
 
     private static void displayAppInfo() {
-        String version = "";
+        String version = appVersion;
         if (appVersion.contains("JBANG_SNAPSHOT_ID")) {
             version = "0";
         }
