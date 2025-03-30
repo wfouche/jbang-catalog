@@ -205,11 +205,16 @@ public class SnapshotCli {
         List<String> lines = new LinkedList<>();
         try (BufferedReader file = new BufferedReader(new FileReader(scriptFilename))) {
             String line;
-            String token = "__JBANG_SNAPSHOT_ID__";
+            boolean tokensReplaced = false;
+            String token1 = "__JBANG_SNAPSHOT_ID__";
+            String token2 = "__JBANG_SNAPSHOT_TIMESTAMP__";
             while ((line = file.readLine()) != null) {
-                if (line.length() > token.length() && line.contains(token)) {
-                    line = line.replace("__JBANG_SNAPSHOT_ID__", snapshotId + "");
-                    line = line.replace("__JBANG_SNAPSHOT_TIMESTAMP__", dateTimestamp);
+                if (line.length() > token1.length() && line.contains(token1)) {
+                    if (!tokensReplaced) {
+                        line = line.replace(token1, snapshotId + "");
+                        line = line.replace(token2, dateTimestamp);
+                        tokensReplaced = true;
+                    }
                 }
                 lines.add(line);
             }
