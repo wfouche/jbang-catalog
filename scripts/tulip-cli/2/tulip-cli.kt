@@ -10,8 +10,8 @@ import java.io.IOException
 import java.nio.file.Files
 import java.nio.file.Paths
 
-const val appName: String = "tulipt-cli"
-const val appVersion: String = "2/2025-03-30T20:08:39"
+const val appName: String = "tulip-cli"
+const val appVersion: String = "2/2025-03-30T20:32:57"
 
 private fun displayAppInfo() {
     var version: String = appVersion
