@@ -1,11 +1,18 @@
 ///usr/bin/env jbang "$0" "$@" ; exit $?
 
+//DEPS com.google.code.gson:gson:2.12.1
+
 import java.io.*;
 import java.nio.file.*;
 import java.security.MessageDigest;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.Arrays;
+import java.io.IOException;
+import java.io.FileReader;
+import java.util.Map;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 
 public class SnapshotCli {
 
@@ -18,6 +25,20 @@ public class SnapshotCli {
             version = "0";
         }
         System.out.println(appName + "/" + version);
+    }
+
+    private static String getScriptname(String alias) {
+        System.out.println("\nScript alias    : " + alias);
+        String scriptRef = null;
+        try {
+            FileReader reader = new FileReader("jbang-catalog.json");
+            Gson gson = new Gson();
+            JsonObject jb = gson.fromJson(reader, JsonObject.class);
+            scriptRef =  jb.getAsJsonObject("aliases").getAsJsonObject(alias).get("script-ref").getAsString();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return scriptRef;
     }
 
     private static final String indexFileText = "{\n    \"description\": \"__DESC__\",\n    \"timestamp\": \"__TIMESTAMP__\"\n}\n";
@@ -64,13 +85,12 @@ public class SnapshotCli {
     }
 
     public static void main(String[] args) {
-        String mainScriptFilename = args[0];
+        displayAppInfo();
+        String mainScriptFilename = getScriptname(args[0]);
         String srcDir = new File(mainScriptFilename).getParent();
         String description = args[1];
         String dateTimestamp = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").format(new Date());
-
-        displayAppInfo();
-        System.out.println("\nSource script   : " + mainScriptFilename);
+        System.out.println("Source script   : " + mainScriptFilename);
         System.out.println("Description     : " + description);
 
         String mainSnapshotDirname = mainScriptFilename.substring(0, mainScriptFilename.lastIndexOf('.'));
