@@ -23,7 +23,7 @@
       "script-ref": "scripts/tulip-cli.kt"
     },
     "tulip-cli"     : {
-      "script-ref": "scripts/tulip-cli/1/tulip-cli.kt"
+      "script-ref": "scripts/tulip-cli/2/tulip-cli.kt"
     }
   },
   "templates": {}
