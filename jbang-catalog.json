@@ -17,7 +17,7 @@
       "script-ref": "scripts/SnapshotCli.java"
     },
     "snapshot-cli": {
-      "script-ref": "scripts/SnapshotCli/1/SnapshotCli.java"
+      "script-ref": "scripts/SnapshotCli/2/SnapshotCli.java"
     },
     "tulip-cli-dev": {
       "script-ref": "scripts/tulip-cli.kt"
