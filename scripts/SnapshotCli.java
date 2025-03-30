@@ -7,7 +7,7 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.Arrays;
 
-public class SnapshotManager {
+public class SnapshotCli {
 
     private static final String indexFileText = "{\n    \"description\": \"__DESC__\",\n    \"timestamp\": \"__TIMESTAMP__\"\n}\n";
 
