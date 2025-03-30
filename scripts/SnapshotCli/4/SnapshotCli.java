@@ -17,7 +17,7 @@ import com.google.gson.JsonObject;
 public class SnapshotCli {
 
     private static String appName = "snapshot-cli";
-    private static String appVersion = "4/2025-03-30T21:59:19";
+    private static String appVersion = "4/2025-03-30T23:05:28";
 
     private static void displayAppInfo() {
         String version = appVersion;
@@ -205,11 +205,16 @@ public class SnapshotCli {
         List<String> lines = new LinkedList<>();
         try (BufferedReader file = new BufferedReader(new FileReader(scriptFilename))) {
             String line;
-            String token = "4";
+            boolean tokensReplaced = false;
+            String token1 = "__JBANG_SNAPSHOT_ID__";
+            String token2 = "__JBANG_SNAPSHOT_TIMESTAMP__";
             while ((line = file.readLine()) != null) {
-                if (line.length() > token.length() && line.contains(token)) {
-                    line = line.replace("4", snapshotId + "");
-                    line = line.replace("__JBANG_SNAPSHOT_TIMESTAMP__", dateTimestamp);
+                if (line.length() > token1.length() && line.contains(token1)) {
+                    if (!tokensReplaced) {
+                        line = line.replace(token1, snapshotId + "");
+                        line = line.replace(token2, dateTimestamp);
+                        tokensReplaced = true;
+                    }
                 }
                 lines.add(line);
             }
