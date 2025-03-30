@@ -88,12 +88,22 @@ public class SnapshotCli {
         // Determine source files
         List<String> srcFiles = new LinkedList<>();
         srcFiles.add(mainScriptFilename);
+        boolean sourcesError = false;
         List<String> sources = getSources(mainScriptFilename);
         if (sources.size() > 0) {
             System.out.println("\n//SOURCES:");
             for (String file : sources) {
+                if (file.indexOf(File.separator) != -1) {
+                    sourcesError = true;
+                }
                 System.out.println("   " + file);
             }
+        }
+        if (sourcesError) {
+            System.out.println("\nError: //SOURCES");
+            System.out.println("   All files in sources list should be in the same folder as main script file.");
+            System.out.println("   Exiting.");
+            System.exit(1);
         }
 
         // Display sourced files
