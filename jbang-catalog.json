@@ -13,17 +13,17 @@
     "kwrk": {
       "script-ref": "scripts/kwrk.kt"
     },
-    "snapshot-cli": {
-      "script-ref": "scripts/SnapshotCli/1/SnapshotCli.java"
-    },
     "snapshot-cli-dev": {
       "script-ref": "scripts/SnapshotCli.java"
     },
-    "tulip-cli"     : {
-      "script-ref": "scripts/tulip-cli/1/tulip-cli.kt"
+    "snapshot-cli": {
+      "script-ref": "scripts/SnapshotCli/1/SnapshotCli.java"
     },
     "tulip-cli-dev": {
       "script-ref": "scripts/tulip-cli.kt"
+    },
+    "tulip-cli"     : {
+      "script-ref": "scripts/tulip-cli/1/tulip-cli.kt"
     }
   },
   "templates": {}
