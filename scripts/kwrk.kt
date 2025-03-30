@@ -32,6 +32,17 @@ import java.nio.file.Paths
 
 import java.util.Locale
 
+const val appName: String = "kwrk"
+const val appVersion: String = "__JBANG_SNAPSHOT_ID__/__JBANG_SNAPSHOT_TIMESTAMP__"
+
+private fun displayAppInfo() {
+    var version: String = appVersion
+    if (appVersion.contains("JBANG_SNAPSHOT_ID")) {
+        version = "0"
+    }
+    println(appName + "/" + version + "/" + TulipApi.VERSION)
+}
+
 val benchmarkConfig:String = """
 {
     "actions": {
@@ -161,6 +172,8 @@ class KwrkCli : CliktCommand() {
     private val p_url by option("--url").default("--")
 
     override fun run() {
+        displayAppInfo();
+
         var json = benchmarkConfig
 
         json = json.replace("__P_RATE__", p_rate.toString())
