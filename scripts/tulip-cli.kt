@@ -10,7 +10,7 @@ import java.io.IOException
 import java.nio.file.Files
 import java.nio.file.Paths
 
-const val appName: String = "tulipt-cli"
+const val appName: String = "tulip-cli"
 const val appVersion: String = "__JBANG_SNAPSHOT_ID__/__JBANG_SNAPSHOT_TIMESTAMP__"
 
 private fun displayAppInfo() {
