@@ -28,10 +28,12 @@ public class SnapshotCli {
     }
 
     private static String getScriptname(String alias) {
-        System.out.println("\nScript alias    : " + alias);
+        String catalog = "jbang-catalog.json";
+        System.out.println("\nJBang catalog   : " + catalog);
+        System.out.println("Script alias    : " + alias);
         String scriptRef = null;
         try {
-            FileReader reader = new FileReader("jbang-catalog.json");
+            FileReader reader = new FileReader(catalog);
             Gson gson = new Gson();
             JsonObject jb = gson.fromJson(reader, JsonObject.class);
             scriptRef =  jb.getAsJsonObject("aliases").getAsJsonObject(alias).get("script-ref").getAsString();
@@ -93,6 +95,9 @@ public class SnapshotCli {
         System.out.println("Source script   : " + mainScriptFilename);
         System.out.println("Description     : " + description);
 
+        if (description.equals("--")) {
+            System.exit(1);
+        }
         String mainSnapshotDirname = mainScriptFilename.substring(0, mainScriptFilename.lastIndexOf('.'));
 
         // Create the snapshot folder if required
