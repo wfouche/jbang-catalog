@@ -96,7 +96,8 @@ public class SnapshotCli {
         System.out.println("Description     : " + description);
 
         if (description.equals("--")) {
-            System.exit(1);
+            System.out.println("\nExiting without snapshotting file " + mainScriptFilename);
+            System.exit(0);
         }
         String mainSnapshotDirname = mainScriptFilename.substring(0, mainScriptFilename.lastIndexOf('.'));
 
