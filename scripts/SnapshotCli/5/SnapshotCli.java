@@ -17,7 +17,7 @@ import com.google.gson.JsonObject;
 public class SnapshotCli {
 
     private static String appName = "snapshot-cli";
-    private static String appVersion = "5/2025-03-31T08:18:04";
+    private static String appVersion = "5/2025-03-31T10:32:38";
 
     private static void displayAppInfo() {
         String version = appVersion;
@@ -236,7 +236,11 @@ public class SnapshotCli {
             System.err.println("Error writing to file: " + e.getMessage());
         }
 
-        System.out.println("\nSnapshot done.");
+        System.out.println("\nSnapshot done:");
+        System.out.println(
+                "   " + mainScriptFilename
+                + " --> " +
+                Paths.get(destDir, Paths.get(mainScriptFilename).getFileName().toString()));
     }
 
 }
