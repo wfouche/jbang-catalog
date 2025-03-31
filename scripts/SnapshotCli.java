@@ -161,7 +161,7 @@ public class SnapshotCli {
         // Copy files
         System.out.println("\nSnapshot started:");
         for (String srcFile : srcFiles) {
-            System.out.println("    " + srcFile + " copy " + destDir);
+            System.out.println("   " + srcFile + " copy " + destDir);
             try {
                 Files.copy(Paths.get(srcFile), Paths.get(destDir, Paths.get(srcFile).getFileName().toString()), StandardCopyOption.REPLACE_EXISTING);
             } catch (IOException e) {
