@@ -17,7 +17,7 @@ import com.google.gson.JsonObject;
 public class SnapshotCli {
 
     private static String appName = "snapshot-cli";
-    private static String appVersion = "5/2025-03-31T10:32:38";
+    private static String appVersion = "5/2025-03-31T10:41:31";
 
     private static void displayAppInfo() {
         String version = appVersion;
@@ -54,7 +54,7 @@ public class SnapshotCli {
             try (BufferedWriter outF = new BufferedWriter(new FileWriter(outputFilepath))) {
                 outF.write(hashValue);
             }
-            System.out.println("    " + filepath + " sha1 " + outputFilepath);
+            System.out.println("   " + filepath + " sha1 " + outputFilepath);
         } catch (FileNotFoundException e) {
             System.out.println("Error: File not found at " + filepath);
         } catch (Exception e) {
@@ -161,7 +161,7 @@ public class SnapshotCli {
         // Copy files
         System.out.println("\nSnapshot started:");
         for (String srcFile : srcFiles) {
-            System.out.println("    " + srcFile + " copy " + destDir);
+            System.out.println("   " + srcFile + " copy " + destDir);
             try {
                 Files.copy(Paths.get(srcFile), Paths.get(destDir, Paths.get(srcFile).getFileName().toString()), StandardCopyOption.REPLACE_EXISTING);
             } catch (IOException e) {
@@ -173,7 +173,7 @@ public class SnapshotCli {
 
         String srcFile = Paths.get(destDir, "00index.json").toString();
         String dstFile = srcFile + ".sha1";
-        System.out.println("    " + srcFile + " create");
+        System.out.println("   " + srcFile + " create");
         try (BufferedWriter idxFile = new BufferedWriter(new FileWriter(srcFile))) {
             idxFile.write(indexFileText.replace("__DESC__", description).replace("__TIMESTAMP__", dateTimestamp));
         } catch (IOException e) {
