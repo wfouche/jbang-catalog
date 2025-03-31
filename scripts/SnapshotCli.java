@@ -206,7 +206,7 @@ public class SnapshotCli {
             e.printStackTrace();
         }
 
-        // Update snapshotted main script file, replace __JBANG_SNAPSHOT_VERSION_INFO__
+        // Update snapshotted main script file, replace __JBANG_....__ tags.
         String scriptFilename = destDir + '/' + new File(mainScriptFilename).getName();
         List<String> lines = new LinkedList<>();
         try (BufferedReader file = new BufferedReader(new FileReader(scriptFilename))) {
