@@ -54,7 +54,7 @@ public class SnapshotCli {
             try (BufferedWriter outF = new BufferedWriter(new FileWriter(outputFilepath))) {
                 outF.write(hashValue);
             }
-            System.out.println("    " + filepath + " sha1 " + outputFilepath);
+            System.out.println("   " + filepath + " sha1 " + outputFilepath);
         } catch (FileNotFoundException e) {
             System.out.println("Error: File not found at " + filepath);
         } catch (Exception e) {
@@ -173,7 +173,7 @@ public class SnapshotCli {
 
         String srcFile = Paths.get(destDir, "00index.json").toString();
         String dstFile = srcFile + ".sha1";
-        System.out.println("    " + srcFile + " create");
+        System.out.println("   " + srcFile + " create");
         try (BufferedWriter idxFile = new BufferedWriter(new FileWriter(srcFile))) {
             idxFile.write(indexFileText.replace("__DESC__", description).replace("__TIMESTAMP__", dateTimestamp));
         } catch (IOException e) {
