@@ -236,7 +236,11 @@ public class SnapshotCli {
             System.err.println("Error writing to file: " + e.getMessage());
         }
 
-        System.out.println("\nSnapshot done.");
+        System.out.println("\nSnapshot done:");
+        System.out.println(
+                "   " + mainScriptFilename
+                + " --> " +
+                Paths.get(destDir, Paths.get(mainScriptFilename).getFileName().toString()));
     }
 
 }
