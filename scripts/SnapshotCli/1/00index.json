@@ -1,4 +1,4 @@
 {
-    "description": "Display source and dest script filenames",
-    "timestamp": "2025-03-31T10:41:31"
+    "description": "Fixed path separator on Windows",
+    "timestamp": "2025-04-01T10:45:19"
 }
