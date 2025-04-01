@@ -19,11 +19,12 @@ public class SnapshotCli {
     private static String appName = "snapshot-cli";
     private static String appVersion = "__JBANG_SNAPSHOT_ID__/__JBANG_SNAPSHOT_TIMESTAMP__";
 
+    private static String appVersionDev = "2025-04-01T14:21:54";
+
     private static void displayAppInfo() {
         String version = appVersion;
         if (appVersion.contains("JBANG_SNAPSHOT_ID")) {
-            version = "0";
-        }
+            version = "0" + "/" + appVersionDev;
         System.out.println(appName + "/" + version);
     }
 
