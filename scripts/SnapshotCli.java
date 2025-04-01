@@ -40,6 +40,13 @@ public class SnapshotCli {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        if (scriptRef != null) {
+            if (File.separatorChar != '/') {
+                if (scriptRef.contains("/")) {
+                    scriptRef = scriptRef.replace('/', File.separatorChar);
+                }
+            }
+        }
         return scriptRef;
     }
 
