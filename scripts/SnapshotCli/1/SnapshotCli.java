@@ -179,7 +179,7 @@ public class SnapshotCli {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        sha1HashFile(srcFile, dstFile);
+        //sha1HashFile(srcFile, dstFile);
 
         System.out.println("\nSnapshot files:");
         String indexFilename = "";
