@@ -1,4 +1,4 @@
 {
-    "description": "Fixed path separator on Windows",
-    "timestamp": "2025-04-01T10:45:19"
+    "description": "Support alias or script filename",
+    "timestamp": "2025-04-01T11:18:37"
 }

@@ -17,7 +17,7 @@ import com.google.gson.JsonObject;
 public class SnapshotCli {
 
     private static String appName = "snapshot-cli";
-    private static String appVersion = "1/2025-04-01T10:45:19";
+    private static String appVersion = "1/2025-04-01T11:18:37";
 
     private static void displayAppInfo() {
         String version = appVersion;
@@ -32,13 +32,18 @@ public class SnapshotCli {
         System.out.println("\nJBang catalog   : " + catalog);
         System.out.println("Script alias    : " + alias);
         String scriptRef = null;
-        try {
-            FileReader reader = new FileReader(catalog);
-            Gson gson = new Gson();
-            JsonObject jb = gson.fromJson(reader, JsonObject.class);
-            scriptRef =  jb.getAsJsonObject("aliases").getAsJsonObject(alias).get("script-ref").getAsString();
-        } catch (IOException e) {
-            e.printStackTrace();
+        Path path = new File(alias).toPath();
+        if (Files.exists(path)) {
+            scriptRef = alias;
+        } else {
+            try {
+                FileReader reader = new FileReader(catalog);
+                Gson gson = new Gson();
+                JsonObject jb = gson.fromJson(reader, JsonObject.class);
+                scriptRef = jb.getAsJsonObject("aliases").getAsJsonObject(alias).get("script-ref").getAsString();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
         if (scriptRef != null) {
             if (File.separatorChar != '/') {
