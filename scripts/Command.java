@@ -13,7 +13,6 @@ public class Command {
         System.out.println(appName + "/" + version);
     }   
 
-
     public static void main(String[] args) {
 	displayAppInfo();
 
