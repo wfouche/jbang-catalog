@@ -3,12 +3,23 @@
 //JAVA 21
 //KOTLIN 2.0.21
 
-import io.github.wfouche.tulip.api.TulipApi.VERSION
 import io.github.wfouche.tulip.api.TulipApi.NUM_ACTIONS
+import io.github.wfouche.tulip.api.TulipApi.VERSION
 import java.io.FileWriter
 import java.io.IOException
 import java.nio.file.Files
 import java.nio.file.Paths
+
+const val appName: String = "tulip-cli"
+const val appVersion: String = "1/2025-03-30T20:32:57"
+
+private fun displayAppInfo() {
+    var version: String = appVersion
+    if (appVersion.contains("JBANG_SNAPSHOT_ID")) {
+        version = "0"
+    }
+    println(appName + "/" + version + "/" + VERSION)
+}
 
 fun writeToFile(path: String, content: String, append: Boolean) {
     try {
@@ -814,6 +825,8 @@ val JythonBenchmark: String = """
 
 fun main(args: Array<String>) {
 
+    displayAppInfo()
+
     val osid: String = "${NUM_ACTIONS-1}"
     var lang: String = "Java"
     var protocol: String = "http"
@@ -845,9 +858,9 @@ fun main(args: Array<String>) {
     }
 
     if (lang == "Scala") {
-        println("tulip-cli ($VERSION): creating a " + lang + " benchmark with Scala-CLI support")
+        println("\nCreating a " + lang + " benchmark with Scala-CLI support")
     } else {
-        println("tulip-cli ($VERSION): creating a " + lang + " benchmark with JBang support")
+        println("\nCreating a " + lang + " benchmark with JBang support")
     }
 
     var avgAPS: String = "10.0"
