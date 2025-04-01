@@ -118,7 +118,7 @@ public class SnapshotCli {
         int snapshotId = intSet.isEmpty() ? 1 : Collections.max(intSet) + 1;
 
         // Create the snapshot folder
-        String destDir = mainSnapshotDirname + "/" + snapshotId;
+        String destDir = Paths.get(mainSnapshotDirname, "" + snapshotId).toString();
         System.out.println("\nSnapshot folder:");
         System.out.println("   " + destDir);
         new File(destDir).mkdir();
@@ -207,7 +207,7 @@ public class SnapshotCli {
         }
 
         // Update snapshotted main script file, replace __JBANG_....__ tags.
-        String scriptFilename = destDir + '/' + new File(mainScriptFilename).getName();
+        String scriptFilename = Paths.get(destDir, new File(mainScriptFilename).getName()).toString();
         List<String> lines = new LinkedList<>();
         try (BufferedReader file = new BufferedReader(new FileReader(scriptFilename))) {
             String line;
