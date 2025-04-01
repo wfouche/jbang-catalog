@@ -167,8 +167,8 @@ public class SnapshotCli {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            String sha1DestFile = destDir + '/' + new File(srcFile).getName() + ".sha1";
-            sha1HashFile(srcFile, sha1DestFile);
+            //String sha1DestFile = destDir + '/' + new File(srcFile).getName() + ".sha1";
+            //sha1HashFile(srcFile, sha1DestFile);
         }
 
         String srcFile = Paths.get(destDir, "00index.json").toString();
