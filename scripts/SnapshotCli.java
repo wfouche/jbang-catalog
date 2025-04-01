@@ -45,22 +45,22 @@ public class SnapshotCli {
 
     private static final String indexFileText = "{\n    \"description\": \"__DESC__\",\n    \"timestamp\": \"__TIMESTAMP__\"\n}\n";
 
-    public static void sha1HashFile(String filepath, String outputFilepath) {
-        try {
-            MessageDigest sha1 = MessageDigest.getInstance("SHA-1");
-            byte[] fileBytes = Files.readAllBytes(Paths.get(filepath));
-            sha1.update(fileBytes);
-            String hashValue = bytesToHex(sha1.digest());
-            try (BufferedWriter outF = new BufferedWriter(new FileWriter(outputFilepath))) {
-                outF.write(hashValue);
-            }
-            System.out.println("   " + filepath + " sha1 " + outputFilepath);
-        } catch (FileNotFoundException e) {
-            System.out.println("Error: File not found at " + filepath);
-        } catch (Exception e) {
-            System.out.println("An error occurred: " + e.getMessage());
-        }
-    }
+//    public static void sha1HashFile(String filepath, String outputFilepath) {
+//        try {
+//            MessageDigest sha1 = MessageDigest.getInstance("SHA-1");
+//            byte[] fileBytes = Files.readAllBytes(Paths.get(filepath));
+//            sha1.update(fileBytes);
+//            String hashValue = bytesToHex(sha1.digest());
+//            try (BufferedWriter outF = new BufferedWriter(new FileWriter(outputFilepath))) {
+//                outF.write(hashValue);
+//            }
+//            System.out.println("   " + filepath + " sha1 " + outputFilepath);
+//        } catch (FileNotFoundException e) {
+//            System.out.println("Error: File not found at " + filepath);
+//        } catch (Exception e) {
+//            System.out.println("An error occurred: " + e.getMessage());
+//        }
+//    }
 
     public static List<String> getSources(String scriptFilename) {
         List<String> sources = new LinkedList<>();
@@ -167,8 +167,8 @@ public class SnapshotCli {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            String sha1DestFile = destDir + '/' + new File(srcFile).getName() + ".sha1";
-            sha1HashFile(srcFile, sha1DestFile);
+            //String sha1DestFile = destDir + '/' + new File(srcFile).getName() + ".sha1";
+            //sha1HashFile(srcFile, sha1DestFile);
         }
 
         String srcFile = Paths.get(destDir, "00index.json").toString();
@@ -179,7 +179,7 @@ public class SnapshotCli {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        sha1HashFile(srcFile, dstFile);
+        //sha1HashFile(srcFile, dstFile);
 
         System.out.println("\nSnapshot files:");
         String indexFilename = "";
