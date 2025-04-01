@@ -17,7 +17,7 @@ import com.google.gson.JsonObject;
 public class SnapshotCli {
 
     private static String appName = "snapshot-cli";
-    private static String appVersion = "1/2025-03-31T10:41:31";
+    private static String appVersion = "1/2025-04-01T10:45:19";
 
     private static void displayAppInfo() {
         String version = appVersion;
@@ -40,27 +40,34 @@ public class SnapshotCli {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        if (scriptRef != null) {
+            if (File.separatorChar != '/') {
+                if (scriptRef.contains("/")) {
+                    scriptRef = scriptRef.replace('/', File.separatorChar);
+                }
+            }
+        }
         return scriptRef;
     }
 
     private static final String indexFileText = "{\n    \"description\": \"__DESC__\",\n    \"timestamp\": \"__TIMESTAMP__\"\n}\n";
 
-    public static void sha1HashFile(String filepath, String outputFilepath) {
-        try {
-            MessageDigest sha1 = MessageDigest.getInstance("SHA-1");
-            byte[] fileBytes = Files.readAllBytes(Paths.get(filepath));
-            sha1.update(fileBytes);
-            String hashValue = bytesToHex(sha1.digest());
-            try (BufferedWriter outF = new BufferedWriter(new FileWriter(outputFilepath))) {
-                outF.write(hashValue);
-            }
-            System.out.println("   " + filepath + " sha1 " + outputFilepath);
-        } catch (FileNotFoundException e) {
-            System.out.println("Error: File not found at " + filepath);
-        } catch (Exception e) {
-            System.out.println("An error occurred: " + e.getMessage());
-        }
-    }
+//    public static void sha1HashFile(String filepath, String outputFilepath) {
+//        try {
+//            MessageDigest sha1 = MessageDigest.getInstance("SHA-1");
+//            byte[] fileBytes = Files.readAllBytes(Paths.get(filepath));
+//            sha1.update(fileBytes);
+//            String hashValue = bytesToHex(sha1.digest());
+//            try (BufferedWriter outF = new BufferedWriter(new FileWriter(outputFilepath))) {
+//                outF.write(hashValue);
+//            }
+//            System.out.println("   " + filepath + " sha1 " + outputFilepath);
+//        } catch (FileNotFoundException e) {
+//            System.out.println("Error: File not found at " + filepath);
+//        } catch (Exception e) {
+//            System.out.println("An error occurred: " + e.getMessage());
+//        }
+//    }
 
     public static List<String> getSources(String scriptFilename) {
         List<String> sources = new LinkedList<>();
@@ -118,7 +125,7 @@ public class SnapshotCli {
         int snapshotId = intSet.isEmpty() ? 1 : Collections.max(intSet) + 1;
 
         // Create the snapshot folder
-        String destDir = mainSnapshotDirname + "/" + snapshotId;
+        String destDir = Paths.get(mainSnapshotDirname, "" + snapshotId).toString();
         System.out.println("\nSnapshot folder:");
         System.out.println("   " + destDir);
         new File(destDir).mkdir();
@@ -206,8 +213,8 @@ public class SnapshotCli {
             e.printStackTrace();
         }
 
-        // Update snapshotted main script file, replace __JBANG_SNAPSHOT_VERSION_INFO__
-        String scriptFilename = destDir + '/' + new File(mainScriptFilename).getName();
+        // Update snapshotted main script file, replace __JBANG_....__ tags.
+        String scriptFilename = Paths.get(destDir, new File(mainScriptFilename).getName()).toString();
         List<String> lines = new LinkedList<>();
         try (BufferedReader file = new BufferedReader(new FileReader(scriptFilename))) {
             String line;
