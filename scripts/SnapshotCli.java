@@ -55,6 +55,17 @@ public class SnapshotCli {
         return scriptRef;
     }
 
+    private static boolean deleteDirectory(File directoryToBeDeleted) {
+        File[] allContents = directoryToBeDeleted.listFiles();
+        if (allContents != null) {
+            for (File file : allContents) {
+                deleteDirectory(file);
+            }
+        }
+        System.out.println("   Delete " + directoryToBeDeleted.toString());
+        return directoryToBeDeleted.delete();
+    }
+
     private static final String indexFileText = "{\n    \"description\": \"__DESC__\",\n    \"timestamp\": \"__TIMESTAMP__\"\n}\n";
 
 //    public static void sha1HashFile(String filepath, String outputFilepath) {
@@ -143,6 +154,14 @@ public class SnapshotCli {
         String destDir = Paths.get(mainSnapshotDirname, "" + snapshotId).toString();
         System.out.println("\nSnapshot folder:");
         System.out.println("   " + destDir);
+        // delete destDir, if it exists -> snapshot will be overwritten
+        {
+            File file = new File(destDir);
+            if (file.isDirectory()) {
+                System.out.println("");
+                deleteDirectory(file);
+            }
+        }
         new File(destDir).mkdir();
 
         // Determine source files
