@@ -17,7 +17,7 @@ import com.google.gson.JsonObject;
 public class SnapshotCli {
 
     private static String appName = "snapshot-cli";
-    private static String appVersion = "1/2025-04-01T11:18:37";
+    private static String appVersion = "1/2025-04-01T12:42:59";
 
     private static void displayAppInfo() {
         String version = appVersion;
@@ -106,6 +106,9 @@ public class SnapshotCli {
         String dateTimestamp = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").format(new Date());
         System.out.println("Source script   : " + mainScriptFilename);
         System.out.println("Description     : " + description);
+        if (args.length == 3) {
+            System.out.println("Snapshot Id     : " + args[2]);
+        }
 
         if (description.equals("--")) {
             System.out.println("\nExiting without snapshotting file " + mainScriptFilename);
@@ -120,14 +123,21 @@ public class SnapshotCli {
         }
 
         // Calculate the next snapshotId to be used
-        File[] dirList = snapshotDir.listFiles();
-        Set<Integer> intSet = new HashSet<>();
-        if (dirList != null) {
-            for (File dirname : dirList) {
-                intSet.add(Integer.parseInt(dirname.getName()));
+        int snapshotId = -1;
+        if (args.length == 3) {
+            // The the id provided on the command-line
+            // jbang run snapshot-cli@wfouche  <alias/script-file> <message> <snapshot-id>
+            snapshotId = Integer.parseInt(args[2]);
+        } else {
+            File[] dirList = snapshotDir.listFiles();
+            Set<Integer> intSet = new HashSet<>();
+            if (dirList != null) {
+                for (File dirname : dirList) {
+                    intSet.add(Integer.parseInt(dirname.getName()));
+                }
             }
+            snapshotId = intSet.isEmpty() ? 1 : Collections.max(intSet) + 1;
         }
-        int snapshotId = intSet.isEmpty() ? 1 : Collections.max(intSet) + 1;
 
         // Create the snapshot folder
         String destDir = Paths.get(mainSnapshotDirname, "" + snapshotId).toString();
