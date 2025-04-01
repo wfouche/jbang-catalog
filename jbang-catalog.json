@@ -7,6 +7,12 @@
     "clojure": {
       "script-ref": "scripts/Clojure.java"
     },
+    "command-dev": {
+      "script-ref": "scripts/Command.java"
+    },
+    "command": {
+      "script-ref": "scripts/Command/1/Command.java"
+    },
     "jython-jpm": {
       "script-ref": "scripts/JythonJpm.java"
     },
