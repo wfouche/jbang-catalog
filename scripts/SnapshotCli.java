@@ -25,6 +25,7 @@ public class SnapshotCli {
         String version = appVersion;
         if (appVersion.contains("JBANG_SNAPSHOT_ID")) {
             version = "0" + "/" + appVersionDev;
+        }
         System.out.println(appName + "/" + version);
     }
 
