@@ -16,7 +16,7 @@ const val appVersion: String = "__JBANG_SNAPSHOT_ID__/__JBANG_SNAPSHOT_TIMESTAMP
 private fun displayAppInfo() {
     var version: String = appVersion
     if (appVersion.contains("JBANG_SNAPSHOT_ID")) {
-        version = "0"
+        version = "0/2025-04-02T19:48:30"
     }
     println(appName + "/" + version + "/" + VERSION)
 }
@@ -281,13 +281,20 @@ val javaUser: String = """
     
                 var url = getUserParamValue("protocol") + "://" + getUserParamValue("host");
                 logger.info("url=" + url);
-    
+
+                debug = Boolean.valueOf(getUserParamValue("debug"));
+                if (debug) {
+                   disableSSLValidation();
+                   System.out.println("debug: disable SSL cert checking");
+                } else {
+                   System.out.println("debug: enable SSL cert checking");
+                }
+
                 client = RestClient.builder()
                     .requestFactory(factory)
                     .baseUrl(url)
                     .build();
     
-                debug = Boolean.valueOf(getUserParamValue("debug"));
             }
             return true;
         }
@@ -327,6 +334,36 @@ val javaUser: String = """
             }
             return rc;
         }
+        
+          public void disableSSLValidation() throws Exception {
+            final SSLContext sslContext = SSLContext.getInstance("TLS");
+    
+            sslContext.init(
+                null,
+                new TrustManager[] {
+                  new X509TrustManager() {
+                    @Override
+                    public void checkClientTrusted(X509Certificate[] x509Certificates, String s) {}
+    
+                    @Override
+                    public void checkServerTrusted(X509Certificate[] x509Certificates, String s) {}
+    
+                    @Override
+                    public X509Certificate[] getAcceptedIssuers() {
+                      return new X509Certificate[0];
+                    }
+                  }
+                },
+                null);
+    
+            HttpsURLConnection.setDefaultSSLSocketFactory(sslContext.getSocketFactory());
+            HttpsURLConnection.setDefaultHostnameVerifier(
+                new HostnameVerifier() {
+                  public boolean verify(String hostname, SSLSession session) {
+                    return true;
+                  }
+                });
+          }
 
         // RestClient object
         private static RestClient client;
