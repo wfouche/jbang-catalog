@@ -255,6 +255,8 @@ val javaUser: String = """
     import org.springframework.http.client.SimpleClientHttpRequestFactory;
     import org.slf4j.Logger;
     import org.slf4j.LoggerFactory;
+    import java.security.cert.X509Certificate;
+    import javax.net.ssl.*;
 
     public class HttpUser extends TulipUser {
 
