@@ -16,7 +16,7 @@ const val appVersion: String = "__JBANG_SNAPSHOT_ID__/__JBANG_SNAPSHOT_TIMESTAMP
 private fun displayAppInfo() {
     var version: String = appVersion
     if (appVersion.contains("JBANG_SNAPSHOT_ID")) {
-        version = "0/2025-04-03T21:05:57"
+        version = "0/2025-04-03T21:58:57"
     }
     println(appName + "/" + version + "/" + VERSION)
 }
@@ -339,8 +339,6 @@ val kotlinUser: String = """
             
         // RestClient object
         companion object {
-            private lateinit var client: RestClient
-            private var debug: Boolean = false
             private val logger = LoggerFactory.getLogger(KotlinHttpUser::class.java)
         }
     }
