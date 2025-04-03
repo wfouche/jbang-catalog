@@ -106,11 +106,13 @@ fun writeToFile(path: String, content: String, append: Boolean) {
 class KwrkHttpUser(userId: Int, threadId: Int) : HttpUser(userId, threadId) {
 
     override fun onStart(): Boolean {
-        super.onStart();
-        val h: String = getUserParamValue("httpHeader")
-        val L = h.split(":")
-        http_header_key = L[0].trim()
-        http_header_val = L[1].trim()
+        if (userId == 0) {
+            super.onStart();
+            val h: String = getUserParamValue("httpHeader")
+            val L = h.split(":")
+            http_header_key = L[0].trim()
+            http_header_val = L[1].trim()
+        }
         return true
     }
 
