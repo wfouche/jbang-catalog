@@ -137,7 +137,7 @@ class KwrkHttpUser(userId: Int, threadId: Int) : HttpUser(userId, threadId) {
     // RestClient object
     companion object {
         private lateinit var restClient: RestClient
-        private val logger = LoggerFactory.getLogger(HttpUser::class.java)
+        private val logger = LoggerFactory.getLogger(KwrkHttpUser::class.java)
         private lateinit var http_header_key: String
         private lateinit var http_header_val: String
     }
