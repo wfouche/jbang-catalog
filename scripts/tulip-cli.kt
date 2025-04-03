@@ -602,11 +602,7 @@ val JythonBenchmark: String = """
     import io.github.wfouche.tulip.user.HttpUser as HttpUser
     import io.github.wfouche.tulip.api.TulipUserFactory as TulipUserFactory
     import io.github.wfouche.tulip.api.TulipApi as TulipApi
-    import org.springframework.web.client.RestClient as RestClient
-    import org.springframework.web.client.RestClientException as RestClientException
-    import org.springframework.http.client.SimpleClientHttpRequestFactory as SimpleClientHttpRequestFactory
     import java.util.concurrent.ThreadLocalRandom as ThreadLocalRandom
-    import java.lang.String
         
     class JythonHttpUser(HttpUser):
     
@@ -620,34 +616,16 @@ val JythonBenchmark: String = """
             return True
     
         def action1(self):
-            rc = False
-            try:
-                id = ThreadLocalRandom.current().nextInt(100) + 1
-                rsp = self.restClient().get().uri("/posts/{id}", id).retrieve().body(java.lang.String)
-                rc = (rsp is not None and len(rsp) > 2)
-            except RestClientException:
-                pass
-            return rc
+            id = ThreadLocalRandom.current().nextInt(100) + 1
+            return self.http_GET("/posts/{id}", id)
     
         def action2(self):
-            rc = False
-            try:
-                id = ThreadLocalRandom.current().nextInt(500) + 1
-                rsp = self.restClient().get().uri("/comments/{id}", id).retrieve().body(java.lang.String)
-                rc = (rsp is not None and len(rsp) > 2)
-            except RestClientException:
-                pass
-            return rc
+            id = ThreadLocalRandom.current().nextInt(500) + 1
+            return self.http_GET("/comments/{id}", id)
     
         def action3(self):
-            rc = False
-            try:
-                id = ThreadLocalRandom.current().nextInt(200) + 1
-                rsp = self.restClient().get().uri("/todos/{id}", id).retrieve().body(java.lang.String)
-                rc = (rsp is not None and len(rsp) > 2)
-            except RestClientException:
-                pass
-            return rc
+            id = ThreadLocalRandom.current().nextInt(200) + 1
+            return self.http_GET("/todos/{id}", id)
     
         def onStop(self):
             return True
