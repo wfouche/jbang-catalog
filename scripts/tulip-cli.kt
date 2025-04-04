@@ -617,15 +617,15 @@ val JythonBenchmark: String = """
     
         def action1(self):
             id = ThreadLocalRandom.current().nextInt(100) + 1
-            return not(self.http_GET("/posts/{id}", id).isEmpty())
+            return len(self.http_GET("/posts/{id}", id)) > 0
     
         def action2(self):
             id = ThreadLocalRandom.current().nextInt(500) + 1
-            return not(self.http_GET("/comments/{id}", id).isEmpty())
+            return len(self.http_GET("/comments/{id}", id)) > 0
     
         def action3(self):
             id = ThreadLocalRandom.current().nextInt(200) + 1
-            return not(self.http_GET("/todos/{id}", id).isEmpty())
+            return len(self.http_GET("/todos/{id}", id)) > 0
     
         def onStop(self):
             return True
