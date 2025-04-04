@@ -270,19 +270,19 @@ val javaUser: String = """
         // Action 1: GET /posts/{id}
         public boolean action1() {
             int id = ThreadLocalRandom.current().nextInt(100)+1;
-            return http_GET("/posts/{id}", id);
+            return !http_GET("/posts/{id}", id).isEmpty();
         }
 
         // Action 2: GET /comments/{id}
         public boolean action2() {
             int id = ThreadLocalRandom.current().nextInt(500)+1;
-            return http_GET("/comments/{id}", id);
+            return !http_GET("/comments/{id}", id).isEmpty();
         }
 
         // Action 3: GET /todos/{id}
         public boolean action3() {
             int id = ThreadLocalRandom.current().nextInt(200)+1;
-            return http_GET("/todos/{id}", id);
+            return !http_GET("/todos/{id}", id).isEmpty();
         }
 
         public boolean onStop() {
@@ -318,19 +318,19 @@ val kotlinUser: String = """
         // Action 1: GET /posts/{id}
         override fun action1(): Boolean {
             val id: Int = ThreadLocalRandom.current().nextInt(100)+1
-            return http_GET("/posts/{id}", id)
+            return !http_GET("/posts/{id}", id).isEmpty()
         }
     
         // Action 2: GET /comments/{id}
         override fun action2(): Boolean {
             val id: Int = ThreadLocalRandom.current().nextInt(500)+1
-            return http_GET("/comments/{id}", id)
+            return !http_GET("/comments/{id}", id).isEmpty()
         }
     
         // Action 3: GET /todos/{id}
         override fun action3(): Boolean {
             val id: Int = ThreadLocalRandom.current().nextInt(200)+1
-            return http_GET("/todos/{id}", id)
+            return !http_GET("/todos/{id}", id).isEmpty()
         }
     
         override fun onStop(): Boolean {
@@ -370,19 +370,19 @@ val groovyUser = """
         // Action 1: GET /posts/{id}
         boolean action1() {
             int id = ThreadLocalRandom.current().nextInt(100) + 1
-            return http_GET("/posts/{id}", id)            
+            return !http_GET("/posts/{id}", id).isEmpty()            
         }
     
         // Action 2: GET /comments/{id}
         boolean action2() {
             int id = ThreadLocalRandom.current().nextInt(500) + 1
-            return http_GET("/comments/{id}", id)
+            return !http_GET("/comments/{id}", id).isEmpty()
         }
     
         // Action 3: GET /todos/{id}
         boolean action3() {
             int id = ThreadLocalRandom.current().nextInt(200) + 1
-            return http_GET("/todos/{id}", id)
+            return !http_GET("/todos/{id}", id).isEmpty()
         }
     
         boolean onStop() {
@@ -417,19 +417,19 @@ val scalaUser: String = """
       // Action 1: GET /posts/{id}
       override def action1(): Boolean = {
         val id = ThreadLocalRandom.current().nextInt(100) + 1
-        http_GET("/posts/{id}", id)
+        !http_GET("/posts/{id}", id).isEmpty()
       }
     
       // Action 2: GET /comments/{id}
       override def action2(): Boolean = {
         val id = ThreadLocalRandom.current().nextInt(500) + 1
-        http_GET("/comments/{id}", id)
+        !http_GET("/comments/{id}", id).isEmpty()
       }
     
       // Action 3: GET /todos/{id}
       override def action3(): Boolean = {
         val id = ThreadLocalRandom.current().nextInt(200) + 1
-        http_GET("/todos/{id}", id)
+        !http_GET("/todos/{id}", id).isEmpty()
       }
     
       override def onStop(): Boolean = true
@@ -617,15 +617,15 @@ val JythonBenchmark: String = """
     
         def action1(self):
             id = ThreadLocalRandom.current().nextInt(100) + 1
-            return self.http_GET("/posts/{id}", id)
+            return not(self.http_GET("/posts/{id}", id).isEmpty())
     
         def action2(self):
             id = ThreadLocalRandom.current().nextInt(500) + 1
-            return self.http_GET("/comments/{id}", id)
+            return not(self.http_GET("/comments/{id}", id).isEmpty())
     
         def action3(self):
             id = ThreadLocalRandom.current().nextInt(200) + 1
-            return self.http_GET("/todos/{id}", id)
+            return not(self.http_GET("/todos/{id}", id).isEmpty())
     
         def onStop(self):
             return True
