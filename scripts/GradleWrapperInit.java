@@ -116,8 +116,10 @@ public class GradleWrapperInit {
                 String os = System.getProperty("os.name").toLowerCase();
                 if (os.contains("win")) {
                     commandList.add("gradlew.bat");
+                    commandList.add("--no-daemon");
                 } else {
                     commandList.add("./gradlew");
+                    commandList.add("--no-daemon");
                 }
                 commandList.add("wrapper");
                 commandList.add("--gradle-version");
