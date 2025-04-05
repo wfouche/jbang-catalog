@@ -102,15 +102,15 @@ public class GradleWrapperInit {
                 Files.setPosixFilePermissions(gradlew.toPath(), perms);
             }
 
-            if (!isWindows) {
-                String cmd = "./gradlew wrapper --gradle-version 8.9";
-                out.println(cmd);
-                Runtime.getRuntime().exec(cmd);
-            } else {
-                String cmd = "gradlew.bat wrapper --gradle-version 8.9";
-                out.println(cmd);
-                Runtime.getRuntime().exec("cmd /c " + cmd);
-            }
+//            if (!isWindows) {
+//                String cmd = "./gradlew wrapper --gradle-version 8.9";
+//                out.println(cmd);
+//                Runtime.getRuntime().exec(cmd);
+//            } else {
+//                String cmd = "gradlew.bat wrapper --gradle-version 8.9";
+//                out.println(cmd);
+//                Runtime.getRuntime().exec("cmd /c " + cmd);
+//            }
 
             // Update Gradle to version 8.9
             {
