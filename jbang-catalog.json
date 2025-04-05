@@ -36,7 +36,7 @@
     },
     "timestamp": {
       "script-ref": "scripts/timestamp.java"
-    }
+    },
     "gradle-init": {
       "script-ref": "scripts/GradleWrapperInit.java"
     }
