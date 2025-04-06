@@ -28,6 +28,8 @@ import java.nio.file.Paths
 
 import java.util.Locale
 
+import org.springframework.http.MediaType
+
 const val appName: String = "kwrk"
 const val appVersion: String = "__JBANG_SNAPSHOT_ID__/__JBANG_SNAPSHOT_TIMESTAMP__"
 
@@ -116,12 +118,31 @@ class KwrkHttpUser(userId: Int, threadId: Int) : HttpUser(userId, threadId) {
         return true
     }
 
+    // Curl commands: https://gist.github.com/hnnazm/ac6f986d45556e52334fb7fd2689d9be
+
     // Action 1: GET ${url}
     override fun action1(): Boolean {
         return try {
             val rsp: String? = restClient().get()
                 .uri(getUrlPath())
                 .header(http_header_key, http_header_val)
+                .retrieve()
+                .body(String::class.java)
+            //Postcondition
+            (rsp != null && rsp.length > 0)
+        } catch (e: RestClientException) {
+            false
+        }
+    }
+
+    // Action 2: POST ${url}
+    override fun action2(): Boolean {
+        return try {
+            val rsp: String? = restClient().post()
+                .uri(getUrlPath())
+                .header(http_header_key, http_header_val)
+                .contentType(MediaType.APPLICATION_JSON)
+                .body("")
                 .retrieve()
                 .body(String::class.java)
             //Postcondition
