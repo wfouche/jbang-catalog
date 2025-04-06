@@ -103,11 +103,11 @@ public class GradleWrapperInit {
             }
 
 //            if (!isWindows) {
-//                String cmd = "./gradlew wrapper --gradle-version 8.9";
+//                String cmd = "./gradlew --no-daemon wrapper --gradle-version 8.9";
 //                out.println(cmd);
 //                Runtime.getRuntime().exec(cmd);
 //            } else {
-//                String cmd = "gradlew.bat wrapper --gradle-version 8.9";
+//                String cmd = "gradlew.bat --no-daemon wrapper --gradle-version 8.9";
 //                out.println(cmd);
 //                Runtime.getRuntime().exec("cmd /c " + cmd);
 //            }
