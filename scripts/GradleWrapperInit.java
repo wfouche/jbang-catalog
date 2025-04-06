@@ -1,6 +1,7 @@
 ///usr/bin/env jbang "$0" "$@" ; exit $?
 
 //JAVA 21
+//COMPILE_OPTIONS -Xlint:deprecation
 
 import static java.lang.System.*;
 
@@ -21,6 +22,7 @@ import java.util.Base64;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.attribute.PosixFilePermissions;
 import java.nio.file.attribute.PosixFilePermission;
+import java.net.*;
 
 public class GradleWrapperInit {
 
@@ -35,7 +37,7 @@ public class GradleWrapperInit {
 
     public static void downloadToFile(String url, String dest) {
         try {
-            java.net.URL website = new java.net.URL(url);
+            URL website = new URI(url).toURL();
             java.nio.channels.ReadableByteChannel rbc = java.nio.channels.Channels.newChannel(website.openStream());
             java.io.FileOutputStream fos = new java.io.FileOutputStream(dest);
             fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
