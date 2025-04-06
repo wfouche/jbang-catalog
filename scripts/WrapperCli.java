@@ -24,7 +24,7 @@ import java.nio.file.attribute.PosixFilePermissions;
 import java.nio.file.attribute.PosixFilePermission;
 import java.net.*;
 
-public class GradleWrapperInit {
+public class WrapperCli {
 
     // https://www.baeldung.com/java-base64-encode-and-decode
 
