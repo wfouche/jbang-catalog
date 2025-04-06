@@ -55,54 +55,66 @@ public class GradleWrapperInit {
         }
     }
 
-        
-    public static void main(String... args) throws IOException{
+    public static void initGradleWrapper() throws IOException {
         boolean isWindows = System.getProperty("os.name").toLowerCase().contains("windows");
-        
-        java.io.File file = new java.io.File("gradle");
-        if (file.isDirectory()) {
-            out.println("Error: gradle is already installed.");
-            exit(1);
-        } else {
-            out.println("Installing gradle..."); 
 
-            {
-                File wrapperDir = new java.io.File("gradle/wrapper");
-                wrapperDir.mkdirs();
+        // Check if directory gradle exists
+        {
+            java.io.File file = new java.io.File("gradle");
+
+            if (file.isDirectory()) {
+                out.println("Error: gradle is already installed.");
+                exit(1);
             }
+        }
 
-            downloadToFile(
-                "https://raw.githubusercontent.com/gradle/gradle/master/gradle/wrapper/gradle-wrapper.jar", 
+        // Check if file build.gradle exists
+        {
+            java.io.File file = new java.io.File("build.gradle");
+            if (!file.isFile()) {
+                out.println("Error: file build.gradle not found.");
+                exit(1);
+            }
+        }
+
+        out.println("Installing gradle...");
+        {
+            File wrapperDir = new java.io.File("gradle/wrapper");
+            wrapperDir.mkdirs();
+        }
+
+        downloadToFile(
+                "https://raw.githubusercontent.com/gradle/gradle/master/gradle/wrapper/gradle-wrapper.jar",
                 "gradle/wrapper/gradle-wrapper.jar");
 
-            downloadToFile(
-                "https://raw.githubusercontent.com/gradle/gradle/master/gradle/wrapper/gradle-wrapper.properties", 
+        downloadToFile(
+                "https://raw.githubusercontent.com/gradle/gradle/master/gradle/wrapper/gradle-wrapper.properties",
                 "gradle/wrapper/gradle-wrapper.properties");
-            
-            writeToFile(
-                "gradlew", 
+
+        writeToFile(
+                "gradlew",
                 new String(Base64.getDecoder().decode(gradlewSh), StandardCharsets.UTF_8),
                 false
-            );
+        );
 
-            writeToFile(
-                "gradlew.bat", 
+        writeToFile(
+                "gradlew.bat",
                 new String(Base64.getDecoder().decode(gradlewBt), StandardCharsets.UTF_8),
                 false
-            );
+        );
 
-            if (!isWindows) {
-                File gradlew = new File("gradlew");
-                Set<PosixFilePermission> perms = new HashSet<>();
-                perms.add(PosixFilePermission.OWNER_READ);
-                perms.add(PosixFilePermission.OWNER_WRITE);
-                perms.add(PosixFilePermission.OWNER_EXECUTE);
-                perms.add(PosixFilePermission.OTHERS_READ);
-                perms.add(PosixFilePermission.OTHERS_EXECUTE);
-                perms.add(PosixFilePermission.GROUP_READ);
-                perms.add(PosixFilePermission.GROUP_EXECUTE);
-                Files.setPosixFilePermissions(gradlew.toPath(), perms);
-            }
+        if (!isWindows) {
+            File gradlew = new File("gradlew");
+            Set<PosixFilePermission> perms = new HashSet<>();
+            perms.add(PosixFilePermission.OWNER_READ);
+            perms.add(PosixFilePermission.OWNER_WRITE);
+            perms.add(PosixFilePermission.OWNER_EXECUTE);
+            perms.add(PosixFilePermission.OTHERS_READ);
+            perms.add(PosixFilePermission.OTHERS_EXECUTE);
+            perms.add(PosixFilePermission.GROUP_READ);
+            perms.add(PosixFilePermission.GROUP_EXECUTE);
+            Files.setPosixFilePermissions(gradlew.toPath(), perms);
+        }
 
 //            if (!isWindows) {
 //                String cmd = "./gradlew --no-daemon wrapper --gradle-version 8.9";
@@ -114,57 +126,90 @@ public class GradleWrapperInit {
 //                Runtime.getRuntime().exec("cmd /c " + cmd);
 //            }
 
-            // Update Gradle to version 8.9
-            {
-                String gradleVersion = "8.9";
-                List<String> commandList = new ArrayList<>();
-        
-                String os = System.getProperty("os.name").toLowerCase();
-                if (os.contains("win")) {
-                    commandList.add("gradlew.bat");
-                    commandList.add("--no-daemon");
-                } else {
-                    commandList.add("./gradlew");
-                    commandList.add("--no-daemon");
-                }
-                commandList.add("wrapper");
-                commandList.add("--gradle-version");
-                commandList.add(gradleVersion);
-        
-                try {
-                    ProcessBuilder processBuilder = new ProcessBuilder(commandList);
-                    processBuilder.directory(new java.io.File("."));
-        
-                    Process process = processBuilder.start();
-        
-                    // Read the output of the process
-                    BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-                    String line;
-                    System.out.println("Gradle Output:");
-                    while ((line = reader.readLine()) != null) {
-                        System.out.println(line);
-                    }
+        // Update Gradle to version 8.9
+        {
+            String gradleVersion = "8.9";
+            List<String> commandList = new ArrayList<>();
 
-                    // Read any error output
-                    BufferedReader errorReader = new BufferedReader(new InputStreamReader(process.getErrorStream()));
-                    System.out.println("\nGradle Error Output:");
-                    while ((line = errorReader.readLine()) != null) {
-                        System.err.println(line);
-                    }
-
-                    // Wait for the process to complete
-                    int exitCode = process.waitFor();
-                    System.out.println("\nGradle process finished with exit code: " + exitCode);
-
-        
-                } catch (IOException e) {
-                    System.err.println("Error executing Gradle command: " + e.getMessage());
-                } catch (InterruptedException e) {
-                    System.err.println("Process interrupted: " + e.getMessage());
-                }
+            String os = System.getProperty("os.name").toLowerCase();
+            if (os.contains("win")) {
+                commandList.add("gradlew.bat");
+                commandList.add("--no-daemon");
+            } else {
+                commandList.add("./gradlew");
+                commandList.add("--no-daemon");
             }
+            commandList.add("wrapper");
+            commandList.add("--gradle-version");
+            commandList.add(gradleVersion);
 
+            try {
+                ProcessBuilder processBuilder = new ProcessBuilder(commandList);
+                processBuilder.directory(new java.io.File("."));
+
+                Process process = processBuilder.start();
+
+                // Read the output of the process
+                BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+                String line;
+                System.out.println("Gradle Output:");
+                while ((line = reader.readLine()) != null) {
+                    System.out.println(line);
+                }
+
+                // Read any error output
+                BufferedReader errorReader = new BufferedReader(new InputStreamReader(process.getErrorStream()));
+                System.out.println("\nGradle Error Output:");
+                while ((line = errorReader.readLine()) != null) {
+                    System.err.println(line);
+                }
+
+                // Wait for the process to complete
+                int exitCode = process.waitFor();
+                System.out.println("\nGradle process finished with exit code: " + exitCode);
+
+
+            } catch (IOException e) {
+                System.err.println("Error executing Gradle command: " + e.getMessage());
+            } catch (InterruptedException e) {
+                System.err.println("Process interrupted: " + e.getMessage());
+            }
             out.println("Done.");
-        }   
+        }
+    }
+
+    public static void initMavenWrapper() {
+
+    }
+        
+    public static void main(String... args) throws IOException{
+
+//        for (String arg: args) {
+//            out.println("arg: " + arg);
+//        }
+        String command = "";
+        if (args.length > 0) {
+            command = args[0].toLowerCase();
+        }
+        //out.println("command = " + command);
+
+        if (!command.equals("init")) {
+            java.lang.System.exit(0);
+        }
+
+        String type = "";
+        if (args.length > 1) {
+            type = args[1].toLowerCase();
+        }
+        //out.println("type = " + type);
+
+        if (type.equals("gradle")) {
+            initGradleWrapper();
+        }
+
+        if (type.equals("maven")) {
+            initMavenWrapper();
+        }
+
     }
 }
