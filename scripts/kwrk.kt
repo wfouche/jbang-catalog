@@ -179,6 +179,7 @@ class KwrkCli : CliktCommand() {
 
     override fun run() {
         displayAppInfo();
+        println("")
 
         var json = benchmarkConfig
 
