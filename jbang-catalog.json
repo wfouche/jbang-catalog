@@ -39,6 +39,9 @@
     },
     "wrapper-cli": {
       "script-ref": "scripts/WrapperCli.java"
+    },
+    "python-jvm": {
+      "script-ref": "scripts/python_jvm.java"
     }
   },
   "templates": {}
