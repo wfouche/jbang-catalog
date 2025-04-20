@@ -189,14 +189,16 @@ public class python_jvm {
 
         try (BufferedWriter jf = new BufferedWriter(new FileWriter(javaFilename))) {
             String ls = System.lineSeparator();
-            jf.write("///usr/bin/env jbang \"$0\" \"$@\" ; exit $?" + System.lineSeparator() + System.lineSeparator());
-            jf.write("// spotless:off" + System.lineSeparator());
+            jf.write("///usr/bin/env jbang \"$0\" \"$@\" ; exit $?" + ls + ls);
+            jf.write("// spotless:off" + ls);
             for (String dependency : deps) {
-                jf.write("//DEPS " + dependency + System.lineSeparator());
+                jf.write("//DEPS " + dependency + ls);
             }
-            jf.write("//JAVA " + javaVersion + System.lineSeparator());
-            jf.write("//RUNTIME_OPTIONS -XX:+UnlockExperimentalVMOptions -XX:+EnableJVMCI -Dpolyglot.engine.WarnInterpreterOnly=false" + ls);
-            jf.write("// spotless:on" + System.lineSeparator() + System.lineSeparator());
+            jf.write("//JAVA " + javaVersion + ls);
+            if (graalpyVersion.length() > 0) {
+                jf.write("//RUNTIME_OPTIONS -XX:+UnlockExperimentalVMOptions -XX:+EnableJVMCI -Dpolyglot.engine.WarnInterpreterOnly=false" + ls);
+            }
+            jf.write("// spotless:on" + ls + ls);
             String text = textJythonApp;
             if (graalpyVersion.length() > 0) {
                 text = textGraalpyApp;
