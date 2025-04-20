@@ -16,29 +16,6 @@ import org.tomlj.TomlTable;
 
 public class python_jvm {
 
-    private static final String pep723Script = """
-            import re
-                        
-            REGEX = r'(?m)^# /// (?P<type>[a-zA-Z0-9-]+)$\\s(?P<content>(^#(| .*)$\\s)+)^# ///$'
-            
-            def readConfig(filename):
-                script = open(filename, "r").read()
-                name = 'jbang'
-                matches = list(
-                    filter(lambda m: m.group('type') == name, re.finditer(REGEX, script))
-                )
-                if len(matches) > 1:
-                    raise ValueError('Multiple ' + name + ' blocks found')
-                elif len(matches) == 1:
-                    content = ''.join(
-                        line[2:] if line.startswith('# ') else line[1:]
-                        for line in matches[0].group('content').splitlines(True)
-                    )
-                    return content
-                else:
-                    return None
-            """;
-
     private static final String textJythonApp = """
             // import org.python.util.jython;
             import org.python.util.PythonInterpreter;
@@ -155,16 +132,35 @@ public class python_jvm {
         String graalpyAllowAllAccess = "false";
         String graalpyEmulateJython = "false";
         String javaVersion = "21";
+        String ls = System.lineSeparator();
 
         // Parse PEP723 data
         {
-            PythonInterpreter pyInterp = new PythonInterpreter();
-            pyInterp.exec(pep723Script);
-            String expression = "readConfig('" + scriptFilename + "')";
-            String tomlText = pyInterp.eval(expression).toString();
-            pyInterp.close();
-
-            TomlParseResult tpr = Toml.parse(tomlText);
+            StringBuffer tomlText = new StringBuffer("");
+            {
+                List<String> lines = Files.readAllLines(new File(scriptFilename).toPath());
+                boolean found = false;
+                for (String line: lines) {
+                    if (line.startsWith("# /// jbang")) {
+                        found = true;
+                    }
+                    else if (line.startsWith("# ///")) {
+                        found = false;
+                        break;
+                    } else if (line.startsWith("# ")) {
+                        if (found) {
+                            if (tomlText.length() == 0) {
+                                tomlText.append(line.substring(2));
+                            } else {
+                                tomlText.append(ls + line.substring(2));
+                            }
+                        }
+                    }
+                }
+                //System.out.println("Java TOML scanner:");
+                //System.out.println(tomlText.toString());
+            }
+            TomlParseResult tpr = Toml.parse(tomlText.toString());
             if (tpr.isString("requires-jython")) {
                 jythonVersion = tpr.getString("requires-jython").substring(2);
             }
@@ -201,7 +197,6 @@ public class python_jvm {
         String scriptFileTextB64 = Base64.getEncoder().encodeToString(data);
 
         try (BufferedWriter jf = new BufferedWriter(new FileWriter(javaFilename))) {
-            String ls = System.lineSeparator();
             jf.write("///usr/bin/env jbang \"$0\" \"$@\" ; exit $?" + ls + ls);
             jf.write("// spotless:off" + ls);
             for (String dependency : deps) {
