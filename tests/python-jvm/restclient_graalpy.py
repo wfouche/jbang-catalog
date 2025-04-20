@@ -1,7 +1,8 @@
 #!/usr/bin/env python-jvm
+
 # restclient_graalpy.py
 #
-# Run as: $ jbang run python-jvm@wfouche restclient_graalpy.py
+# Run: jbang run python-jvm@wfouche restclient_graalpy.py
 #
 
 # /// jbang
