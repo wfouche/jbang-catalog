@@ -132,7 +132,7 @@ public class python_jvm {
         String javaVersion = "21";
         String ls = System.lineSeparator();
 
-        // Parse PEP723 data
+        // Parse PEP 723 text block
         {
             StringBuffer tomlText = new StringBuffer("");
             {
