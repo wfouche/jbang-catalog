@@ -90,12 +90,68 @@ public class python_jvm {
             }            
             """;
 
+    public static final String textGraalpyApp = """
+            import org.graalvm.polyglot.*;
+            import java.util.Base64;
+            
+            public class __CLASSNAME__ {
+            
+                public static String mainScriptTextBase64 = "__MAIN_SCRIPT__";
+            
+                public static void main(String... args) {
+                    String mainScriptFilename = "__MAIN_SCRIPT_FILENAME__";
+                    String mainScript = "";
+                    String jythonArgsScript = "";
+                    for (String arg: args) {
+                        if (jythonArgsScript.length() == 0) {
+                            if (!arg.equals(mainScriptFilename)) {
+                                jythonArgsScript += "'" + mainScriptFilename + "', ";
+                            }
+                        } else {
+                            jythonArgsScript += ", ";
+                        }
+                        jythonArgsScript += "'" + arg + "'";
+                    }
+                    if (jythonArgsScript.length() == 0) {
+                        jythonArgsScript = "'" + mainScriptFilename + "'";
+                    }
+                    jythonArgsScript = "import sys; sys.argv = [" + jythonArgsScript + "]";
+                    //System.out.println("argsL " + jythonArgsScript);
+                    {
+                        byte[] decodedBytes = Base64.getDecoder().decode(mainScriptTextBase64);
+                        String text = new String(decodedBytes);
+                        mainScript = text;
+                    }
+                    {
+                        // run script
+                        //PythonInterpreter pyInterp = new PythonInterpreter();
+            
+                        // initialize args
+                        //pyInterp.exec(jythonArgsScript);
+            
+                        // run script
+                        //pyInterp.exec("__name__=\\"\\"");
+                        //pyInterp.exec(mainScript);
+                        try (var context = Context.newBuilder().option("python.EmulateJython", "true").allowAllAccess(true).build()) {
+                            Source sourceArgs = Source.create("python", jythonArgsScript);
+                            Source sourceMain = Source.create("python", mainScript);
+                            Value result = context.eval(sourceArgs);
+                            result = context.eval(sourceMain);
+                            //System.out.println(context.eval("python", "'Hello Python!'").asString());
+                            //System.out.println(context.eval("python", "1+1"));
+                        }
+                     }
+                }
+            }
+            """;
+
     public static void main(String[] args) throws IOException {
         String scriptFilename = args[0];
         String javaClassname = new File(scriptFilename).getName().substring(0, scriptFilename.length() - 3) + "_py";
         String javaFilename = scriptFilename.replace(".", "_") + ".java";
         List<String> deps = new ArrayList<>();
         String jythonVersion = "2.7.4";
+        String graalpyVersion = "";
         String javaVersion = "21";
 
         // Parse PEP723 data
@@ -110,6 +166,9 @@ public class python_jvm {
             if (tpr.isString("requires-jython")) {
                 jythonVersion = tpr.getString("requires-jython").substring(2);
             }
+            if (tpr.isString("requires-graalpy")) {
+                graalpyVersion = tpr.getString("requires-graalpy").substring(2);
+            }
             if (tpr.isString("requires-java")) {
                 javaVersion = tpr.getString("requires-java").substring(2);
             }
@@ -120,20 +179,29 @@ public class python_jvm {
         }
 
         String dep = "org.python:jython-standalone:" + jythonVersion;
+        if (graalpyVersion.length() > 0) {
+            dep = "org.graalvm.python:jbang:" + graalpyVersion;
+        }
         deps.add(dep);
 
         byte[] data = Files.readAllBytes(Paths.get(scriptFilename));
         String scriptFileTextB64 = Base64.getEncoder().encodeToString(data);
 
         try (BufferedWriter jf = new BufferedWriter(new FileWriter(javaFilename))) {
+            String ls = System.lineSeparator();
             jf.write("///usr/bin/env jbang \"$0\" \"$@\" ; exit $?" + System.lineSeparator() + System.lineSeparator());
             jf.write("// spotless:off" + System.lineSeparator());
             for (String dependency : deps) {
                 jf.write("//DEPS " + dependency + System.lineSeparator());
             }
             jf.write("//JAVA " + javaVersion + System.lineSeparator());
+            jf.write("//RUNTIME_OPTIONS -XX:+UnlockExperimentalVMOptions -XX:+EnableJVMCI -Dpolyglot.engine.WarnInterpreterOnly=false" + ls);
             jf.write("// spotless:on" + System.lineSeparator() + System.lineSeparator());
-            String jtext = textJythonApp.replace("__CLASSNAME__", javaClassname)
+            String text = textJythonApp;
+            if (graalpyVersion.length() > 0) {
+                text = textGraalpyApp;
+            }
+            String jtext = text.replace("__CLASSNAME__", javaClassname)
                                .replace("__MAIN_SCRIPT__", scriptFileTextB64)
                                .replace("__MAIN_SCRIPT_FILENAME__", scriptFilename);
             jf.write(jtext);
