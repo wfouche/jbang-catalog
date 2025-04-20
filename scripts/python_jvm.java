@@ -51,22 +51,22 @@ public class python_jvm {
                 public static void main(String... args) {
                     String mainScriptFilename = "__MAIN_SCRIPT_FILENAME__";
                     String mainScript = "";
-                    String jythonArgsScript = "";
+                    String pythonArgsScript = "";
                     for (String arg: args) {
                         //System.out.println("Java: " + arg);
-                        if (jythonArgsScript.length() == 0) {
+                        if (pythonArgsScript.length() == 0) {
                             if (!arg.equals(mainScriptFilename)) {
-                                jythonArgsScript += "'" + mainScriptFilename + "', ";
+                                pythonArgsScript += "'" + mainScriptFilename + "', ";
                             }
                         } else {
-                            jythonArgsScript += ", ";
+                            pythonArgsScript += ", ";
                         }
-                        jythonArgsScript += "'" + arg + "'";
+                        pythonArgsScript += "'" + arg + "'";
                     }
-                    if (jythonArgsScript.length() == 0) {
-                        jythonArgsScript = "'" + mainScriptFilename + "'";
+                    if (pythonArgsScript.length() == 0) {
+                        pythonArgsScript = "'" + mainScriptFilename + "'";
                     }
-                    jythonArgsScript = "import sys; sys.argv = [" + jythonArgsScript + "]";
+                    pythonArgsScript = "import sys; sys.argv = [" + pythonArgsScript + "]";
                     {
                         byte[] decodedBytes = Base64.getDecoder().decode(mainScriptTextBase64);
                         String text = new String(decodedBytes);
@@ -75,12 +75,12 @@ public class python_jvm {
                         //System.out.println("===");
                         mainScript = text;
                     }
-                    //System.out.println("args --> " + jythonArgsScript);
+                    //System.out.println("args --> " + pythonArgsScript);
                     {
                         // run script
                         PythonInterpreter pyInterp = new PythonInterpreter();
                         // initialize args
-                        pyInterp.exec(jythonArgsScript);
+                        pyInterp.exec(pythonArgsScript);
                         // run script
                         //pyInterp.exec("__name__=\\"\\"");
                         pyInterp.exec(mainScript);
@@ -101,22 +101,22 @@ public class python_jvm {
                 public static void main(String... args) {
                     String mainScriptFilename = "__MAIN_SCRIPT_FILENAME__";
                     String mainScript = "";
-                    String jythonArgsScript = "";
+                    String pythonArgsScript = "";
                     for (String arg: args) {
-                        if (jythonArgsScript.length() == 0) {
+                        if (pythonArgsScript.length() == 0) {
                             if (!arg.equals(mainScriptFilename)) {
-                                jythonArgsScript += "'" + mainScriptFilename + "', ";
+                                pythonArgsScript += "'" + mainScriptFilename + "', ";
                             }
                         } else {
-                            jythonArgsScript += ", ";
+                            pythonArgsScript += ", ";
                         }
-                        jythonArgsScript += "'" + arg + "'";
+                        pythonArgsScript += "'" + arg + "'";
                     }
-                    if (jythonArgsScript.length() == 0) {
-                        jythonArgsScript = "'" + mainScriptFilename + "'";
+                    if (pythonArgsScript.length() == 0) {
+                        pythonArgsScript = "'" + mainScriptFilename + "'";
                     }
-                    jythonArgsScript = "import sys; sys.argv = [" + jythonArgsScript + "]";
-                    //System.out.println("argsL " + jythonArgsScript);
+                    pythonArgsScript = "import sys; sys.argv = [" + pythonArgsScript + "]";
+                    //System.out.println("argsL " + pythonArgsScript);
                     {
                         byte[] decodedBytes = Base64.getDecoder().decode(mainScriptTextBase64);
                         String text = new String(decodedBytes);
@@ -127,13 +127,13 @@ public class python_jvm {
                         //PythonInterpreter pyInterp = new PythonInterpreter();
             
                         // initialize args
-                        //pyInterp.exec(jythonArgsScript);
+                        //pyInterp.exec(pythonArgsScript);
             
                         // run script
                         //pyInterp.exec("__name__=\\"\\"");
                         //pyInterp.exec(mainScript);
                         try (var context = Context.newBuilder().option("python.EmulateJython", "__EMJ__").allowAllAccess(__AAA__).build()) {
-                            Source sourceArgs = Source.create("python", jythonArgsScript);
+                            Source sourceArgs = Source.create("python", pythonArgsScript);
                             Source sourceMain = Source.create("python", mainScript);
                             Value result = context.eval(sourceArgs);
                             result = context.eval(sourceMain);
