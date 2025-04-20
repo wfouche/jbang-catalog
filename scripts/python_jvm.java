@@ -139,7 +139,7 @@ public class python_jvm {
         {
             StringBuffer tomlText = new StringBuffer("");
             {
-                List<String> lines = Files.readAllLines(new File(scriptFilename).toPath());
+                List<String> lines = Files.readAllLines(Paths.get(scriptFilename));
                 boolean found = false;
                 for (String line: lines) {
                     if (line.startsWith("# /// jbang")) {
