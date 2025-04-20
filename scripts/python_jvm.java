@@ -1,15 +1,52 @@
 ///usr/bin/env jbang "$0" "$@" ; exit $?
 
 //DEPS dev.jbang:jash:0.0.1
+//DEPS org.tomlj:tomlj:1.1.1
+//DEPS org.python:jython-standalone:2.7.4
 //JAVA 21
 
 import java.io.*;
 import java.nio.file.*;
 import java.util.*;
-
+import org.python.util.PythonInterpreter;
 import dev.jbang.jash.Jash;
+import org.tomlj.Toml;
+import org.tomlj.TomlParseResult;
+import org.tomlj.TomlTable;
 
 public class python_jvm {
+
+    private static final String pep723Script = """
+            import re
+            
+            # /// script
+            # requires-jython = ">=2.7.4"
+            # requires-java = ">=21"
+            # dependencies = [
+            #   "org.springframework.boot:spring-boot-starter-web:3.4.4",
+            # ]
+            # ///
+            
+            REGEX = r'(?m)^# /// (?P<type>[a-zA-Z0-9-]+)$\\s(?P<content>(^#(| .*)$\\s)+)^# ///$'
+            
+            def readConfig(filename):
+                script = open(filename, "r").read()
+                name = 'jbang'
+                matches = list(
+                    filter(lambda m: m.group('type') == name, re.finditer(REGEX, script))
+                )
+                if len(matches) > 1:
+                    raise ValueError('Multiple ' + name + ' blocks found')
+                elif len(matches) == 1:
+                    content = ''.join(
+                        line[2:] if line.startswith('# ') else line[1:]
+                        for line in matches[0].group('content').splitlines(True)
+                    )
+                    return content
+                else:
+                    return None
+            """;
+
     private static final String text = """
             // import org.python.util.jython;
             import org.python.util.PythonInterpreter;
@@ -69,22 +106,24 @@ public class python_jvm {
         String jythonVersion = "2.7.4";
         String javaVersion = "21";
 
-        List<String> lines = Files.readAllLines(Paths.get(scriptFilename));
-        String tag1 = "##DEPS";
-        String tag2 = "##JYTHON";
-        String tag3 = "##JAVA";
+        // Parse PEP723 data
+        {
+            PythonInterpreter pyInterp = new PythonInterpreter();
+            pyInterp.exec(pep723Script);
+            String expression = "readConfig('" + scriptFilename + "')";
+            String tomlText = pyInterp.eval(expression).toString();
+            pyInterp.close();
 
-        for (String line : lines) {
-            if (line.length() > tag1.length() && line.startsWith(tag1)) {
-                String[] list = line.split(" ");
-                String dep = list[1];
+            TomlParseResult tpr = Toml.parse(tomlText);
+            if (tpr.isString("requires-jython")) {
+                jythonVersion = tpr.getString("requires-jython").substring(2);
+            }
+            if (tpr.isString("requires-java")) {
+                javaVersion = tpr.getString("requires-java").substring(2);
+            }
+            for (Object e : tpr.getArrayOrEmpty("dependencies").toList()) {
+                String dep = (String) e;
                 deps.add(dep);
-            }
-            if (line.length() > tag2.length() && line.startsWith(tag2)) {
-                jythonVersion = line.split(" ")[1];
-            }
-            if (line.length() > tag3.length() && line.startsWith(tag3)) {
-                javaVersion = line.split(" ")[1];
             }
         }
 
@@ -107,7 +146,7 @@ public class python_jvm {
                                .replace("__MAIN_SCRIPT_FILENAME__", scriptFilename);
             jf.write(jtext);
         }
-        // Run command
+        // jbang run <script>_py.java param1 param2 ...
         {
             List<String> commandList = new ArrayList<String>();
 
