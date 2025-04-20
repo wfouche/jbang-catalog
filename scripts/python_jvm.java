@@ -147,8 +147,8 @@ public class python_jvm {
 
     public static void main(String[] args) throws IOException {
         String scriptFilename = args[0];
-        String javaClassname = new File(scriptFilename).getName().substring(0, scriptFilename.length() - 3) + "_py";
-        String javaFilename = scriptFilename.replace(".", "_") + ".java";
+        String javaClassname = new File(scriptFilename).getName().replace(".", "_");
+        String javaFilename = javaClassname + ".java";
         List<String> deps = new ArrayList<>();
         String jythonVersion = "2.7.4";
         String graalpyVersion = "";

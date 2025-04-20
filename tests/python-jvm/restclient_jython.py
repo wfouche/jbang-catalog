@@ -1,4 +1,4 @@
-#!/usr/bin/env ./python-run.py
+#!/usr/bin/env python-jvm
 # restclient_jython.py
 #
 # Run as: $ jbang run python-jvm@wfouche restclient_jython.py
