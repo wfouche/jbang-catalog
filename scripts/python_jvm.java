@@ -132,7 +132,9 @@ public class python_jvm {
         String graalpyEmulateJython = "false";
         String javaVersion = "21";
         String ls = System.lineSeparator();
+        boolean debug = true;
 
+        if (debug) System.out.println("(debug) python-jvm: creating " + javaFilename);
         // Parse PEP 723 text block
         {
             StringBuffer tomlText = new StringBuffer("");
@@ -226,6 +228,7 @@ public class python_jvm {
             for (int i = 1; i < args.length; i++) {
                 commandList.add(args[i]);
             }
+            if (debug) System.out.println("(debug) jbang: running " + javaFilename);
             Jash.start(
                 "jbang",
                 commandList.toArray(new String[0]))
