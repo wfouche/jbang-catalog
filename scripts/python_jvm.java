@@ -2,13 +2,11 @@
 
 //DEPS dev.jbang:jash:0.0.1
 //DEPS org.tomlj:tomlj:1.1.1
-//DEPS org.python:jython-standalone:2.7.4
 //JAVA 21
 
 import java.io.*;
 import java.nio.file.*;
 import java.util.*;
-import org.python.util.PythonInterpreter;
 import dev.jbang.jash.Jash;
 import org.tomlj.Toml;
 import org.tomlj.TomlParseResult;
