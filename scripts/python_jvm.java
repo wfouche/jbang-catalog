@@ -132,7 +132,7 @@ public class python_jvm {
                         // run script
                         //pyInterp.exec("__name__=\\"\\"");
                         //pyInterp.exec(mainScript);
-                        try (var context = Context.newBuilder().option("python.EmulateJython", "true").allowAllAccess(true).build()) {
+                        try (var context = Context.newBuilder().option("python.EmulateJython", "__EMJ__").allowAllAccess(__AAA__).build()) {
                             Source sourceArgs = Source.create("python", jythonArgsScript);
                             Source sourceMain = Source.create("python", mainScript);
                             Value result = context.eval(sourceArgs);
@@ -152,6 +152,8 @@ public class python_jvm {
         List<String> deps = new ArrayList<>();
         String jythonVersion = "2.7.4";
         String graalpyVersion = "";
+        String graalpyAllowAllAccess = "false";
+        String graalpyEmulateJython = "false";
         String javaVersion = "21";
 
         // Parse PEP723 data
@@ -168,6 +170,17 @@ public class python_jvm {
             }
             if (tpr.isString("requires-graalpy")) {
                 graalpyVersion = tpr.getString("requires-graalpy").substring(2);
+                TomlTable graalpyTable = tpr.getTable("graalpy");
+                if (graalpyTable != null) {
+                    Boolean allowAllAccess = graalpyTable.getBoolean("allowAllAccess");
+                    if (allowAllAccess != null && allowAllAccess.equals(Boolean.TRUE) ) {
+                        graalpyAllowAllAccess = "true";
+                    }
+                    Boolean emulateJython = graalpyTable.getBoolean("emulateJython");
+                    if (emulateJython != null && emulateJython.equals(Boolean.TRUE) ) {
+                        graalpyEmulateJython = "true";
+                    }
+                }
             }
             if (tpr.isString("requires-java")) {
                 javaVersion = tpr.getString("requires-java").substring(2);
@@ -202,6 +215,8 @@ public class python_jvm {
             String text = textJythonApp;
             if (graalpyVersion.length() > 0) {
                 text = textGraalpyApp;
+                text = text.replace("__EMJ__", graalpyEmulateJython);
+                text = text.replace("__AAA__", graalpyAllowAllAccess);
             }
             String jtext = text.replace("__CLASSNAME__", javaClassname)
                                .replace("__MAIN_SCRIPT__", scriptFileTextB64)
