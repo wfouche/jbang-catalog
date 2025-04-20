@@ -229,8 +229,9 @@ public class python_jvm {
                 commandList.add(args[i]);
             }
             if (debug) System.out.println("(debug) jbang: running " + javaFilename);
+            String ext = System.getProperty("os.name").toLowerCase().startsWith("win") ? ".cmd" : "";
             Jash.start(
-                "jbang",
+                "jbang" + ext,
                 commandList.toArray(new String[0]))
                     .stream()
                     .forEach(System.out::println);
