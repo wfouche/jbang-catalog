@@ -18,15 +18,7 @@ public class python_jvm {
 
     private static final String pep723Script = """
             import re
-            
-            # /// script
-            # requires-jython = ">=2.7.4"
-            # requires-java = ">=21"
-            # dependencies = [
-            #   "org.springframework.boot:spring-boot-starter-web:3.4.4",
-            # ]
-            # ///
-            
+                        
             REGEX = r'(?m)^# /// (?P<type>[a-zA-Z0-9-]+)$\\s(?P<content>(^#(| .*)$\\s)+)^# ///$'
             
             def readConfig(filename):
@@ -47,7 +39,7 @@ public class python_jvm {
                     return None
             """;
 
-    private static final String text = """
+    private static final String textJythonApp = """
             // import org.python.util.jython;
             import org.python.util.PythonInterpreter;
             import java.util.Base64;
@@ -141,7 +133,7 @@ public class python_jvm {
             }
             jf.write("//JAVA " + javaVersion + System.lineSeparator());
             jf.write("// spotless:on" + System.lineSeparator() + System.lineSeparator());
-            String jtext = text.replace("__CLASSNAME__", javaClassname)
+            String jtext = textJythonApp.replace("__CLASSNAME__", javaClassname)
                                .replace("__MAIN_SCRIPT__", scriptFileTextB64)
                                .replace("__MAIN_SCRIPT_FILENAME__", scriptFilename);
             jf.write(jtext);
