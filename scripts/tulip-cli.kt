@@ -620,7 +620,7 @@ val JythonBenchmark: String = """
     import io.github.wfouche.tulip.api.TulipApi as TulipApi
     import java.util.concurrent.ThreadLocalRandom as ThreadLocalRandom
         
-    class JythonHttpUser(HttpUser):
+    class PythonHttpUser(HttpUser):
     
         def __init__(self, userId, threadId):
             HttpUser.__init__(self, userId, threadId)
@@ -649,7 +649,7 @@ val JythonBenchmark: String = """
     class UserFactory(TulipUserFactory):
     
         def getUser(self, userId, className, threadId):
-            return JythonHttpUser(userId, threadId)
+            return PythonHttpUser(userId, threadId)
     
     TulipApi.runTulip("benchmark_config.json", UserFactory())
 
