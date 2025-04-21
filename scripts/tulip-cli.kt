@@ -612,7 +612,7 @@ val JythonBenchmark: String = """
     #   "ch.qos.logback:logback-classic:1.5.18",
     # ]
     # [java]
-    # runtime-options = "__TULIP_JAVA_OPTIONS__"
+    #   runtime-options = "__TULIP_JAVA_OPTIONS__"
     # ///
     
     import io.github.wfouche.tulip.user.HttpUser as HttpUser
