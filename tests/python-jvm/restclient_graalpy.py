@@ -14,8 +14,8 @@
 # [graalpy]
 # allowAllAccess = true
 # emulateJython = true
-[java]
-runtime-options = "-XX:+UnlockExperimentalVMOptions -XX:+EnableJVMCI -Dpolyglot.engine.WarnInterpreterOnly=false"
+# [java]
+# runtime-options = "-XX:+UnlockExperimentalVMOptions -XX:+EnableJVMCI -Dpolyglot.engine.WarnInterpreterOnly=false"
 # ///
 
 import java.lang.String as String
