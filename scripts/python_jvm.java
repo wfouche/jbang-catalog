@@ -134,7 +134,7 @@ public class python_jvm {
         String ls = System.lineSeparator();
         boolean debug = true;
 
-        if (debug) System.out.println("(debug) python-jvm: creating " + javaFilename);
+        if (debug) System.out.println("[debug] python-jvm init " + javaFilename + " from " + scriptFilename);
         // Parse PEP 723 text block
         {
             StringBuffer tomlText = new StringBuffer("");
@@ -228,7 +228,7 @@ public class python_jvm {
             for (int i = 1; i < args.length; i++) {
                 commandList.add(args[i]);
             }
-            if (debug) System.out.println("(debug) jbang: running " + javaFilename);
+            if (debug) System.out.println("[debug] jbang run " + javaFilename);
             String ext = System.getProperty("os.name").toLowerCase().startsWith("win") ? ".cmd" : "";
             Jash.start(
                 "jbang" + ext,
