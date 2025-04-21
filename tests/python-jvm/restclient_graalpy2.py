@@ -11,6 +11,9 @@
 # dependencies = [
 #   "org.springframework.boot:spring-boot-starter-web:3.4.4",
 # ]
+# [graalpy]
+# allowAllAccess = true
+# emulateJython = false
 # [java]
 # runtime-options = "-XX:+UnlockExperimentalVMOptions -XX:+EnableJVMCI -Dpolyglot.engine.WarnInterpreterOnly=false"
 # ///
