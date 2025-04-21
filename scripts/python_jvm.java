@@ -217,18 +217,17 @@ public class python_jvm {
         }
         // jbang run <script>_py.java param1 param2 ...
         {
-            List<String> commandList = new ArrayList<String>();
+            StringBuffer params = new StringBuffer("run");
 
-            commandList.add("run");
-            commandList.add(javaFilename);
+            params.append(" " + javaFilename);
             for (int i = 1; i < args.length; i++) {
-                commandList.add(args[i]);
+                params.append(" " + args[i]);
             }
-            if (debug) System.out.println("[debug] jbang run " + javaFilename);
+            if (debug) System.out.println("[debug] jbang " + params.toString());
             String ext = System.getProperty("os.name").toLowerCase().startsWith("win") ? ".cmd" : "";
             Jash.start(
                 "jbang" + ext,
-                commandList.toArray(new String[0]))
+                params.toString().split("\\s+"))
                     .stream()
                     .forEach(System.out::println);
         }
