@@ -128,7 +128,7 @@ public class python_jvm {
         List<String> deps = new ArrayList<>();
         String jythonVersion = "2.7.4";
         String graalpyVersion = "";
-        String graalpyAllowAllAccess = "false";
+        String graalpyAllowAllAccess = "true";
         String graalpyEmulateJython = "false";
         String javaVersion = "21";
         String ls = System.lineSeparator();
