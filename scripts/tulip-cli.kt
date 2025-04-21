@@ -599,6 +599,20 @@ val JythonJava: String = """
 val JythonBenchmark: String = """
     from __future__ import print_function
     
+    # /// jbang
+    # requires-jython = "==2.7.4"
+    # requires-java = ">=21"
+    # dependencies = [
+    #   "io.github.wfouche.tulip:tulip-runtime:__TULIP_VERSION__",
+    #   "org.springframework.boot:spring-boot-starter-web:3.4.4",
+    #   "org.slf4j:slf4j-api:2.0.17",
+    #   "ch.qos.logback:logback-core:1.5.18",
+    #   "ch.qos.logback:logback-classic:1.5.18",
+    # ]
+    # [java]
+    # runtime-options = "__TULIP_JAVA_OPTIONS__"
+    # ///
+    
     import io.github.wfouche.tulip.user.HttpUser as HttpUser
     import io.github.wfouche.tulip.api.TulipUserFactory as TulipUserFactory
     import io.github.wfouche.tulip.api.TulipApi as TulipApi
@@ -900,7 +914,9 @@ fun main(args: Array<String>) {
 
         writeToFile(
             "benchmark.py",
-            JythonBenchmark,
+            JythonBenchmark
+                .replace("__TULIP_VERSION__", version)
+                .replace("__TULIP_JAVA_OPTIONS__", TULIP_JAVA_OPTIONS),
             false
         )
 
