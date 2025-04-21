@@ -16,7 +16,6 @@ import org.tomlj.TomlTable;
 public class python_jvm {
 
     private static final String textJythonApp = """
-            // import org.python.util.jython;
             import org.python.util.PythonInterpreter;
             import java.util.Base64;
             
@@ -29,7 +28,6 @@ public class python_jvm {
                     String mainScript = "";
                     String pythonArgsScript = "";
                     for (String arg: args) {
-                        //System.out.println("Java: " + arg);
                         if (pythonArgsScript.length() == 0) {
                             if (!arg.equals(mainScriptFilename)) {
                                 pythonArgsScript += "'" + mainScriptFilename + "', ";
@@ -46,22 +44,16 @@ public class python_jvm {
                     {
                         byte[] decodedBytes = Base64.getDecoder().decode(mainScriptTextBase64);
                         String text = new String(decodedBytes);
-                        //System.out.println("===");
-                        //System.out.println(text);
-                        //System.out.println("===");
                         mainScript = text;
                     }
-                    //System.out.println("args --> " + pythonArgsScript);
                     {
-                        // run script
+                        // create Python interpreter object
                         PythonInterpreter pyInterp = new PythonInterpreter();
-                        // initialize args
+                        // initialize command-line args
                         pyInterp.exec(pythonArgsScript);
                         // run script
-                        //pyInterp.exec("__name__=\\"\\"");
                         pyInterp.exec(mainScript);
                     }
-                    //jython.main(args);
                 }
             }            
             """;
@@ -92,29 +84,17 @@ public class python_jvm {
                         pythonArgsScript = "'" + mainScriptFilename + "'";
                     }
                     pythonArgsScript = "import sys; sys.argv = [" + pythonArgsScript + "]";
-                    //System.out.println("argsL " + pythonArgsScript);
                     {
                         byte[] decodedBytes = Base64.getDecoder().decode(mainScriptTextBase64);
                         String text = new String(decodedBytes);
                         mainScript = text;
                     }
                     {
-                        // run script
-                        //PythonInterpreter pyInterp = new PythonInterpreter();
-            
-                        // initialize args
-                        //pyInterp.exec(pythonArgsScript);
-            
-                        // run script
-                        //pyInterp.exec("__name__=\\"\\"");
-                        //pyInterp.exec(mainScript);
                         try (var context = Context.newBuilder().option("python.EmulateJython", "__EMJ__").allowAllAccess(__AAA__).build()) {
                             Source sourceArgs = Source.create("python", pythonArgsScript);
-                            Source sourceMain = Source.create("python", mainScript);
                             Value result = context.eval(sourceArgs);
+                            Source sourceMain = Source.create("python", mainScript);
                             result = context.eval(sourceMain);
-                            //System.out.println(context.eval("python", "'Hello Python!'").asString());
-                            //System.out.println(context.eval("python", "1+1"));
                         }
                      }
                 }
@@ -158,8 +138,6 @@ public class python_jvm {
                         }
                     }
                 }
-                //System.out.println("Java TOML scanner:");
-                //System.out.println(tomlText.toString());
             }
             TomlParseResult tpr = Toml.parse(tomlText.toString());
             if (tpr.isString("requires-jython")) {
