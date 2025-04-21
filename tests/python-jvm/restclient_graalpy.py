@@ -12,10 +12,10 @@
 #   "org.springframework.boot:spring-boot-starter-web:3.4.4",
 # ]
 # [graalpy]
-# allowAllAccess = true
-# emulateJython = true
+#   allowAllAccess = true
+#   emulateJython = true
 # [java]
-# runtime-options = "-XX:+UnlockExperimentalVMOptions -XX:+EnableJVMCI -Dpolyglot.engine.WarnInterpreterOnly=false"
+#   runtime-options = "-XX:+UnlockExperimentalVMOptions -XX:+EnableJVMCI -Dpolyglot.engine.WarnInterpreterOnly=false"
 # ///
 
 import java.lang.String as String

@@ -12,7 +12,7 @@
 #   "org.springframework.boot:spring-boot-starter-web:3.4.4",
 # ]
 # [java]
-# runtime-options = "-server -Xms2g -Xmx2g -XX:+UseZGC -XX:+ZGenerational"
+#   runtime-options = "-server -Xms2g -Xmx2g -XX:+UseZGC -XX:+ZGenerational"
 # ///
 
 import java.lang.String as String
