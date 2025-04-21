@@ -141,6 +141,14 @@ public class python_jvm {
                 }
             }
             TomlParseResult tpr = Toml.parse(tomlText.toString());
+            if (debug) {
+                System.out.println("");
+                System.out.println("[ -----------------jbang-config-begin-------------------- ]");
+                System.out.println("");
+                System.out.println(tpr.toToml());
+                System.out.println("[ -----------------jbang-config-end---------------------- ]");
+                System.out.println("");
+            }
             if (tpr.isString("requires-jython")) {
                 jythonVersion = tpr.getString("requires-jython").substring(2);
             }
