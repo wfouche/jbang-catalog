@@ -553,6 +553,7 @@ val runBenchShJython: String = """
     rm -f benchmark_report.html
     #export JBANG_JAVA_OPTIONS="__TULIP_JAVA_OPTIONS__"
     jbang run Jython.java benchmark.py
+    rem jbang run python-jvm@wfouche benchmark.py
     echo ""
     #w3m -dump -cols 205 benchmark_report.html
     lynx -dump -width 205 benchmark_report.html
@@ -564,6 +565,7 @@ val runBenchCmdJython: String = """
     if exist benchmark_report.html del benchmark_report.html
     REM JBANG_JAVA_OPTIONS=__TULIP_JAVA_OPTIONS__
     call jbang run Jython.java benchmark.py
+    rem call jbang run python-jvm@wfouche benchmark.py
     @echo off
     echo.
     REM call w3m.exe -dump -cols 205 benchmark_report.html
