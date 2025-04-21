@@ -111,6 +111,7 @@ public class python_jvm {
         String graalpyAllowAllAccess = "true";
         String graalpyEmulateJython = "false";
         String javaVersion = "21";
+        String javaRuntimeOptions = "";
         String ls = System.lineSeparator();
         boolean debug = true;
 
@@ -160,9 +161,18 @@ public class python_jvm {
             if (tpr.isString("requires-java")) {
                 javaVersion = tpr.getString("requires-java").substring(2);
             }
+            // dependencies
             for (Object e : tpr.getArrayOrEmpty("dependencies").toList()) {
                 String dep = (String) e;
                 deps.add(dep);
+            }
+            // [java]
+            TomlTable javaTable = tpr.getTable("java");
+            if (javaTable != null) {
+                String runtimeOptions = javaTable.getString("runtime-options");
+                if (runtimeOptions != null) {
+                    javaRuntimeOptions = runtimeOptions;
+                }
             }
         }
 
@@ -182,8 +192,8 @@ public class python_jvm {
                 jf.write("//DEPS " + dependency + ls);
             }
             jf.write("//JAVA " + javaVersion + ls);
-            if (graalpyVersion.length() > 0) {
-                jf.write("//RUNTIME_OPTIONS -XX:+UnlockExperimentalVMOptions -XX:+EnableJVMCI -Dpolyglot.engine.WarnInterpreterOnly=false" + ls);
+            if (javaRuntimeOptions.length() > 0) {
+                jf.write("//RUNTIME_OPTIONS " + javaRuntimeOptions + ls);
             }
             jf.write("// spotless:on" + ls + ls);
             String text = textJythonApp;

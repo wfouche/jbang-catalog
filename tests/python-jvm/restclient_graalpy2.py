@@ -11,6 +11,8 @@
 # dependencies = [
 #   "org.springframework.boot:spring-boot-starter-web:3.4.4",
 # ]
+# [java]
+# runtime-options = "-XX:+UnlockExperimentalVMOptions -XX:+EnableJVMCI -Dpolyglot.engine.WarnInterpreterOnly=false"
 # ///
 
 import java
