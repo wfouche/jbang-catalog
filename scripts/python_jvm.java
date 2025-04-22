@@ -8,6 +8,7 @@
 import java.io.*;
 import java.nio.file.*;
 import java.util.*;
+import java.util.stream.Stream;
 import dev.jbang.jash.Jash;
 import org.tomlj.Toml;
 import org.tomlj.TomlParseResult;
@@ -225,11 +226,11 @@ public class python_jvm {
             }
             if (debug) System.out.println("[debug] jbang " + params.toString());
             String ext = System.getProperty("os.name").toLowerCase().startsWith("win") ? ".cmd" : "";
-            Jash.start(
+            try (Stream<String> ps = Jash.start(
                 "jbang" + ext,
-                params.toString().split("\\s+"))
-                    .stream()
-                    .forEach(System.out::println);
+                params.toString().split("\\s+")).stream()) {
+                    ps.forEach(System.out::println);
+            }
         }
     }
 }
