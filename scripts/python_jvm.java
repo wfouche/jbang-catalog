@@ -226,9 +226,8 @@ public class python_jvm {
             }
             if (debug) System.out.println("[debug] jbang " + params.toString());
             String ext = System.getProperty("os.name").toLowerCase().startsWith("win") ? ".cmd" : "";
-            try (Stream<String> ps = Jash.start(
-                "jbang" + ext,
-                params.toString().split("\\s+")).stream()) {
+            var jargs = params.toString().split("\\s+");
+            try (Stream<String> ps = Jash.start("jbang" + ext, jargs).stream()) {
                     ps.forEach(System.out::println);
             }
         }
