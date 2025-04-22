@@ -224,7 +224,7 @@ public class python_jvm {
             for (int i = 1; i < args.length; i++) {
                 params.append(" " + args[i]);
             }
-            if (debug) System.out.println("[debug] jbang " + params.toString());
+            //if (debug) System.out.println("[debug] jbang " + params.toString());
             String ext = System.getProperty("os.name").toLowerCase().startsWith("win") ? ".cmd" : "";
             var jargs = params.toString().split("\\s+");
             try (Stream<String> ps = Jash.start("jbang" + ext, jargs).stream()) {
