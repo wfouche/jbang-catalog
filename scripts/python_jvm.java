@@ -204,6 +204,7 @@ public class python_jvm {
             if (javaRuntimeOptions.length() > 0) {
                 jf.write("//RUNTIME_OPTIONS " + javaRuntimeOptions + ls);
             }
+            jf.write("//NOINTEGRATIONS" + ls);
             jf.write("// spotless:on" + ls + ls);
             String text = textJythonApp;
             if (graalpyVersion.length() > 0) {
