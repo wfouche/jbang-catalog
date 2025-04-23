@@ -10,7 +10,7 @@
 # requires-java = ">=21"
 # debug = false
 # dependencies = [
-#   "org.springframework.boot:spring-boot-starter-web:3.4.4",
+#   "org.springframework.boot:spring-boot-starter-web:3.4.4"
 # ]
 # [graalpy]
 #   allowAllAccess = true
