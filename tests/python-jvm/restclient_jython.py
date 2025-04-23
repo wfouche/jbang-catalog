@@ -8,6 +8,7 @@
 # /// jbang
 # requires-jython = "==2.7.4"
 # requires-java = ">=21"
+# debug = false
 # dependencies = [
 #   "org.springframework.boot:spring-boot-starter-web:3.4.4",
 # ]

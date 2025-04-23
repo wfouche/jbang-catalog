@@ -115,9 +115,8 @@ public class python_jvm {
         String javaRuntimeOptions = "";
         String jbangIntegrations = "true";
         String ls = System.lineSeparator();
-        boolean debug = true;
+        boolean debug = false;
 
-        if (debug) System.out.println("[debug] python-jvm init " + javaFilename + " from " + scriptFilename);
         // Parse PEP 723 text block
         {
             StringBuffer tomlText = new StringBuffer("");
@@ -143,6 +142,12 @@ public class python_jvm {
                 }
             }
             TomlParseResult tpr = Toml.parse(tomlText.toString());
+            if (tpr.isBoolean("debug")) {
+                debug = tpr.getBoolean("debug");
+            }
+            if (debug) {
+                System.out.println("[debug] python-jvm init " + javaFilename + " from " + scriptFilename);
+            }
             if (debug) {
                 System.out.println("");
                 System.out.println("[ -----------------jbang-config-begin-------------------- ]");
