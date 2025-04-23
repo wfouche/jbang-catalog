@@ -113,6 +113,7 @@ public class python_jvm {
         String graalpyEmulateJython = "false";
         String javaVersion = "21";
         String javaRuntimeOptions = "";
+        String jbangIntegrations = "true";
         String ls = System.lineSeparator();
         boolean debug = true;
 
@@ -155,6 +156,7 @@ public class python_jvm {
             }
             if (tpr.isString("requires-graalpy")) {
                 graalpyVersion = tpr.getString("requires-graalpy").substring(2);
+                // [graalpy]
                 TomlTable graalpyTable = tpr.getTable("graalpy");
                 if (graalpyTable != null) {
                     Boolean allowAllAccess = graalpyTable.getBoolean("allowAllAccess");
@@ -183,6 +185,14 @@ public class python_jvm {
                     javaRuntimeOptions = runtimeOptions;
                 }
             }
+            // [jbang]
+            TomlTable jbangTable = tpr.getTable("jbang");
+            if (jbangTable != null) {
+                Boolean integrations = jbangTable.getBoolean("integrations");
+                if (integrations != null && integrations.equals(Boolean.FALSE)) {
+                    jbangIntegrations = "false";
+                }
+            }
         }
 
         String dep = "org.python:jython-standalone:" + jythonVersion;
@@ -204,7 +214,9 @@ public class python_jvm {
             if (javaRuntimeOptions.length() > 0) {
                 jf.write("//RUNTIME_OPTIONS " + javaRuntimeOptions + ls);
             }
-            jf.write("//NOINTEGRATIONS" + ls);
+            if (jbangIntegrations.equals("false")) {
+                jf.write("//NOINTEGRATIONS" + ls);
+            }
             jf.write("// spotless:on" + ls + ls);
             String text = textJythonApp;
             if (graalpyVersion.length() > 0) {

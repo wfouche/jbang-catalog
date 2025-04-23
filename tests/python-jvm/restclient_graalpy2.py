@@ -16,6 +16,8 @@
 #   emulateJython = false
 # [java]
 #   runtime-options = "-XX:+UnlockExperimentalVMOptions -XX:+EnableJVMCI -Dpolyglot.engine.WarnInterpreterOnly=false"
+# [jbang]
+#   integrations = false
 # ///
 
 import java
