@@ -8,12 +8,13 @@
 # /// jbang
 # requires-jython = "==2.7.4"
 # requires-java = ">=21"
-# debug = false
 # dependencies = [
 #   "org.springframework.boot:spring-boot-starter-web:3.4.4"
 # ]
 # [java]
 #   runtime-options = "-server -Xms2g -Xmx2g -XX:+UseZGC -XX:+ZGenerational"
+# [python-jvm]
+#   debug = false
 # ///
 
 import java.lang.String as String

@@ -142,8 +142,12 @@ public class python_jvm {
                 }
             }
             TomlParseResult tpr = Toml.parse(tomlText.toString());
-            if (tpr.isBoolean("debug")) {
-                debug = tpr.getBoolean("debug");
+            // [python-jvm]
+            TomlTable pythonjvmTable = tpr.getTable("python-jvm");
+            if (pythonjvmTable != null) {
+                if (pythonjvmTable.isBoolean("debug")) {
+                    debug = pythonjvmTable.getBoolean("debug");
+                }
             }
             if (debug) {
                 System.out.println("[debug] python-jvm init " + javaFilename + " from " + scriptFilename);
