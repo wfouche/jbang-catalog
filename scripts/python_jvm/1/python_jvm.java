@@ -2,7 +2,6 @@
 
 //DEPS dev.jbang:jash:0.0.3
 //DEPS org.tomlj:tomlj:1.1.1
-//DEPS info.picocli:picocli:4.7.7
 //DEPS org.python:jython-standalone:2.7.4
 //JAVA 21
 
@@ -15,18 +14,12 @@ import org.tomlj.Toml;
 import org.tomlj.TomlParseResult;
 import org.tomlj.TomlTable;
 
-import picocli.CommandLine;
-import picocli.CommandLine.Command;
-import picocli.CommandLine.Parameters;
-
-import java.util.concurrent.Callable;
-
 import org.python.util.jython;
 
 public class python_jvm {
 
     private static final String appName = "python-jvm";
-    private static final String appVersion = "1/2025-04-24T20:06:46";
+    private static final String appVersion = "1/2025-04-24T20:14:30";
 
     private static void displayAppInfo() {
         String version = appVersion;
