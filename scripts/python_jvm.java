@@ -24,7 +24,7 @@ public class python_jvm {
     private static void displayAppInfo() {
         String version = appVersion;
         if (appVersion.contains("JBANG_SNAPSHOT_ID")) {
-            version = "0/2025-04-24T11:44:49";
+            version = "0/2025-04-24T20:12:43";
         }
         System.out.println(appName + "/" + version);
     }
