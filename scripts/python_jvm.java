@@ -23,6 +23,17 @@ import java.util.concurrent.Callable;
 
 public class python_jvm {
 
+    private static final String appName = "python-jvm";
+    private static final String appVersion = "__JBANG_SNAPSHOT_ID__/__JBANG_SNAPSHOT_TIMESTAMP__";
+
+    private static void displayAppInfo() {
+        String version = appVersion;
+        if (appVersion.contains("JBANG_SNAPSHOT_ID")) {
+            version = "0/2025-04-24T11:44:49";
+        }
+        System.out.println(appName + "/" + version);
+    }
+
     private static final String textJythonApp = """
             import org.python.util.PythonInterpreter;
             import java.util.Base64;
@@ -123,6 +134,8 @@ public class python_jvm {
         String jbangIntegrations = "true";
         String ls = System.lineSeparator();
         boolean debug = false;
+
+        displayAppInfo();
 
         // Parse PEP 723 text block
         {
