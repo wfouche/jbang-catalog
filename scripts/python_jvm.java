@@ -136,8 +136,8 @@ public class python_jvm {
 
         displayAppInfo();
 
-        // Invoke the Jython interpreter if no Python script file is specified
-        if (args.length == 0) {
+        // Invoke the Jython interpreter if no Python script file is specified, or Jython command-line options are specified
+        if (args.length == 0 || (args.length > 0 && args[0].substring(0,1).equals("-"))) {
             jython.main(args);
             System.exit(0);
         }
