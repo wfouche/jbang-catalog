@@ -3,7 +3,7 @@
 //DEPS dev.jbang:jash:0.0.3
 //DEPS org.tomlj:tomlj:1.1.1
 //DEPS info.picocli:picocli:4.7.7
-
+//DEPS org.python:jython-standalone:2.7.4
 //JAVA 21
 
 import java.io.*;
@@ -20,6 +20,8 @@ import picocli.CommandLine.Command;
 import picocli.CommandLine.Parameters;
 
 import java.util.concurrent.Callable;
+
+import org.python.util.jython;
 
 public class python_jvm {
 
@@ -121,9 +123,6 @@ public class python_jvm {
             """;
 
     public static void main(String[] args) throws IOException {
-        String scriptFilename = args[0];
-        String javaClassname = new File(scriptFilename).getName().replace(".", "_");
-        String javaFilename = javaClassname + ".java";
         List<String> deps = new ArrayList<>();
         String jythonVersion = "2.7.4";
         String graalpyVersion = "";
@@ -136,6 +135,16 @@ public class python_jvm {
         boolean debug = false;
 
         displayAppInfo();
+
+        // Invoke the Jython interpreter if no Python script file is specified
+        if (args.length == 0) {
+            jython.main(args);
+            System.exit(0);
+        }
+
+        String scriptFilename = args[0];
+        String javaClassname = new File(scriptFilename).getName().replace(".", "_");
+        String javaFilename = javaClassname + ".java";
 
         // Parse PEP 723 text block
         {
