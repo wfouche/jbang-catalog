@@ -2,7 +2,6 @@
 
 //DEPS dev.jbang:jash:0.0.3
 //DEPS org.tomlj:tomlj:1.1.1
-//DEPS info.picocli:picocli:4.7.7
 //DEPS org.python:jython-standalone:2.7.4
 //JAVA 21
 
@@ -14,12 +13,6 @@ import dev.jbang.jash.Jash;
 import org.tomlj.Toml;
 import org.tomlj.TomlParseResult;
 import org.tomlj.TomlTable;
-
-import picocli.CommandLine;
-import picocli.CommandLine.Command;
-import picocli.CommandLine.Parameters;
-
-import java.util.concurrent.Callable;
 
 import org.python.util.jython;
 
