@@ -1,4 +1,4 @@
 {
-    "description": "Enter interpreter mode, if no args provided",
-    "timestamp": "2025-04-24T17:58:24"
+    "description": "Support Jython command-line options",
+    "timestamp": "2025-04-24T20:06:46"
 }
