@@ -45,6 +45,9 @@
     },
     "python-jvm": {
       "script-ref": "scripts/python_jvm/1/python_jvm.java"
+    },
+    "python-cli": {
+      "script-ref": "scripts/python_jvm/1/python_cli.java"
     }
   },
   "templates": {}
