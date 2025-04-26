@@ -18,6 +18,9 @@ import org.python.util.jython;
 
 public class python_cli {
 
+    // Increment this number with each new release of python-cli
+    private static final int FIX_NUMBER = 0;  
+
     private static final String textJythonApp = """
             import org.python.util.PythonInterpreter;
             import java.util.Base64;
@@ -69,6 +72,12 @@ public class python_cli {
         String jbangIntegrations = "true";
         String ls = System.lineSeparator();
         boolean debug = false;
+
+        // --version
+        if (args.length == 1 && args[0].equals("--version")) {
+            System.out.println(jythonVersion + "." + FIX_NUMBER);
+            System.exit(0); 
+        }
 
         // Invoke the Jython interpreter if no Python script file is specified, or Jython command-line options are specified
         if (args.length == 0 || (args.length > 0 && args[0].substring(0,1).equals("-"))) {
