@@ -16,7 +16,7 @@ const val appVersion: String = "__JBANG_SNAPSHOT_ID__/__JBANG_SNAPSHOT_TIMESTAMP
 private fun displayAppInfo() {
     var version: String = appVersion
     if (appVersion.contains("JBANG_SNAPSHOT_ID")) {
-        version = "0/2025-04-03T21:58:57"
+        version = "0/2025-04-26T14:02:46"
     }
     println(appName + "/" + version + "/" + VERSION)
 }
@@ -148,7 +148,7 @@ var benchmarkConfig: String = """
 val javaApp: String = """
     ///usr/bin/env jbang "${'$'}0" "${'$'}@" ; exit ${'$'}?
     //DEPS io.github.wfouche.tulip:tulip-runtime:__TULIP_VERSION__
-    //DEPS org.springframework.boot:spring-boot-starter-web:3.4.4
+    //DEPS org.springframework.boot:spring-boot-starter-web:3.4.5
     //DEPS org.slf4j:slf4j-api:2.0.17
     //DEPS ch.qos.logback:logback-core:1.5.18
     //DEPS ch.qos.logback:logback-classic:1.5.18
@@ -172,7 +172,7 @@ val javaApp: String = """
 val kotlinApp: String = """
     ///usr/bin/env jbang "${'$'}0" "${'$'}@" ; exit ${'$'}?
     //DEPS io.github.wfouche.tulip:tulip-runtime:__TULIP_VERSION__
-    //DEPS org.springframework.boot:spring-boot-starter-web:3.4.4
+    //DEPS org.springframework.boot:spring-boot-starter-web:3.4.5
     //DEPS org.slf4j:slf4j-api:2.0.17
     //DEPS ch.qos.logback:logback-core:1.5.18
     //DEPS ch.qos.logback:logback-classic:1.5.18
@@ -199,7 +199,7 @@ val kotlinApp: String = """
 val groovyApp: String = """
     ///usr/bin/env jbang "${'$'}0" "${'$'}@" ; exit ${'$'}?
     //DEPS io.github.wfouche.tulip:tulip-runtime:__TULIP_VERSION__
-    //DEPS org.springframework.boot:spring-boot-starter-web:3.4.4
+    //DEPS org.springframework.boot:spring-boot-starter-web:3.4.5
     //DEPS org.slf4j:slf4j-api:2.0.17
     //DEPS ch.qos.logback:logback-core:1.5.18
     //DEPS ch.qos.logback:logback-classic:1.5.18
@@ -223,7 +223,7 @@ val groovyApp: String = """
 val scalaApp: String = """
     //> using jvm 21
     //> using dep io.github.wfouche.tulip:tulip-runtime:__TULIP_VERSION__
-    //> using dep org.springframework.boot:spring-boot-starter-web:3.4.4
+    //> using dep org.springframework.boot:spring-boot-starter-web:3.4.5
     //> using dep org.slf4j:slf4j-api:2.0.17
     //> using dep ch.qos.logback:logback-core:1.5.18
     //> using dep ch.qos.logback:logback-classic:1.5.18
@@ -581,7 +581,7 @@ val JythonJava: String = """
     
     //DEPS org.python:jython-standalone:2.7.4
     //DEPS io.github.wfouche.tulip:tulip-runtime:__TULIP_VERSION__
-    //DEPS org.springframework.boot:spring-boot-starter-web:3.4.4
+    //DEPS org.springframework.boot:spring-boot-starter-web:3.4.5
     //DEPS org.slf4j:slf4j-api:2.0.17
     //DEPS ch.qos.logback:logback-core:1.5.18
     //DEPS ch.qos.logback:logback-classic:1.5.18
@@ -606,7 +606,7 @@ val JythonBenchmark: String = """
     # requires-java = ">=21"
     # dependencies = [
     #   "io.github.wfouche.tulip:tulip-runtime:__TULIP_VERSION__",
-    #   "org.springframework.boot:spring-boot-starter-web:3.4.4",
+    #   "org.springframework.boot:spring-boot-starter-web:3.4.5",
     #   "org.slf4j:slf4j-api:2.0.17",
     #   "ch.qos.logback:logback-core:1.5.18",
     #   "ch.qos.logback:logback-classic:1.5.18",
