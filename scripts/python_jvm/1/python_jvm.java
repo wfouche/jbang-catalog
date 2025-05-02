@@ -19,12 +19,12 @@ import org.python.util.jython;
 public class python_jvm {
 
     private static final String appName = "python-jvm";
-    private static final String appVersion = "1/2025-04-24T20:14:30";
+    private static final String appVersion = "1/2025-05-02T18:08:10";
 
     private static void displayAppInfo() {
         String version = appVersion;
         if (appVersion.contains("JBANG_SNAPSHOT_ID")) {
-            version = "0/2025-04-24T11:44:49";
+            version = "0/2025-05-02T17:58:14";
         }
         System.out.println(appName + "/" + version);
     }
@@ -126,8 +126,19 @@ public class python_jvm {
         String jbangIntegrations = "true";
         String ls = System.lineSeparator();
         boolean debug = false;
+        boolean keepJava = false;
 
         displayAppInfo();
+
+        // --keep-java <script-name>.py arg1 arg2, arg3 ...
+        if (args.length > 1 && args[0].equals("--keep-java")) {
+            keepJava = true;
+            String[] newArgs = new String[args.length - 1];
+            for (int i = 1; i < args.length; i++) {
+                newArgs[i-1] = args[i];
+            }
+            args = newArgs;
+        }
 
         // Invoke the Jython interpreter if no Python script file is specified, or Jython command-line options are specified
         if (args.length == 0 || (args.length > 0 && args[0].substring(0,1).equals("-"))) {
@@ -260,6 +271,12 @@ public class python_jvm {
                                .replace("__MAIN_SCRIPT_FILENAME__", scriptFilename);
             jf.write(jtext);
         }
+
+        // register javaFilename to be deleted when the JVM exits
+        if (!keepJava) {
+            new File(javaFilename).deleteOnExit();
+        }
+
         // jbang run <script>_py.java param1 param2 ...
         {
             StringBuffer params = new StringBuffer("run");
