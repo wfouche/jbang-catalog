@@ -260,6 +260,10 @@ public class python_jvm {
                                .replace("__MAIN_SCRIPT_FILENAME__", scriptFilename);
             jf.write(jtext);
         }
+
+        // register javaFilename to be deleted when the JVM exits
+        new File(javaFilename).deleteOnExit();
+
         // jbang run <script>_py.java param1 param2 ...
         {
             StringBuffer params = new StringBuffer("run");
