@@ -157,6 +157,7 @@ val javaApp: String = """
     //PREVIEW
     //RUNTIME_OPTIONS __TULIP_JAVA_OPTIONS__
     //COMPILE_OPTIONS -g
+    //FILES benchmark_config.json
     
     package io.tulip;
     
@@ -181,6 +182,7 @@ val kotlinApp: String = """
     //KOTLIN 2.0.21
     //RUNTIME_OPTIONS __TULIP_JAVA_OPTIONS__
     //COMPILE_OPTIONS -progressive
+    //FILES benchmark_config.json
     
     package io.tulip
     
@@ -208,7 +210,8 @@ val groovyApp: String = """
     //GROOVY 4.0.26
     //RUNTIME_OPTIONS __TULIP_JAVA_OPTIONS__
     //COMPILE_OPTIONS --tolerance=5
-
+    //FILES benchmark_config.json
+    
     package io.tulip
     
     import io.github.wfouche.tulip.api.TulipApi
@@ -587,7 +590,8 @@ val JythonJava: String = """
     //DEPS ch.qos.logback:logback-classic:1.5.18
     //JAVA 21
     //RUNTIME_OPTIONS __TULIP_JAVA_OPTIONS__
-        
+    //FILES benchmark_config.json
+    
     import org.python.util.jython;
     
     public class Jython {
