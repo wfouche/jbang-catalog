@@ -124,7 +124,7 @@ public class python_jvm {
         String javaVersion = "21";
         String javaRuntimeOptions = "";
         String jbangIntegrations = "true";
-        String ls = System.lineSeparator();
+        String ls = "\n"; // System.lineSeparator();
         boolean debug = false;
         boolean keepJava = false;
 
