@@ -19,7 +19,7 @@ import org.python.util.jython;
 public class python_jvm {
 
     private static final String appName = "python-jvm";
-    private static final String appVersion = "1/2025-05-02T18:08:10";
+    private static final String appVersion = "1/2025-05-12T22:06:13";
 
     private static void displayAppInfo() {
         String version = appVersion;
@@ -124,7 +124,7 @@ public class python_jvm {
         String javaVersion = "21";
         String javaRuntimeOptions = "";
         String jbangIntegrations = "true";
-        String ls = System.lineSeparator();
+        String ls = "\n"; // System.lineSeparator();
         boolean debug = false;
         boolean keepJava = false;
 

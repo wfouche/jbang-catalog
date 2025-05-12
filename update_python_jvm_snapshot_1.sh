@@ -1,1 +1,1 @@
-jbang run snapshot-cli@wfouche python-jvm-dev "Implemented option --keep-java" 1
+jbang run snapshot-cli@wfouche python-jvm-dev "Use \\n as line separator" 1
