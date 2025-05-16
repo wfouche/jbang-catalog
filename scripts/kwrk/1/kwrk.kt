@@ -1,15 +1,11 @@
 ///usr/bin/env jbang "$0" "$@" ; exit $?
 //DEPS com.github.ajalt.clikt:clikt-jvm:5.0.1
-//DEPS io.github.wfouche.tulip:tulip-runtime:2.1.6
-//DEPS org.springframework.boot:spring-boot-starter-web:3.4.3
-//DEPS org.slf4j:slf4j-api:2.0.17
-//DEPS ch.qos.logback:logback-core:1.5.17
-//DEPS ch.qos.logback:logback-classic:1.5.17
+//DEPS io.github.wfouche.tulip:tulip-runtime:2.1.7
 //JAVA 21
 //KOTLIN 2.0.21
 
 import io.github.wfouche.tulip.api.TulipApi
-import io.github.wfouche.tulip.api.TulipUser
+import io.github.wfouche.tulip.user.HttpUser
 import java.util.concurrent.ThreadLocalRandom
 import org.springframework.web.client.RestClient
 import org.springframework.web.client.RestClientException
@@ -32,13 +28,15 @@ import java.nio.file.Paths
 
 import java.util.Locale
 
+import org.springframework.http.MediaType
+
 const val appName: String = "kwrk"
-const val appVersion: String = "1/2025-03-30T22:37:01"
+const val appVersion: String = "1/2025-05-16T15:35:06"
 
 private fun displayAppInfo() {
     var version: String = appVersion
     if (appVersion.contains("JBANG_SNAPSHOT_ID")) {
-        version = "0"
+        version = "0/2025-04-03T19:47:04"
     }
     println(appName + "/" + version + "/" + TulipApi.VERSION)
 }
@@ -49,12 +47,12 @@ val benchmarkConfig:String = """
         "description": "kwrk",
         "output_filename": "kwrk_output.json",
         "report_filename": "kwrk_report.html",
-        "user_class": "HttpUser",
+        "user_class": "KwrkHttpUser",
         "user_params": {
             "url": "__P_URL__",
             "httpHeader": "__P_HEADER__",
-            "connectTimeoutMillis": 500,
-            "readTimeoutMillis": 2000
+            "connectTimeoutMillis": 1000,
+            "readTimeoutMillis": 10000
         },
         "user_actions": {
             "1": "GET:url"
@@ -107,22 +105,11 @@ fun writeToFile(path: String, content: String, append: Boolean) {
     }
 }
 
-class HttpUser(userId: Int, threadId: Int) : TulipUser(userId, threadId) {
+class KwrkHttpUser(userId: Int, threadId: Int) : HttpUser(userId, threadId) {
 
-    // Action 0
     override fun onStart(): Boolean {
-        // Initialize the shared RestClient object only once
         if (userId == 0) {
-            val connectTimeout = getUserParamValue("connectTimeoutMillis").toInt()
-            val readTimeout = getUserParamValue("readTimeoutMillis").toInt()
-            val factory = SimpleClientHttpRequestFactory().apply {
-                setConnectTimeout(connectTimeout)
-                setReadTimeout(readTimeout)
-            }
-            restClient = RestClient.builder()
-                .requestFactory(factory)
-                .baseUrl(getUserParamValue("url"))
-                .build()
+            super.onStart();
             val h: String = getUserParamValue("httpHeader")
             val L = h.split(":")
             http_header_key = L[0].trim()
@@ -131,12 +118,31 @@ class HttpUser(userId: Int, threadId: Int) : TulipUser(userId, threadId) {
         return true
     }
 
+    // Curl commands: https://gist.github.com/hnnazm/ac6f986d45556e52334fb7fd2689d9be
+
     // Action 1: GET ${url}
     override fun action1(): Boolean {
         return try {
-            val rsp: String? = restClient.get()
-                .uri("")
+            val rsp: String? = restClient().get()
+                .uri(getUrlPath())
                 .header(http_header_key, http_header_val)
+                .retrieve()
+                .body(String::class.java)
+            //Postcondition
+            (rsp != null && rsp.length > 0)
+        } catch (e: RestClientException) {
+            false
+        }
+    }
+
+    // Action 2: POST ${url}
+    override fun action2(): Boolean {
+        return try {
+            val rsp: String? = restClient().post()
+                .uri(getUrlPath())
+                .header(http_header_key, http_header_val)
+                .contentType(MediaType.APPLICATION_JSON)
+                .body("")
                 .retrieve()
                 .body(String::class.java)
             //Postcondition
@@ -154,7 +160,7 @@ class HttpUser(userId: Int, threadId: Int) : TulipUser(userId, threadId) {
     // RestClient object
     companion object {
         private lateinit var restClient: RestClient
-        private val logger = LoggerFactory.getLogger(HttpUser::class.java)
+        private val logger = LoggerFactory.getLogger(KwrkHttpUser::class.java)
         private lateinit var http_header_key: String
         private lateinit var http_header_val: String
     }
@@ -173,6 +179,7 @@ class KwrkCli : CliktCommand() {
 
     override fun run() {
         displayAppInfo();
+        println("")
 
         var json = benchmarkConfig
 
