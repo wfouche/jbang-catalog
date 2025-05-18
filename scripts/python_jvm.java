@@ -3,7 +3,9 @@
 //DEPS dev.jbang:jash:0.0.3
 //DEPS org.tomlj:tomlj:1.1.1
 //DEPS org.python:jython-standalone:2.7.4
+//DEPS org.graalvm.python:jbang:24.2.1
 //JAVA 21
+//NOINTEGRATIONS
 
 import java.io.*;
 import java.nio.file.*;
