@@ -2,7 +2,7 @@
 
 //DEPS dev.jbang:jash:0.0.3
 //DEPS org.tomlj:tomlj:1.1.1
-//DEPS org.python:jython-standalone:2.7.4
+//DEPS org.python:jython-slim:2.7.4
 //JAVA 21
 
 import java.io.*;
@@ -161,7 +161,7 @@ public class python_cli {
             }
         }
 
-        String dep = "org.python:jython-standalone:" + jythonVersion;
+        String dep = "org.python:jython-slim:" + jythonVersion;
         deps.add(dep);
 
         byte[] data = Files.readAllBytes(Paths.get(scriptFilename));

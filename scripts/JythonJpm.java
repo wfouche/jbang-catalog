@@ -29,7 +29,7 @@ public class JythonJpm
       String jython_jar = "";
       if (files != null) {
         for (File file : files) {
-          if (file.getName().startsWith("jython-standalone")) {
+          if (file.getName().startsWith("jython-slim")) {
             jython_jar = "deps" + fileSeparator + file.getName();
           } else {
             //System.out.println(file.getName());
