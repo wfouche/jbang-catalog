@@ -50,7 +50,7 @@
       "script-ref": "scripts/python_cli.java"
     },
     "jython-cli": {
-      "script-ref": "scripts/jython_cli.java"
+      "script-ref": "scripts/JythonCli.java"
     }
   },
   "templates": {}
