@@ -1,7 +1,7 @@
 ///usr/bin/env jbang "$0" "$@" ; exit $?
 //DEPS io.github.wfouche.tulip:tulip-runtime:2.1.8-dev
 //JAVA 21
-//KOTLIN 2.0.21
+//KOTLIN 2.1.21
 
 import io.github.wfouche.tulip.api.TulipApi.NUM_ACTIONS
 import io.github.wfouche.tulip.api.TulipApi.VERSION
@@ -180,7 +180,7 @@ val kotlinApp: String = """
     //DEPS ch.qos.logback:logback-classic:1.5.18
     //SOURCES KotlinHttpUser.kt
     //JAVA 21
-    //KOTLIN 2.0.21
+    //KOTLIN 2.1.21
     //RUNTIME_OPTIONS __TULIP_JAVA_OPTIONS__
     //COMPILE_OPTIONS -progressive
     //FILES ../../benchmark_config.json
