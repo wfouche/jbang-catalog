@@ -2,8 +2,10 @@
 
 //DEPS dev.jbang:jash:0.0.3
 //DEPS org.tomlj:tomlj:1.1.1
-//DEPS org.python:jython-standalone:2.7.4
+//DEPS org.python:jython-slim:2.7.4
+//DEPS org.graalvm.python:jbang:24.2.1
 //JAVA 21
+//NOINTEGRATIONS
 
 import java.io.*;
 import java.nio.file.*;
@@ -19,7 +21,7 @@ import org.python.util.jython;
 public class python_jvm {
 
     private static final String appName = "python-jvm";
-    private static final String appVersion = "1/2025-05-12T22:06:13";
+    private static final String appVersion = "1/2025-05-26T08:52:28";
 
     private static void displayAppInfo() {
         String version = appVersion;
@@ -237,7 +239,7 @@ public class python_jvm {
             }
         }
 
-        String dep = "org.python:jython-standalone:" + jythonVersion;
+        String dep = "org.python:jython-slim:" + jythonVersion;
         if (graalpyVersion.length() > 0) {
             dep = "org.graalvm.python:jbang:" + graalpyVersion;
         }
