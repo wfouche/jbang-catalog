@@ -32,7 +32,7 @@
       "script-ref": "scripts/TulipCli.java"
     },
     "tulip-cli"     : {
-      "script-ref": "cripts/TulipCli/1/TulipCli.java",
+      "script-ref": "scripts/TulipCli/1/TulipCli.java"
     },
     "timestamp": {
       "script-ref": "scripts/timestamp.java"
