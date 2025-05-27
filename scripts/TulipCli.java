@@ -612,6 +612,141 @@ public class TulipCli {
         chmod();
     }
 
+    static String scalaApp = """
+    //> using jvm 21
+    //> using dep io.github.wfouche.tulip:tulip-runtime:__TULIP_VERSION__
+    //> using dep org.springframework.boot:spring-boot-starter-web:3.4.5
+    //> using dep org.slf4j:slf4j-api:2.0.17
+    //> using dep ch.qos.logback:logback-core:1.5.18
+    //> using dep ch.qos.logback:logback-classic:1.5.18
+    //> using javaOpt __TULIP_JAVA_OPTIONS__
+    //> using repositories m2local
+
+    // https://yadukrishnan.live/developing-java-applications-with-scala-cli
+    // https://www.baeldung.com/scala/scala-cli-intro
+
+    package io.tulip
+
+    import io.github.wfouche.tulip.api.TulipApi
+
+    object App {
+      def main(args: Array[String]): Unit = {
+        TulipApi.runTulip("benchmark_config.json")
+      }
+    }
+    """.stripIndent();
+
+    static String scalaUser = """
+    package io.tulip
+
+    import io.github.wfouche.tulip.user.HttpUser
+    import java.util.concurrent.ThreadLocalRandom
+    import org.slf4j.Logger
+    import org.slf4j.LoggerFactory
+
+    class ScalaHttpUser(userId: Int, threadId: Int) extends HttpUser(userId, threadId) {
+
+      override def onStart(): Boolean = {
+        // Initialize the shared RestClient object only once
+        if (getUserId == 0) {
+          logger.info("Scala")
+          super.onStart()
+        }
+        true
+      }
+
+      // Action 1: GET /posts/{id}
+      override def action1(): Boolean = {
+        val id = ThreadLocalRandom.current().nextInt(100) + 1
+        !http_GET("/posts/{id}", id).isEmpty()
+      }
+
+      // Action 2: GET /comments/{id}
+      override def action2(): Boolean = {
+        val id = ThreadLocalRandom.current().nextInt(500) + 1
+        !http_GET("/comments/{id}", id).isEmpty()
+      }
+
+      // Action 3: GET /todos/{id}
+      override def action3(): Boolean = {
+        val id = ThreadLocalRandom.current().nextInt(200) + 1
+        !http_GET("/todos/{id}", id).isEmpty()
+      }
+
+      override def onStop(): Boolean = true
+
+    }
+
+    // Logger
+    val logger: Logger = LoggerFactory.getLogger(classOf[ScalaHttpUser])
+    """.stripIndent();
+
+    static String runBenchShScala = """
+    #!/bin/bash
+    rm -f benchmark_report.html
+    scala-cli io/tulip/App.scala io/tulip/ScalaHttpUser.scala
+    echo ""
+    #w3m -dump -cols 205 benchmark_report.html
+    lynx -dump -width 205 benchmark_report.html
+    #jbang run asciidoc@wfouche benchmark_config.adoc
+    """.stripIndent();
+
+    static String runBenchCmdScala = """
+    if exist benchmark_report.html del benchmark_report.html
+    scala-cli io\\tulip\\App.scala io\\tulip\\ScalaHttpUser.scala
+    @echo off
+    echo.
+    REM call w3m.exe -dump -cols 205 benchmark_report.html
+    REM lynx.exe -dump -width 205 benchmark_report.html
+    start benchmark_report.html
+    REM jbang asciidoc@wfouche benchmark_config.adoc
+    REM start benchmark_config.html
+    """.stripIndent();
+
+    static void generateScalaApp() throws IOException, InterruptedException {
+        Files.createDirectories(Paths.get(path));
+
+        writeToFile(
+                "benchmark_config.json",
+                benchmarkConfig
+                        .replace("__TULIP_LANG__", lang)
+                        .replace("__AVG_APS__", avgAPS)
+                        .replace("__URL__", url)
+                        .replace("__ONSTOP_ID__", osid),
+                false
+        );
+
+        writeToFile(
+                path + "App.scala",
+                scalaApp
+                        .replace("__TULIP_VERSION__", version)
+                        .replace("__TULIP_JAVA_OPTIONS__", TULIP_JAVA_OPTIONS),
+                false
+        );
+
+        writeToFile(
+                path + "ScalaHttpUser.scala",
+                scalaUser,
+                false
+        );
+
+        writeToFile(
+                "run_bench.sh",
+                runBenchShScala
+                        .replace("__TULIP_VERSION__", version)
+                        .replace("__TULIP_JAVA_OPTIONS__", TULIP_JAVA_OPTIONS),
+                false
+        );
+
+        writeToFile(
+                "run_bench.cmd",
+                runBenchCmdScala
+                        .replace("__TULIP_VERSION__", version)
+                        .replace("__TULIP_JAVA_OPTIONS__", TULIP_JAVA_OPTIONS), false
+        );
+
+        chmod();
+    }
 
     public static void main(String[] args) throws IOException, InterruptedException {
 
@@ -672,6 +807,10 @@ public class TulipCli {
 
         if (lang.equals("Groovy")) {
             generateGroovyApp();
+        }
+
+        if (lang.equals("Scala")) {
+            generateScalaApp();
         }
     }
 }
