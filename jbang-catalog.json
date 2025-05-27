@@ -29,7 +29,7 @@
       "script-ref": "scripts/SnapshotCli/1/SnapshotCli.java"
     },
     "tulip-cli-dev": {
-      "script-ref": "scripts/tulip-cli.kt"
+      "script-ref": "scripts/TulipCli.java"
     },
     "tulip-cli"     : {
       "script-ref": "scripts/tulip-cli/1/tulip-cli.kt"
