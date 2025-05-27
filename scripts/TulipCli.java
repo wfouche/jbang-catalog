@@ -173,7 +173,7 @@ public class TulipCli {
     static String javaApp = """
     ///usr/bin/env jbang "$0" "$@" ; exit $?
     //DEPS io.github.wfouche.tulip:tulip-runtime:__TULIP_VERSION__
-    //DEPS org.springframework.boot:spring-boot-starter-web:3.4.5
+    //DEPS org.springframework.boot:spring-boot-starter-web:3.4.6
     //DEPS org.slf4j:slf4j-api:2.0.17
     //DEPS ch.qos.logback:logback-core:1.5.18
     //DEPS ch.qos.logback:logback-classic:1.5.18
@@ -320,7 +320,7 @@ public class TulipCli {
     static String kotlinApp = """
     ///usr/bin/env jbang "$0" "$@" ; exit $?
     //DEPS io.github.wfouche.tulip:tulip-runtime:__TULIP_VERSION__
-    //DEPS org.springframework.boot:spring-boot-starter-web:3.4.5
+    //DEPS org.springframework.boot:spring-boot-starter-web:3.4.6
     //DEPS org.slf4j:slf4j-api:2.0.17
     //DEPS ch.qos.logback:logback-core:1.5.18
     //DEPS ch.qos.logback:logback-classic:1.5.18
@@ -468,7 +468,7 @@ public class TulipCli {
     static String groovyApp = """
     ///usr/bin/env jbang "$0" "$@" ; exit $?
     //DEPS io.github.wfouche.tulip:tulip-runtime:__TULIP_VERSION__
-    //DEPS org.springframework.boot:spring-boot-starter-web:3.4.5
+    //DEPS org.springframework.boot:spring-boot-starter-web:3.4.6
     //DEPS org.slf4j:slf4j-api:2.0.17
     //DEPS ch.qos.logback:logback-core:1.5.18
     //DEPS ch.qos.logback:logback-classic:1.5.18
@@ -615,7 +615,7 @@ public class TulipCli {
     static String scalaApp = """
     //> using jvm 21
     //> using dep io.github.wfouche.tulip:tulip-runtime:__TULIP_VERSION__
-    //> using dep org.springframework.boot:spring-boot-starter-web:3.4.5
+    //> using dep org.springframework.boot:spring-boot-starter-web:3.4.6
     //> using dep org.slf4j:slf4j-api:2.0.17
     //> using dep ch.qos.logback:logback-core:1.5.18
     //> using dep ch.qos.logback:logback-classic:1.5.18
@@ -753,7 +753,7 @@ public class TulipCli {
     
     //DEPS org.python:jython-standalone:2.7.4
     //DEPS io.github.wfouche.tulip:tulip-runtime:__TULIP_VERSION__
-    //DEPS org.springframework.boot:spring-boot-starter-web:3.4.5
+    //DEPS org.springframework.boot:spring-boot-starter-web:3.4.6
     //DEPS org.slf4j:slf4j-api:2.0.17
     //DEPS ch.qos.logback:logback-core:1.5.18
     //DEPS ch.qos.logback:logback-classic:1.5.18
@@ -777,7 +777,7 @@ public class TulipCli {
     # requires-java = ">=21"
     # dependencies = [
     #   "io.github.wfouche.tulip:tulip-runtime:__TULIP_VERSION__",
-    #   "org.springframework.boot:spring-boot-starter-web:3.4.5",
+    #   "org.springframework.boot:spring-boot-starter-web:3.4.6",
     #   "org.slf4j:slf4j-api:2.0.17",
     #   "ch.qos.logback:logback-core:1.5.18",
     #   "ch.qos.logback:logback-classic:1.5.18",
