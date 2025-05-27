@@ -466,7 +466,7 @@ public class TulipCli {
     }
 
     static String groovyApp = """
-    ///usr/bin/env jbang "${'$'}0" "${'$'}@" ; exit ${'$'}?
+    ///usr/bin/env jbang "$0" "$@" ; exit $?
     //DEPS io.github.wfouche.tulip:tulip-runtime:__TULIP_VERSION__
     //DEPS org.springframework.boot:spring-boot-starter-web:3.4.5
     //DEPS org.slf4j:slf4j-api:2.0.17
@@ -748,6 +748,157 @@ public class TulipCli {
         chmod();
     }
 
+    static String JythonJava = """
+    ///usr/bin/env jbang "$0" "$@" ; exit $?
+    
+    //DEPS org.python:jython-standalone:2.7.4
+    //DEPS io.github.wfouche.tulip:tulip-runtime:__TULIP_VERSION__
+    //DEPS org.springframework.boot:spring-boot-starter-web:3.4.5
+    //DEPS org.slf4j:slf4j-api:2.0.17
+    //DEPS ch.qos.logback:logback-core:1.5.18
+    //DEPS ch.qos.logback:logback-classic:1.5.18
+    //JAVA 21
+    //RUNTIME_OPTIONS __TULIP_JAVA_OPTIONS__
+    
+    import org.python.util.jython;
+    
+    public class Jython {
+        public static void main(String[] args) {
+            jython.main(args);
+        }
+    }
+    """.stripIndent();
+
+    static String JythonBenchmark = """
+    from __future__ import print_function
+
+    # /// jbang
+    # requires-jython = "==2.7.4"
+    # requires-java = ">=21"
+    # dependencies = [
+    #   "io.github.wfouche.tulip:tulip-runtime:__TULIP_VERSION__",
+    #   "org.springframework.boot:spring-boot-starter-web:3.4.5",
+    #   "org.slf4j:slf4j-api:2.0.17",
+    #   "ch.qos.logback:logback-core:1.5.18",
+    #   "ch.qos.logback:logback-classic:1.5.18",
+    # ]
+    # [java]
+    #   runtime-options = "__TULIP_JAVA_OPTIONS__"
+    # ///
+
+    import io.github.wfouche.tulip.user.HttpUser as HttpUser
+    import io.github.wfouche.tulip.api.TulipUserFactory as TulipUserFactory
+    import io.github.wfouche.tulip.api.TulipApi as TulipApi
+    import java.util.concurrent.ThreadLocalRandom as ThreadLocalRandom
+
+    class PythonHttpUser(HttpUser):
+
+        def __init__(self, userId, threadId):
+            HttpUser.__init__(self, userId, threadId)
+
+        def onStart(self):
+            if self.userId == 0:
+                print("Jython")
+                HttpUser.onStart(self)
+            return True
+
+        def action1(self):
+            id = ThreadLocalRandom.current().nextInt(100) + 1
+            return len(self.http_GET("/posts/{id}", id)) > 0
+
+        def action2(self):
+            id = ThreadLocalRandom.current().nextInt(500) + 1
+            return len(self.http_GET("/comments/{id}", id)) > 0
+
+        def action3(self):
+            id = ThreadLocalRandom.current().nextInt(200) + 1
+            return len(self.http_GET("/todos/{id}", id)) > 0
+
+        def onStop(self):
+            return True
+
+    class UserFactory(TulipUserFactory):
+
+        def getUser(self, userId, className, threadId):
+            return PythonHttpUser(userId, threadId)
+
+    TulipApi.runTulip("benchmark_config.json", UserFactory())
+
+    """.stripIndent();
+
+    static String runBenchShJython = """
+    #!/bin/bash
+    rm -f benchmark_report.html
+    #export JBANG_JAVA_OPTIONS="__TULIP_JAVA_OPTIONS__"
+    jbang run Jython.java benchmark.py
+    rem jbang run python-jvm@wfouche benchmark.py
+    echo ""
+    #w3m -dump -cols 205 benchmark_report.html
+    lynx -dump -width 205 benchmark_report.html
+    #jbang run asciidoc@wfouche benchmark_config.adoc
+    """.stripIndent();
+
+    static String runBenchCmdJython = """
+    if exist benchmark_report.html del benchmark_report.html
+    REM JBANG_JAVA_OPTIONS=__TULIP_JAVA_OPTIONS__
+    call jbang run Jython.java benchmark.py
+    rem call jbang run python-jvm@wfouche benchmark.py
+    @echo off
+    echo.
+    REM call w3m.exe -dump -cols 205 benchmark_report.html
+    REM lynx.exe -dump -width 205 benchmark_report.html
+    start benchmark_report.html
+    REM jbang run asciidoc@wfouche benchmark_config.adoc
+    REM start benchmark_config.html
+    """.stripIndent();
+
+    static void generateJythonApp() throws IOException, InterruptedException {
+        //Files.createDirectories(Paths.get(path));
+
+        writeToFile(
+                "benchmark_config.json",
+                benchmarkConfig
+                        .replace("__TULIP_LANG__", lang)
+                        .replace("__AVG_APS__", avgAPS)
+                        .replace("__URL__", url)
+                        .replace("__ONSTOP_ID__", osid),
+                false
+        );
+
+        writeToFile(
+                "Jython.java",
+                JythonJava
+                        .replace("__TULIP_VERSION__", version)
+                        .replace("__TULIP_JAVA_OPTIONS__", TULIP_JAVA_OPTIONS),
+                false
+        );
+
+        writeToFile(
+                "benchmark.py",
+                JythonBenchmark
+                        .replace("__TULIP_VERSION__", version)
+                        .replace("__TULIP_JAVA_OPTIONS__", TULIP_JAVA_OPTIONS),
+                false
+        );
+
+        writeToFile(
+                "run_bench.sh",
+                runBenchShJython
+                        .replace("__TULIP_VERSION__", version)
+                        .replace("__TULIP_JAVA_OPTIONS__", TULIP_JAVA_OPTIONS),
+                false
+        );
+
+        writeToFile(
+                "run_bench.cmd",
+                runBenchCmdJython
+                        .replace("__TULIP_VERSION__", version)
+                        .replace("__TULIP_JAVA_OPTIONS__", TULIP_JAVA_OPTIONS), false
+        );
+
+        chmod();
+    }
+
     public static void main(String[] args) throws IOException, InterruptedException {
 
         displayAppInfo();
@@ -811,6 +962,10 @@ public class TulipCli {
 
         if (lang.equals("Scala")) {
             generateScalaApp();
+        }
+
+        if (lang.equals("Jython")) {
+            generateJythonApp();
         }
     }
 }
