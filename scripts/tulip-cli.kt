@@ -541,7 +541,7 @@ val runBenchShScala: String = """
 
 val runBenchCmdScala: String = """
     if exist benchmark_report.html del benchmark_report.html
-    scala-cli io\tulip\App.scala io\tulip\HttpUser.scala
+    scala-cli io\tulip\App.scala io\tulip\ScalaHttpUser.scala
     @echo off
     echo.
     REM call w3m.exe -dump -cols 205 benchmark_report.html
