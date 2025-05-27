@@ -44,6 +44,17 @@ public class TulipCli {
         }
     }
 
+    static void chmod() throws IOException, InterruptedException {
+        if (!java.lang.System.getProperty("os.name").toLowerCase().contains("windows")) {
+            List<String> cmd = new LinkedList<String>();
+            cmd.add("chmod");
+            cmd.add("+x");
+            cmd.add("run_bench.sh");
+            ProcessBuilder pb = new ProcessBuilder(cmd);
+            pb.start().waitFor();
+        }
+    }
+
     static String benchmarkConfig = """
     {
         "actions": {
@@ -301,16 +312,157 @@ public class TulipCli {
                 .replace("__TULIP_VERSION__", version)
                 .replace("__TULIP_JAVA_OPTIONS__", TULIP_JAVA_OPTIONS), false
         );
-        
-        if (!java.lang.System.getProperty("os.name").toLowerCase().contains("windows")) {
-            List<String> cmd = new LinkedList<String>();
-            cmd.add("chmod");
-            cmd.add("+x");
-            cmd.add("run_bench.sh");               
-            ProcessBuilder pb = new ProcessBuilder(cmd);
-            pb.start().waitFor();
-        }
 
+        chmod();
+
+    }
+
+    static String kotlinApp = """
+    ///usr/bin/env jbang "$0" "$@" ; exit $?
+    //DEPS io.github.wfouche.tulip:tulip-runtime:__TULIP_VERSION__
+    //DEPS org.springframework.boot:spring-boot-starter-web:3.4.5
+    //DEPS org.slf4j:slf4j-api:2.0.17
+    //DEPS ch.qos.logback:logback-core:1.5.18
+    //DEPS ch.qos.logback:logback-classic:1.5.18
+    //SOURCES KotlinHttpUser.kt
+    //JAVA 21
+    //KOTLIN 2.1.21
+    //RUNTIME_OPTIONS __TULIP_JAVA_OPTIONS__
+    //COMPILE_OPTIONS -progressive
+    //FILES ../../benchmark_config.json
+
+    package io.tulip
+
+    import io.github.wfouche.tulip.api.TulipApi
+
+    class App() {
+        companion object {
+            @JvmStatic
+            fun main(args: Array<String>) {
+                TulipApi.runTulip("benchmark_config.json")
+            }
+        }
+    }
+    """.stripIndent();
+
+    static String kotlinUser = """
+    package io.tulip
+    
+    import io.github.wfouche.tulip.user.HttpUser
+    import java.util.concurrent.ThreadLocalRandom
+    import org.slf4j.Logger
+    import org.slf4j.LoggerFactory
+    
+    class KotlinHttpUser(userId: Int, threadId: Int) : HttpUser(userId, threadId) {
+    
+        // Action 0
+        override fun onStart(): Boolean {
+            // Initialize the shared RestClient object only once
+            if (userId == 0) {
+                logger.info("Kotlin")
+                super.onStart()
+            }
+            return true
+        }
+    
+        // Action 1: GET /posts/{id}
+        override fun action1(): Boolean {
+            val id: Int = ThreadLocalRandom.current().nextInt(100)+1
+            return !http_GET("/posts/{id}", id).isEmpty()
+        }
+    
+        // Action 2: GET /comments/{id}
+        override fun action2(): Boolean {
+            val id: Int = ThreadLocalRandom.current().nextInt(500)+1
+            return !http_GET("/comments/{id}", id).isEmpty()
+        }
+    
+        // Action 3: GET /todos/{id}
+        override fun action3(): Boolean {
+            val id: Int = ThreadLocalRandom.current().nextInt(200)+1
+            return !http_GET("/todos/{id}", id).isEmpty()
+        }
+    
+        override fun onStop(): Boolean {
+            return true
+        }
+            
+        // RestClient object
+        companion object {
+            private val logger = LoggerFactory.getLogger(KotlinHttpUser::class.java)
+        }
+    }
+    """.stripIndent();
+
+    static String runBenchShKotlin = """
+    #!/bin/bash
+    rm -f benchmark_report.html
+    #export JBANG_JAVA_OPTIONS="__TULIP_JAVA_OPTIONS__"
+    jbang run io/tulip/App.kt
+    echo ""
+    #w3m -dump -cols 205 benchmark_report.html
+    lynx -dump -width 205 benchmark_report.html
+    #jbang run asciidoc@wfouche benchmark_config.adoc
+    #jbang export fatjar io/tulip/App.kt
+    """.stripIndent();
+
+    static String runBenchCmdKotlin = """
+    if exist benchmark_report.html del benchmark_report.html
+    REM JBANG_JAVA_OPTIONS=__TULIP_JAVA_OPTIONS__
+    call jbang run io\\tulip\\App.kt
+    @echo off
+    echo.
+    REM call w3m.exe -dump -cols 205 benchmark_report.html
+    REM lynx.exe -dump -width 205 benchmark_report.html
+    start benchmark_report.html
+    REM jbang run asciidoc@wfouche benchmark_config.adoc
+    REM start benchmark_config.html
+    REM jbang export fatjar io\\tulip\\App.kt
+    """.stripIndent();
+
+    static void generateKotlinApp() throws IOException, InterruptedException {
+        Files.createDirectories(Paths.get(path));
+
+        writeToFile(
+                "benchmark_config.json",
+                benchmarkConfig
+                        .replace("__TULIP_LANG__", lang)
+                        .replace("__AVG_APS__", avgAPS)
+                        .replace("__URL__", url)
+                        .replace("__ONSTOP_ID__", osid),
+                false
+        );
+
+        writeToFile(
+                path + "App.kt",
+                kotlinApp
+                        .replace("__TULIP_VERSION__", version)
+                        .replace("__TULIP_JAVA_OPTIONS__", TULIP_JAVA_OPTIONS),
+                false
+        );
+
+        writeToFile(
+                path + "KotlinHttpUser.kt",
+                kotlinUser,
+                false
+        );
+
+        writeToFile(
+                "run_bench.sh",
+                runBenchShKotlin
+                        .replace("__TULIP_VERSION__", version)
+                        .replace("__TULIP_JAVA_OPTIONS__", TULIP_JAVA_OPTIONS),
+                false
+        );
+
+        writeToFile(
+                "run_bench.cmd",
+                runBenchCmdKotlin
+                        .replace("__TULIP_VERSION__", version)
+                        .replace("__TULIP_JAVA_OPTIONS__", TULIP_JAVA_OPTIONS), false
+        );
+
+        chmod();
     }
 
     public static void main(String[] args) throws IOException, InterruptedException {
@@ -364,6 +516,10 @@ public class TulipCli {
 
         if (lang.equals("Java")) {
             generateJavaApp();
+        }
+
+        if (lang.equals("Kotlin")) {
+            generateKotlinApp();
         }
     }
 }
