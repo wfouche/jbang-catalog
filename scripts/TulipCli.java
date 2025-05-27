@@ -465,6 +465,154 @@ public class TulipCli {
         chmod();
     }
 
+    static String groovyApp = """
+    ///usr/bin/env jbang "${'$'}0" "${'$'}@" ; exit ${'$'}?
+    //DEPS io.github.wfouche.tulip:tulip-runtime:__TULIP_VERSION__
+    //DEPS org.springframework.boot:spring-boot-starter-web:3.4.5
+    //DEPS org.slf4j:slf4j-api:2.0.17
+    //DEPS ch.qos.logback:logback-core:1.5.18
+    //DEPS ch.qos.logback:logback-classic:1.5.18
+    //SOURCES GroovyHttpUser.groovy
+    //JAVA 21
+    //GROOVY 4.0.26
+    //RUNTIME_OPTIONS __TULIP_JAVA_OPTIONS__
+    //COMPILE_OPTIONS --tolerance=5
+    //FILES ../../benchmark_config.json
+
+    package io.tulip
+
+    import io.github.wfouche.tulip.api.TulipApi
+
+    class App {
+        static void main(String[] args) {
+            TulipApi.runTulip("benchmark_config.json")
+        }
+    }
+    """.stripIndent();
+
+    static String groovyUser = """
+    package io.tulip
+    
+    import io.github.wfouche.tulip.user.HttpUser
+    import java.util.concurrent.ThreadLocalRandom
+    import org.slf4j.Logger
+    import org.slf4j.LoggerFactory
+    
+    class GroovyHttpUser extends HttpUser {
+    
+        GroovyHttpUser(int userId, int threadId) {
+            super(userId, threadId)
+        }
+    
+        boolean onStart() {
+            // Initialize the shared RestClient object only once
+            if (userId == 0) {
+                logger.info("Groovy")
+                super.onStart()
+            }
+            return true
+        }
+    
+        // Action 1: GET /posts/{id}
+        boolean action1() {
+            int id = ThreadLocalRandom.current().nextInt(100) + 1
+            return !http_GET("/posts/{id}", id).isEmpty()            
+        }
+    
+        // Action 2: GET /comments/{id}
+        boolean action2() {
+            int id = ThreadLocalRandom.current().nextInt(500) + 1
+            return !http_GET("/comments/{id}", id).isEmpty()
+        }
+    
+        // Action 3: GET /todos/{id}
+        boolean action3() {
+            int id = ThreadLocalRandom.current().nextInt(200) + 1
+            return !http_GET("/todos/{id}", id).isEmpty()
+        }
+    
+        boolean onStop() {
+            return true
+        }
+
+        // Logger
+        static Logger logger = LoggerFactory.getLogger(GroovyHttpUser.class)
+    
+    }    
+    """.stripIndent();
+
+    static String runBenchShGroovy = """
+    #!/bin/bash
+    rm -f benchmark_report.html
+    #export JBANG_JAVA_OPTIONS="__TULIP_JAVA_OPTIONS__"
+    jbang run io/tulip/App.groovy
+    echo ""
+    #w3m -dump -cols 205 benchmark_report.html
+    lynx -dump -width 205 benchmark_report.html
+    #jbang run asciidoc@wfouche benchmark_config.adoc
+    #jbang export fatjar io/tulip/App.groovy
+    """.stripIndent();
+
+    static String runBenchCmdGroovy = """
+    if exist benchmark_report.html del benchmark_report.html
+    REM JBANG_JAVA_OPTIONS=__TULIP_JAVA_OPTIONS__
+    call jbang run io\\tulip\\App.groovy
+    @echo off
+    echo.
+    REM call w3m.exe -dump -cols 205 benchmark_report.html
+    REM lynx.exe -dump -width 205 benchmark_report.html
+    start benchmark_report.html
+    REM jbang run asciidoc@wfouche benchmark_config.adoc
+    REM start benchmark_config.html
+    REM jbang export fatjar io\\tulip\\App.groovy
+    """.stripIndent();
+
+    static void generateGroovyApp() throws IOException, InterruptedException {
+        Files.createDirectories(Paths.get(path));
+
+        writeToFile(
+                "benchmark_config.json",
+                benchmarkConfig
+                        .replace("__TULIP_LANG__", lang)
+                        .replace("__AVG_APS__", avgAPS)
+                        .replace("__URL__", url)
+                        .replace("__ONSTOP_ID__", osid),
+                false
+        );
+
+        writeToFile(
+                path + "App.groovy",
+                groovyApp
+                        .replace("__TULIP_VERSION__", version)
+                        .replace("__TULIP_JAVA_OPTIONS__", TULIP_JAVA_OPTIONS),
+                false
+        );
+
+        writeToFile(
+                path + "GroovyHttpUser.groovy",
+                groovyUser,
+                false
+        );
+
+        writeToFile(
+                "run_bench.sh",
+                runBenchShGroovy
+                        .replace("__TULIP_VERSION__", version)
+                        .replace("__TULIP_JAVA_OPTIONS__", TULIP_JAVA_OPTIONS),
+                false
+        );
+
+        writeToFile(
+                "run_bench.cmd",
+                runBenchCmdGroovy
+                        .replace("__TULIP_VERSION__", version)
+                        .replace("__TULIP_JAVA_OPTIONS__", TULIP_JAVA_OPTIONS), false
+        );
+
+        chmod();
+    }
+
+
     public static void main(String[] args) throws IOException, InterruptedException {
 
         displayAppInfo();
@@ -520,6 +668,10 @@ public class TulipCli {
 
         if (lang.equals("Kotlin")) {
             generateKotlinApp();
+        }
+
+        if (lang.equals("Groovy")) {
+            generateGroovyApp();
         }
     }
 }
