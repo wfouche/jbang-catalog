@@ -1,0 +1,369 @@
+///usr/bin/env jbang "$0" "$@" ; exit $?
+
+//DEPS io.github.wfouche.tulip:tulip-runtime:2.1.7
+//JAVA 21
+
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.LinkedList;
+import java.util.List;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
+public class TulipCli {
+
+    static String appName = "tulip-cli";
+    static String appVersion = "__JBANG_SNAPSHOT_ID__/__JBANG_SNAPSHOT_TIMESTAMP__";
+
+    static void displayAppInfo() {
+        String version = appVersion;
+        if (appVersion.contains("JBANG_SNAPSHOT_ID")) {
+            version = "0    /2025-04-26T14:02:46";
+        }
+        System.err.println(appName + "/" + version + "/" + io.github.wfouche.tulip.api.TulipApi.VERSION);
+    }
+
+    static String osid = String.valueOf(io.github.wfouche.tulip.api.TulipApi.NUM_ACTIONS-1).toString();
+    static String lang = "Java";
+    static String protocol = "http";
+    static String url = "http://jsonplaceholder.typicode.com/posts/1";     
+    static String TULIP_JAVA_OPTIONS = "-server -Xms2g -Xmx2g -XX:+UseZGC -XX:+ZGenerational";
+    static String avgAPS = "10.0";
+    static String version = io.github.wfouche.tulip.api.TulipApi.VERSION;
+    static String path = "io/tulip/";
+
+    static void writeToFile(String path, String content, Boolean append) {
+        try {
+            FileWriter fw = new FileWriter(path, append);
+            fw.write(content);
+            fw.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    static String benchmarkConfig = """
+    {
+        "actions": {
+            "description": "Spring RestClient Benchmark [__TULIP_LANG__]",
+            "output_filename": "benchmark_output.json",
+            "report_filename": "benchmark_report.html",
+            "user_class": "io.tulip.__TULIP_LANG__HttpUser",
+            "user_params": {
+                "url": "__URL__",
+                "httpVersion": "",
+                "connectTimeoutMillis": 500,
+                "readTimeoutMillis": 2000,
+                "debug": true
+            },
+            "user_actions": {
+                "1": "GET:posts",
+                "2": "GET:comments",
+                "3": "GET:todos"
+            }
+        },
+        "workflows": {
+            "api-user": {
+                "-": {
+                    "1": 0.40,
+                    "3": 0.60
+                },
+                "1": {
+                    "2": 1.0
+                },
+                "2": {
+                    "-": 1.0
+                },
+                "3": {
+                    "-": 1.0
+                }
+            }
+        },
+        "benchmarks": {
+            "onStart": {
+                "save_stats": false,
+                "scenario_actions": [ {"id": 0} ]
+            },
+            "REST1": {
+                "enabled": true,
+                "aps_rate": __AVG_APS__,
+                "scenario_actions": [
+                    {
+                        "id": 1
+                    }
+                ],
+                "time": {
+                    "pre_warmup_duration": 30,
+                    "warmup_duration": 10,
+                    "benchmark_duration": 30,
+                    "benchmark_iterations": 3
+                }
+            },
+            "REST2": {
+                "enabled": true,
+                "aps_rate": __AVG_APS__,
+                "scenario_actions": [
+                    {
+                        "id": 1, "weight": 10
+                    },
+                    {
+                        "id": 2, "weight": 40
+                    },
+                    {
+                        "id": 3, "weight": 50
+                    }
+                ],
+                "time": {
+                    "pre_warmup_duration": 30,
+                    "warmup_duration": 10,
+                    "benchmark_duration": 30,
+                    "benchmark_iterations": 3
+                }
+            },
+            "REST3": {
+                "enabled": true,
+                "aps_rate": __AVG_APS__,
+                "scenario_workflow": "api-user",
+                "time": {
+                    "pre_warmup_duration": 30,
+                    "warmup_duration": 10,
+                    "benchmark_duration": 30,
+                    "benchmark_iterations": 3
+                }
+            },
+            "REST3.max": {
+                "enabled": true,
+                "aps_rate": 0.0,
+                "scenario_workflow": "api-user",
+                "time": {
+                    "pre_warmup_duration": 30,
+                    "warmup_duration": 10,
+                    "benchmark_duration": 30,
+                    "benchmark_iterations": 3
+                }
+            },
+            "onStop": {
+                "save_stats": false,
+                "scenario_actions": [ {"id": __ONSTOP_ID__} ]
+            }
+        },
+        "contexts": {
+            "Context-1": {
+                "enabled": true,
+                "num_users": 128,
+                "num_threads": 8
+            }
+        }
+    }
+    """.stripIndent();
+
+    static String javaApp = """
+    ///usr/bin/env jbang "$0" "$@" ; exit $?
+    //DEPS io.github.wfouche.tulip:tulip-runtime:__TULIP_VERSION__
+    //DEPS org.springframework.boot:spring-boot-starter-web:3.4.5
+    //DEPS org.slf4j:slf4j-api:2.0.17
+    //DEPS ch.qos.logback:logback-core:1.5.18
+    //DEPS ch.qos.logback:logback-classic:1.5.18
+    //SOURCES JavaHttpUser.java
+    //JAVA 21
+    //PREVIEW
+    //RUNTIME_OPTIONS __TULIP_JAVA_OPTIONS__
+    //COMPILE_OPTIONS -g
+    //FILES ../../benchmark_config.json
+    
+    package io.tulip;
+    
+    import io.github.wfouche.tulip.api.TulipApi;
+    
+    public class App {
+       public static void main(String[] args) {
+          TulipApi.runTulip("benchmark_config.json");
+       }
+    }
+    """.stripIndent();
+
+    static String javaUser = """
+    package io.tulip;
+
+    import io.github.wfouche.tulip.user.HttpUser;
+    import java.util.concurrent.ThreadLocalRandom;
+    import org.slf4j.Logger;
+    import org.slf4j.LoggerFactory;
+
+    public class JavaHttpUser extends HttpUser {
+
+        public JavaHttpUser(int userId, int threadId) {
+            super(userId, threadId);
+        }
+
+        public boolean onStart() {
+            // Initialize the shared RestClient object only once
+            if (getUserId() == 0) {
+                logger.info("Java");
+                super.onStart();
+            }
+            return true;
+        }
+
+        // Action 1: GET /posts/{id}
+        public boolean action1() {
+            int id = ThreadLocalRandom.current().nextInt(100)+1;
+            return !http_GET("/posts/{id}", id).isEmpty();
+        }
+
+        // Action 2: GET /comments/{id}
+        public boolean action2() {
+            int id = ThreadLocalRandom.current().nextInt(500)+1;
+            return !http_GET("/comments/{id}", id).isEmpty();
+        }
+
+        // Action 3: GET /todos/{id}
+        public boolean action3() {
+            int id = ThreadLocalRandom.current().nextInt(200)+1;
+            return !http_GET("/todos/{id}", id).isEmpty();
+        }
+
+        public boolean onStop() {
+            return true;
+        }
+        
+        // Logger
+        private static final Logger logger = LoggerFactory.getLogger(JavaHttpUser.class);
+
+    }    
+    """.stripIndent();
+
+    static String runBenchShJava = """
+    #!/bin/bash
+    rm -f benchmark_report.html
+    #export JBANG_JAVA_OPTIONS="__TULIP_JAVA_OPTIONS__"
+    jbang run io/tulip/App.java
+    echo ""
+    #w3m -dump -cols 205 benchmark_report.html
+    lynx -dump -width 205 benchmark_report.html
+    #jbang run asciidoc@wfouche benchmark_config.adoc
+    #jbang export fatjar io/tulip/App.java
+    """.stripIndent();
+
+    static String runBenchCmdJava = """
+    if exist benchmark_report.html del benchmark_report.html
+    REM JBANG_JAVA_OPTIONS=__TULIP_JAVA_OPTIONS__
+    call jbang run io\\tulip\\App.java
+    @echo off 
+    echo.
+    REM w3m.exe -dump -cols 205 benchmark_report.html
+    REM lynx.exe -dump -width 205 benchmark_report.html
+    start benchmark_report.html
+    REM jbang run asciidoc@wfouche benchmark_config.adoc
+    REM start benchmark_config.html
+    REM jbang export fatjar io\\tulip\\App.java
+    """.stripIndent();
+
+    static void generateJavaApp() throws IOException, InterruptedException {
+        Files.createDirectories(Paths.get(path));
+        writeToFile(
+            "benchmark_config.json",
+            benchmarkConfig
+                .replace("__TULIP_LANG__", lang)
+                .replace("__AVG_APS__", avgAPS)
+                .replace("__URL__", url)
+                .replace("__ONSTOP_ID__", osid),
+            false
+        );
+
+        writeToFile(
+            path + "App.java",
+            javaApp
+                .replace("__TULIP_VERSION__", version)
+                .replace("__TULIP_JAVA_OPTIONS__", TULIP_JAVA_OPTIONS),
+            false
+        );
+
+        writeToFile(
+            path + "JavaHttpUser.java",
+            javaUser,
+            false
+        );
+
+        writeToFile(
+            "run_bench.sh",
+            runBenchShJava
+                .replace("__TULIP_VERSION__", version)
+                .replace("__TULIP_JAVA_OPTIONS__", TULIP_JAVA_OPTIONS),
+            false
+        );
+
+        writeToFile(
+            "run_bench.cmd",
+            runBenchCmdJava
+                .replace("__TULIP_VERSION__", version)
+                .replace("__TULIP_JAVA_OPTIONS__", TULIP_JAVA_OPTIONS), false
+        );
+        
+        if (!java.lang.System.getProperty("os.name").toLowerCase().contains("windows")) {
+            List<String> cmd = new LinkedList<String>();
+            cmd.add("chmod");
+            cmd.add("+x");
+            cmd.add("run_bench.sh");               
+            ProcessBuilder pb = new ProcessBuilder(cmd);
+            pb.start().waitFor();
+        }
+
+    }
+
+    public static void main(String[] args) throws IOException, InterruptedException {
+
+        displayAppInfo();
+
+        if (java.lang.System.getenv("TULIP_JAVA_OPTIONS") != null) {
+            TULIP_JAVA_OPTIONS = java.lang.System.getenv("TULIP_JAVA_OPTIONS");
+        }
+
+        String command = "";
+        if (args.length > 0) {
+            command = args[0];
+        }
+
+        if (!command.equals("init")) {
+            java.lang.System.exit(0);
+        }
+
+        if (args.length > 1) {
+            lang = args[1];
+        }
+
+        List<String> list = new LinkedList<String>();
+        list.add("Java");
+        list.add("Kotlin");
+        list.add("Groovy");
+        list.add("Scala");
+        list.add("Jython");
+        if (!list.contains(lang)) {
+            lang = "Java";
+        }
+
+        if (lang.equals("Scala")) {
+            System.out.println("\nCreating a " + lang + " benchmark with Scala-CLI support");
+        } else {
+            System.out.println("\nCreating a " + lang + " benchmark with JBang support");
+        }
+
+        if (args.length > 2) {
+            avgAPS = args[2];
+        }
+        
+        if (args.length > 3) {
+            url = args[3];
+        }
+        
+        if (args.length > 4) {
+            version = args[4];
+        }
+
+        if (lang.equals("Java")) {
+            generateJavaApp();
+        }
+    }
+}
