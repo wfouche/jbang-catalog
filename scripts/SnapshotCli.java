@@ -1,6 +1,6 @@
 ///usr/bin/env jbang "$0" "$@" ; exit $?
 
-//DEPS com.google.code.gson:gson:2.12.1
+//DEPS com.google.code.gson:gson:2.13.1
 
 import java.io.*;
 import java.nio.file.*;
