@@ -474,7 +474,7 @@ public class TulipCli {
     //DEPS ch.qos.logback:logback-classic:1.5.18
     //SOURCES GroovyHttpUser.groovy
     //JAVA 21
-    //GROOVY 4.0.26
+    //GROOVY 4.0.27
     //RUNTIME_OPTIONS __TULIP_JAVA_OPTIONS__
     //COMPILE_OPTIONS --tolerance=5
     //FILES ../../benchmark_config.json
