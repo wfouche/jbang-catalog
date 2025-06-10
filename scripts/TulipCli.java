@@ -1,6 +1,6 @@
 ///usr/bin/env jbang "$0" "$@" ; exit $?
 
-//DEPS io.github.wfouche.tulip:tulip-runtime:2.1.8-dev
+//DEPS io.github.wfouche.tulip:tulip-runtime:2.1.7
 //JAVA 21
 
 import java.io.FileWriter;
@@ -773,8 +773,8 @@ public class TulipCli {
     from __future__ import print_function
 
     # /// jbang
-    # requires-jython = "==2.7.4"
-    # requires-java = ">=21"
+    # requires-jython = "2.7.4"
+    # requires-java = "21"
     # dependencies = [
     #   "io.github.wfouche.tulip:tulip-runtime:__TULIP_VERSION__",
     #   "org.springframework.boot:spring-boot-starter-web:3.4.6",
@@ -782,8 +782,9 @@ public class TulipCli {
     #   "ch.qos.logback:logback-core:1.5.18",
     #   "ch.qos.logback:logback-classic:1.5.18",
     # ]
-    # [java]
-    #   runtime-options = "__TULIP_JAVA_OPTIONS__"
+    # runtime-options = [
+    #   "-server", "-Xms2g", "-Xmx2g", "-XX:+UseZGC", "-XX:+ZGenerational"
+    # ]
     # ///
 
     import io.github.wfouche.tulip.user.HttpUser as HttpUser
@@ -830,8 +831,8 @@ public class TulipCli {
     #!/bin/bash
     rm -f benchmark_report.html
     #export JBANG_JAVA_OPTIONS="__TULIP_JAVA_OPTIONS__"
-    jbang run Jython.java benchmark.py
-    rem jbang run python-jvm@wfouche benchmark.py
+    #jbang run Jython.java benchmark.py
+    jbang run jython-cli@jython benchmark.py
     echo ""
     #w3m -dump -cols 205 benchmark_report.html
     lynx -dump -width 205 benchmark_report.html
@@ -841,8 +842,8 @@ public class TulipCli {
     static String runBenchCmdJython = """
     if exist benchmark_report.html del benchmark_report.html
     REM JBANG_JAVA_OPTIONS=__TULIP_JAVA_OPTIONS__
-    call jbang run Jython.java benchmark.py
-    rem call jbang run python-jvm@wfouche benchmark.py
+    REM call jbang run Jython.java benchmark.py
+    call jbang run jython-cli@jython benchmark.py
     @echo off
     echo.
     REM call w3m.exe -dump -cols 205 benchmark_report.html
@@ -865,13 +866,13 @@ public class TulipCli {
                 false
         );
 
-        writeToFile(
-                "Jython.java",
-                JythonJava
-                        .replace("__TULIP_VERSION__", version)
-                        .replace("__TULIP_JAVA_OPTIONS__", TULIP_JAVA_OPTIONS),
-                false
-        );
+//        writeToFile(
+//                "Jython.java",
+//                JythonJava
+//                        .replace("__TULIP_VERSION__", version)
+//                        .replace("__TULIP_JAVA_OPTIONS__", TULIP_JAVA_OPTIONS),
+//                false
+//        );
 
         writeToFile(
                 "benchmark.py",
