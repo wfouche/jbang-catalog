@@ -78,7 +78,7 @@ public class TulipCli {
             }
         },
         "workflows": {
-            "api-user": {
+            "ApiUser": {
                 "-": {
                     "1": 0.40,
                     "3": 0.60
@@ -138,7 +138,7 @@ public class TulipCli {
             "REST3": {
                 "enabled": true,
                 "aps_rate": __AVG_APS__,
-                "scenario_workflow": "api-user",
+                "scenario_workflow": "ApiUser",
                 "time": {
                     "pre_warmup_duration": 30,
                     "warmup_duration": 10,
@@ -149,7 +149,7 @@ public class TulipCli {
             "REST3.max": {
                 "enabled": true,
                 "aps_rate": 0.0,
-                "scenario_workflow": "api-user",
+                "scenario_workflow": "ApiUser",
                 "time": {
                     "pre_warmup_duration": 30,
                     "warmup_duration": 10,
