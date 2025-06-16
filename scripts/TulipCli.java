@@ -61,6 +61,8 @@ public class TulipCli {
             "description": "Spring RestClient Benchmark [__TULIP_LANG__]",
             "output_filename": "benchmark_output.json",
             "report_filename": "benchmark_report.html",
+            "diagram_server_url": "https://kroki.io/",
+            "diagram_server_type": "kroki_io",
             "user_class": "io.tulip.__TULIP_LANG__HttpUser",
             "user_params": {
                 "url": "__URL__",
