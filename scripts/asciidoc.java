@@ -1,7 +1,7 @@
-
 ///usr/bin/env jbang "$0" "$@" ; exit $?
 //DEPS org.asciidoctor:asciidoctorj:3.0.0
-//DEPS org.asciidoctor:asciidoctorj-diagram:2.3.1
+//DEPS org.asciidoctor:asciidoctorj-diagram:3.0.1
+//DEPS org.asciidoctor:asciidoctorj-diagram-plantuml:1.2025.3
 
 import org.asciidoctor.Asciidoctor;
 import org.asciidoctor.Options;
