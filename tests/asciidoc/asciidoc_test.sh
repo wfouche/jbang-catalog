@@ -1,1 +1,1 @@
-jbang asciidoc@wfouche asciidoc_test_document.adoc
+jbang run asciidoctorj@wfouche asciidoc_test_document.adoc -r asciidoctor-diagram
