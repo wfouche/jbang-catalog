@@ -4,6 +4,9 @@
     "asciidoc": {
       "script-ref": "scripts/asciidoc.java"
     },
+    "asciidoctorj": {
+      "script-ref": "scripts/asciidoctorj.java"
+    },
     "clojure": {
       "script-ref": "scripts/Clojure.java"
     },
