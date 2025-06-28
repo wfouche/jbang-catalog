@@ -8,7 +8,7 @@
 //DEPS org.asciidoctor:asciidoctorj-pdf:2.3.19
 //DEPS org.asciidoctor:asciidoctorj-revealjs:5.1.0
 //DEPS com.beust:jcommander:1.82
-//DEPS org.jruby:jruby-complete:9.4.13.0
+//DEPS org.jruby:jruby-complete:9.4.8.0
 
 import java.io.IOException;
 
