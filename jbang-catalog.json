@@ -10,6 +10,9 @@
     "asciidoctor-cli": {
       "script-ref": "scripts/AsciidoctorCli.java"
     },
+    "asciidoctorj-cli": {
+      "script-ref": "scripts/asciidoctorj_cli.java"
+    },
     "clojure": {
       "script-ref": "scripts/Clojure.java"
     },
