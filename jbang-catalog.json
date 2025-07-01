@@ -22,6 +22,9 @@
     "command": {
       "script-ref": "scripts/Command/1/Command.java"
     },
+    "deps": {
+      "script-ref": "scripts/deps.java"
+    },
     "jython-jpm": {
       "script-ref": "scripts/JythonJpm.java"
     },
