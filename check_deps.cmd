@@ -1,0 +1,1 @@
+jbang run jython-cli@jython jbang-deps.py scripts\asciidoctorj_cli.java
