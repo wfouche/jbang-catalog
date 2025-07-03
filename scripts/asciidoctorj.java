@@ -1,4 +1,5 @@
 ///usr/bin/env jbang "$0" "$@" ; exit $?
+
 //DEPS org.asciidoctor:asciidoctorj:3.0.0
 //DEPS org.asciidoctor:asciidoctorj-api:3.0.0
 //DEPS org.asciidoctor:asciidoctorj-cli:3.0.0
