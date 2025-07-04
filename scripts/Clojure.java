@@ -1,6 +1,6 @@
 ///usr/bin/env jbang "$0" "$@" ; exit $?
 
-//DEPS org.clojure:clojure:1.12.0
+//DEPS org.clojure:clojure:1.12.1
 //JAVA 21
 
 import clojure.main;
