@@ -1,4 +1,3 @@
-
 ///usr/bin/env jbang "$0" "$@" ; exit $?
 
 import java.io.File;
