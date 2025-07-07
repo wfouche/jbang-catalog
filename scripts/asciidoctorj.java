@@ -16,7 +16,6 @@
 
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.List;
 
 public class asciidoctorj {
 
@@ -25,8 +24,8 @@ public class asciidoctorj {
     public static void main(String[] args) throws IOException {
         // Check if revealjsdir is specified in the arguments
         // using template "-a revealjsdir=path/to/revealjs"
-        String revealjsdir = null;
         boolean revealjsBackendEnabled = false;
+        String revealjsdir = null;
         for (int i = 0; i < args.length; i++) {
             String arg = args[i];
             if (arg.equals("-a")) {
@@ -61,7 +60,6 @@ public class asciidoctorj {
 
         boolean debugEnabled = false;
         if (debugEnabled) {
-            System.out.println("Using revealjsdir: " + (revealjsdir != null ? revealjsdir : REVEALJSDIR));
             System.out.println("Arguments: " + Arrays.toString(argz));
         }
 
