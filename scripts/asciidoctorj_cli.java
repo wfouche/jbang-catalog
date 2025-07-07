@@ -1,4 +1,5 @@
 ///usr/bin/env jbang "$0" "$@" ; exit $?
+
 //DEPS org.asciidoctor:asciidoctorj:3.0.0
 //DEPS org.asciidoctor:asciidoctorj-api:3.0.0
 //DEPS org.asciidoctor:asciidoctorj-cli:3.0.0
@@ -14,33 +15,55 @@
 //DEPS org.jruby:jruby-complete:9.4.8.0
 
 import java.io.IOException;
-
-// Check dependency updates
-// $ jbang export maven asciidoctorj.java
-// $ cd asciidoctorj
-// $ ./mvnw versions:display-dependency-updates
-// [INFO] Scanning for projects...
-// [INFO]
-// [INFO] ------------------< org.example.project:asciidoctorj >------------------
-// [INFO] Building asciidoctorj 999-SNAPSHOT
-// [INFO]   from pom.xml
-// [INFO] --------------------------------[ jar ]---------------------------------
-// [INFO]
-// [INFO] --- versions:2.18.0:display-dependency-updates (default-cli) @ asciidoctorj ---
-// [INFO] The following dependencies in Dependencies have newer versions:
-// [INFO]   org.asciidoctor:asciidoctorj-epub3 .................... 2.1.3 -> 2.2.0
-// [INFO]   org.jruby:jruby-complete ......................... 9.4.8.0 -> 10.0.0.1
-// [INFO]
-// [INFO] ------------------------------------------------------------------------
-// [INFO] BUILD SUCCESS
-// [INFO] ------------------------------------------------------------------------
-// [INFO] Total time:  1.961 s
-// [INFO] Finished at: 2025-06-28T15:49:01+02:00
-// [INFO] ------------------------------------------------------------------------
+import java.util.Arrays;
 
 public class asciidoctorj_cli {
 
+    static String REVEALJSDIR = "https://cdn.jsdelivr.net/npm/reveal.js@5.2.0";
+
     public static void main(String[] args) throws IOException {
-        org.asciidoctor.cli.jruby.AsciidoctorInvoker.main(args);
+        // Check if revealjsdir is specified in the arguments
+        // using template "-a revealjsdir=path/to/revealjs"
+        boolean revealjsBackendEnabled = false;
+        String revealjsdir = null;
+        for (int i = 0; i < args.length; i++) {
+            String arg = args[i];
+            if (arg.equals("-a")) {
+                if (i + 1 < args.length) {
+                    String attribute = args[i + 1];
+                    if (attribute.startsWith("revealjsdir=")) {
+                        if (revealjsdir == null) {
+                            revealjsdir = attribute;
+                        }
+                    }
+                    i++; // Skip the next argument
+                }
+            } else if (arg.equals("-b")) {
+                if (i + 1 < args.length) {
+                    String attribute = args[i+1];
+                    revealjsBackendEnabled = attribute.equals("revealjs");
+                    i++; // Skip the next argument
+                }
+            }
+        }
+
+        // If revealjsdir is required but not specified, set it to the default value
+        String[] argz = args;
+        if (revealjsBackendEnabled) {
+            if (revealjsdir == null) {
+                argz = new String[args.length + 2];
+                System.arraycopy(args, 0, argz, 0, args.length);
+                argz[args.length] = "-a";
+                argz[args.length + 1] = "revealjsdir=" + REVEALJSDIR;
+            }
+        }
+
+        boolean debugEnabled = false;
+        if (debugEnabled) {
+            System.out.println("Arguments: " + Arrays.toString(argz));
+        }
+
+        // Call the Asciidoctor CLI main method with the modified arguments
+        org.asciidoctor.cli.jruby.AsciidoctorInvoker.main(argz);
     }
 }
