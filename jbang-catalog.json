@@ -7,7 +7,7 @@
     "asciidoctorj": {
       "script-ref": "scripts/asciidoctorj.java"
     },
-    "asciidoctor-cli": {
+    "asciidoctorj-cli": {
       "script-ref": "scripts/asciidoctorj_cli.java"
     },
     "clojure": {
