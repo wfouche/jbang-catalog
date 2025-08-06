@@ -1,1 +1,1 @@
-jbang run snapshot-cli@wfouche tulip-cli-dev "Change this message" 1
+jbang run snapshot-cli@wfouche tulip-cli-dev "Update to Tulip 2.1.8" 1
