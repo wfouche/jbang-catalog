@@ -1,6 +1,6 @@
 ///usr/bin/env jbang "$0" "$@" ; exit $?
 //DEPS com.github.ajalt.clikt:clikt-jvm:5.0.1
-//DEPS io.github.wfouche.tulip:tulip-runtime:2.1.8-dev
+//DEPS io.github.wfouche.tulip:tulip-runtime:2.1.8
 //JAVA 21
 //KOTLIN 2.0.21
 
@@ -36,7 +36,7 @@ const val appVersion: String = "__JBANG_SNAPSHOT_ID__/__JBANG_SNAPSHOT_TIMESTAMP
 private fun displayAppInfo() {
     var version: String = appVersion
     if (appVersion.contains("JBANG_SNAPSHOT_ID")) {
-        version = "0/2025-04-03T19:47:04"
+        version = "0/2025-08-06T14:52:50"
     }
     println(appName + "/" + version + "/" + TulipApi.VERSION)
 }
