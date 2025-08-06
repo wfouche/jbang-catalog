@@ -1,6 +1,6 @@
 ///usr/bin/env jbang "$0" "$@" ; exit $?
 
-//DEPS io.github.wfouche.tulip:tulip-runtime:2.1.7
+//DEPS io.github.wfouche.tulip:tulip-runtime:2.1.8
 //JAVA 21
 
 import java.io.FileWriter;
@@ -15,7 +15,7 @@ import java.nio.file.Paths;
 public class TulipCli {
 
     static String appName = "tulip-cli";
-    static String appVersion = "1/2025-06-10T08:25:32";
+    static String appVersion = "1/2025-08-06T15:13:10";
 
     static void displayAppInfo() {
         String version = appVersion;
@@ -64,7 +64,7 @@ public class TulipCli {
             "user_class": "io.tulip.__TULIP_LANG__HttpUser",
             "user_params": {
                 "url": "__URL__",
-                "httpVersion": "",
+                "httpVersion": "HTTP_1_1",
                 "connectTimeoutMillis": 500,
                 "readTimeoutMillis": 2000,
                 "debug": true
@@ -76,7 +76,7 @@ public class TulipCli {
             }
         },
         "workflows": {
-            "api-user": {
+            "ApiUser": {
                 "-": {
                     "1": 0.40,
                     "3": 0.60
@@ -136,7 +136,7 @@ public class TulipCli {
             "REST3": {
                 "enabled": true,
                 "aps_rate": __AVG_APS__,
-                "scenario_workflow": "api-user",
+                "scenario_workflow": "ApiUser",
                 "time": {
                     "pre_warmup_duration": 30,
                     "warmup_duration": 10,
@@ -147,7 +147,7 @@ public class TulipCli {
             "REST3.max": {
                 "enabled": true,
                 "aps_rate": 0.0,
-                "scenario_workflow": "api-user",
+                "scenario_workflow": "ApiUser",
                 "time": {
                     "pre_warmup_duration": 30,
                     "warmup_duration": 10,
@@ -173,7 +173,6 @@ public class TulipCli {
     static String javaApp = """
     ///usr/bin/env jbang "$0" "$@" ; exit $?
     //DEPS io.github.wfouche.tulip:tulip-runtime:__TULIP_VERSION__
-    //DEPS org.springframework.boot:spring-boot-starter-web:3.4.6
     //DEPS org.slf4j:slf4j-api:2.0.17
     //DEPS ch.qos.logback:logback-core:1.5.18
     //DEPS ch.qos.logback:logback-classic:1.5.18
@@ -320,7 +319,6 @@ public class TulipCli {
     static String kotlinApp = """
     ///usr/bin/env jbang "$0" "$@" ; exit $?
     //DEPS io.github.wfouche.tulip:tulip-runtime:__TULIP_VERSION__
-    //DEPS org.springframework.boot:spring-boot-starter-web:3.4.6
     //DEPS org.slf4j:slf4j-api:2.0.17
     //DEPS ch.qos.logback:logback-core:1.5.18
     //DEPS ch.qos.logback:logback-classic:1.5.18
@@ -468,7 +466,6 @@ public class TulipCli {
     static String groovyApp = """
     ///usr/bin/env jbang "$0" "$@" ; exit $?
     //DEPS io.github.wfouche.tulip:tulip-runtime:__TULIP_VERSION__
-    //DEPS org.springframework.boot:spring-boot-starter-web:3.4.6
     //DEPS org.slf4j:slf4j-api:2.0.17
     //DEPS ch.qos.logback:logback-core:1.5.18
     //DEPS ch.qos.logback:logback-classic:1.5.18
@@ -615,7 +612,6 @@ public class TulipCli {
     static String scalaApp = """
     //> using jvm 21
     //> using dep io.github.wfouche.tulip:tulip-runtime:__TULIP_VERSION__
-    //> using dep org.springframework.boot:spring-boot-starter-web:3.4.6
     //> using dep org.slf4j:slf4j-api:2.0.17
     //> using dep ch.qos.logback:logback-core:1.5.18
     //> using dep ch.qos.logback:logback-classic:1.5.18
@@ -753,7 +749,6 @@ public class TulipCli {
     
     //DEPS org.python:jython-standalone:2.7.4
     //DEPS io.github.wfouche.tulip:tulip-runtime:__TULIP_VERSION__
-    //DEPS org.springframework.boot:spring-boot-starter-web:3.4.6
     //DEPS org.slf4j:slf4j-api:2.0.17
     //DEPS ch.qos.logback:logback-core:1.5.18
     //DEPS ch.qos.logback:logback-classic:1.5.18
@@ -777,7 +772,6 @@ public class TulipCli {
     # requires-java = "21"
     # dependencies = [
     #   "io.github.wfouche.tulip:tulip-runtime:__TULIP_VERSION__",
-    #   "org.springframework.boot:spring-boot-starter-web:3.4.6",
     #   "org.slf4j:slf4j-api:2.0.17",
     #   "ch.qos.logback:logback-core:1.5.18",
     #   "ch.qos.logback:logback-classic:1.5.18",
