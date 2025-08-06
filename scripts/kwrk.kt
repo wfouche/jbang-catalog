@@ -2,7 +2,7 @@
 //DEPS com.github.ajalt.clikt:clikt-jvm:5.0.1
 //DEPS io.github.wfouche.tulip:tulip-runtime:2.1.8
 //JAVA 21
-//KOTLIN 2.0.21
+//KOTLIN 2.1.21
 
 import io.github.wfouche.tulip.api.TulipApi
 import io.github.wfouche.tulip.user.HttpUser
