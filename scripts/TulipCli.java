@@ -279,7 +279,7 @@ public class TulipCli {
     gradle=8.14.3
     
     # JBang
-    jbang=0.126.3
+    jbang=0.129.0
     
     # Scala
     scalacli=1.8.5
