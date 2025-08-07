@@ -31,7 +31,7 @@ import java.util.Locale
 import org.springframework.http.MediaType
 
 const val appName: String = "kwrk"
-const val appVersion: String = "1/2025-08-07T12:50:25"
+const val appVersion: String = "1/2025-08-07T20:41:03"
 
 private fun displayAppInfo() {
     var version: String = appVersion
@@ -104,7 +104,7 @@ fun writeToFile(path: String, content: String, append: Boolean) {
             fileWriter.write(content)
         }
     } catch (e: IOException) {
-        println(e.toString())
+        // exception handling ...
     }
 }
 
