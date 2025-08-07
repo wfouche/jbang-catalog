@@ -31,7 +31,7 @@ import java.util.Locale
 import org.springframework.http.MediaType
 
 const val appName: String = "kwrk"
-const val appVersion: String = "1/2025-08-06T15:01:20"
+const val appVersion: String = "1/2025-08-07T10:16:51"
 
 private fun displayAppInfo() {
     var version: String = appVersion
@@ -171,7 +171,7 @@ class KwrkCli : CliktCommand() {
     private val p_rate by option("--rate").double().default(5.0)
     private val p_qsize by option("--qsize").int().default(0)
     private val p_threads by option("--threads").int().default(2)
-    private val p_warmup by option("--warmup").int().default(15)
+    private val p_warmup by option("--warmup").int().default(5)
     private val p_duration by option("--duration").int().default(30)
     private val p_iterations by option("--iterations").int().default(3)
     private val p_header by option("--header").default("User-Agent: kwrk")
@@ -192,7 +192,7 @@ class KwrkCli : CliktCommand() {
         json = json.replace("__P_HEADER__", p_header)
 
         var warmup = p_warmup
-        if (p_rate <= 1.0) {
+        if (p_rate < 1.0) {
             if (p_rate != 0.0) {
                 warmup = 0
             }
