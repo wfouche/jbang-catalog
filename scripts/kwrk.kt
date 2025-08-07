@@ -50,6 +50,7 @@ val benchmarkConfig:String = """
         "user_class": "KwrkHttpUser",
         "user_params": {
             "url": "__P_URL__",
+            "httpVersion": "HTTP_1_1",
             "httpHeader": "__P_HEADER__",
             "connectTimeoutMillis": 1000,
             "readTimeoutMillis": 10000
