@@ -27,7 +27,7 @@ fun writeToFile(path: String, content: String, append: Boolean) {
             fileWriter.write(content)
         }
     } catch (e: IOException) {
-        // exception handling ...
+        println(e.toString())
     }
 }
 
