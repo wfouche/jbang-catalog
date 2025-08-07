@@ -175,7 +175,7 @@ class KwrkCli : CliktCommand() {
     private val p_rate_step_change by option("--rateStepChange").double().default(0.0)
     private val p_rate_step_count by option("--rateStepCount").int().default(1)
     private val p_qsize by option("--qsize").int().default(0)
-    private val p_threads by option("--threads").int().default(2)
+    private val p_threads by option("--threads").int().default(8)
     private val p_warmup by option("--warmup").int().default(5)
     private val p_duration by option("--duration").int().default(30)
     private val p_iterations by option("--iterations").int().default(3)
