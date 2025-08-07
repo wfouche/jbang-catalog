@@ -1,5 +1,5 @@
 ///usr/bin/env jbang "$0" "$@" ; exit $?
-//DEPS io.github.wfouche.tulip:tulip-runtime:2.1.8-dev
+//DEPS io.github.wfouche.tulip:tulip-runtime:2.1.8
 //JAVA 21
 //KOTLIN 2.1.21
 
@@ -659,6 +659,29 @@ val JythonBenchmark: String = """
 
 """.trimIndent()
 
+val sdkmanConfig: String = """
+    # Java
+    java=21.0.8-tem
+
+    # Gradle
+    gradle=8.14.3
+
+    # JBang
+    jbang=0.126.3
+
+    # Scala
+    scalacli=1.8.4
+
+    # MCS
+    mcs=0.7.6
+
+    # Maven
+    maven=3.9.11
+
+    # VisualVM
+    visualvm=2.2
+""".trimIndent()
+
 fun main(args: Array<String>) {
 
     displayAppInfo()
@@ -760,6 +783,7 @@ fun main(args: Array<String>) {
                 .replace("__TULIP_VERSION__", version)
                 .replace("__TULIP_JAVA_OPTIONS__", TULIP_JAVA_OPTIONS), false
         )
+        writeToFile(".sdkmanrc", sdkmanConfig, false)
     }
 
     if (lang == "Kotlin") {
@@ -806,6 +830,7 @@ fun main(args: Array<String>) {
                 .replace("__TULIP_VERSION__", version)
                 .replace("__TULIP_JAVA_OPTIONS__", TULIP_JAVA_OPTIONS), false
         )
+        writeToFile(".sdkmanrc", sdkmanConfig, false)
     }
 
     if (lang == "Groovy") {
@@ -852,6 +877,7 @@ fun main(args: Array<String>) {
                 .replace("__TULIP_VERSION__", version)
                 .replace("__TULIP_JAVA_OPTIONS__", TULIP_JAVA_OPTIONS), false
         )
+        writeToFile(".sdkmanrc", sdkmanConfig, false)
     }
 
     if (lang == "Scala") {
@@ -897,6 +923,7 @@ fun main(args: Array<String>) {
                 .replace("__TULIP_VERSION__", version),
             false
         )
+        writeToFile(".sdkmanrc", sdkmanConfig, false)
     }
 
     if (lang == "Jython") {
@@ -946,7 +973,7 @@ fun main(args: Array<String>) {
             runBenchCmdJython
                 .replace("__TULIP_JAVA_OPTIONS__", TULIP_JAVA_OPTIONS), false
         )
-
+        writeToFile(".sdkmanrc", sdkmanConfig, false)
     }
 
 }
