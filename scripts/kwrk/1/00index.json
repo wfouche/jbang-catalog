@@ -1,4 +1,4 @@
 {
-    "description": "Update to Tulip 2.1.8",
-    "timestamp": "2025-08-07T10:16:51"
+    "description": "httpServer set to HTTP_1_1",
+    "timestamp": "2025-08-07T10:56:37"
 }

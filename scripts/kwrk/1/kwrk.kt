@@ -31,7 +31,7 @@ import java.util.Locale
 import org.springframework.http.MediaType
 
 const val appName: String = "kwrk"
-const val appVersion: String = "1/2025-08-07T10:16:51"
+const val appVersion: String = "1/2025-08-07T10:56:37"
 
 private fun displayAppInfo() {
     var version: String = appVersion
@@ -50,6 +50,7 @@ val benchmarkConfig:String = """
         "user_class": "KwrkHttpUser",
         "user_params": {
             "url": "__P_URL__",
+            "httpVersion": "HTTP_1_1",
             "httpHeader": "__P_HEADER__",
             "connectTimeoutMillis": 1000,
             "readTimeoutMillis": 10000
@@ -66,6 +67,8 @@ val benchmarkConfig:String = """
          "HTTP": {
             "enabled": true,
             "aps_rate": __P_RATE__,
+            "aps_rate_step_change": __P_RATE_STEP_CHANGE__,
+            "aps_rate_step_count" : __P_RATE_STEP_COUNT__,
             "worker_thread_queue_size": __P_QSIZE__,
             "scenario_actions": [
                 {
@@ -169,6 +172,8 @@ class KwrkHttpUser(userId: Int, threadId: Int) : HttpUser(userId, threadId) {
 class KwrkCli : CliktCommand() {
     private val p_debug by option("--debug").default("false")
     private val p_rate by option("--rate").double().default(5.0)
+    private val p_rate_step_change by option("--rateStepChange").double().default(0.0)
+    private val p_rate_step_count by option("--rateStepCount").int().default(1)
     private val p_qsize by option("--qsize").int().default(0)
     private val p_threads by option("--threads").int().default(2)
     private val p_warmup by option("--warmup").int().default(5)
@@ -184,6 +189,8 @@ class KwrkCli : CliktCommand() {
         var json = benchmarkConfig
 
         json = json.replace("__P_RATE__", p_rate.toString())
+        json = json.replace("__P_RATE_STEP_CHANGE__", p_rate_step_change.toString())
+        json = json.replace("__P_RATE_STEP_COUNT__", p_rate_step_count.toString())
         json = json.replace("__P_QSIZE__", p_qsize.toString())
         json = json.replace("__P_THREADS__", p_threads.toString())
         json = json.replace("__P_DURATION__", p_duration.toString())
@@ -205,6 +212,8 @@ class KwrkCli : CliktCommand() {
         } else {
             println("kwrk options:")
             println("  --rate ${p_rate}")
+            println("  --rateStepChange ${p_rate_step_change}")
+            println("  --rateStepCount ${p_rate_step_count}")
             println("  --threads ${p_threads}")
             println("  --duration ${p_duration}")
             println("  --iterations ${p_iterations}")
