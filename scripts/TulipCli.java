@@ -271,6 +271,29 @@ public class TulipCli {
     REM jbang export fatjar io\\tulip\\App.java
     """.stripIndent();
 
+    static String sdkmanConfig = """
+    # Java
+    java=21.0.8-tem
+    
+    # Gradle
+    gradle=8.14.3
+    
+    # JBang
+    jbang=0.126.3
+    
+    # Scala
+    scalacli=1.8.4
+    
+    # MCS
+    mcs=0.7.6
+    
+    # Maven
+    maven=3.9.11
+    
+    # VisualVM
+    visualvm=2.2
+    """.stripIndent();
+
     static void generateJavaApp() throws IOException, InterruptedException {
         Files.createDirectories(Paths.get(path));
         writeToFile(
@@ -311,6 +334,8 @@ public class TulipCli {
                 .replace("__TULIP_VERSION__", version)
                 .replace("__TULIP_JAVA_OPTIONS__", TULIP_JAVA_OPTIONS), false
         );
+
+        writeToFile(".sdkmanrc", sdkmanConfig, false);
 
         chmod();
 
@@ -460,6 +485,8 @@ public class TulipCli {
                         .replace("__TULIP_JAVA_OPTIONS__", TULIP_JAVA_OPTIONS), false
         );
 
+        writeToFile(".sdkmanrc", sdkmanConfig, false);
+
         chmod();
     }
 
@@ -606,6 +633,8 @@ public class TulipCli {
                         .replace("__TULIP_JAVA_OPTIONS__", TULIP_JAVA_OPTIONS), false
         );
 
+        writeToFile(".sdkmanrc", sdkmanConfig, false);
+
         chmod();
     }
 
@@ -740,6 +769,8 @@ public class TulipCli {
                         .replace("__TULIP_VERSION__", version)
                         .replace("__TULIP_JAVA_OPTIONS__", TULIP_JAVA_OPTIONS), false
         );
+
+        writeToFile(".sdkmanrc", sdkmanConfig, false);
 
         chmod();
     }
@@ -890,6 +921,8 @@ public class TulipCli {
                         .replace("__TULIP_VERSION__", version)
                         .replace("__TULIP_JAVA_OPTIONS__", TULIP_JAVA_OPTIONS), false
         );
+
+        writeToFile(".sdkmanrc", sdkmanConfig, false);
 
         chmod();
     }
