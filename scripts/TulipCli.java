@@ -282,7 +282,7 @@ public class TulipCli {
     jbang=0.126.3
     
     # Scala
-    scalacli=1.8.4
+    scalacli=1.8.5
     
     # MCS
     mcs=0.7.6
