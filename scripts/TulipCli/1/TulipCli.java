@@ -15,7 +15,7 @@ import java.nio.file.Paths;
 public class TulipCli {
 
     static String appName = "tulip-cli";
-    static String appVersion = "1/2025-08-07T21:14:24";
+    static String appVersion = "1/2025-08-09T12:41:44";
 
     static void displayAppInfo() {
         String version = appVersion;
@@ -50,6 +50,7 @@ public class TulipCli {
             cmd.add("chmod");
             cmd.add("+x");
             cmd.add("run_bench.sh");
+            cmd.add("view_benchmark_report.sh");
             ProcessBuilder pb = new ProcessBuilder(cmd);
             pb.start().waitFor();
         }
@@ -294,6 +295,14 @@ public class TulipCli {
     visualvm=2.2
     """.stripIndent();
 
+    static String viewBenchReportSh = """
+    firefox benchmark_report.html
+    """.stripIndent();
+
+    static String viewBenchReportCmd = """
+    start benchmark_report.html
+    """.stripIndent();
+
     static void generateJavaApp() throws IOException, InterruptedException {
         Files.createDirectories(Paths.get(path));
         writeToFile(
@@ -336,6 +345,8 @@ public class TulipCli {
         );
 
         writeToFile(".sdkmanrc", sdkmanConfig, false);
+        writeToFile("view_benchmark_report.sh", viewBenchReportSh, false);
+        writeToFile("view_benchmark_report.cmd", viewBenchReportCmd, false);
 
         chmod();
 
@@ -486,6 +497,8 @@ public class TulipCli {
         );
 
         writeToFile(".sdkmanrc", sdkmanConfig, false);
+        writeToFile("view_benchmark_report.sh", viewBenchReportSh, false);
+        writeToFile("view_benchmark_report.cmd", viewBenchReportCmd, false);
 
         chmod();
     }
@@ -634,6 +647,8 @@ public class TulipCli {
         );
 
         writeToFile(".sdkmanrc", sdkmanConfig, false);
+        writeToFile("view_benchmark_report.sh", viewBenchReportSh, false);
+        writeToFile("view_benchmark_report.cmd", viewBenchReportCmd, false);
 
         chmod();
     }
@@ -771,6 +786,8 @@ public class TulipCli {
         );
 
         writeToFile(".sdkmanrc", sdkmanConfig, false);
+        writeToFile("view_benchmark_report.sh", viewBenchReportSh, false);
+        writeToFile("view_benchmark_report.cmd", viewBenchReportCmd, false);
 
         chmod();
     }
@@ -923,6 +940,8 @@ public class TulipCli {
         );
 
         writeToFile(".sdkmanrc", sdkmanConfig, false);
+        writeToFile("view_benchmark_report.sh", viewBenchReportSh, false);
+        writeToFile("view_benchmark_report.cmd", viewBenchReportCmd, false);
 
         chmod();
     }
