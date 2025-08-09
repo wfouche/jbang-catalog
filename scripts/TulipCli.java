@@ -20,15 +20,14 @@ public class TulipCli {
     static void displayAppInfo() {
         String version = appVersion;
         if (appVersion.contains("JBANG_SNAPSHOT_ID")) {
-            version = "0/2025-08-09T21:12:21";
+            version = "0/2025-08-09T22:12:21";
         }
         System.err.println(appName + "/" + version + "/" + io.github.wfouche.tulip.api.TulipApi.VERSION);
     }
 
     static String osid = String.valueOf(io.github.wfouche.tulip.api.TulipApi.NUM_ACTIONS-1).toString();
     static String lang = "Java";
-    static String protocol = "http";
-    static String url = "http://jsonplaceholder.typicode.com/posts/1";     
+    static String url = "http://jsonplaceholder.typicode.com";
     static String TULIP_JAVA_OPTIONS = "-server -Xms2g -Xmx2g -XX:+UseZGC -XX:+ZGenerational";
     static String avgAPS = "10.0";
     static String version = io.github.wfouche.tulip.api.TulipApi.VERSION;
