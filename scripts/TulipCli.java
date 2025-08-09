@@ -59,7 +59,7 @@ public class TulipCli {
     static String benchmarkConfig = """
     {
         "actions": {
-            "description": "Spring RestClient Benchmark [__TULIP_LANG__]",
+            "description": "jsonplaceholder.typicode.com [__TULIP_LANG__]",
             "output_filename": "benchmark_output.json",
             "report_filename": "benchmark_report.html",
             "user_class": "io.tulip.__TULIP_LANG__HttpUser",
