@@ -15,7 +15,7 @@ import java.nio.file.Paths;
 public class TulipCli {
 
     static String appName = "tulip-cli";
-    static String appVersion = "1/2025-08-09T12:47:07";
+    static String appVersion = "1/2025-08-09T16:29:17";
 
     static void displayAppInfo() {
         String version = appVersion;
@@ -59,7 +59,7 @@ public class TulipCli {
     static String benchmarkConfig = """
     {
         "actions": {
-            "description": "Spring RestClient Benchmark [__TULIP_LANG__]",
+            "description": "jsonplaceholder.typicode.com [__TULIP_LANG__]",
             "output_filename": "benchmark_output.json",
             "report_filename": "benchmark_report.html",
             "user_class": "io.tulip.__TULIP_LANG__HttpUser",
