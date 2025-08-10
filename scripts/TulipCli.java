@@ -241,6 +241,10 @@ public class TulipCli {
             return true;
         }
     
+        public Logger getLogger() {
+            return logger;
+        }
+    
         // Logger
         private static final Logger logger = LoggerFactory.getLogger(JavaHttpUser.class);
 
@@ -421,7 +425,11 @@ public class TulipCli {
         override fun onStop(): Boolean {
             return true
         }
-            
+    
+        override fun getLogger(): Logger {
+            return logger
+        }
+    
         // RestClient object
         companion object {
             private val logger = LoggerFactory.getLogger(KotlinHttpUser::class.java)
@@ -572,6 +580,10 @@ public class TulipCli {
         boolean onStop() {
             return true
         }
+        
+        Logger getLogger() {
+            return logger
+        }
 
         // Logger
         static Logger logger = LoggerFactory.getLogger(GroovyHttpUser.class)
@@ -715,6 +727,10 @@ public class TulipCli {
       }
 
       override def onStop(): Boolean = true
+    
+      override def getLogger(): Logger = {
+        return logger
+      }
 
     }
 
