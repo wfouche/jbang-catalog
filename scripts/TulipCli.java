@@ -604,14 +604,18 @@ public class TulipCli {
     """.stripIndent();
 
     static String runBenchCmdGroovy = """
-    if exist benchmark_report.html del benchmark_report.html
+    REM
+    REM JBang / Groovy / Tulip is not supported on Windows
+    REM Try running the benchmark on Linux or macOS
+    REM
+    REM if exist benchmark_report.html del benchmark_report.html
     REM JBANG_JAVA_OPTIONS=__TULIP_JAVA_OPTIONS__
-    call jbang run io\\tulip\\App.groovy
-    @echo off
-    echo.
+    REM call jbang run io\\tulip\\App.groovy
+    REM @echo off
+    REM echo.
     REM call w3m.exe -dump -cols 205 benchmark_report.html
     REM lynx.exe -dump -width 205 benchmark_report.html
-    start benchmark_report.html
+    REM start benchmark_report.html
     REM jbang run asciidoc@wfouche benchmark_config.adoc
     REM start benchmark_config.html
     REM jbang export fatjar io\\tulip\\App.groovy
