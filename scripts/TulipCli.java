@@ -242,7 +242,7 @@ public class TulipCli {
             return true;
         }
     
-        public Logger getLogger() {
+        public Logger logger() {
             return logger;
         }
     
@@ -428,7 +428,7 @@ public class TulipCli {
             return true
         }
     
-        override fun getLogger(): Logger {
+        override fun logger(): Logger {
             return logger
         }
     
@@ -584,7 +584,7 @@ public class TulipCli {
             return true
         }
         
-        Logger getLogger() {
+        Logger logger() {
             return logger
         }
 
@@ -736,7 +736,7 @@ public class TulipCli {
 
       override def onStop(): Boolean = true
     
-      override def getLogger(): Logger = {
+      override def logger(): Logger = {
         return logger
       }
 
@@ -861,7 +861,7 @@ public class TulipCli {
     import io.github.wfouche.tulip.api.TulipApi as TulipApi
     import java.util.concurrent.ThreadLocalRandom as ThreadLocalRandom
 
-    class PythonHttpUser(HttpUser):
+    class JythonHttpUser(HttpUser):
 
         def __init__(self, userId, threadId):
             HttpUser.__init__(self, userId, threadId)
@@ -890,7 +890,7 @@ public class TulipCli {
     class UserFactory(TulipUserFactory):
 
         def getUser(self, userId, className, threadId):
-            return PythonHttpUser(userId, threadId)
+            return JythonHttpUser(userId, threadId)
 
     TulipApi.runTulip("benchmark_config.json", UserFactory())
 
