@@ -176,6 +176,7 @@ public class TulipCli {
     //DEPS org.slf4j:slf4j-api:2.0.17
     //DEPS ch.qos.logback:logback-core:1.5.18
     //DEPS ch.qos.logback:logback-classic:1.5.18
+    //DEPS org.springframework.boot:spring-boot-starter-web:3.5.4
     //SOURCES JavaHttpUser.java
     //JAVA 21
     //PREVIEW
@@ -363,6 +364,7 @@ public class TulipCli {
     //DEPS org.slf4j:slf4j-api:2.0.17
     //DEPS ch.qos.logback:logback-core:1.5.18
     //DEPS ch.qos.logback:logback-classic:1.5.18
+    //DEPS org.springframework.boot:spring-boot-starter-web:3.5.4
     //SOURCES KotlinHttpUser.kt
     //JAVA 21
     //KOTLIN 2.1.21
@@ -518,6 +520,7 @@ public class TulipCli {
     //DEPS org.slf4j:slf4j-api:2.0.17
     //DEPS ch.qos.logback:logback-core:1.5.18
     //DEPS ch.qos.logback:logback-classic:1.5.18
+    //DEPS org.springframework.boot:spring-boot-starter-web:3.5.4
     //SOURCES GroovyHttpUser.groovy
     //JAVA 21
     //GROOVY 4.0.27
@@ -676,6 +679,7 @@ public class TulipCli {
     //> using dep org.slf4j:slf4j-api:2.0.17
     //> using dep ch.qos.logback:logback-core:1.5.18
     //> using dep ch.qos.logback:logback-classic:1.5.18
+    //> using dep org.springframework.boot:spring-boot-starter-web:3.5.4
     //> using javaOpt __TULIP_JAVA_OPTIONS__
     //> using repositories m2local
 
@@ -821,6 +825,7 @@ public class TulipCli {
     //DEPS org.slf4j:slf4j-api:2.0.17
     //DEPS ch.qos.logback:logback-core:1.5.18
     //DEPS ch.qos.logback:logback-classic:1.5.18
+    //DEPS org.springframework.boot:spring-boot-starter-web:3.5.4
     //JAVA 21
     //RUNTIME_OPTIONS __TULIP_JAVA_OPTIONS__
     
@@ -844,6 +849,7 @@ public class TulipCli {
     #   "org.slf4j:slf4j-api:2.0.17",
     #   "ch.qos.logback:logback-core:1.5.18",
     #   "ch.qos.logback:logback-classic:1.5.18",
+    #   "org.springframework.boot:spring-boot-starter-web:3.5.4"
     # ]
     # runtime-options = [
     #   "-server", "-Xms2g", "-Xmx2g", "-XX:+UseZGC", "-XX:+ZGenerational"
