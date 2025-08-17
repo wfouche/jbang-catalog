@@ -237,6 +237,26 @@ public class TulipCli {
             int id = random.nextInt(200)+1;
             return !http_GET("/todos/{id}", id).isEmpty();
         }
+        
+        // Action 4: POST /posts
+        public boolean action4() {
+            return !http_POST("/posts").isEmpty();
+        }
+        
+        // Action 5: PUT /posts/1
+        public boolean action4() {
+            return !http_PUT("/posts/1").isEmpty();
+        }
+        
+        // Action 5: PATCH /posts/1
+        public boolean action6() {
+            return !http_PATCH("/posts/1").isEmpty();
+        }
+        
+        // Action 6: DELETE /posts/1
+        public boolean action6() {
+            return !http_DELETE("/posts/1").isEmpty();
+        }
 
         public boolean onStop() {
             return true;
@@ -737,13 +757,13 @@ public class TulipCli {
       override def onStop(): Boolean = true
     
       override def logger(): Logger = {
-        return logger
+        return loggerz
       }
 
     }
 
     // Logger
-    val logger: Logger = LoggerFactory.getLogger(classOf[ScalaHttpUser])
+    val loggerz: Logger = LoggerFactory.getLogger(classOf[ScalaHttpUser])
     """.stripIndent();
 
     static String runBenchShScala = """
