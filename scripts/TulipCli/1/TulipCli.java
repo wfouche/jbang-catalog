@@ -1,6 +1,6 @@
 ///usr/bin/env jbang "$0" "$@" ; exit $?
 
-//DEPS io.github.wfouche.tulip:tulip-runtime:2.1.8
+//DEPS io.github.wfouche.tulip:tulip-runtime:2.1.9
 //JAVA 21
 
 import java.io.FileWriter;
@@ -15,20 +15,19 @@ import java.nio.file.Paths;
 public class TulipCli {
 
     static String appName = "tulip-cli";
-    static String appVersion = "1/2025-08-09T16:29:17";
+    static String appVersion = "1/2025-08-18T16:19:22";
 
     static void displayAppInfo() {
         String version = appVersion;
         if (appVersion.contains("JBANG_SNAPSHOT_ID")) {
-            version = "0/2025-08-07T21:01:10";
+            version = "0/2025-08-09T22:12:21";
         }
         System.err.println(appName + "/" + version + "/" + io.github.wfouche.tulip.api.TulipApi.VERSION);
     }
 
     static String osid = String.valueOf(io.github.wfouche.tulip.api.TulipApi.NUM_ACTIONS-1).toString();
     static String lang = "Java";
-    static String protocol = "http";
-    static String url = "http://jsonplaceholder.typicode.com/posts/1";     
+    static String url = "http://jsonplaceholder.typicode.com";
     static String TULIP_JAVA_OPTIONS = "-server -Xms2g -Xmx2g -XX:+UseZGC -XX:+ZGenerational";
     static String avgAPS = "10.0";
     static String version = io.github.wfouche.tulip.api.TulipApi.VERSION;
@@ -177,6 +176,7 @@ public class TulipCli {
     //DEPS org.slf4j:slf4j-api:2.0.17
     //DEPS ch.qos.logback:logback-core:1.5.18
     //DEPS ch.qos.logback:logback-classic:1.5.18
+    //DEPS org.springframework.boot:spring-boot-starter-web:3.5.4
     //SOURCES JavaHttpUser.java
     //JAVA 21
     //PREVIEW
@@ -205,6 +205,8 @@ public class TulipCli {
 
     public class JavaHttpUser extends HttpUser {
 
+        private ThreadLocalRandom random = ThreadLocalRandom.current();
+    
         public JavaHttpUser(int userId, int threadId) {
             super(userId, threadId);
         }
@@ -220,30 +222,34 @@ public class TulipCli {
 
         // Action 1: GET /posts/{id}
         public boolean action1() {
-            int id = ThreadLocalRandom.current().nextInt(100)+1;
+            int id = random.nextInt(100)+1;
             return !http_GET("/posts/{id}", id).isEmpty();
         }
 
         // Action 2: GET /comments/{id}
         public boolean action2() {
-            int id = ThreadLocalRandom.current().nextInt(500)+1;
+            int id = random.nextInt(500)+1;
             return !http_GET("/comments/{id}", id).isEmpty();
         }
 
         // Action 3: GET /todos/{id}
         public boolean action3() {
-            int id = ThreadLocalRandom.current().nextInt(200)+1;
+            int id = random.nextInt(200)+1;
             return !http_GET("/todos/{id}", id).isEmpty();
         }
-
+        
         public boolean onStop() {
             return true;
         }
-        
+    
+        public Logger logger() {
+            return logger;
+        }
+    
         // Logger
         private static final Logger logger = LoggerFactory.getLogger(JavaHttpUser.class);
 
-    }    
+    }
     """.stripIndent();
 
     static String runBenchShJava = """
@@ -358,6 +364,7 @@ public class TulipCli {
     //DEPS org.slf4j:slf4j-api:2.0.17
     //DEPS ch.qos.logback:logback-core:1.5.18
     //DEPS ch.qos.logback:logback-classic:1.5.18
+    //DEPS org.springframework.boot:spring-boot-starter-web:3.5.4
     //SOURCES KotlinHttpUser.kt
     //JAVA 21
     //KOTLIN 2.1.21
@@ -420,7 +427,11 @@ public class TulipCli {
         override fun onStop(): Boolean {
             return true
         }
-            
+    
+        override fun logger(): Logger {
+            return logger
+        }
+    
         // RestClient object
         companion object {
             private val logger = LoggerFactory.getLogger(KotlinHttpUser::class.java)
@@ -509,9 +520,10 @@ public class TulipCli {
     //DEPS org.slf4j:slf4j-api:2.0.17
     //DEPS ch.qos.logback:logback-core:1.5.18
     //DEPS ch.qos.logback:logback-classic:1.5.18
+    //DEPS org.springframework.boot:spring-boot-starter-web:3.5.4
     //SOURCES GroovyHttpUser.groovy
     //JAVA 21
-    //GROOVY 4.0.27
+    //GROOVY 4.0.28
     //RUNTIME_OPTIONS __TULIP_JAVA_OPTIONS__
     //COMPILE_OPTIONS --tolerance=5
     //FILES ../../benchmark_config.json
@@ -571,6 +583,10 @@ public class TulipCli {
         boolean onStop() {
             return true
         }
+        
+        Logger logger() {
+            return logger
+        }
 
         // Logger
         static Logger logger = LoggerFactory.getLogger(GroovyHttpUser.class)
@@ -591,14 +607,18 @@ public class TulipCli {
     """.stripIndent();
 
     static String runBenchCmdGroovy = """
-    if exist benchmark_report.html del benchmark_report.html
+    REM
+    REM JBang / Groovy / Tulip is not supported on Windows
+    REM Try running the benchmark on Linux or macOS
+    REM
+    REM if exist benchmark_report.html del benchmark_report.html
     REM JBANG_JAVA_OPTIONS=__TULIP_JAVA_OPTIONS__
-    call jbang run io\\tulip\\App.groovy
-    @echo off
-    echo.
+    REM call jbang run io\\tulip\\App.groovy
+    REM @echo off
+    REM echo.
     REM call w3m.exe -dump -cols 205 benchmark_report.html
     REM lynx.exe -dump -width 205 benchmark_report.html
-    start benchmark_report.html
+    REM start benchmark_report.html
     REM jbang run asciidoc@wfouche benchmark_config.adoc
     REM start benchmark_config.html
     REM jbang export fatjar io\\tulip\\App.groovy
@@ -659,6 +679,7 @@ public class TulipCli {
     //> using dep org.slf4j:slf4j-api:2.0.17
     //> using dep ch.qos.logback:logback-core:1.5.18
     //> using dep ch.qos.logback:logback-classic:1.5.18
+    //> using dep org.springframework.boot:spring-boot-starter-web:3.5.4
     //> using javaOpt __TULIP_JAVA_OPTIONS__
     //> using repositories m2local
 
@@ -714,11 +735,15 @@ public class TulipCli {
       }
 
       override def onStop(): Boolean = true
+    
+      override def logger(): Logger = {
+        return loggerz
+      }
 
     }
 
     // Logger
-    val logger: Logger = LoggerFactory.getLogger(classOf[ScalaHttpUser])
+    val loggerz: Logger = LoggerFactory.getLogger(classOf[ScalaHttpUser])
     """.stripIndent();
 
     static String runBenchShScala = """
@@ -800,6 +825,7 @@ public class TulipCli {
     //DEPS org.slf4j:slf4j-api:2.0.17
     //DEPS ch.qos.logback:logback-core:1.5.18
     //DEPS ch.qos.logback:logback-classic:1.5.18
+    //DEPS org.springframework.boot:spring-boot-starter-web:3.5.4
     //JAVA 21
     //RUNTIME_OPTIONS __TULIP_JAVA_OPTIONS__
     
@@ -823,6 +849,7 @@ public class TulipCli {
     #   "org.slf4j:slf4j-api:2.0.17",
     #   "ch.qos.logback:logback-core:1.5.18",
     #   "ch.qos.logback:logback-classic:1.5.18",
+    #   "org.springframework.boot:spring-boot-starter-web:3.5.4"
     # ]
     # runtime-options = [
     #   "-server", "-Xms2g", "-Xmx2g", "-XX:+UseZGC", "-XX:+ZGenerational"
@@ -834,7 +861,7 @@ public class TulipCli {
     import io.github.wfouche.tulip.api.TulipApi as TulipApi
     import java.util.concurrent.ThreadLocalRandom as ThreadLocalRandom
 
-    class PythonHttpUser(HttpUser):
+    class JythonHttpUser(HttpUser):
 
         def __init__(self, userId, threadId):
             HttpUser.__init__(self, userId, threadId)
@@ -863,7 +890,7 @@ public class TulipCli {
     class UserFactory(TulipUserFactory):
 
         def getUser(self, userId, className, threadId):
-            return PythonHttpUser(userId, threadId)
+            return JythonHttpUser(userId, threadId)
 
     TulipApi.runTulip("benchmark_config.json", UserFactory())
 
