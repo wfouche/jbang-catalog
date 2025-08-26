@@ -2,7 +2,7 @@
 
 // Game developed using Google Gemini AI (2.5 Pro)
 
-// $ jbang run JavaCli.java Pong2.java
+// $ jbang run java-cli@wfouche Pong2.java
 
 // ### jbang
 // deps = [
