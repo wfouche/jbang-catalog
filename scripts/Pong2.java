@@ -8,7 +8,8 @@
 //   "org.lwjgl:lwjgl-glfw:3.3.6", 
 //   "org.lwjgl:lwjgl-opengl:3.3.6"]
 // runtimeOptions = ["-Xmx512m"]
-//  
+// debug = true
+// 
 // [platform.macos]
 // runtimeOptions = ["-XstartOnFirstThread"]
 // 
