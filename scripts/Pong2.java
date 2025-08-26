@@ -14,19 +14,19 @@
 // 
 // [platform.macos]
 // runtimeOptions = ["-XstartOnFirstThread"]
-// 
-// [platform.macos.aarch64]
-// deps = [
-//   "org.lwjgl:lwjgl:3.3.6:natives-macos-arm64", 
-//   "org.lwjgl:lwjgl-glfw:3.3.6:natives-macos-arm64", 
-//   "org.lwjgl:lwjgl-opengl:3.3.6:natives-macos-arm64"]
-// 
+//
 // [platform.macos.amd64]
 // deps = [
 //   "org.lwjgl:lwjgl:3.3.6:natives-macos", 
 //   "org.lwjgl:lwjgl-glfw:3.3.6:natives-macos", 
 //   "org.lwjgl:lwjgl-opengl:3.3.6:natives-macos"]
-// 
+//
+// [platform.macos.aarch64]
+// deps = [
+//   "org.lwjgl:lwjgl:3.3.6:natives-macos-arm64",
+//   "org.lwjgl:lwjgl-glfw:3.3.6:natives-macos-arm64",
+//   "org.lwjgl:lwjgl-opengl:3.3.6:natives-macos-arm64"]
+//
 // [platform.windows.amd64]
 // deps = [
 //  "org.lwjgl:lwjgl:3.3.6:natives-windows",
