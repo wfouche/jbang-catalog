@@ -22,6 +22,9 @@
     "deps": {
       "script-ref": "scripts/deps.java"
     },
+    "java-cli": {
+      "script-ref": "scripts/JavaCli.java"
+    },
     "jython-jpm": {
       "script-ref": "scripts/JythonJpm.java"
     },
