@@ -523,6 +523,7 @@ public class TulipCli {
         writeToFile(".sdkmanrc", sdkmanConfig, false);
         writeToFile("view_report.sh", viewBenchReportSh, false);
         writeToFile("view_report.cmd", viewBenchReportCmd, false);
+        writeToFile("clean.cmd", cleanCmd, false);
 
         chmod();
     }
@@ -682,6 +683,7 @@ public class TulipCli {
         writeToFile(".sdkmanrc", sdkmanConfig, false);
         writeToFile("view_report.sh", viewBenchReportSh, false);
         writeToFile("view_report.cmd", viewBenchReportCmd, false);
+        writeToFile("clean.cmd", cleanCmd, false);
 
         chmod();
     }
