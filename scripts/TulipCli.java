@@ -278,6 +278,18 @@ public class TulipCli {
     REM jbang export fatjar io\\tulip\\App.java
     """.stripIndent();
 
+    static String cleanCmd = """
+    rd/q/s io
+    del view*.cmd
+    del view*.sh
+    del run*.cmd
+    del run*.sh
+    del benchmark_*.*
+    del .sdkmanrc
+    rd/q/s .asciidoctor
+    del wfd0.svg
+    """.stripIndent();
+
     static String sdkmanConfig = """
     # Java
     java=21.0.8-tem
@@ -353,6 +365,7 @@ public class TulipCli {
         writeToFile(".sdkmanrc", sdkmanConfig, false);
         writeToFile("view_report.sh", viewBenchReportSh, false);
         writeToFile("view_report.cmd", viewBenchReportCmd, false);
+        writeToFile("clean.cmd", cleanCmd, false);
 
         chmod();
 
@@ -583,7 +596,7 @@ public class TulipCli {
         boolean onStop() {
             return true
         }
-        
+    
         Logger logger() {
             return logger
         }
@@ -591,7 +604,7 @@ public class TulipCli {
         // Logger
         static Logger logger = LoggerFactory.getLogger(GroovyHttpUser.class)
     
-    }    
+    }
     """.stripIndent();
 
     static String runBenchShGroovy = """
