@@ -65,8 +65,8 @@ public class TulipCli {
             "user_params": {
                 "url": "__URL__",
                 "httpVersion": "HTTP_2",
-                "connectTimeoutMillis": 500,
-                "readTimeoutMillis": 2000,
+                "connectTimeoutMillis": 5000,
+                "readTimeoutMillis": 10000,
                 "debug": true
             },
             "user_actions": {
