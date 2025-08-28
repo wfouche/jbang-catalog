@@ -15,7 +15,7 @@ import java.nio.file.Paths;
 public class TulipCli {
 
     static String appName = "tulip-cli";
-    static String appVersion = "1/2025-08-28T12:53:48";
+    static String appVersion = "1/2025-08-28T13:08:39";
 
     static void displayAppInfo() {
         String version = appVersion;
@@ -64,7 +64,7 @@ public class TulipCli {
             "user_class": "io.tulip.__TULIP_LANG__HttpUser",
             "user_params": {
                 "url": "__URL__",
-                "httpVersion": "HTTP_1_1",
+                "httpVersion": "HTTP_2",
                 "connectTimeoutMillis": 500,
                 "readTimeoutMillis": 2000,
                 "debug": true
@@ -565,7 +565,7 @@ public class TulipCli {
         // Action 1: GET /posts/{id}
         boolean action1() {
             int id = ThreadLocalRandom.current().nextInt(100) + 1
-            return !http_GET("/posts/{id}", id).isEmpty()            
+            return !http_GET("/posts/{id}", id).isEmpty()
         }
     
         // Action 2: GET /comments/{id}
