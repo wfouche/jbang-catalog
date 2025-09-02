@@ -537,7 +537,7 @@ public class TulipCli {
     //DEPS org.springframework.boot:spring-boot-starter-web:3.5.5
     //SOURCES GroovyHttpUser.groovy
     //JAVA 21
-    //GROOVY 4.0.28
+    //GROOVY 5.0.0
     //RUNTIME_OPTIONS __TULIP_JAVA_OPTIONS__
     //COMPILE_OPTIONS --tolerance=5
     //FILES ../../benchmark_config.json
