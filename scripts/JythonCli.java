@@ -173,6 +173,8 @@ public class JythonCli {
 
         if (tomlText.length() > 0) {
             int lineno = 0;
+            printIfDebug("");
+            printIfDebug("TOML data extracted from Jython script:");
             for (String line: tomlText.toString().split("\\n", -1)) {
                 lineno += 1;
                 printIfDebug(lineno, line);
@@ -209,6 +211,15 @@ public class JythonCli {
             for (Object e : tpr.getArrayOrEmpty("runtime-options").toList()) {
                 String ropt = (String) e;
                 ropts.add(ropt);
+            }
+
+            // Remove this workaround for Java 26 and use the
+            // still to be released updated jnr/jffi library
+            if (javaVersion.equals("24") || javaVersion.equals("25")) {
+                ropts.add("--enable-native-access=ALL-UNNAMED");
+                // https://github.com/jnr/jffi/issues/165
+                // ropts.add("-Djffi.unsafe.disabled=true");
+                ropts.add("--sun-misc-unsafe-memory-access=allow");
             }
         }
     }
@@ -249,7 +260,13 @@ public class JythonCli {
 
         cmd.addAll(jythonArgs);
 
-        printIfDebug(cmd.toString());
+        //printIfDebug(cmd.toString());
+        printIfDebug("");
+        printIfDebug("JBang command-line parameters:");
+        for (String e : cmd) {
+            printIfDebug("    " + e);
+        }
+        printIfDebug("");
 
         ProcessBuilder pb = new ProcessBuilder(cmd);
         pb.inheritIO();
@@ -265,7 +282,7 @@ public class JythonCli {
      */
     void printIfDebug(int lineno, String line) {
         if (debug) {
-            System.err.printf("{%3d} %s\n", lineno, line);
+            System.err.printf("%6d :%s\n", lineno, line);
         }
     }
 
