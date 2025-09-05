@@ -114,6 +114,15 @@ public class JavaCli {
         ropts.add(ropt);
       }
 
+      // Remove this workaround for Java 26 and use the
+      // still to be released updated jnr/jffi library
+      if (javaVersion.equals("24") || javaVersion.equals("25")) {
+          ropts.add("--enable-native-access=ALL-UNNAMED");
+          // https://github.com/jnr/jffi/issues/165
+          // ropts.add("-Djffi.unsafe.disabled=true");
+          ropts.add("--sun-misc-unsafe-memory-access=allow");
+      }
+
       // debug
       if (tpr.isBoolean("debug")) {
         debug = Boolean.TRUE.equals(tpr.getBoolean("debug"));
