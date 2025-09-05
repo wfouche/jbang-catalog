@@ -59,6 +59,8 @@ public class JythonCli {
      */
     boolean debug = false;
 
+    boolean printDebugIndented = false;
+
     /**
      * Determine the major version number of the JVM {@code jython-cli} is
      * running on.
@@ -265,6 +267,15 @@ public class JythonCli {
         printIfDebug("JBang command-line parameters:");
         for (String e : cmd) {
             printIfDebug("    " + e);
+            if (e.startsWith("--")) {
+                if (printDebugIndented == false) {
+                    printDebugIndented = true;
+                } else {
+                    printDebugIndented = false;
+                }
+            } else {
+                printDebugIndented = false;
+            }
         }
         printIfDebug("");
 
@@ -293,7 +304,11 @@ public class JythonCli {
      */
     void printIfDebug(String text) {
         if (debug) {
-            System.err.println(text);
+            String indent = "";
+            if (printDebugIndented) {
+                indent = "  ";
+            }
+            System.err.println(indent + text);
         }
     }
 
