@@ -56,11 +56,16 @@ public class JavaCli {
           found = true;
         } else if (found && line.startsWith("// ###")) {
           break;
-        } else if (found && line.startsWith("// ")) {
+        } else if (found && line.startsWith("//")) {
           if (tomlText.length() > 0) {
             tomlText.append("\n");
           }
-          tomlText.append(line.substring(3));
+          tomlText.append(line.substring(2));
+        } else if (found && line.startsWith("// ")) {
+            if (tomlText.length() > 0) {
+                tomlText.append("\n");
+            }
+            tomlText.append(line.substring(3));
         }
       }
     }
