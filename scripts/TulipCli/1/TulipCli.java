@@ -15,7 +15,7 @@ import java.nio.file.Paths;
 public class TulipCli {
 
     static String appName = "tulip-cli";
-    static String appVersion = "1/2025-09-09T10:35:00";
+    static String appVersion = "1/2025-09-09T10:56:28";
 
     static void displayAppInfo() {
         String version = appVersion;
@@ -301,10 +301,10 @@ public class TulipCli {
     jbang=0.129.0
     
     # Scala
-    scalacli=1.8.5
+    scalacli=1.9.0
     
     # MCS
-    mcs=0.7.6
+    mcs=0.8.0
     
     # Maven
     maven=3.9.11
