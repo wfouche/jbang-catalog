@@ -288,6 +288,7 @@ public class TulipCli {
     del .sdkmanrc
     rd/q/s .asciidoctor
     del wfd0.svg
+    del json_report.py
     """.stripIndent();
 
     static String sdkmanConfig = """
