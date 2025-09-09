@@ -15,7 +15,7 @@ import java.nio.file.Paths;
 public class TulipCli {
 
     static String appName = "tulip-cli";
-    static String appVersion = "1/2025-08-28T13:08:39";
+    static String appVersion = "1/2025-09-09T10:35:00";
 
     static void displayAppInfo() {
         String version = appVersion;
@@ -64,9 +64,9 @@ public class TulipCli {
             "user_class": "io.tulip.__TULIP_LANG__HttpUser",
             "user_params": {
                 "url": "__URL__",
-                "httpVersion": "HTTP_2",
-                "connectTimeoutMillis": 500,
-                "readTimeoutMillis": 2000,
+                "httpVersion": "HTTP_1_1",
+                "connectTimeoutMillis": 5000,
+                "readTimeoutMillis": 10000,
                 "debug": true
             },
             "user_actions": {
@@ -278,6 +278,18 @@ public class TulipCli {
     REM jbang export fatjar io\\tulip\\App.java
     """.stripIndent();
 
+    static String cleanCmd = """
+    rd/q/s io
+    del view*.cmd
+    del view*.sh
+    del run*.cmd
+    del run*.sh
+    del benchmark_*.*
+    del .sdkmanrc
+    rd/q/s .asciidoctor
+    del wfd0.svg
+    """.stripIndent();
+
     static String sdkmanConfig = """
     # Java
     java=21.0.8-tem
@@ -299,6 +311,25 @@ public class TulipCli {
     
     # VisualVM
     visualvm=2.2
+    """.stripIndent();
+
+    static String jsonReportPy = """
+    import json
+    from collections import OrderedDict
+    
+    filename = "benchmark_report.json"
+    fileObj = open(filename)
+    jb = json.load(fileObj, object_pairs_hook=OrderedDict)
+    
+    def report(name):
+        print name
+        print "  ", jb["benchmarks"][name]["actions"]["summary"]["aps"], "aps"
+        print "  ", jb["benchmarks"][name]["actions"]["summary"]["aps_target_rate"], "aps_target_rate"
+    
+    report("REST1")
+    report("REST2")
+    report("REST3")
+    report("REST3.max")
     """.stripIndent();
 
     static String viewBenchReportSh = """
@@ -351,8 +382,10 @@ public class TulipCli {
         );
 
         writeToFile(".sdkmanrc", sdkmanConfig, false);
+        writeToFile("json_report.py", jsonReportPy, false);
         writeToFile("view_report.sh", viewBenchReportSh, false);
         writeToFile("view_report.cmd", viewBenchReportCmd, false);
+        writeToFile("clean.cmd", cleanCmd, false);
 
         chmod();
 
@@ -508,8 +541,10 @@ public class TulipCli {
         );
 
         writeToFile(".sdkmanrc", sdkmanConfig, false);
+        writeToFile("json_report.py", jsonReportPy, false);
         writeToFile("view_report.sh", viewBenchReportSh, false);
         writeToFile("view_report.cmd", viewBenchReportCmd, false);
+        writeToFile("clean.cmd", cleanCmd, false);
 
         chmod();
     }
@@ -523,7 +558,7 @@ public class TulipCli {
     //DEPS org.springframework.boot:spring-boot-starter-web:3.5.5
     //SOURCES GroovyHttpUser.groovy
     //JAVA 21
-    //GROOVY 4.0.28
+    //GROOVY 5.0.0
     //RUNTIME_OPTIONS __TULIP_JAVA_OPTIONS__
     //COMPILE_OPTIONS --tolerance=5
     //FILES ../../benchmark_config.json
@@ -583,7 +618,7 @@ public class TulipCli {
         boolean onStop() {
             return true
         }
-        
+    
         Logger logger() {
             return logger
         }
@@ -591,7 +626,7 @@ public class TulipCli {
         // Logger
         static Logger logger = LoggerFactory.getLogger(GroovyHttpUser.class)
     
-    }    
+    }
     """.stripIndent();
 
     static String runBenchShGroovy = """
@@ -667,8 +702,10 @@ public class TulipCli {
         );
 
         writeToFile(".sdkmanrc", sdkmanConfig, false);
+        writeToFile("json_report.py", jsonReportPy, false);
         writeToFile("view_report.sh", viewBenchReportSh, false);
         writeToFile("view_report.cmd", viewBenchReportCmd, false);
+        writeToFile("clean.cmd", cleanCmd, false);
 
         chmod();
     }
@@ -811,6 +848,7 @@ public class TulipCli {
         );
 
         writeToFile(".sdkmanrc", sdkmanConfig, false);
+        writeToFile("json_report.py", jsonReportPy, false);
         writeToFile("view_report.sh", viewBenchReportSh, false);
         writeToFile("view_report.cmd", viewBenchReportCmd, false);
 
@@ -967,6 +1005,7 @@ public class TulipCli {
         );
 
         writeToFile(".sdkmanrc", sdkmanConfig, false);
+        writeToFile("json_report.py", jsonReportPy, false);
         writeToFile("view_report.sh", viewBenchReportSh, false);
         writeToFile("view_report.cmd", viewBenchReportCmd, false);
 
