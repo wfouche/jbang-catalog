@@ -15,7 +15,7 @@ import java.nio.file.Paths;
 public class TulipCli {
 
     static String appName = "tulip-cli";
-    static String appVersion = "1/2025-09-09T10:56:28";
+    static String appVersion = "1/2025-09-09T11:03:42";
 
     static void displayAppInfo() {
         String version = appVersion;
@@ -288,6 +288,7 @@ public class TulipCli {
     del .sdkmanrc
     rd/q/s .asciidoctor
     del wfd0.svg
+    del json_report.py
     """.stripIndent();
 
     static String sdkmanConfig = """
