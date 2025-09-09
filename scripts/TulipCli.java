@@ -313,6 +313,25 @@ public class TulipCli {
     visualvm=2.2
     """.stripIndent();
 
+    static String jsonReportPy = """
+    import json
+    from collections import OrderedDict
+    
+    filename = "benchmark_report.json"
+    fileObj = open(filename)
+    jb = json.load(fileObj, object_pairs_hook=OrderedDict)
+    
+    def report(name):
+        print name
+        print "  ", jb["benchmarks"][name]["actions"]["summary"]["aps"], "aps"
+        print "  ", jb["benchmarks"][name]["actions"]["summary"]["aps_target_rate"], "aps_target_rate"
+    
+    report("REST1")
+    report("REST2")
+    report("REST3")
+    report("REST3.max")
+    """
+
     static String viewBenchReportSh = """
     firefox benchmark_report.html
     """.stripIndent();
@@ -363,6 +382,7 @@ public class TulipCli {
         );
 
         writeToFile(".sdkmanrc", sdkmanConfig, false);
+        writeToFile("json_report.py", jsonReportPy, false);
         writeToFile("view_report.sh", viewBenchReportSh, false);
         writeToFile("view_report.cmd", viewBenchReportCmd, false);
         writeToFile("clean.cmd", cleanCmd, false);
@@ -521,6 +541,7 @@ public class TulipCli {
         );
 
         writeToFile(".sdkmanrc", sdkmanConfig, false);
+        writeToFile("json_report.py", jsonReportPy, false);
         writeToFile("view_report.sh", viewBenchReportSh, false);
         writeToFile("view_report.cmd", viewBenchReportCmd, false);
         writeToFile("clean.cmd", cleanCmd, false);
@@ -681,6 +702,7 @@ public class TulipCli {
         );
 
         writeToFile(".sdkmanrc", sdkmanConfig, false);
+        writeToFile("json_report.py", jsonReportPy, false);
         writeToFile("view_report.sh", viewBenchReportSh, false);
         writeToFile("view_report.cmd", viewBenchReportCmd, false);
         writeToFile("clean.cmd", cleanCmd, false);
@@ -826,6 +848,7 @@ public class TulipCli {
         );
 
         writeToFile(".sdkmanrc", sdkmanConfig, false);
+        writeToFile("json_report.py", jsonReportPy, false);
         writeToFile("view_report.sh", viewBenchReportSh, false);
         writeToFile("view_report.cmd", viewBenchReportCmd, false);
 
@@ -982,6 +1005,7 @@ public class TulipCli {
         );
 
         writeToFile(".sdkmanrc", sdkmanConfig, false);
+        writeToFile("json_report.py", jsonReportPy, false);
         writeToFile("view_report.sh", viewBenchReportSh, false);
         writeToFile("view_report.cmd", viewBenchReportCmd, false);
 
