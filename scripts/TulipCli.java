@@ -330,7 +330,7 @@ public class TulipCli {
     report("REST2")
     report("REST3")
     report("REST3.max")
-    """
+    """.stripIndent();
 
     static String viewBenchReportSh = """
     firefox benchmark_report.html
