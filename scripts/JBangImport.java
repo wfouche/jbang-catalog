@@ -83,7 +83,7 @@ public static Optional<String> findGavBySha1(String sha1) throws IOException, In
         // 1. Validate input argument
         if (args.length == 0) {
             System.err.println("❌ Error: Please provide a directory path.");
-            System.err.println("Usage: jbang JarSha1.java <directory>");
+            System.err.println("Usage: jbang JBangImport.java <directory>");
             System.exit(1);
         }
 
