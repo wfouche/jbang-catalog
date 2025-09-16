@@ -82,7 +82,7 @@ public static Optional<String> findGavBySha1(String sha1) throws IOException, In
     public static void main(String... args) throws InterruptedException {
         // 1. Validate input argument
         if (args.length == 0) {
-            System.err.println("❌ Error: Please provide a directory path.");
+            System.err.println("Error: Please provide a directory path.");
             System.err.println("Usage: jbang JBangImport.java <directory>");
             System.exit(1);
         }
@@ -90,11 +90,11 @@ public static Optional<String> findGavBySha1(String sha1) throws IOException, In
         Path dir = Paths.get(args[0]);
 
         if (!Files.isDirectory(dir)) {
-            System.err.println("❌ Error: '" + dir + "' is not a valid directory.");
+            System.err.println("Error: '" + dir + "' is not a valid directory.");
             System.exit(1);
         }
 
-        System.out.println("🔎 Calculating //DEPS for JAR files in: " + dir.toAbsolutePath());
+        System.out.println("Calculating //DEPS for JAR files in: " + dir.toAbsolutePath());
         System.out.println("-------------------------------------------------------------------------");
 
         // 2. Iterate through all files ending with .jar
@@ -104,7 +104,7 @@ public static Optional<String> findGavBySha1(String sha1) throws IOException, In
                     // 3. Calculate and print SHA-1 hash for each file
                     String sha1 = calculateSha1(jarFile);
                     //System.out.printf("%-40s: %s%n", jarFile.getFileName(), sha1);
-		    System.out.println("//DEPS " + findGavBySha1(sha1).orElse("[" + jarFile.toString() + "]"));
+		            System.out.println("//DEPS " + findGavBySha1(sha1).orElse("[" + jarFile.toString() + ", " + sha1 + "]"));
                 } catch (IOException | NoSuchAlgorithmException e) {
                     System.err.printf("Could not process file %s: %s%n", jarFile.getFileName(), e.getMessage());
                 }
