@@ -28,6 +28,9 @@
     "jython-jpm": {
       "script-ref": "scripts/JythonJpm.java"
     },
+    "import": {
+      "script-ref": "scripts/JBangImport.java"
+    },
     "kwrk-dev": {
       "script-ref": "scripts/kwrk.kt"
     },
