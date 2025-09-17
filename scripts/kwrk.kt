@@ -50,7 +50,7 @@ val benchmarkConfig:String = """
         "user_class": "KwrkHttpUser",
         "user_params": {
             "url": "__P_URL__",
-            "httpVersion": "HTTP_1_1",
+            "httpVersion": "__P_HTTP_VERSION__",
             "httpHeader": "__P_HEADER__",
             "connectTimeoutMillis": 1000,
             "readTimeoutMillis": 10000
@@ -171,6 +171,7 @@ class KwrkHttpUser(userId: Int, threadId: Int) : HttpUser(userId, threadId) {
 
 class KwrkCli : CliktCommand() {
     private val p_debug by option("--debug").default("false")
+    private val p_http by option("--http").default("HTTP_1_1")
     private val p_rate by option("--rate").double().default(5.0)
     private val p_rate_step_change by option("--rateStepChange").double().default(0.0)
     private val p_rate_step_count by option("--rateStepCount").int().default(1)
@@ -188,6 +189,7 @@ class KwrkCli : CliktCommand() {
 
         var json = benchmarkConfig
 
+        json = json.replace("__P_HTTP_VERSION__", p_http.toString())
         json = json.replace("__P_RATE__", p_rate.toString())
         json = json.replace("__P_RATE_STEP_CHANGE__", p_rate_step_change.toString())
         json = json.replace("__P_RATE_STEP_COUNT__", p_rate_step_count.toString())
@@ -215,8 +217,10 @@ class KwrkCli : CliktCommand() {
             println("  --rateStepChange ${p_rate_step_change}")
             println("  --rateStepCount ${p_rate_step_count}")
             println("  --threads ${p_threads}")
+            println("  --warmup ${p_warmup}")
             println("  --duration ${p_duration}")
             println("  --iterations ${p_iterations}")
+            println("  --http ${p_http}")
             println("  --header ${p_header}")
             println("  --url ${p_url}")
         }
