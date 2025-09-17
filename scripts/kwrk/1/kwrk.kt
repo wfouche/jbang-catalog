@@ -1,6 +1,6 @@
 ///usr/bin/env jbang "$0" "$@" ; exit $?
 //DEPS com.github.ajalt.clikt:clikt-jvm:5.0.1
-//DEPS io.github.wfouche.tulip:tulip-runtime:2.1.8
+//DEPS io.github.wfouche.tulip:tulip-runtime:2.1.9
 //JAVA 21
 //KOTLIN 2.1.21
 
@@ -31,7 +31,7 @@ import java.util.Locale
 import org.springframework.http.MediaType
 
 const val appName: String = "kwrk"
-const val appVersion: String = "1/2025-08-07T20:41:03"
+const val appVersion: String = "1/2025-09-17T20:35:45"
 
 private fun displayAppInfo() {
     var version: String = appVersion
@@ -50,7 +50,7 @@ val benchmarkConfig:String = """
         "user_class": "KwrkHttpUser",
         "user_params": {
             "url": "__P_URL__",
-            "httpVersion": "HTTP_1_1",
+            "httpVersion": "__P_HTTP_VERSION__",
             "httpHeader": "__P_HEADER__",
             "connectTimeoutMillis": 1000,
             "readTimeoutMillis": 10000
@@ -171,6 +171,7 @@ class KwrkHttpUser(userId: Int, threadId: Int) : HttpUser(userId, threadId) {
 
 class KwrkCli : CliktCommand() {
     private val p_debug by option("--debug").default("false")
+    private val p_version by option("--version").default("HTTP_1_1")
     private val p_rate by option("--rate").double().default(5.0)
     private val p_rate_step_change by option("--rateStepChange").double().default(0.0)
     private val p_rate_step_count by option("--rateStepCount").int().default(1)
@@ -188,6 +189,7 @@ class KwrkCli : CliktCommand() {
 
         var json = benchmarkConfig
 
+        json = json.replace("__P_HTTP_VERSION__", p_version.toString())
         json = json.replace("__P_RATE__", p_rate.toString())
         json = json.replace("__P_RATE_STEP_CHANGE__", p_rate_step_change.toString())
         json = json.replace("__P_RATE_STEP_COUNT__", p_rate_step_count.toString())
@@ -215,8 +217,10 @@ class KwrkCli : CliktCommand() {
             println("  --rateStepChange ${p_rate_step_change}")
             println("  --rateStepCount ${p_rate_step_count}")
             println("  --threads ${p_threads}")
+            println("  --warmup ${p_warmup}")
             println("  --duration ${p_duration}")
             println("  --iterations ${p_iterations}")
+            println("  --http ${p_version}")
             println("  --header ${p_header}")
             println("  --url ${p_url}")
         }
@@ -262,6 +266,11 @@ class KwrkCli : CliktCommand() {
         new_lines.add("<tr>")
         new_lines.add("  <td>url</th>")
         new_lines.add("  <td>__P_URL__</th>".replace("__P_URL__", p_url.toString()))
+        new_lines.add("</tr>")
+
+        new_lines.add("<tr>")
+        new_lines.add("  <td>version</th>")
+        new_lines.add("  <td>__P_HTTP__</th>".replace("__P_HTTP__", p_version.toString()))
         new_lines.add("</tr>")
 
         new_lines.add("<tr>")
