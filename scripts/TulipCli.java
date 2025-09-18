@@ -64,7 +64,7 @@ public class TulipCli {
             "user_class": "io.tulip.__TULIP_LANG__HttpUser",
             "user_params": {
                 "url": "__URL__",
-                "httpVersion": "HTTP",
+                "httpVersion": "HTTP_1_1",
                 "connectTimeoutMillis": 5000,
                 "readTimeoutMillis": 10000,
                 "debug": true
