@@ -163,7 +163,7 @@ public class TulipCli {
             "Context-1": {
                 "enabled": true,
                 "num_users": 128,
-                "num_threads": 8
+                "num_threads": 4
             }
         }
     }
