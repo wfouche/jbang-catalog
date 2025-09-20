@@ -13,7 +13,7 @@ import java.util.List;
 public class TulipCli {
 
     static String appName = "tulip-cli";
-    static String appVersion = "1/2025-09-20T08:23:34";
+    static String appVersion = "1/2025-09-20T19:26:53";
 
     static void displayAppInfo() {
         String version = appVersion;
@@ -291,20 +291,29 @@ public class TulipCli {
     """.stripIndent();
 
     static String sdkmanConfig = """
+    # Enable auto-env through the sdkman_auto_env config
+    # Add key=value pairs of SDKs to use below
+        
     # Java
     java=21.0.8-tem
     
+    # Groovy
+    groovy=5.0.1
+    
     # Gradle
-    gradle=8.14.3
+    gradle=9.1.0
     
     # JBang
-    jbang=0.129.0
+    jbang=0.131.0
     
+    # Kotlin
+    kotlin=2.1.21
+            
     # Scala
-    scalacli=1.9.0
+    scalacli=1.9.1
     
     # MCS
-    mcs=0.8.0
+    mcs=0.9.0
     
     # Maven
     maven=3.9.11
