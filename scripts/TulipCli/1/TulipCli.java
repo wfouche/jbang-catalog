@@ -14,7 +14,7 @@ import java.util.List;
 public class TulipCli {
 
     static String appName = "tulip-cli";
-    static String appVersion = "1/2025-09-23T18:04:03";
+    static String appVersion = "1/2025-09-23T19:50:29";
 
     static void displayAppInfo() {
         String version = appVersion;
@@ -281,6 +281,8 @@ public class TulipCli {
 
     static String cleanCmd = """
     rd/q/s io
+    del app.log
+    del logback.xml
     del view*.cmd
     del view*.sh
     del run*.cmd
