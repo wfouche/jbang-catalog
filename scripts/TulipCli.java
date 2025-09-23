@@ -282,6 +282,7 @@ public class TulipCli {
     static String cleanCmd = """
     rd/q/s io
     del app.log
+    del logback.xml
     del view*.cmd
     del view*.sh
     del run*.cmd
