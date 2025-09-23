@@ -356,7 +356,7 @@ public class TulipCli {
             </root>
             
             </configuration>
-            """.stripIdent();
+            """.stripIndent();
 
     static String jsonReportPy = """
     import json
