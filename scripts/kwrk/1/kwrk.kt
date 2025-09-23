@@ -1,6 +1,6 @@
 ///usr/bin/env jbang "$0" "$@" ; exit $?
 //DEPS com.github.ajalt.clikt:clikt-jvm:5.0.3
-//DEPS io.github.wfouche.tulip:tulip-runtime:2.1.10
+//DEPS io.github.wfouche.tulip:tulip-runtime:2.1.11
 //JAVA 21
 //KOTLIN 2.1.21
 
@@ -31,7 +31,7 @@ import java.util.Locale
 import org.springframework.http.MediaType
 
 const val appName: String = "kwrk"
-const val appVersion: String = "1/2025-09-20T08:27:33"
+const val appVersion: String = "1/2025-09-23T11:14:34"
 
 private fun displayAppInfo() {
     var version: String = appVersion
