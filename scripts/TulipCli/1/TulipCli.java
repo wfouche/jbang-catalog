@@ -1,6 +1,6 @@
 ///usr/bin/env jbang "$0" "$@" ; exit $?
 
-//DEPS io.github.wfouche.tulip:tulip-runtime:2.1.10
+//DEPS io.github.wfouche.tulip:tulip-runtime:2.1.11
 //JAVA 21
 
 import java.io.FileWriter;
@@ -13,7 +13,7 @@ import java.util.List;
 public class TulipCli {
 
     static String appName = "tulip-cli";
-    static String appVersion = "1/2025-09-20T19:26:53";
+    static String appVersion = "1/2025-09-23T11:27:49";
 
     static void displayAppInfo() {
         String version = appVersion;
@@ -26,7 +26,7 @@ public class TulipCli {
     static String osid = String.valueOf(io.github.wfouche.tulip.api.TulipApi.NUM_ACTIONS-1).toString();
     static String lang = "Java";
     static String url = "http://jsonplaceholder.typicode.com";
-    static String TULIP_JAVA_OPTIONS = "-server -Xms2g -Xmx2g -XX:+UseZGC -XX:+ZGenerational";
+    static String TULIP_JAVA_OPTIONS = "-server -Xmx2g -XX:+UseZGC -XX:+ZGenerational";
     static String avgAPS = "10.0";
     static String tulipVersion = io.github.wfouche.tulip.api.TulipApi.VERSION;
     static String httpVersion = "HTTP";
@@ -903,7 +903,7 @@ public class TulipCli {
     #   "org.springframework.boot:spring-boot-starter-web:3.5.6"
     # ]
     # runtime-options = [
-    #   "-server", "-Xms2g", "-Xmx2g", "-XX:+UseZGC", "-XX:+ZGenerational"
+    #   "-server", "-Xmx2g", "-XX:+UseZGC", "-XX:+ZGenerational"
     # ]
     # ///
 
