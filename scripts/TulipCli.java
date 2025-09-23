@@ -290,6 +290,7 @@ public class TulipCli {
     del benchmark_*.*
     del .sdkmanrc
     rd/q/s .asciidoctor
+    rd/q/s benchmark_report
     del wfd0.svg
     del json_report.py
     """.stripIndent();
