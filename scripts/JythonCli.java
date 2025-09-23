@@ -73,7 +73,7 @@ public class JythonCli {
         if (version.startsWith("1.")) {
             version = version.substring(2);
         }
-        return version.replaceAll("(\\d+).+", "$1");
+        return version.replaceAll("(\\d+).*", "$1");
     }
 
     /**
