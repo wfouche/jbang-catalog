@@ -1,7 +1,8 @@
 ///usr/bin/env jbang "$0" "$@" ; exit $?
 
 //DEPS io.github.wfouche.tulip:tulip-runtime:2.1.11
-//JAVA 21
+
+//JAVA 21+
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -18,7 +19,7 @@ public class TulipCli {
     static void displayAppInfo() {
         String version = appVersion;
         if (appVersion.contains("JBANG_SNAPSHOT_ID")) {
-            version = "0/2025-08-09T22:12:21";
+            version = "0/2025-09-23T17:38:17";
         }
         System.err.println(appName + "/" + version + "/" + io.github.wfouche.tulip.api.TulipApi.VERSION);
     }
