@@ -14,7 +14,7 @@ import java.util.List;
 public class TulipCli {
 
     static String appName = "tulip-cli";
-    static String appVersion = "1/2025-09-23T17:40:12";
+    static String appVersion = "1/2025-09-23T18:04:03";
 
     static void displayAppInfo() {
         String version = appVersion;
@@ -183,6 +183,7 @@ public class TulipCli {
     //RUNTIME_OPTIONS __TULIP_JAVA_OPTIONS__
     //COMPILE_OPTIONS -g
     //FILES ../../benchmark_config.json
+    //FILES ../../logback.xml
     
     package io.tulip;
     
@@ -323,6 +324,40 @@ public class TulipCli {
     visualvm=2.2
     """.stripIndent();
 
+    static String logbackXml = """
+            <?xml version="1.0" encoding="UTF-8"?>
+            
+            <configuration>
+            
+            <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+                <encoder>
+                    <pattern>%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n</pattern>
+                </encoder>
+                <filter class="ch.qos.logback.classic.filter.LevelFilter">
+                    <level>INFO</level>
+                    <onMatch>ACCEPT</onMatch>
+                    <onMismatch>DENY</onMismatch>
+                </filter>
+            </appender>
+            
+            <appender name="FILE" class="ch.qos.logback.core.FileAppender">
+                <file>app.log</file>
+                <encoder>
+                    <pattern>%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n</pattern>
+                </encoder>
+                <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+                    <level>INFO</level>
+                </filter>
+            </appender>
+            
+            <root level="INFO">
+                <appender-ref ref="CONSOLE" />
+                <appender-ref ref="FILE" />
+            </root>
+            
+            </configuration>
+            """.stripIndent();
+
     static String jsonReportPy = """
     import json
     from collections import OrderedDict
@@ -393,6 +428,7 @@ public class TulipCli {
         );
 
         writeToFile(".sdkmanrc", sdkmanConfig, false);
+        writeToFile("logback.xml", logbackXml, false);
         writeToFile("json_report.py", jsonReportPy, false);
         writeToFile("view_report.sh", viewBenchReportSh, false);
         writeToFile("view_report.cmd", viewBenchReportCmd, false);
@@ -415,6 +451,7 @@ public class TulipCli {
     //RUNTIME_OPTIONS __TULIP_JAVA_OPTIONS__
     //COMPILE_OPTIONS -progressive
     //FILES ../../benchmark_config.json
+    //FILES ../../logback.xml
 
     package io.tulip
 
@@ -553,6 +590,7 @@ public class TulipCli {
         );
 
         writeToFile(".sdkmanrc", sdkmanConfig, false);
+        writeToFile("logback.xml", logbackXml, false);
         writeToFile("json_report.py", jsonReportPy, false);
         writeToFile("view_report.sh", viewBenchReportSh, false);
         writeToFile("view_report.cmd", viewBenchReportCmd, false);
@@ -574,6 +612,7 @@ public class TulipCli {
     //RUNTIME_OPTIONS __TULIP_JAVA_OPTIONS__
     //COMPILE_OPTIONS --tolerance=5
     //FILES ../../benchmark_config.json
+    //FILES ../../logback.xml
 
     package io.tulip
 
@@ -715,6 +754,7 @@ public class TulipCli {
         );
 
         writeToFile(".sdkmanrc", sdkmanConfig, false);
+        writeToFile("logback.xml", logbackXml, false);
         writeToFile("json_report.py", jsonReportPy, false);
         writeToFile("view_report.sh", viewBenchReportSh, false);
         writeToFile("view_report.cmd", viewBenchReportCmd, false);
@@ -862,6 +902,7 @@ public class TulipCli {
         );
 
         writeToFile(".sdkmanrc", sdkmanConfig, false);
+        writeToFile("logback.xml", logbackXml, false);
         writeToFile("json_report.py", jsonReportPy, false);
         writeToFile("view_report.sh", viewBenchReportSh, false);
         writeToFile("view_report.cmd", viewBenchReportCmd, false);
@@ -1020,6 +1061,7 @@ public class TulipCli {
         );
 
         writeToFile(".sdkmanrc", sdkmanConfig, false);
+        writeToFile("logback.xml", logbackXml, false);
         writeToFile("json_report.py", jsonReportPy, false);
         writeToFile("view_report.sh", viewBenchReportSh, false);
         writeToFile("view_report.cmd", viewBenchReportCmd, false);
