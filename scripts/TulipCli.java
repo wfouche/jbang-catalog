@@ -178,7 +178,7 @@ public class TulipCli {
     //DEPS ch.qos.logback:logback-classic:1.5.18
     //DEPS org.springframework.boot:spring-boot-starter-web:3.5.6
     //SOURCES JavaHttpUser.java
-    //JAVA 21
+    //JAVA 21+
     //PREVIEW
     //RUNTIME_OPTIONS __TULIP_JAVA_OPTIONS__
     //COMPILE_OPTIONS -g
@@ -449,7 +449,7 @@ public class TulipCli {
     //DEPS ch.qos.logback:logback-classic:1.5.18
     //DEPS org.springframework.boot:spring-boot-starter-web:3.5.6
     //SOURCES KotlinHttpUser.kt
-    //JAVA 21
+    //JAVA 21+
     //KOTLIN 2.1.21
     //RUNTIME_OPTIONS __TULIP_JAVA_OPTIONS__
     //COMPILE_OPTIONS -progressive
@@ -610,7 +610,7 @@ public class TulipCli {
     //DEPS ch.qos.logback:logback-classic:1.5.18
     //DEPS org.springframework.boot:spring-boot-starter-web:3.5.6
     //SOURCES GroovyHttpUser.groovy
-    //JAVA 21
+    //JAVA 21+
     //GROOVY 5.0.1
     //RUNTIME_OPTIONS __TULIP_JAVA_OPTIONS__
     //COMPILE_OPTIONS --tolerance=5
@@ -922,7 +922,7 @@ public class TulipCli {
     //DEPS ch.qos.logback:logback-core:1.5.18
     //DEPS ch.qos.logback:logback-classic:1.5.18
     //DEPS org.springframework.boot:spring-boot-starter-web:3.5.6
-    //JAVA 21
+    //JAVA 21+
     //RUNTIME_OPTIONS __TULIP_JAVA_OPTIONS__
     
     import org.python.util.jython;
