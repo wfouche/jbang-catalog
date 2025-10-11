@@ -66,6 +66,21 @@
     },
     "jython-cli": {
       "script-ref": "scripts/JythonCli.java"
+    },
+    "jython-java-fmt": {
+      "script-ref": "jbang-fmt@jbangdev/jbang-fmt",
+      "description": "Formats Java Source Code in src folder",
+      "arguments": [
+        "--line-length",
+        "90",
+        "--java",
+        "8",
+        "--indent-with",
+        "space",
+        "--indent-size",
+        "4",
+        "src"
+      ]
     }
   },
   "templates": {}
