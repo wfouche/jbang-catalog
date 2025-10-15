@@ -90,6 +90,7 @@ val benchmarkConfig: String =
         }
     }
     """
+        .trimIndent()
 
 fun writeToFile(path: String, content: String, append: Boolean) {
     try {
@@ -182,7 +183,7 @@ class KwrkCli : CliktCommand() {
         displayAppInfo()
         println("")
 
-        var json = benchmarkConfig.trimIndent()
+        var json = benchmarkConfig
 
         json = json.replace("__P_HTTP_VERSION__", p_version.toString())
         json = json.replace("__P_RATE__", p_rate.toString())
