@@ -2,70 +2,70 @@
   "catalogs": {},
   "aliases": {
     "asciidoc": {
-      "script-ref": "scripts/asciidoc.java"
+      "script-ref": "src/asciidoc.java"
     },
     "asciidoctorj": {
-      "script-ref": "scripts/asciidoctorj.java"
+      "script-ref": "src/asciidoctorj.java"
     },
     "asciidoctorj-cli": {
-      "script-ref": "scripts/asciidoctorj_cli.java"
+      "script-ref": "src/asciidoctorj_cli.java"
     },
     "clojure": {
-      "script-ref": "scripts/Clojure.java"
+      "script-ref": "src/Clojure.java"
     },
     "command-dev": {
-      "script-ref": "scripts/Command.java"
+      "script-ref": "src/Command.java"
     },
     "command": {
-      "script-ref": "scripts/Command/1/Command.java"
+      "script-ref": "src/Command/1/Command.java"
     },
     "deps": {
-      "script-ref": "scripts/deps.java"
+      "script-ref": "src/deps.java"
     },
     "java-cli": {
-      "script-ref": "scripts/JavaCli.java"
+      "script-ref": "src/JavaCli.java"
     },
     "jython-jpm": {
-      "script-ref": "scripts/JythonJpm.java"
+      "script-ref": "src/JythonJpm.java"
     },
     "import": {
-      "script-ref": "scripts/JBangImport.java"
+      "script-ref": "src/JBangImport.java"
     },
     "kwrk-dev": {
-      "script-ref": "scripts/kwrk.kt"
+      "script-ref": "src/kwrk.kt"
     },
     "kwrk": {
-      "script-ref": "scripts/kwrk/1/kwrk.kt"
+      "script-ref": "src/kwrk/1/kwrk.kt"
     },
     "snapshot-cli-dev": {
-      "script-ref": "scripts/SnapshotCli.java"
+      "script-ref": "src/SnapshotCli.java"
     },
     "snapshot-cli": {
-      "script-ref": "scripts/SnapshotCli/1/SnapshotCli.java"
+      "script-ref": "src/SnapshotCli/1/SnapshotCli.java"
     },
     "tulip-cli-dev": {
-      "script-ref": "scripts/TulipCli.java"
+      "script-ref": "src/TulipCli.java"
     },
     "tulip-cli"     : {
-      "script-ref": "scripts/TulipCli/1/TulipCli.java"
+      "script-ref": "src/TulipCli/1/TulipCli.java"
     },
     "timestamp": {
-      "script-ref": "scripts/timestamp.java"
+      "script-ref": "src/timestamp.java"
     },
     "wrapper-cli": {
-      "script-ref": "scripts/WrapperCli.java"
+      "script-ref": "src/WrapperCli.java"
     },
     "python-jvm-dev": {
-      "script-ref": "scripts/python_jvm.java"
+      "script-ref": "src/python_jvm.java"
     },
     "python-jvm": {
-      "script-ref": "scripts/python_jvm/1/python_jvm.java"
+      "script-ref": "src/python_jvm/1/python_jvm.java"
     },
     "python-cli": {
-      "script-ref": "scripts/python_cli.java"
+      "script-ref": "src/python_cli.java"
     },
     "jython-cli": {
-      "script-ref": "scripts/JythonCli.java"
+      "script-ref": "src/JythonCli.java"
     },
     "jython-java-fmt": {
       "script-ref": "jbang-fmt@jbangdev/jbang-fmt",
