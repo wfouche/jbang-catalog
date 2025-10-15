@@ -1,63 +1,55 @@
-//usr/bin/env jbang "$0" "$@" ; exit $?
-
 // Game developed using Google Gemini AI (2.5 Pro)
 
 // $ jbang run java-cli@wfouche Pong2.java
 
 // ### jbang
 // deps = [
-//   "org.lwjgl:lwjgl:3.3.6", 
-//   "org.lwjgl:lwjgl-glfw:3.3.6", 
+//   "org.lwjgl:lwjgl:3.3.6",
+//   "org.lwjgl:lwjgl-glfw:3.3.6",
 //   "org.lwjgl:lwjgl-opengl:3.3.6"]
 // runtimeOptions = ["-Xmx512m"]
 // debug = true
-// 
+//
 // [platform.macos]
 // runtimeOptions = ["-XstartOnFirstThread"]
-// 
+//
 // [platform.macos.amd64]
 // deps = [
-//   "org.lwjgl:lwjgl:3.3.6:natives-macos", 
-//   "org.lwjgl:lwjgl-glfw:3.3.6:natives-macos", 
+//   "org.lwjgl:lwjgl:3.3.6:natives-macos",
+//   "org.lwjgl:lwjgl-glfw:3.3.6:natives-macos",
 //   "org.lwjgl:lwjgl-opengl:3.3.6:natives-macos"]
-// 
+//
 // [platform.macos.aarch64]
 // deps = [
 //   "org.lwjgl:lwjgl:3.3.6:natives-macos-arm64",
 //   "org.lwjgl:lwjgl-glfw:3.3.6:natives-macos-arm64",
 //   "org.lwjgl:lwjgl-opengl:3.3.6:natives-macos-arm64"]
-// 
+//
 // [platform.windows.amd64]
 // deps = [
 //  "org.lwjgl:lwjgl:3.3.6:natives-windows",
 //  "org.lwjgl:lwjgl-glfw:3.3.6:natives-windows",
 //  "org.lwjgl:lwjgl-opengl:3.3.6:natives-windows"]
-// 
+//
 // [platform.windows.aarch64]
 // deps = [
 //  "org.lwjgl:lwjgl:3.3.6:natives-windows-arm64",
 //  "org.lwjgl:lwjgl-glfw:3.3.6:natives-windows-arm64",
 //  "org.lwjgl:lwjgl-opengl:3.3.6:natives-windows-arm64"]
-// 
+//
 // [platform.linux.amd64]
 // deps = [
 //  "org.lwjgl:lwjgl:3.3.6:natives-linux",
 //  "org.lwjgl:lwjgl-glfw:3.3.6:natives-linux",
 //  "org.lwjgl:lwjgl-opengl:3.3.6:natives-linux"]
-// 
+//
 // [platform.linux.aarch64]
 // deps = [
 //  "org.lwjgl:lwjgl:3.3.6:natives-linux-arm64",
 //  "org.lwjgl:lwjgl-glfw:3.3.6:natives-linux-arm64",
 //  "org.lwjgl:lwjgl-opengl:3.3.6:natives-linux-arm64"]
-// 
+//
 // ###
-
-import org.lwjgl.glfw.*;
-import org.lwjgl.opengl.*;
-import org.lwjgl.system.*;
-
-import java.nio.IntBuffer;
 
 import static org.lwjgl.glfw.Callbacks.*;
 import static org.lwjgl.glfw.GLFW.*;
@@ -65,18 +57,19 @@ import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.system.MemoryStack.*;
 import static org.lwjgl.system.MemoryUtil.*;
 
+import java.nio.IntBuffer;
+import org.lwjgl.glfw.*;
+import org.lwjgl.opengl.*;
+import org.lwjgl.system.*;
+
 /**
  * A simple Pong game using LWJGL 3 and runnable with JBang.
  *
- * How to Run:
- * 1. Install JBang (https://www.jbang.dev/download/)
- * 2. Save this file as Pong.java
+ * <p>How to Run: 1. Install JBang (https://www.jbang.dev/download/) 2. Save this file as Pong.java
  * 3. Open a terminal and run: jbang Pong.java
  *
- * Controls:
- * - Player 1 (Left Paddle): W (Up), S (Down)
- * - Player 2 (Right Paddle): Up Arrow (Up), Down Arrow (Down)
- * - Close the window or press ESC to exit.
+ * <p>Controls: - Player 1 (Left Paddle): W (Up), S (Down) - Player 2 (Right Paddle): Up Arrow (Up),
+ * Down Arrow (Down) - Close the window or press ESC to exit.
  */
 public class Pong2 {
 
@@ -135,12 +128,16 @@ public class Pong2 {
             throw new RuntimeException("Failed to create the GLFW window");
         }
 
-        // Setup a key callback. It will be called every time a key is pressed, repeated or released.
-        glfwSetKeyCallback(window, (window, key, scancode, action, mods) -> {
-            if (key == GLFW_KEY_ESCAPE && action == GLFW_RELEASE) {
-                glfwSetWindowShouldClose(window, true); // We will detect this in the rendering loop
-            }
-        });
+        // Setup a key callback. It will be called every time a key is pressed, repeated or
+        // released.
+        glfwSetKeyCallback(
+                window,
+                (window, key, scancode, action, mods) -> {
+                    if (key == GLFW_KEY_ESCAPE && action == GLFW_RELEASE) {
+                        glfwSetWindowShouldClose(
+                                window, true); // We will detect this in the rendering loop
+                    }
+                });
 
         // Get the thread stack and push a new frame
         try (MemoryStack stack = stackPush()) {
@@ -155,10 +152,9 @@ public class Pong2 {
 
             // Center the window
             glfwSetWindowPos(
-                window,
-                (vidmode.width() - pWidth.get(0)) / 2,
-                (vidmode.height() - pHeight.get(0)) / 2
-            );
+                    window,
+                    (vidmode.width() - pWidth.get(0)) / 2,
+                    (vidmode.height() - pHeight.get(0)) / 2);
         } // The stack frame is popped automatically
 
         // Make the OpenGL context current
@@ -178,16 +174,15 @@ public class Pong2 {
         player2Y = (HEIGHT - PADDLE_HEIGHT) / 2;
         resetBall();
     }
-    
+
     private void resetBall() {
         ballX = (WIDTH - BALL_SIZE) / 2;
         ballY = (HEIGHT - BALL_SIZE) / 2;
-        
+
         // Give the ball a random initial direction
         ballVelX = (Math.random() > 0.5) ? INITIAL_BALL_SPEED : -INITIAL_BALL_SPEED;
         ballVelY = (Math.random() > 0.5) ? INITIAL_BALL_SPEED : -INITIAL_BALL_SPEED;
     }
-
 
     private void loop() {
         // This line is critical for LWJGL's interoperation with GLFW's
@@ -226,8 +221,10 @@ public class Pong2 {
             // Sleep to limit the frame rate
             // This is a simple way to control the frame rate without busy-waiting
             // In a real game, you might want to use a more sophisticated timing mechanism
-            try {Thread.sleep(16);} catch (InterruptedException e) {}
-
+            try {
+                Thread.sleep(16);
+            } catch (InterruptedException e) {
+            }
         }
     }
 
@@ -267,14 +264,18 @@ public class Pong2 {
 
         // Ball collision with paddles
         // Player 1 (left)
-        if (ballX <= PADDLE_WIDTH && ballY + BALL_SIZE >= player1Y && ballY <= player1Y + PADDLE_HEIGHT) {
+        if (ballX <= PADDLE_WIDTH
+                && ballY + BALL_SIZE >= player1Y
+                && ballY <= player1Y + PADDLE_HEIGHT) {
             ballVelX = Math.abs(ballVelX); // Ensure it moves right
         }
         // Player 2 (right)
-        if (ballX >= WIDTH - PADDLE_WIDTH - BALL_SIZE && ballY + BALL_SIZE >= player2Y && ballY <= player2Y + PADDLE_HEIGHT) {
+        if (ballX >= WIDTH - PADDLE_WIDTH - BALL_SIZE
+                && ballY + BALL_SIZE >= player2Y
+                && ballY <= player2Y + PADDLE_HEIGHT) {
             ballVelX = -Math.abs(ballVelX); // Ensure it moves left
         }
-        
+
         // Scoring
         if (ballX < 0) {
             score2++;
@@ -315,7 +316,6 @@ public class Pong2 {
         glVertex2f(x, y + height);
         glEnd();
     }
-
 
     public static void main(String[] args) {
         new Pong2().run();

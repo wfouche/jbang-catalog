@@ -1,5 +1,4 @@
-///usr/bin/env jbang "$0" "$@" ; exit $?
-
+// spotless:off
 // http://mvnrepository.com/artifact/dev.jbang/jash
 //DEPS dev.jbang:jash:0.0.3
 
@@ -23,6 +22,7 @@
 
 // https://mvnrepository.com/artifact/org.slf4j/slf4j-simple
 //DEPS org.slf4j:slf4j-simple:2.0.17
+// spotless:on
 
 import static dev.jbang.jash.Jash.*;
 
@@ -30,19 +30,22 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.LinkedList;
 import java.util.List;
-
+import java.util.concurrent.Callable;
 import picocli.CommandLine;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Parameters;
 
-import java.util.concurrent.Callable;
-
-@Command(name = "deps", mixinStandardHelpOptions = true, version = "deps 0.1",
+@Command(
+        name = "deps",
+        mixinStandardHelpOptions = true,
+        version = "deps 0.1",
         description = "Analyze JBang script dependencies")
-
 public class deps implements Callable<Integer> {
 
-    @Parameters(index = "0", description = "JBang script alias, filename or GAV to analyze", defaultValue = "")
+    @Parameters(
+            index = "0",
+            description = "JBang script alias, filename or GAV to analyze",
+            defaultValue = "")
     private String name;
 
     public static void main(String... args) throws Exception {
@@ -64,7 +67,9 @@ public class deps implements Callable<Integer> {
 
             if (!name.contains(":")) {
                 // name is a script file or alias
-                String dependencies = $(jbang_launch_cmd + " info tools --quiet --select=dependencies " + name).get();
+                String dependencies =
+                        $(jbang_launch_cmd + " info tools --quiet --select=dependencies " + name)
+                                .get();
                 JsonNode deps = new ObjectMapper().readTree(dependencies);
 
                 // Build the gavList
@@ -87,5 +92,4 @@ public class deps implements Callable<Integer> {
         // Return success
         return 0;
     }
-
 }

@@ -1,22 +1,21 @@
-///usr/bin/env jbang "$0" "$@" ; exit $?
-
+// spotless:off
 //DEPS dev.jbang:jash:0.0.3
 //DEPS org.tomlj:tomlj:1.1.1
 //DEPS org.python:jython-slim:2.7.4
 //DEPS org.graalvm.python:jbang:24.2.1
 //JAVA 21
 //NOINTEGRATIONS
+// spotless:on
 
+import dev.jbang.jash.Jash;
 import java.io.*;
 import java.nio.file.*;
 import java.util.*;
 import java.util.stream.Stream;
-import dev.jbang.jash.Jash;
+import org.python.util.jython;
 import org.tomlj.Toml;
 import org.tomlj.TomlParseResult;
 import org.tomlj.TomlTable;
-
-import org.python.util.jython;
 
 public class python_jvm {
 
@@ -31,14 +30,15 @@ public class python_jvm {
         System.out.println(appName + "/" + version);
     }
 
-    private static final String textJythonApp = """
+    private static final String textJythonApp =
+            """
             import org.python.util.PythonInterpreter;
             import java.util.Base64;
-            
+
             public class __CLASSNAME__ {
-            
+
                 public static String mainScriptTextBase64 = "__MAIN_SCRIPT__";
- 
+
                 public static void main(String... args) {
                     String mainScriptFilename = "__MAIN_SCRIPT_FILENAME__";
                     String mainScript = "";
@@ -71,17 +71,18 @@ public class python_jvm {
                         pyInterp.exec(mainScript);
                     }
                 }
-            }            
+            }
             """;
 
-    public static final String textGraalpyApp = """
+    public static final String textGraalpyApp =
+            """
             import org.graalvm.polyglot.*;
             import java.util.Base64;
-            
+
             public class __CLASSNAME__ {
-            
+
                 public static String mainScriptTextBase64 = "__MAIN_SCRIPT__";
-            
+
                 public static void main(String... args) {
                     String mainScriptFilename = "__MAIN_SCRIPT_FILENAME__";
                     String mainScript = "";
@@ -137,13 +138,14 @@ public class python_jvm {
             keepJava = true;
             String[] newArgs = new String[args.length - 1];
             for (int i = 1; i < args.length; i++) {
-                newArgs[i-1] = args[i];
+                newArgs[i - 1] = args[i];
             }
             args = newArgs;
         }
 
-        // Invoke the Jython interpreter if no Python script file is specified, or Jython command-line options are specified
-        if (args.length == 0 || (args.length > 0 && args[0].substring(0,1).equals("-"))) {
+        // Invoke the Jython interpreter if no Python script file is specified, or Jython
+        // command-line options are specified
+        if (args.length == 0 || (args.length > 0 && args[0].substring(0, 1).equals("-"))) {
             jython.main(args);
             System.exit(0);
         }
@@ -158,11 +160,10 @@ public class python_jvm {
             {
                 List<String> lines = Files.readAllLines(Paths.get(scriptFilename));
                 boolean found = false;
-                for (String line: lines) {
+                for (String line : lines) {
                     if (line.startsWith("# /// jbang")) {
                         found = true;
-                    }
-                    else if (line.startsWith("# ///")) {
+                    } else if (line.startsWith("# ///")) {
                         found = false;
                         break;
                     } else if (line.startsWith("# ")) {
@@ -185,7 +186,8 @@ public class python_jvm {
                 }
             }
             if (debug) {
-                System.out.println("[debug] python-jvm init " + javaFilename + " from " + scriptFilename);
+                System.out.println(
+                        "[debug] python-jvm init " + javaFilename + " from " + scriptFilename);
             }
             if (debug) {
                 System.out.println("");
@@ -204,11 +206,11 @@ public class python_jvm {
                 TomlTable graalpyTable = tpr.getTable("graalpy");
                 if (graalpyTable != null) {
                     Boolean allowAllAccess = graalpyTable.getBoolean("allowAllAccess");
-                    if (allowAllAccess != null && allowAllAccess.equals(Boolean.TRUE) ) {
+                    if (allowAllAccess != null && allowAllAccess.equals(Boolean.TRUE)) {
                         graalpyAllowAllAccess = "true";
                     }
                     Boolean emulateJython = graalpyTable.getBoolean("emulateJython");
-                    if (emulateJython != null && emulateJython.equals(Boolean.TRUE) ) {
+                    if (emulateJython != null && emulateJython.equals(Boolean.TRUE)) {
                         graalpyEmulateJython = "true";
                     }
                 }
@@ -268,9 +270,10 @@ public class python_jvm {
                 text = text.replace("__EMJ__", graalpyEmulateJython);
                 text = text.replace("__AAA__", graalpyAllowAllAccess);
             }
-            String jtext = text.replace("__CLASSNAME__", javaClassname)
-                               .replace("__MAIN_SCRIPT__", scriptFileTextB64)
-                               .replace("__MAIN_SCRIPT_FILENAME__", scriptFilename);
+            String jtext =
+                    text.replace("__CLASSNAME__", javaClassname)
+                            .replace("__MAIN_SCRIPT__", scriptFileTextB64)
+                            .replace("__MAIN_SCRIPT_FILENAME__", scriptFilename);
             jf.write(jtext);
         }
 
@@ -287,11 +290,12 @@ public class python_jvm {
             for (int i = 1; i < args.length; i++) {
                 params.append(" " + args[i]);
             }
-            //if (debug) System.out.println("[debug] jbang " + params.toString());
-            String ext = System.getProperty("os.name").toLowerCase().startsWith("win") ? ".cmd" : "";
+            // if (debug) System.out.println("[debug] jbang " + params.toString());
+            String ext =
+                    System.getProperty("os.name").toLowerCase().startsWith("win") ? ".cmd" : "";
             var jargs = params.toString().split("\\s+");
             try (Stream<String> ps = Jash.start("jbang" + ext, jargs).stream()) {
-                    ps.forEach(System.out::println);
+                ps.forEach(System.out::println);
             }
         }
     }

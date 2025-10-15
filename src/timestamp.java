@@ -1,6 +1,5 @@
-///usr/bin/env jbang "$0" "$@" ; exit $?
-
 import static java.lang.System.*;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 

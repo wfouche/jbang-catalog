@@ -1,8 +1,7 @@
-///usr/bin/env jbang "$0" "$@" ; exit $?
-
+// spotless:off
 //DEPS io.github.wfouche.tulip:tulip-runtime:2.1.12
-
 //JAVA 21+
+// spotless:on
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -21,10 +20,12 @@ public class TulipCli {
         if (appVersion.contains("JBANG_SNAPSHOT_ID")) {
             version = "0/2025-09-23T17:38:17";
         }
-        System.err.println(appName + "/" + version + "/" + io.github.wfouche.tulip.api.TulipApi.VERSION);
+        System.err.println(
+                appName + "/" + version + "/" + io.github.wfouche.tulip.api.TulipApi.VERSION);
     }
 
-    static String osid = String.valueOf(io.github.wfouche.tulip.api.TulipApi.NUM_ACTIONS-1).toString();
+    static String osid =
+            String.valueOf(io.github.wfouche.tulip.api.TulipApi.NUM_ACTIONS - 1).toString();
     static String lang = "Java";
     static String url = "http://jsonplaceholder.typicode.com";
     static String TULIP_JAVA_OPTIONS = "-server -Xmx2g -XX:+UseZGC -XX:+ZGenerational";
@@ -55,283 +56,291 @@ public class TulipCli {
         }
     }
 
-    static String benchmarkConfig = """
-    {
-        "actions": {
-            "description": "jsonplaceholder.typicode.com [__TULIP_LANG__]",
-            "output_filename": "benchmark_output.json",
-            "report_filename": "benchmark_report.html",
-            "user_class": "io.tulip.__TULIP_LANG__HttpUser",
-            "user_params": {
-                "url": "__URL__",
-                "httpVersion": "__HTTP_VERSION__",
-                "connectTimeoutMillis": 5000,
-                "readTimeoutMillis": 10000,
-                "debug": true
-            },
-            "user_actions": {
-                "1": "GET:posts",
-                "2": "GET:comments",
-                "3": "GET:todos"
-            }
-        },
-        "workflows": {
-            "ApiUser": {
-                "-": {
-                    "1": 0.40,
-                    "3": 0.60
-                },
-                "1": {
-                    "2": 1.0
-                },
-                "2": {
-                    "-": 1.0
-                },
-                "3": {
-                    "-": 1.0
-                }
-            }
-        },
-        "benchmarks": {
-            "onStart": {
-                "save_stats": false,
-                "scenario_actions": [ {"id": 0} ]
-            },
-            "REST1": {
-                "enabled": true,
-                "aps_rate": __AVG_APS__,
-                "scenario_actions": [
-                    {
-                        "id": 1
-                    }
-                ],
-                "time": {
-                    "pre_warmup_duration": 30,
-                    "warmup_duration": 10,
-                    "benchmark_duration": 30,
-                    "benchmark_iterations": 3
-                }
-            },
-            "REST2": {
-                "enabled": true,
-                "aps_rate": __AVG_APS__,
-                "scenario_actions": [
-                    {
-                        "id": 1, "weight": 10
+    static String benchmarkConfig =
+            """
+            {
+                "actions": {
+                    "description": "jsonplaceholder.typicode.com [__TULIP_LANG__]",
+                    "output_filename": "benchmark_output.json",
+                    "report_filename": "benchmark_report.html",
+                    "user_class": "io.tulip.__TULIP_LANG__HttpUser",
+                    "user_params": {
+                        "url": "__URL__",
+                        "httpVersion": "__HTTP_VERSION__",
+                        "connectTimeoutMillis": 5000,
+                        "readTimeoutMillis": 10000,
+                        "debug": true
                     },
-                    {
-                        "id": 2, "weight": 40
-                    },
-                    {
-                        "id": 3, "weight": 50
+                    "user_actions": {
+                        "1": "GET:posts",
+                        "2": "GET:comments",
+                        "3": "GET:todos"
                     }
-                ],
-                "time": {
-                    "pre_warmup_duration": 30,
-                    "warmup_duration": 10,
-                    "benchmark_duration": 30,
-                    "benchmark_iterations": 3
+                },
+                "workflows": {
+                    "ApiUser": {
+                        "-": {
+                            "1": 0.40,
+                            "3": 0.60
+                        },
+                        "1": {
+                            "2": 1.0
+                        },
+                        "2": {
+                            "-": 1.0
+                        },
+                        "3": {
+                            "-": 1.0
+                        }
+                    }
+                },
+                "benchmarks": {
+                    "onStart": {
+                        "save_stats": false,
+                        "scenario_actions": [ {"id": 0} ]
+                    },
+                    "REST1": {
+                        "enabled": true,
+                        "aps_rate": __AVG_APS__,
+                        "scenario_actions": [
+                            {
+                                "id": 1
+                            }
+                        ],
+                        "time": {
+                            "pre_warmup_duration": 30,
+                            "warmup_duration": 10,
+                            "benchmark_duration": 30,
+                            "benchmark_iterations": 3
+                        }
+                    },
+                    "REST2": {
+                        "enabled": true,
+                        "aps_rate": __AVG_APS__,
+                        "scenario_actions": [
+                            {
+                                "id": 1, "weight": 10
+                            },
+                            {
+                                "id": 2, "weight": 40
+                            },
+                            {
+                                "id": 3, "weight": 50
+                            }
+                        ],
+                        "time": {
+                            "pre_warmup_duration": 30,
+                            "warmup_duration": 10,
+                            "benchmark_duration": 30,
+                            "benchmark_iterations": 3
+                        }
+                    },
+                    "REST3": {
+                        "enabled": true,
+                        "aps_rate": __AVG_APS__,
+                        "scenario_workflow": "ApiUser",
+                        "time": {
+                            "pre_warmup_duration": 30,
+                            "warmup_duration": 10,
+                            "benchmark_duration": 30,
+                            "benchmark_iterations": 3
+                        }
+                    },
+                    "REST3.max": {
+                        "enabled": true,
+                        "aps_rate": 0.0,
+                        "scenario_workflow": "ApiUser",
+                        "time": {
+                            "pre_warmup_duration": 30,
+                            "warmup_duration": 10,
+                            "benchmark_duration": 30,
+                            "benchmark_iterations": 3
+                        }
+                    },
+                    "onStop": {
+                        "save_stats": false,
+                        "scenario_actions": [ {"id": __ONSTOP_ID__} ]
+                    }
+                },
+                "contexts": {
+                    "Context-1": {
+                        "enabled": true,
+                        "num_users": 128,
+                        "num_threads": 4
+                    }
                 }
-            },
-            "REST3": {
-                "enabled": true,
-                "aps_rate": __AVG_APS__,
-                "scenario_workflow": "ApiUser",
-                "time": {
-                    "pre_warmup_duration": 30,
-                    "warmup_duration": 10,
-                    "benchmark_duration": 30,
-                    "benchmark_iterations": 3
-                }
-            },
-            "REST3.max": {
-                "enabled": true,
-                "aps_rate": 0.0,
-                "scenario_workflow": "ApiUser",
-                "time": {
-                    "pre_warmup_duration": 30,
-                    "warmup_duration": 10,
-                    "benchmark_duration": 30,
-                    "benchmark_iterations": 3
-                }
-            },
-            "onStop": {
-                "save_stats": false,
-                "scenario_actions": [ {"id": __ONSTOP_ID__} ]
             }
-        },
-        "contexts": {
-            "Context-1": {
-                "enabled": true,
-                "num_users": 128,
-                "num_threads": 4
-            }
-        }
-    }
-    """.stripIndent();
+            """;
 
-    static String javaApp = """
-    ///usr/bin/env jbang "$0" "$@" ; exit $?
-    //DEPS io.github.wfouche.tulip:tulip-runtime:__TULIP_VERSION__
-    //DEPS org.slf4j:slf4j-api:2.0.17
-    //DEPS ch.qos.logback:logback-core:1.5.18
-    //DEPS ch.qos.logback:logback-classic:1.5.18
-    //DEPS org.springframework.boot:spring-boot-starter-web:3.5.6
-    //SOURCES JavaHttpUser.java
-    //JAVA 21+
-    //PREVIEW
-    //RUNTIME_OPTIONS __TULIP_JAVA_OPTIONS__
-    //COMPILE_OPTIONS -g
-    //FILES ../../benchmark_config.json
-    //FILES ../../logback.xml
-    
-    package io.tulip;
-    
-    import io.github.wfouche.tulip.api.TulipApi;
-    
-    public class App {
-       public static void main(String[] args) {
-          TulipApi.runTulip("benchmark_config.json");
-       }
-    }
-    """.stripIndent();
-
-    static String javaUser = """
-    package io.tulip;
-
-    import io.github.wfouche.tulip.user.HttpUser;
-    import java.util.concurrent.ThreadLocalRandom;
-    import org.slf4j.Logger;
-    import org.slf4j.LoggerFactory;
-
-    public class JavaHttpUser extends HttpUser {
-
-        private ThreadLocalRandom random = ThreadLocalRandom.current();
-    
-        public JavaHttpUser(int userId, int threadId) {
-            super(userId, threadId);
-        }
-
-        public boolean onStart() {
-            // Initialize the shared RestClient object only once
-            if (getUserId() == 0) {
-                logger.info("Java");
-                super.onStart();
-            }
-            return true;
-        }
-
-        // Action 1: GET /posts/{id}
-        public boolean action1() {
-            int id = random.nextInt(100)+1;
-            return !http_GET("/posts/{id}", id).isEmpty();
-        }
-
-        // Action 2: GET /comments/{id}
-        public boolean action2() {
-            int id = random.nextInt(500)+1;
-            return !http_GET("/comments/{id}", id).isEmpty();
-        }
-
-        // Action 3: GET /todos/{id}
-        public boolean action3() {
-            int id = random.nextInt(200)+1;
-            return !http_GET("/todos/{id}", id).isEmpty();
-        }
+    static String javaApp =
+            """
+            ///usr/bin/env jbang "$0" "$@" ; exit $?
+            //DEPS io.github.wfouche.tulip:tulip-runtime:__TULIP_VERSION__
+            //DEPS org.slf4j:slf4j-api:2.0.17
+            //DEPS ch.qos.logback:logback-core:1.5.18
+            //DEPS ch.qos.logback:logback-classic:1.5.18
+            //DEPS org.springframework.boot:spring-boot-starter-web:3.5.6
+            //SOURCES JavaHttpUser.java
+            //JAVA 21+
+            //PREVIEW
+            //RUNTIME_OPTIONS __TULIP_JAVA_OPTIONS__
+            //COMPILE_OPTIONS -g
+            //FILES ../../benchmark_config.json
+            //FILES ../../logback.xml
         
-        public boolean onStop() {
-            return true;
-        }
-    
-        public Logger logger() {
-            return logger;
-        }
-    
-        // Logger
-        private static final Logger logger = LoggerFactory.getLogger(JavaHttpUser.class);
-
-    }
-    """.stripIndent();
-
-    static String runBenchShJava = """
-    #!/bin/bash
-    rm -f benchmark_report.html
-    #export JBANG_JAVA_OPTIONS="__TULIP_JAVA_OPTIONS__"
-    jbang run io/tulip/App.java
-    echo ""
-    #w3m -dump -cols 205 benchmark_report.html
-    lynx -dump -width 205 benchmark_report.html
-    #jbang run asciidoctorj@asciidoctor benchmark_config.adoc
-    #jbang export fatjar io/tulip/App.java
-    """.stripIndent();
-
-    static String runBenchCmdJava = """
-    if exist benchmark_report.html del benchmark_report.html
-    REM JBANG_JAVA_OPTIONS=__TULIP_JAVA_OPTIONS__
-    call jbang run io\\tulip\\App.java
-    @echo off 
-    echo.
-    REM w3m.exe -dump -cols 205 benchmark_report.html
-    REM lynx.exe -dump -width 205 benchmark_report.html
-    start benchmark_report.html
-    REM jbang run asciidoctorj@asciidoctor benchmark_config.adoc
-    REM start benchmark_config.html
-    REM jbang export fatjar io\\tulip\\App.java
-    """.stripIndent();
-
-    static String cleanCmd = """
-    rd/q/s io
-    del app.log
-    del logback.xml
-    del view*.cmd
-    del view*.sh
-    del run*.cmd
-    del run*.sh
-    del benchmark_*.*
-    del .sdkmanrc
-    rd/q/s .asciidoctor
-    rd/q/s benchmark_report
-    del wfd0.svg
-    del json_report.py
-    """.stripIndent();
-
-    static String sdkmanConfig = """
-    # Enable auto-env through the sdkman_auto_env config
-    # Add key=value pairs of SDKs to use below
+            package io.tulip;
         
-    # Java
-    java=21.0.8-tem
-    
-    # Groovy
-    groovy=5.0.1
-    
-    # Gradle
-    gradle=9.1.0
-    
-    # JBang
-    jbang=0.131.0
-    
-    # Kotlin
-    kotlin=2.1.21
-            
-    # Scala
-    scalacli=1.9.1
-    
-    # MCS
-    mcs=0.9.0
-    
-    # Maven
-    maven=3.9.11
-    
-    # VisualVM
-    visualvm=2.2
-    """.stripIndent();
+            import io.github.wfouche.tulip.api.TulipApi;
+        
+            public class App {
+               public static void main(String[] args) {
+                  TulipApi.runTulip("benchmark_config.json");
+               }
+            }
+            """;
 
-    static String logbackXml = """
+    static String javaUser =
+            """
+            package io.tulip;
+        
+            import io.github.wfouche.tulip.user.HttpUser;
+            import java.util.concurrent.ThreadLocalRandom;
+            import org.slf4j.Logger;
+            import org.slf4j.LoggerFactory;
+        
+            public class JavaHttpUser extends HttpUser {
+        
+                private ThreadLocalRandom random = ThreadLocalRandom.current();
+        
+                public JavaHttpUser(int userId, int threadId) {
+                    super(userId, threadId);
+                }
+        
+                public boolean onStart() {
+                    // Initialize the shared RestClient object only once
+                    if (getUserId() == 0) {
+                        logger.info("Java");
+                        super.onStart();
+                    }
+                    return true;
+                }
+        
+                // Action 1: GET /posts/{id}
+                public boolean action1() {
+                    int id = random.nextInt(100)+1;
+                    return !http_GET("/posts/{id}", id).isEmpty();
+                }
+        
+                // Action 2: GET /comments/{id}
+                public boolean action2() {
+                    int id = random.nextInt(500)+1;
+                    return !http_GET("/comments/{id}", id).isEmpty();
+                }
+        
+                // Action 3: GET /todos/{id}
+                public boolean action3() {
+                    int id = random.nextInt(200)+1;
+                    return !http_GET("/todos/{id}", id).isEmpty();
+                }
+        
+                public boolean onStop() {
+                    return true;
+                }
+        
+                public Logger logger() {
+                    return logger;
+                }
+        
+                // Logger
+                private static final Logger logger = LoggerFactory.getLogger(JavaHttpUser.class);
+        
+            }
+            """;
+
+    static String runBenchShJava =
+            """
+            #!/bin/bash
+            rm -f benchmark_report.html
+            #export JBANG_JAVA_OPTIONS="__TULIP_JAVA_OPTIONS__"
+            jbang run io/tulip/App.java
+            echo ""
+            #w3m -dump -cols 205 benchmark_report.html
+            lynx -dump -width 205 benchmark_report.html
+            #jbang run asciidoctorj@asciidoctor benchmark_config.adoc
+            #jbang export fatjar io/tulip/App.java
+            """;
+
+    static String runBenchCmdJava =
+            """
+            if exist benchmark_report.html del benchmark_report.html
+            REM JBANG_JAVA_OPTIONS=__TULIP_JAVA_OPTIONS__
+            call jbang run io\\tulip\\App.java
+            @echo off
+            echo.
+            REM w3m.exe -dump -cols 205 benchmark_report.html
+            REM lynx.exe -dump -width 205 benchmark_report.html
+            start benchmark_report.html
+            REM jbang run asciidoctorj@asciidoctor benchmark_config.adoc
+            REM start benchmark_config.html
+            REM jbang export fatjar io\\tulip\\App.java
+            """;
+
+    static String cleanCmd =
+            """
+            rd/q/s io
+            del app.log
+            del logback.xml
+            del view*.cmd
+            del view*.sh
+            del run*.cmd
+            del run*.sh
+            del benchmark_*.*
+            del .sdkmanrc
+            rd/q/s .asciidoctor
+            rd/q/s benchmark_report
+            del wfd0.svg
+            del json_report.py
+            """;
+
+    static String sdkmanConfig =
+            """
+            # Enable auto-env through the sdkman_auto_env config
+            # Add key=value pairs of SDKs to use below
+        
+            # Java
+            java=21.0.8-tem
+        
+            # Groovy
+            groovy=5.0.1
+        
+            # Gradle
+            gradle=9.1.0
+        
+            # JBang
+            jbang=0.131.0
+        
+            # Kotlin
+            kotlin=2.1.21
+        
+            # Scala
+            scalacli=1.9.1
+        
+            # MCS
+            mcs=0.9.0
+        
+            # Maven
+            maven=3.9.11
+        
+            # VisualVM
+            visualvm=2.2
+            """;
+
+    static String logbackXml =
+            """
             <?xml version="1.0" encoding="UTF-8"?>
-            
+
             <configuration>
-            
+
             <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
                 <encoder>
                     <pattern>%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n</pattern>
@@ -342,7 +351,7 @@ public class TulipCli {
                     <onMismatch>DENY</onMismatch>
                 </filter>
             </appender>
-            
+
             <appender name="FILE" class="ch.qos.logback.core.FileAppender">
                 <file>app.log</file>
                 <encoder>
@@ -352,83 +361,78 @@ public class TulipCli {
                     <level>INFO</level>
                 </filter>
             </appender>
-            
+
             <root level="INFO">
                 <appender-ref ref="CONSOLE" />
                 <appender-ref ref="FILE" />
             </root>
-            
+
             </configuration>
-            """.stripIndent();
+            """;
 
-    static String jsonReportPy = """
-    import json
-    from collections import OrderedDict
-    
-    filename = "benchmark_report.json"
-    fileObj = open(filename)
-    jb = json.load(fileObj, object_pairs_hook=OrderedDict)
-    
-    def report(name):
-        print name
-        print "  ", jb["benchmarks"][name]["actions"]["summary"]["aps"], "aps"
-        print "  ", jb["benchmarks"][name]["actions"]["summary"]["aps_target_rate"], "aps_target_rate"
-    
-    report("REST1")
-    report("REST2")
-    report("REST3")
-    report("REST3.max")
-    """.stripIndent();
+    static String jsonReportPy =
+            """
+            import json
+            from collections import OrderedDict
+        
+            filename = "benchmark_report.json"
+            fileObj = open(filename)
+            jb = json.load(fileObj, object_pairs_hook=OrderedDict)
+        
+            def report(name):
+                print name
+                print "  ", jb["benchmarks"][name]["actions"]["summary"]["aps"], "aps"
+                print "  ", jb["benchmarks"][name]["actions"]["summary"]["aps_target_rate"], "aps_target_rate"
+        
+            report("REST1")
+            report("REST2")
+            report("REST3")
+            report("REST3.max")
+            """;
 
-    static String viewBenchReportSh = """
-    firefox benchmark_report.html
-    """.stripIndent();
+    static String viewBenchReportSh =
+            """
+            firefox benchmark_report.html
+            """;
 
-    static String viewBenchReportCmd = """
-    start benchmark_report.html
-    """.stripIndent();
+    static String viewBenchReportCmd =
+            """
+            start benchmark_report.html
+            """;
 
     static void generateJavaApp() throws IOException, InterruptedException {
         Files.createDirectories(Paths.get(path));
         writeToFile(
-            "benchmark_config.json",
-            benchmarkConfig
-                .replace("__TULIP_LANG__", lang)
-                .replace("__HTTP_VERSION__", httpVersion)
-                .replace("__AVG_APS__", avgAPS)
-                .replace("__URL__", url)
-                .replace("__ONSTOP_ID__", osid),
-            false
-        );
+                "benchmark_config.json",
+                benchmarkConfig
+                        .replace("__TULIP_LANG__", lang)
+                        .replace("__HTTP_VERSION__", httpVersion)
+                        .replace("__AVG_APS__", avgAPS)
+                        .replace("__URL__", url)
+                        .replace("__ONSTOP_ID__", osid),
+                false);
 
         writeToFile(
-            path + "App.java",
-            javaApp
-                .replace("__TULIP_VERSION__", tulipVersion)
-                .replace("__TULIP_JAVA_OPTIONS__", TULIP_JAVA_OPTIONS),
-            false
-        );
+                path + "App.java",
+                javaApp.replace("__TULIP_VERSION__", tulipVersion)
+                        .replace("__TULIP_JAVA_OPTIONS__", TULIP_JAVA_OPTIONS),
+                false);
+
+        writeToFile(path + "JavaHttpUser.java", javaUser, false);
 
         writeToFile(
-            path + "JavaHttpUser.java",
-            javaUser,
-            false
-        );
+                "run_bench.sh",
+                runBenchShJava
+                        .replace("__TULIP_VERSION__", tulipVersion)
+                        .replace("__TULIP_JAVA_OPTIONS__", TULIP_JAVA_OPTIONS),
+                false);
 
         writeToFile(
-            "run_bench.sh",
-            runBenchShJava
-                .replace("__TULIP_VERSION__", tulipVersion)
-                .replace("__TULIP_JAVA_OPTIONS__", TULIP_JAVA_OPTIONS),
-            false
-        );
-
-        writeToFile(
-            "run_bench.cmd",
-            runBenchCmdJava
-                .replace("__TULIP_VERSION__", tulipVersion)
-                .replace("__TULIP_JAVA_OPTIONS__", TULIP_JAVA_OPTIONS), false
-        );
+                "run_bench.cmd",
+                runBenchCmdJava
+                        .replace("__TULIP_VERSION__", tulipVersion)
+                        .replace("__TULIP_JAVA_OPTIONS__", TULIP_JAVA_OPTIONS),
+                false);
 
         writeToFile(".sdkmanrc", sdkmanConfig, false);
         writeToFile("logback.xml", logbackXml, false);
@@ -438,116 +442,119 @@ public class TulipCli {
         writeToFile("clean.cmd", cleanCmd, false);
 
         chmod();
-
     }
 
-    static String kotlinApp = """
-    ///usr/bin/env jbang "$0" "$@" ; exit $?
-    //DEPS io.github.wfouche.tulip:tulip-runtime:__TULIP_VERSION__
-    //DEPS org.slf4j:slf4j-api:2.0.17
-    //DEPS ch.qos.logback:logback-core:1.5.18
-    //DEPS ch.qos.logback:logback-classic:1.5.18
-    //DEPS org.springframework.boot:spring-boot-starter-web:3.5.6
-    //SOURCES KotlinHttpUser.kt
-    //JAVA 21+
-    //KOTLIN 2.1.21
-    //RUNTIME_OPTIONS __TULIP_JAVA_OPTIONS__
-    //COMPILE_OPTIONS -progressive
-    //FILES ../../benchmark_config.json
-    //FILES ../../logback.xml
-
-    package io.tulip
-
-    import io.github.wfouche.tulip.api.TulipApi
-
-    class App() {
-        companion object {
-            @JvmStatic
-            fun main(args: Array<String>) {
-                TulipApi.runTulip("benchmark_config.json")
+    static String kotlinApp =
+            """
+            ///usr/bin/env jbang "$0" "$@" ; exit $?
+            //DEPS io.github.wfouche.tulip:tulip-runtime:__TULIP_VERSION__
+            //DEPS org.slf4j:slf4j-api:2.0.17
+            //DEPS ch.qos.logback:logback-core:1.5.18
+            //DEPS ch.qos.logback:logback-classic:1.5.18
+            //DEPS org.springframework.boot:spring-boot-starter-web:3.5.6
+            //SOURCES KotlinHttpUser.kt
+            //JAVA 21+
+            //KOTLIN 2.1.21
+            //RUNTIME_OPTIONS __TULIP_JAVA_OPTIONS__
+            //COMPILE_OPTIONS -progressive
+            //FILES ../../benchmark_config.json
+            //FILES ../../logback.xml
+        
+            package io.tulip
+        
+            import io.github.wfouche.tulip.api.TulipApi
+        
+            class App() {
+                companion object {
+                    @JvmStatic
+                    fun main(args: Array<String>) {
+                        TulipApi.runTulip("benchmark_config.json")
+                    }
+                }
             }
-        }
-    }
-    """.stripIndent();
+            """;
 
-    static String kotlinUser = """
-    package io.tulip
-    
-    import io.github.wfouche.tulip.user.HttpUser
-    import java.util.concurrent.ThreadLocalRandom
-    import org.slf4j.Logger
-    import org.slf4j.LoggerFactory
-    
-    class KotlinHttpUser(userId: Int, threadId: Int) : HttpUser(userId, threadId) {
-    
-        // Action 0
-        override fun onStart(): Boolean {
-            // Initialize the shared RestClient object only once
-            if (userId == 0) {
-                logger.info("Kotlin")
-                super.onStart()
+    static String kotlinUser =
+            """
+            package io.tulip
+        
+            import io.github.wfouche.tulip.user.HttpUser
+            import java.util.concurrent.ThreadLocalRandom
+            import org.slf4j.Logger
+            import org.slf4j.LoggerFactory
+        
+            class KotlinHttpUser(userId: Int, threadId: Int) : HttpUser(userId, threadId) {
+        
+                // Action 0
+                override fun onStart(): Boolean {
+                    // Initialize the shared RestClient object only once
+                    if (userId == 0) {
+                        logger.info("Kotlin")
+                        super.onStart()
+                    }
+                    return true
+                }
+        
+                // Action 1: GET /posts/{id}
+                override fun action1(): Boolean {
+                    val id: Int = ThreadLocalRandom.current().nextInt(100)+1
+                    return !http_GET("/posts/{id}", id).isEmpty()
+                }
+        
+                // Action 2: GET /comments/{id}
+                override fun action2(): Boolean {
+                    val id: Int = ThreadLocalRandom.current().nextInt(500)+1
+                    return !http_GET("/comments/{id}", id).isEmpty()
+                }
+        
+                // Action 3: GET /todos/{id}
+                override fun action3(): Boolean {
+                    val id: Int = ThreadLocalRandom.current().nextInt(200)+1
+                    return !http_GET("/todos/{id}", id).isEmpty()
+                }
+        
+                override fun onStop(): Boolean {
+                    return true
+                }
+        
+                override fun logger(): Logger {
+                    return logger
+                }
+        
+                // RestClient object
+                companion object {
+                    private val logger = LoggerFactory.getLogger(KotlinHttpUser::class.java)
+                }
             }
-            return true
-        }
-    
-        // Action 1: GET /posts/{id}
-        override fun action1(): Boolean {
-            val id: Int = ThreadLocalRandom.current().nextInt(100)+1
-            return !http_GET("/posts/{id}", id).isEmpty()
-        }
-    
-        // Action 2: GET /comments/{id}
-        override fun action2(): Boolean {
-            val id: Int = ThreadLocalRandom.current().nextInt(500)+1
-            return !http_GET("/comments/{id}", id).isEmpty()
-        }
-    
-        // Action 3: GET /todos/{id}
-        override fun action3(): Boolean {
-            val id: Int = ThreadLocalRandom.current().nextInt(200)+1
-            return !http_GET("/todos/{id}", id).isEmpty()
-        }
-    
-        override fun onStop(): Boolean {
-            return true
-        }
-    
-        override fun logger(): Logger {
-            return logger
-        }
-    
-        // RestClient object
-        companion object {
-            private val logger = LoggerFactory.getLogger(KotlinHttpUser::class.java)
-        }
-    }
-    """.stripIndent();
+            """;
 
-    static String runBenchShKotlin = """
-    #!/bin/bash
-    rm -f benchmark_report.html
-    #export JBANG_JAVA_OPTIONS="__TULIP_JAVA_OPTIONS__"
-    jbang run io/tulip/App.kt
-    echo ""
-    #w3m -dump -cols 205 benchmark_report.html
-    lynx -dump -width 205 benchmark_report.html
-    #jbang run asciidoctorj@asciidoctor benchmark_config.adoc
-    #jbang export fatjar io/tulip/App.kt
-    """.stripIndent();
+    static String runBenchShKotlin =
+            """
+            #!/bin/bash
+            rm -f benchmark_report.html
+            #export JBANG_JAVA_OPTIONS="__TULIP_JAVA_OPTIONS__"
+            jbang run io/tulip/App.kt
+            echo ""
+            #w3m -dump -cols 205 benchmark_report.html
+            lynx -dump -width 205 benchmark_report.html
+            #jbang run asciidoctorj@asciidoctor benchmark_config.adoc
+            #jbang export fatjar io/tulip/App.kt
+            """;
 
-    static String runBenchCmdKotlin = """
-    if exist benchmark_report.html del benchmark_report.html
-    REM JBANG_JAVA_OPTIONS=__TULIP_JAVA_OPTIONS__
-    call jbang run io\\tulip\\App.kt
-    @echo off
-    echo.
-    REM call w3m.exe -dump -cols 205 benchmark_report.html
-    REM lynx.exe -dump -width 205 benchmark_report.html
-    start benchmark_report.html
-    REM jbang run asciidoctorj@asciidoctor benchmark_config.adoc
-    REM start benchmark_config.html
-    REM jbang export fatjar io\\tulip\\App.kt
-    """.stripIndent();
+    static String runBenchCmdKotlin =
+            """
+            if exist benchmark_report.html del benchmark_report.html
+            REM JBANG_JAVA_OPTIONS=__TULIP_JAVA_OPTIONS__
+            call jbang run io\\tulip\\App.kt
+            @echo off
+            echo.
+            REM call w3m.exe -dump -cols 205 benchmark_report.html
+            REM lynx.exe -dump -width 205 benchmark_report.html
+            start benchmark_report.html
+            REM jbang run asciidoctorj@asciidoctor benchmark_config.adoc
+            REM start benchmark_config.html
+            REM jbang export fatjar io\\tulip\\App.kt
+            """;
 
     static void generateKotlinApp() throws IOException, InterruptedException {
         Files.createDirectories(Paths.get(path));
@@ -560,37 +567,30 @@ public class TulipCli {
                         .replace("__AVG_APS__", avgAPS)
                         .replace("__URL__", url)
                         .replace("__ONSTOP_ID__", osid),
-                false
-        );
+                false);
 
         writeToFile(
                 path + "App.kt",
                 kotlinApp
                         .replace("__TULIP_VERSION__", tulipVersion)
                         .replace("__TULIP_JAVA_OPTIONS__", TULIP_JAVA_OPTIONS),
-                false
-        );
+                false);
 
-        writeToFile(
-                path + "KotlinHttpUser.kt",
-                kotlinUser,
-                false
-        );
+        writeToFile(path + "KotlinHttpUser.kt", kotlinUser, false);
 
         writeToFile(
                 "run_bench.sh",
                 runBenchShKotlin
                         .replace("__TULIP_VERSION__", tulipVersion)
                         .replace("__TULIP_JAVA_OPTIONS__", TULIP_JAVA_OPTIONS),
-                false
-        );
+                false);
 
         writeToFile(
                 "run_bench.cmd",
                 runBenchCmdKotlin
                         .replace("__TULIP_VERSION__", tulipVersion)
-                        .replace("__TULIP_JAVA_OPTIONS__", TULIP_JAVA_OPTIONS), false
-        );
+                        .replace("__TULIP_JAVA_OPTIONS__", TULIP_JAVA_OPTIONS),
+                false);
 
         writeToFile(".sdkmanrc", sdkmanConfig, false);
         writeToFile("logback.xml", logbackXml, false);
@@ -602,116 +602,120 @@ public class TulipCli {
         chmod();
     }
 
-    static String groovyApp = """
-    ///usr/bin/env jbang "$0" "$@" ; exit $?
-    //DEPS io.github.wfouche.tulip:tulip-runtime:__TULIP_VERSION__
-    //DEPS org.slf4j:slf4j-api:2.0.17
-    //DEPS ch.qos.logback:logback-core:1.5.18
-    //DEPS ch.qos.logback:logback-classic:1.5.18
-    //DEPS org.springframework.boot:spring-boot-starter-web:3.5.6
-    //SOURCES GroovyHttpUser.groovy
-    //JAVA 21+
-    //GROOVY 5.0.1
-    //RUNTIME_OPTIONS __TULIP_JAVA_OPTIONS__
-    //COMPILE_OPTIONS --tolerance=5
-    //FILES ../../benchmark_config.json
-    //FILES ../../logback.xml
-
-    package io.tulip
-
-    import io.github.wfouche.tulip.api.TulipApi
-
-    class App {
-        static void main(String[] args) {
-            TulipApi.runTulip("benchmark_config.json")
-        }
-    }
-    """.stripIndent();
-
-    static String groovyUser = """
-    package io.tulip
-    
-    import io.github.wfouche.tulip.user.HttpUser
-    import java.util.concurrent.ThreadLocalRandom
-    import org.slf4j.Logger
-    import org.slf4j.LoggerFactory
-    
-    class GroovyHttpUser extends HttpUser {
-    
-        GroovyHttpUser(int userId, int threadId) {
-            super(userId, threadId)
-        }
-    
-        boolean onStart() {
-            // Initialize the shared RestClient object only once
-            if (userId == 0) {
-                logger.info("Groovy")
-                super.onStart()
+    static String groovyApp =
+            """
+            ///usr/bin/env jbang "$0" "$@" ; exit $?
+            //DEPS io.github.wfouche.tulip:tulip-runtime:__TULIP_VERSION__
+            //DEPS org.slf4j:slf4j-api:2.0.17
+            //DEPS ch.qos.logback:logback-core:1.5.18
+            //DEPS ch.qos.logback:logback-classic:1.5.18
+            //DEPS org.springframework.boot:spring-boot-starter-web:3.5.6
+            //SOURCES GroovyHttpUser.groovy
+            //JAVA 21+
+            //GROOVY 5.0.1
+            //RUNTIME_OPTIONS __TULIP_JAVA_OPTIONS__
+            //COMPILE_OPTIONS --tolerance=5
+            //FILES ../../benchmark_config.json
+            //FILES ../../logback.xml
+        
+            package io.tulip
+        
+            import io.github.wfouche.tulip.api.TulipApi
+        
+            class App {
+                static void main(String[] args) {
+                    TulipApi.runTulip("benchmark_config.json")
+                }
             }
-            return true
-        }
-    
-        // Action 1: GET /posts/{id}
-        boolean action1() {
-            int id = ThreadLocalRandom.current().nextInt(100) + 1
-            return !http_GET("/posts/{id}", id).isEmpty()
-        }
-    
-        // Action 2: GET /comments/{id}
-        boolean action2() {
-            int id = ThreadLocalRandom.current().nextInt(500) + 1
-            return !http_GET("/comments/{id}", id).isEmpty()
-        }
-    
-        // Action 3: GET /todos/{id}
-        boolean action3() {
-            int id = ThreadLocalRandom.current().nextInt(200) + 1
-            return !http_GET("/todos/{id}", id).isEmpty()
-        }
-    
-        boolean onStop() {
-            return true
-        }
-    
-        Logger logger() {
-            return logger
-        }
+            """;
 
-        // Logger
-        static Logger logger = LoggerFactory.getLogger(GroovyHttpUser.class)
-    
-    }
-    """.stripIndent();
+    static String groovyUser =
+            """
+            package io.tulip
+        
+            import io.github.wfouche.tulip.user.HttpUser
+            import java.util.concurrent.ThreadLocalRandom
+            import org.slf4j.Logger
+            import org.slf4j.LoggerFactory
+        
+            class GroovyHttpUser extends HttpUser {
+        
+                GroovyHttpUser(int userId, int threadId) {
+                    super(userId, threadId)
+                }
+        
+                boolean onStart() {
+                    // Initialize the shared RestClient object only once
+                    if (userId == 0) {
+                        logger.info("Groovy")
+                        super.onStart()
+                    }
+                    return true
+                }
+        
+                // Action 1: GET /posts/{id}
+                boolean action1() {
+                    int id = ThreadLocalRandom.current().nextInt(100) + 1
+                    return !http_GET("/posts/{id}", id).isEmpty()
+                }
+        
+                // Action 2: GET /comments/{id}
+                boolean action2() {
+                    int id = ThreadLocalRandom.current().nextInt(500) + 1
+                    return !http_GET("/comments/{id}", id).isEmpty()
+                }
+        
+                // Action 3: GET /todos/{id}
+                boolean action3() {
+                    int id = ThreadLocalRandom.current().nextInt(200) + 1
+                    return !http_GET("/todos/{id}", id).isEmpty()
+                }
+        
+                boolean onStop() {
+                    return true
+                }
+        
+                Logger logger() {
+                    return logger
+                }
+        
+                // Logger
+                static Logger logger = LoggerFactory.getLogger(GroovyHttpUser.class)
+        
+            }
+            """;
 
-    static String runBenchShGroovy = """
-    #!/bin/bash
-    rm -f benchmark_report.html
-    #export JBANG_JAVA_OPTIONS="__TULIP_JAVA_OPTIONS__"
-    jbang run io/tulip/App.groovy
-    echo ""
-    #w3m -dump -cols 205 benchmark_report.html
-    lynx -dump -width 205 benchmark_report.html
-    #jbang run asciidoctorj@asciidoctor benchmark_config.adoc
-    #jbang export fatjar io/tulip/App.groovy
-    """.stripIndent();
+    static String runBenchShGroovy =
+            """
+            #!/bin/bash
+            rm -f benchmark_report.html
+            #export JBANG_JAVA_OPTIONS="__TULIP_JAVA_OPTIONS__"
+            jbang run io/tulip/App.groovy
+            echo ""
+            #w3m -dump -cols 205 benchmark_report.html
+            lynx -dump -width 205 benchmark_report.html
+            #jbang run asciidoctorj@asciidoctor benchmark_config.adoc
+            #jbang export fatjar io/tulip/App.groovy
+            """;
 
-    static String runBenchCmdGroovy = """
-    REM
-    REM JBang / Groovy / Tulip is not supported on Windows
-    REM Try running the benchmark on Linux or macOS
-    REM
-    REM if exist benchmark_report.html del benchmark_report.html
-    REM JBANG_JAVA_OPTIONS=__TULIP_JAVA_OPTIONS__
-    REM call jbang run io\\tulip\\App.groovy
-    REM @echo off
-    REM echo.
-    REM call w3m.exe -dump -cols 205 benchmark_report.html
-    REM lynx.exe -dump -width 205 benchmark_report.html
-    REM start benchmark_report.html
-    REM jbang run asciidoctorj@asciidoctor benchmark_config.adoc
-    REM start benchmark_config.html
-    REM jbang export fatjar io\\tulip\\App.groovy
-    """.stripIndent();
+    static String runBenchCmdGroovy =
+            """
+            REM
+            REM JBang / Groovy / Tulip is not supported on Windows
+            REM Try running the benchmark on Linux or macOS
+            REM
+            REM if exist benchmark_report.html del benchmark_report.html
+            REM JBANG_JAVA_OPTIONS=__TULIP_JAVA_OPTIONS__
+            REM call jbang run io\\tulip\\App.groovy
+            REM @echo off
+            REM echo.
+            REM call w3m.exe -dump -cols 205 benchmark_report.html
+            REM lynx.exe -dump -width 205 benchmark_report.html
+            REM start benchmark_report.html
+            REM jbang run asciidoctorj@asciidoctor benchmark_config.adoc
+            REM start benchmark_config.html
+            REM jbang export fatjar io\\tulip\\App.groovy
+            """;
 
     static void generateGroovyApp() throws IOException, InterruptedException {
         Files.createDirectories(Paths.get(path));
@@ -724,37 +728,30 @@ public class TulipCli {
                         .replace("__AVG_APS__", avgAPS)
                         .replace("__URL__", url)
                         .replace("__ONSTOP_ID__", osid),
-                false
-        );
+                false);
 
         writeToFile(
                 path + "App.groovy",
                 groovyApp
                         .replace("__TULIP_VERSION__", tulipVersion)
                         .replace("__TULIP_JAVA_OPTIONS__", TULIP_JAVA_OPTIONS),
-                false
-        );
+                false);
 
-        writeToFile(
-                path + "GroovyHttpUser.groovy",
-                groovyUser,
-                false
-        );
+        writeToFile(path + "GroovyHttpUser.groovy", groovyUser, false);
 
         writeToFile(
                 "run_bench.sh",
                 runBenchShGroovy
                         .replace("__TULIP_VERSION__", tulipVersion)
                         .replace("__TULIP_JAVA_OPTIONS__", TULIP_JAVA_OPTIONS),
-                false
-        );
+                false);
 
         writeToFile(
                 "run_bench.cmd",
                 runBenchCmdGroovy
                         .replace("__TULIP_VERSION__", tulipVersion)
-                        .replace("__TULIP_JAVA_OPTIONS__", TULIP_JAVA_OPTIONS), false
-        );
+                        .replace("__TULIP_JAVA_OPTIONS__", TULIP_JAVA_OPTIONS),
+                false);
 
         writeToFile(".sdkmanrc", sdkmanConfig, false);
         writeToFile("logback.xml", logbackXml, false);
@@ -766,100 +763,104 @@ public class TulipCli {
         chmod();
     }
 
-    static String scalaApp = """
-    //> using jvm 21
-    //> using dep io.github.wfouche.tulip:tulip-runtime:__TULIP_VERSION__
-    //> using dep org.slf4j:slf4j-api:2.0.17
-    //> using dep ch.qos.logback:logback-core:1.5.18
-    //> using dep ch.qos.logback:logback-classic:1.5.18
-    //> using dep org.springframework.boot:spring-boot-starter-web:3.5.6
-    //> using javaOpt __TULIP_JAVA_OPTIONS__
-    //> using repositories m2local
+    static String scalaApp =
+            """
+            //> using jvm 21
+            //> using dep io.github.wfouche.tulip:tulip-runtime:__TULIP_VERSION__
+            //> using dep org.slf4j:slf4j-api:2.0.17
+            //> using dep ch.qos.logback:logback-core:1.5.18
+            //> using dep ch.qos.logback:logback-classic:1.5.18
+            //> using dep org.springframework.boot:spring-boot-starter-web:3.5.6
+            //> using javaOpt __TULIP_JAVA_OPTIONS__
+            //> using repositories m2local
+        
+            // https://yadukrishnan.live/developing-java-applications-with-scala-cli
+            // https://www.baeldung.com/scala/scala-cli-intro
+        
+            package io.tulip
+        
+            import io.github.wfouche.tulip.api.TulipApi
+        
+            object App {
+              def main(args: Array[String]): Unit = {
+                TulipApi.runTulip("benchmark_config.json")
+              }
+            }
+            """;
 
-    // https://yadukrishnan.live/developing-java-applications-with-scala-cli
-    // https://www.baeldung.com/scala/scala-cli-intro
+    static String scalaUser =
+            """
+            package io.tulip
+        
+            import io.github.wfouche.tulip.user.HttpUser
+            import java.util.concurrent.ThreadLocalRandom
+            import org.slf4j.Logger
+            import org.slf4j.LoggerFactory
+        
+            class ScalaHttpUser(userId: Int, threadId: Int) extends HttpUser(userId, threadId) {
+        
+              override def onStart(): Boolean = {
+                // Initialize the shared RestClient object only once
+                if (getUserId == 0) {
+                  logger.info("Scala")
+                  super.onStart()
+                }
+                true
+              }
+        
+              // Action 1: GET /posts/{id}
+              override def action1(): Boolean = {
+                val id = ThreadLocalRandom.current().nextInt(100) + 1
+                !http_GET("/posts/{id}", id).isEmpty()
+              }
+        
+              // Action 2: GET /comments/{id}
+              override def action2(): Boolean = {
+                val id = ThreadLocalRandom.current().nextInt(500) + 1
+                !http_GET("/comments/{id}", id).isEmpty()
+              }
+        
+              // Action 3: GET /todos/{id}
+              override def action3(): Boolean = {
+                val id = ThreadLocalRandom.current().nextInt(200) + 1
+                !http_GET("/todos/{id}", id).isEmpty()
+              }
+        
+              override def onStop(): Boolean = true
+        
+              override def logger(): Logger = {
+                return loggerz
+              }
+        
+            }
+        
+            // Logger
+            val loggerz: Logger = LoggerFactory.getLogger(classOf[ScalaHttpUser])
+            """;
 
-    package io.tulip
+    static String runBenchShScala =
+            """
+            #!/bin/bash
+            rm -f benchmark_report.html
+            scala-cli io/tulip/App.scala io/tulip/ScalaHttpUser.scala
+            echo ""
+            #w3m -dump -cols 205 benchmark_report.html
+            lynx -dump -width 205 benchmark_report.html
+            #jbang run asciidoctorj@asciidoctor benchmark_config.adoc
+            """;
 
-    import io.github.wfouche.tulip.api.TulipApi
-
-    object App {
-      def main(args: Array[String]): Unit = {
-        TulipApi.runTulip("benchmark_config.json")
-      }
-    }
-    """.stripIndent();
-
-    static String scalaUser = """
-    package io.tulip
-
-    import io.github.wfouche.tulip.user.HttpUser
-    import java.util.concurrent.ThreadLocalRandom
-    import org.slf4j.Logger
-    import org.slf4j.LoggerFactory
-
-    class ScalaHttpUser(userId: Int, threadId: Int) extends HttpUser(userId, threadId) {
-
-      override def onStart(): Boolean = {
-        // Initialize the shared RestClient object only once
-        if (getUserId == 0) {
-          logger.info("Scala")
-          super.onStart()
-        }
-        true
-      }
-
-      // Action 1: GET /posts/{id}
-      override def action1(): Boolean = {
-        val id = ThreadLocalRandom.current().nextInt(100) + 1
-        !http_GET("/posts/{id}", id).isEmpty()
-      }
-
-      // Action 2: GET /comments/{id}
-      override def action2(): Boolean = {
-        val id = ThreadLocalRandom.current().nextInt(500) + 1
-        !http_GET("/comments/{id}", id).isEmpty()
-      }
-
-      // Action 3: GET /todos/{id}
-      override def action3(): Boolean = {
-        val id = ThreadLocalRandom.current().nextInt(200) + 1
-        !http_GET("/todos/{id}", id).isEmpty()
-      }
-
-      override def onStop(): Boolean = true
-    
-      override def logger(): Logger = {
-        return loggerz
-      }
-
-    }
-
-    // Logger
-    val loggerz: Logger = LoggerFactory.getLogger(classOf[ScalaHttpUser])
-    """.stripIndent();
-
-    static String runBenchShScala = """
-    #!/bin/bash
-    rm -f benchmark_report.html
-    scala-cli io/tulip/App.scala io/tulip/ScalaHttpUser.scala
-    echo ""
-    #w3m -dump -cols 205 benchmark_report.html
-    lynx -dump -width 205 benchmark_report.html
-    #jbang run asciidoctorj@asciidoctor benchmark_config.adoc
-    """.stripIndent();
-
-    static String runBenchCmdScala = """
-    if exist benchmark_report.html del benchmark_report.html
-    scala-cli io\\tulip\\App.scala io\\tulip\\ScalaHttpUser.scala
-    @echo off
-    echo.
-    REM call w3m.exe -dump -cols 205 benchmark_report.html
-    REM lynx.exe -dump -width 205 benchmark_report.html
-    start benchmark_report.html
-    REM jbang asciidoctorj@asciidoctor benchmark_config.adoc
-    REM start benchmark_config.html
-    """.stripIndent();
+    static String runBenchCmdScala =
+            """
+            if exist benchmark_report.html del benchmark_report.html
+            scala-cli io\\tulip\\App.scala io\\tulip\\ScalaHttpUser.scala
+            @echo off
+            echo.
+            REM call w3m.exe -dump -cols 205 benchmark_report.html
+            REM lynx.exe -dump -width 205 benchmark_report.html
+            start benchmark_report.html
+            REM jbang asciidoctorj@asciidoctor benchmark_config.adoc
+            REM start benchmark_config.html
+            """;
 
     static void generateScalaApp() throws IOException, InterruptedException {
         Files.createDirectories(Paths.get(path));
@@ -872,37 +873,29 @@ public class TulipCli {
                         .replace("__AVG_APS__", avgAPS)
                         .replace("__URL__", url)
                         .replace("__ONSTOP_ID__", osid),
-                false
-        );
+                false);
 
         writeToFile(
                 path + "App.scala",
-                scalaApp
-                        .replace("__TULIP_VERSION__", tulipVersion)
+                scalaApp.replace("__TULIP_VERSION__", tulipVersion)
                         .replace("__TULIP_JAVA_OPTIONS__", TULIP_JAVA_OPTIONS),
-                false
-        );
+                false);
 
-        writeToFile(
-                path + "ScalaHttpUser.scala",
-                scalaUser,
-                false
-        );
+        writeToFile(path + "ScalaHttpUser.scala", scalaUser, false);
 
         writeToFile(
                 "run_bench.sh",
                 runBenchShScala
                         .replace("__TULIP_VERSION__", tulipVersion)
                         .replace("__TULIP_JAVA_OPTIONS__", TULIP_JAVA_OPTIONS),
-                false
-        );
+                false);
 
         writeToFile(
                 "run_bench.cmd",
                 runBenchCmdScala
                         .replace("__TULIP_VERSION__", tulipVersion)
-                        .replace("__TULIP_JAVA_OPTIONS__", TULIP_JAVA_OPTIONS), false
-        );
+                        .replace("__TULIP_JAVA_OPTIONS__", TULIP_JAVA_OPTIONS),
+                false);
 
         writeToFile(".sdkmanrc", sdkmanConfig, false);
         writeToFile("logback.xml", logbackXml, false);
@@ -913,113 +906,117 @@ public class TulipCli {
         chmod();
     }
 
-    static String JythonJava = """
-    ///usr/bin/env jbang "$0" "$@" ; exit $?
-    
-    //DEPS org.python:jython-standalone:2.7.4
-    //DEPS io.github.wfouche.tulip:tulip-runtime:__TULIP_VERSION__
-    //DEPS org.slf4j:slf4j-api:2.0.17
-    //DEPS ch.qos.logback:logback-core:1.5.18
-    //DEPS ch.qos.logback:logback-classic:1.5.18
-    //DEPS org.springframework.boot:spring-boot-starter-web:3.5.6
-    //JAVA 21+
-    //RUNTIME_OPTIONS __TULIP_JAVA_OPTIONS__
-    
-    import org.python.util.jython;
-    
-    public class Jython {
-        public static void main(String[] args) {
-            jython.main(args);
-        }
-    }
-    """.stripIndent();
+    static String JythonJava =
+            """
+            ///usr/bin/env jbang "$0" "$@" ; exit $?
+        
+            //DEPS org.python:jython-standalone:2.7.4
+            //DEPS io.github.wfouche.tulip:tulip-runtime:__TULIP_VERSION__
+            //DEPS org.slf4j:slf4j-api:2.0.17
+            //DEPS ch.qos.logback:logback-core:1.5.18
+            //DEPS ch.qos.logback:logback-classic:1.5.18
+            //DEPS org.springframework.boot:spring-boot-starter-web:3.5.6
+            //JAVA 21+
+            //RUNTIME_OPTIONS __TULIP_JAVA_OPTIONS__
+        
+            import org.python.util.jython;
+        
+            public class Jython {
+                public static void main(String[] args) {
+                    jython.main(args);
+                }
+            }
+            """;
 
-    static String JythonBenchmark = """
-    from __future__ import print_function
+    static String JythonBenchmark =
+            """
+            from __future__ import print_function
+        
+            # /// jbang
+            # requires-jython = "2.7.4"
+            # requires-java = "21"
+            # dependencies = [
+            #   "io.github.wfouche.tulip:tulip-runtime:__TULIP_VERSION__",
+            #   "org.slf4j:slf4j-api:2.0.17",
+            #   "ch.qos.logback:logback-core:1.5.18",
+            #   "ch.qos.logback:logback-classic:1.5.18",
+            #   "org.springframework.boot:spring-boot-starter-web:3.5.6"
+            # ]
+            # runtime-options = [
+            #   "-server", "-Xmx2g", "-XX:+UseZGC", "-XX:+ZGenerational"
+            # ]
+            # ///
+        
+            import io.github.wfouche.tulip.user.HttpUser as HttpUser
+            import io.github.wfouche.tulip.api.TulipUserFactory as TulipUserFactory
+            import io.github.wfouche.tulip.api.TulipApi as TulipApi
+            import java.util.concurrent.ThreadLocalRandom as ThreadLocalRandom
+        
+            class JythonHttpUser(HttpUser):
+        
+                def __init__(self, userId, threadId):
+                    HttpUser.__init__(self, userId, threadId)
+        
+                def onStart(self):
+                    if self.userId == 0:
+                        print("Jython")
+                        HttpUser.onStart(self)
+                    return True
+        
+                def action1(self):
+                    id = ThreadLocalRandom.current().nextInt(100) + 1
+                    return len(self.http_GET("/posts/{id}", id)) > 0
+        
+                def action2(self):
+                    id = ThreadLocalRandom.current().nextInt(500) + 1
+                    return len(self.http_GET("/comments/{id}", id)) > 0
+        
+                def action3(self):
+                    id = ThreadLocalRandom.current().nextInt(200) + 1
+                    return len(self.http_GET("/todos/{id}", id)) > 0
+        
+                def onStop(self):
+                    return True
+        
+            class UserFactory(TulipUserFactory):
+        
+                def getUser(self, userId, className, threadId):
+                    return JythonHttpUser(userId, threadId)
+        
+            TulipApi.runTulip("benchmark_config.json", UserFactory())
+        
+            """;
 
-    # /// jbang
-    # requires-jython = "2.7.4"
-    # requires-java = "21"
-    # dependencies = [
-    #   "io.github.wfouche.tulip:tulip-runtime:__TULIP_VERSION__",
-    #   "org.slf4j:slf4j-api:2.0.17",
-    #   "ch.qos.logback:logback-core:1.5.18",
-    #   "ch.qos.logback:logback-classic:1.5.18",
-    #   "org.springframework.boot:spring-boot-starter-web:3.5.6"
-    # ]
-    # runtime-options = [
-    #   "-server", "-Xmx2g", "-XX:+UseZGC", "-XX:+ZGenerational"
-    # ]
-    # ///
+    static String runBenchShJython =
+            """
+            #!/bin/bash
+            rm -f benchmark_report.html
+            #export JBANG_JAVA_OPTIONS="__TULIP_JAVA_OPTIONS__"
+            #jbang run Jython.java benchmark.py
+            jbang run jython-cli@jython benchmark.py
+            echo ""
+            #w3m -dump -cols 205 benchmark_report.html
+            lynx -dump -width 205 benchmark_report.html
+            #jbang run asciidoctorj@asciidoctor benchmark_config.adoc
+            """;
 
-    import io.github.wfouche.tulip.user.HttpUser as HttpUser
-    import io.github.wfouche.tulip.api.TulipUserFactory as TulipUserFactory
-    import io.github.wfouche.tulip.api.TulipApi as TulipApi
-    import java.util.concurrent.ThreadLocalRandom as ThreadLocalRandom
-
-    class JythonHttpUser(HttpUser):
-
-        def __init__(self, userId, threadId):
-            HttpUser.__init__(self, userId, threadId)
-
-        def onStart(self):
-            if self.userId == 0:
-                print("Jython")
-                HttpUser.onStart(self)
-            return True
-
-        def action1(self):
-            id = ThreadLocalRandom.current().nextInt(100) + 1
-            return len(self.http_GET("/posts/{id}", id)) > 0
-
-        def action2(self):
-            id = ThreadLocalRandom.current().nextInt(500) + 1
-            return len(self.http_GET("/comments/{id}", id)) > 0
-
-        def action3(self):
-            id = ThreadLocalRandom.current().nextInt(200) + 1
-            return len(self.http_GET("/todos/{id}", id)) > 0
-
-        def onStop(self):
-            return True
-
-    class UserFactory(TulipUserFactory):
-
-        def getUser(self, userId, className, threadId):
-            return JythonHttpUser(userId, threadId)
-
-    TulipApi.runTulip("benchmark_config.json", UserFactory())
-
-    """.stripIndent();
-
-    static String runBenchShJython = """
-    #!/bin/bash
-    rm -f benchmark_report.html
-    #export JBANG_JAVA_OPTIONS="__TULIP_JAVA_OPTIONS__"
-    #jbang run Jython.java benchmark.py
-    jbang run jython-cli@jython benchmark.py
-    echo ""
-    #w3m -dump -cols 205 benchmark_report.html
-    lynx -dump -width 205 benchmark_report.html
-    #jbang run asciidoctorj@asciidoctor benchmark_config.adoc
-    """.stripIndent();
-
-    static String runBenchCmdJython = """
-    if exist benchmark_report.html del benchmark_report.html
-    REM JBANG_JAVA_OPTIONS=__TULIP_JAVA_OPTIONS__
-    REM call jbang run Jython.java benchmark.py
-    call jbang run jython-cli@jython benchmark.py
-    @echo off
-    echo.
-    REM call w3m.exe -dump -cols 205 benchmark_report.html
-    REM lynx.exe -dump -width 205 benchmark_report.html
-    start benchmark_report.html
-    REM jbang run asciidoctorj@asciidoctor benchmark_config.adoc
-    REM start benchmark_config.html
-    """.stripIndent();
+    static String runBenchCmdJython =
+            """
+            if exist benchmark_report.html del benchmark_report.html
+            REM JBANG_JAVA_OPTIONS=__TULIP_JAVA_OPTIONS__
+            REM call jbang run Jython.java benchmark.py
+            call jbang run jython-cli@jython benchmark.py
+            @echo off
+            echo.
+            REM call w3m.exe -dump -cols 205 benchmark_report.html
+            REM lynx.exe -dump -width 205 benchmark_report.html
+            start benchmark_report.html
+            REM jbang run asciidoctorj@asciidoctor benchmark_config.adoc
+            REM start benchmark_config.html
+            """;
 
     static void generateJythonApp() throws IOException, InterruptedException {
-        //Files.createDirectories(Paths.get(path));
+        // Files.createDirectories(Paths.get(path));
 
         writeToFile(
                 "benchmark_config.json",
@@ -1029,39 +1026,35 @@ public class TulipCli {
                         .replace("__AVG_APS__", avgAPS)
                         .replace("__URL__", url)
                         .replace("__ONSTOP_ID__", osid),
-                false
-        );
+                false);
 
-//        writeToFile(
-//                "Jython.java",
-//                JythonJava
-//                        .replace("__TULIP_VERSION__", version)
-//                        .replace("__TULIP_JAVA_OPTIONS__", TULIP_JAVA_OPTIONS),
-//                false
-//        );
+        //        writeToFile(
+        //                "Jython.java",
+        //                JythonJava
+        //                        .replace("__TULIP_VERSION__", version)
+        //                        .replace("__TULIP_JAVA_OPTIONS__", TULIP_JAVA_OPTIONS),
+        //                false
+        //        );
 
         writeToFile(
                 "benchmark.py",
-                JythonBenchmark
-                        .replace("__TULIP_VERSION__", tulipVersion)
+                JythonBenchmark.replace("__TULIP_VERSION__", tulipVersion)
                         .replace("__TULIP_JAVA_OPTIONS__", TULIP_JAVA_OPTIONS),
-                false
-        );
+                false);
 
         writeToFile(
                 "run_bench.sh",
                 runBenchShJython
                         .replace("__TULIP_VERSION__", tulipVersion)
                         .replace("__TULIP_JAVA_OPTIONS__", TULIP_JAVA_OPTIONS),
-                false
-        );
+                false);
 
         writeToFile(
                 "run_bench.cmd",
                 runBenchCmdJython
                         .replace("__TULIP_VERSION__", tulipVersion)
-                        .replace("__TULIP_JAVA_OPTIONS__", TULIP_JAVA_OPTIONS), false
-        );
+                        .replace("__TULIP_JAVA_OPTIONS__", TULIP_JAVA_OPTIONS),
+                false);
 
         writeToFile(".sdkmanrc", sdkmanConfig, false);
         writeToFile("logback.xml", logbackXml, false);
@@ -1112,11 +1105,11 @@ public class TulipCli {
         if (args.length > 2) {
             avgAPS = args[2];
         }
-        
+
         if (args.length > 3) {
             url = args[3];
         }
-        
+
         if (args.length > 4) {
             tulipVersion = args[4];
         }

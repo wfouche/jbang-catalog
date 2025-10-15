@@ -1,9 +1,16 @@
-/// usr/bin/env jbang "$0" "$@"; exit $?
-
+// spotless:off
 //DEPS com.google.code.gson:gson:2.13.2
+// spotless:on
 
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -11,24 +18,14 @@ import java.nio.file.Paths;
 import java.security.DigestInputStream;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-
-import java.io.IOException;
-import java.net.URI;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
 import java.util.Optional;
 
 public class JBangImport {
 
     /**
-     * Determines the location of the Jbang installation directory.
-     * It checks the JBANG_DIR environment variable first.
-     * If not found, it defaults to the user's home directory (~/.jbang).
+     * Determines the location of the Jbang installation directory. It checks the JBANG_DIR
+     * environment variable first. If not found, it defaults to the user's home directory
+     * (~/.jbang).
      *
      * @return The Path to the .jbang directory.
      */
@@ -46,29 +43,33 @@ public class JBangImport {
     }
 
     /**
-     * Finds the Maven GAV (GroupId:ArtifactId:Version) for a given SHA-1 hash
-     * by querying the Maven Central search API.
+     * Finds the Maven GAV (GroupId:ArtifactId:Version) for a given SHA-1 hash by querying the Maven
+     * Central search API.
      *
      * @param sha1 The SHA-1 checksum of the artifact.
      * @return An Optional containing the GAV string if found, otherwise an empty Optional.
      * @throws IOException If an I/O error occurs when sending or receiving.
      * @throws InterruptedException If the operation is interrupted.
      */
-    public static Optional<String> findGavBySha1(String sha1) throws IOException, InterruptedException {
+    public static Optional<String> findGavBySha1(String sha1)
+            throws IOException, InterruptedException {
         // A single, reusable HttpClient is efficient
         HttpClient httpClient = HttpClient.newHttpClient();
         // Reusable Gson instance
         Gson gson = new Gson();
 
         // 1. Construct the API request URL
-        String url = String.format("https://search.maven.org/solrsearch/select?q=1:%s&wt=json", sha1);
-        HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(url))
-                .header("Accept", "application/json")
-                .build();
+        String url =
+                String.format("https://search.maven.org/solrsearch/select?q=1:%s&wt=json", sha1);
+        HttpRequest request =
+                HttpRequest.newBuilder()
+                        .uri(URI.create(url))
+                        .header("Accept", "application/json")
+                        .build();
 
         // 2. Send the request and get the response body as a String
-        HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+        HttpResponse<String> response =
+                httpClient.send(request, HttpResponse.BodyHandlers.ofString());
 
         // 3. Check for a successful HTTP response
         if (response.statusCode() != 200) {
@@ -115,7 +116,8 @@ public class JBangImport {
         }
 
         System.out.println("Calculating //DEPS for JAR files in: " + dir.toAbsolutePath());
-        System.out.println("-------------------------------------------------------------------------");
+        System.out.println(
+                "-------------------------------------------------------------------------");
 
         // 2. Iterate through all files ending with .jar
         try (DirectoryStream<Path> stream = Files.newDirectoryStream(dir, "*.jar")) {
@@ -123,10 +125,15 @@ public class JBangImport {
                 try {
                     // 3. Calculate and print SHA-1 hash for each file
                     String sha1 = calculateSha1(jarFile);
-                    //System.out.printf("%-40s: %s%n", jarFile.getFileName(), sha1);
-                    System.out.println("//DEPS " + findGavBySha1(sha1).orElse("[" + jarFile.toString() + ", " + sha1 + "]"));
+                    // System.out.printf("%-40s: %s%n", jarFile.getFileName(), sha1);
+                    System.out.println(
+                            "//DEPS "
+                                    + findGavBySha1(sha1)
+                                            .orElse("[" + jarFile.toString() + ", " + sha1 + "]"));
                 } catch (IOException | NoSuchAlgorithmException e) {
-                    System.err.printf("Could not process file %s: %s%n", jarFile.getFileName(), e.getMessage());
+                    System.err.printf(
+                            "Could not process file %s: %s%n",
+                            jarFile.getFileName(), e.getMessage());
                 }
             }
         } catch (IOException e) {
@@ -135,16 +142,14 @@ public class JBangImport {
         }
     }
 
-    /**
-     * Calculates the SHA-1 hash of a file efficiently.
-     */
+    /** Calculates the SHA-1 hash of a file efficiently. */
     private static String calculateSha1(Path file) throws NoSuchAlgorithmException, IOException {
         MessageDigest sha1 = MessageDigest.getInstance("SHA-1");
 
         // Use DigestInputStream to calculate hash while reading the file,
         // which is memory-efficient for large files.
         try (InputStream is = Files.newInputStream(file);
-             DigestInputStream dis = new DigestInputStream(is, sha1)) {
+                DigestInputStream dis = new DigestInputStream(is, sha1)) {
 
             byte[] buffer = new byte[8192]; // 8KB buffer
             while (dis.read(buffer) != -1) {
@@ -156,9 +161,7 @@ public class JBangImport {
         return toHexString(digest);
     }
 
-    /**
-     * Converts a byte array into a hexadecimal string.
-     */
+    /** Converts a byte array into a hexadecimal string. */
     private static String toHexString(byte[] bytes) {
         StringBuilder hexString = new StringBuilder();
         for (byte b : bytes) {

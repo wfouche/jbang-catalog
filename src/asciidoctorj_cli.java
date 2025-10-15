@@ -1,5 +1,4 @@
-///usr/bin/env jbang "$0" "$@" ; exit $?
-
+// spotless:off
 //DEPS org.asciidoctor:asciidoctorj:3.0.0
 //DEPS org.asciidoctor:asciidoctorj-api:3.0.0
 //DEPS org.asciidoctor:asciidoctorj-cli:3.0.0
@@ -13,6 +12,7 @@
 //DEPS org.asciidoctor:asciidoctorj-revealjs:5.2.0
 //DEPS com.beust:jcommander:1.82
 //DEPS org.jruby:jruby-complete:9.4.8.0
+// spotless:on
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -40,7 +40,7 @@ public class asciidoctorj_cli {
                 }
             } else if (arg.equals("-b")) {
                 if (i + 1 < args.length) {
-                    String attribute = args[i+1];
+                    String attribute = args[i + 1];
                     revealjsBackendEnabled = attribute.equals("revealjs");
                     i++; // Skip the next argument
                 }
