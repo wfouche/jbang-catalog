@@ -1,6 +1,7 @@
 // Apply the standard Java plugin
 plugins {
-    id 'java'
+    // id 'java'
+    // id 'org.jetbrains.kotlin.jvm' version '2.1.21'
     // Apply the Spotless plugin (using the same version as in the Kotlin DSL)
     id 'com.diffplug.spotless' version '7.2.1'
 }
@@ -17,7 +18,7 @@ spotless {
         // Target all Java files in any src subfolder (main, test, etc.)
         target 'src/*.java'
 
-        googleJavaFormat("1.30.0").aosp()
+        googleJavaFormat("1.28.0").aosp()
         // eclipse().configFile('eclipse-java-formatter.xml')
 
         // 2. Add standard import organization (ensuring consistent imports)
@@ -27,6 +28,21 @@ spotless {
 
         // Optional: Enforce license header (if you use one)
         // licenseHeaderFile 'licence-header.txt'
+    }
+    kotlin {
+        // Target all .kt files and .kts (Kotlin script) files in the main src directory
+        target 'src/*.kt'
+
+        // Use ktlint for formatting. Spotless automatically downloads the correct version.
+        // It's recommended to explicitly set the version for consistency.
+        ktfmt('0.54').googleStyle().configure {
+            it.setMaxWidth(100)
+            it.setBlockIndent(4)
+            it.setContinuationIndent(4)
+            it.setRemoveUnusedImports(true)
+            it.setManageTrailingCommas(false)
+        }
+        toggleOffOn()
     }
 }
 
