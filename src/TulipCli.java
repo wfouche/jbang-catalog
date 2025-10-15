@@ -187,11 +187,11 @@ public class TulipCli {
             //COMPILE_OPTIONS -g
             //FILES ../../benchmark_config.json
             //FILES ../../logback.xml
-        
+
             package io.tulip;
-        
+
             import io.github.wfouche.tulip.api.TulipApi;
-        
+
             public class App {
                public static void main(String[] args) {
                   TulipApi.runTulip("benchmark_config.json");
@@ -202,20 +202,20 @@ public class TulipCli {
     static String javaUser =
             """
             package io.tulip;
-        
+
             import io.github.wfouche.tulip.user.HttpUser;
             import java.util.concurrent.ThreadLocalRandom;
             import org.slf4j.Logger;
             import org.slf4j.LoggerFactory;
-        
+
             public class JavaHttpUser extends HttpUser {
-        
+
                 private ThreadLocalRandom random = ThreadLocalRandom.current();
-        
+
                 public JavaHttpUser(int userId, int threadId) {
                     super(userId, threadId);
                 }
-        
+
                 public boolean onStart() {
                     // Initialize the shared RestClient object only once
                     if (getUserId() == 0) {
@@ -224,36 +224,36 @@ public class TulipCli {
                     }
                     return true;
                 }
-        
+
                 // Action 1: GET /posts/{id}
                 public boolean action1() {
                     int id = random.nextInt(100)+1;
                     return !http_GET("/posts/{id}", id).isEmpty();
                 }
-        
+
                 // Action 2: GET /comments/{id}
                 public boolean action2() {
                     int id = random.nextInt(500)+1;
                     return !http_GET("/comments/{id}", id).isEmpty();
                 }
-        
+
                 // Action 3: GET /todos/{id}
                 public boolean action3() {
                     int id = random.nextInt(200)+1;
                     return !http_GET("/todos/{id}", id).isEmpty();
                 }
-        
+
                 public boolean onStop() {
                     return true;
                 }
-        
+
                 public Logger logger() {
                     return logger;
                 }
-        
+
                 // Logger
                 private static final Logger logger = LoggerFactory.getLogger(JavaHttpUser.class);
-        
+
             }
             """;
 
@@ -306,31 +306,31 @@ public class TulipCli {
             """
             # Enable auto-env through the sdkman_auto_env config
             # Add key=value pairs of SDKs to use below
-        
+
             # Java
             java=21.0.8-tem
-        
+
             # Groovy
             groovy=5.0.1
-        
+
             # Gradle
             gradle=9.1.0
-        
+
             # JBang
             jbang=0.131.0
-        
+
             # Kotlin
             kotlin=2.1.21
-        
+
             # Scala
             scalacli=1.9.1
-        
+
             # MCS
             mcs=0.9.0
-        
+
             # Maven
             maven=3.9.11
-        
+
             # VisualVM
             visualvm=2.2
             """;
@@ -374,16 +374,16 @@ public class TulipCli {
             """
             import json
             from collections import OrderedDict
-        
+
             filename = "benchmark_report.json"
             fileObj = open(filename)
             jb = json.load(fileObj, object_pairs_hook=OrderedDict)
-        
+
             def report(name):
                 print name
                 print "  ", jb["benchmarks"][name]["actions"]["summary"]["aps"], "aps"
                 print "  ", jb["benchmarks"][name]["actions"]["summary"]["aps_target_rate"], "aps_target_rate"
-        
+
             report("REST1")
             report("REST2")
             report("REST3")
@@ -459,11 +459,11 @@ public class TulipCli {
             //COMPILE_OPTIONS -progressive
             //FILES ../../benchmark_config.json
             //FILES ../../logback.xml
-        
+
             package io.tulip
-        
+
             import io.github.wfouche.tulip.api.TulipApi
-        
+
             class App() {
                 companion object {
                     @JvmStatic
@@ -477,14 +477,14 @@ public class TulipCli {
     static String kotlinUser =
             """
             package io.tulip
-        
+
             import io.github.wfouche.tulip.user.HttpUser
             import java.util.concurrent.ThreadLocalRandom
             import org.slf4j.Logger
             import org.slf4j.LoggerFactory
-        
+
             class KotlinHttpUser(userId: Int, threadId: Int) : HttpUser(userId, threadId) {
-        
+
                 // Action 0
                 override fun onStart(): Boolean {
                     // Initialize the shared RestClient object only once
@@ -494,33 +494,33 @@ public class TulipCli {
                     }
                     return true
                 }
-        
+
                 // Action 1: GET /posts/{id}
                 override fun action1(): Boolean {
                     val id: Int = ThreadLocalRandom.current().nextInt(100)+1
                     return !http_GET("/posts/{id}", id).isEmpty()
                 }
-        
+
                 // Action 2: GET /comments/{id}
                 override fun action2(): Boolean {
                     val id: Int = ThreadLocalRandom.current().nextInt(500)+1
                     return !http_GET("/comments/{id}", id).isEmpty()
                 }
-        
+
                 // Action 3: GET /todos/{id}
                 override fun action3(): Boolean {
                     val id: Int = ThreadLocalRandom.current().nextInt(200)+1
                     return !http_GET("/todos/{id}", id).isEmpty()
                 }
-        
+
                 override fun onStop(): Boolean {
                     return true
                 }
-        
+
                 override fun logger(): Logger {
                     return logger
                 }
-        
+
                 // RestClient object
                 companion object {
                     private val logger = LoggerFactory.getLogger(KotlinHttpUser::class.java)
@@ -617,11 +617,11 @@ public class TulipCli {
             //COMPILE_OPTIONS --tolerance=5
             //FILES ../../benchmark_config.json
             //FILES ../../logback.xml
-        
+
             package io.tulip
-        
+
             import io.github.wfouche.tulip.api.TulipApi
-        
+
             class App {
                 static void main(String[] args) {
                     TulipApi.runTulip("benchmark_config.json")
@@ -632,18 +632,18 @@ public class TulipCli {
     static String groovyUser =
             """
             package io.tulip
-        
+
             import io.github.wfouche.tulip.user.HttpUser
             import java.util.concurrent.ThreadLocalRandom
             import org.slf4j.Logger
             import org.slf4j.LoggerFactory
-        
+
             class GroovyHttpUser extends HttpUser {
-        
+
                 GroovyHttpUser(int userId, int threadId) {
                     super(userId, threadId)
                 }
-        
+
                 boolean onStart() {
                     // Initialize the shared RestClient object only once
                     if (userId == 0) {
@@ -652,36 +652,36 @@ public class TulipCli {
                     }
                     return true
                 }
-        
+
                 // Action 1: GET /posts/{id}
                 boolean action1() {
                     int id = ThreadLocalRandom.current().nextInt(100) + 1
                     return !http_GET("/posts/{id}", id).isEmpty()
                 }
-        
+
                 // Action 2: GET /comments/{id}
                 boolean action2() {
                     int id = ThreadLocalRandom.current().nextInt(500) + 1
                     return !http_GET("/comments/{id}", id).isEmpty()
                 }
-        
+
                 // Action 3: GET /todos/{id}
                 boolean action3() {
                     int id = ThreadLocalRandom.current().nextInt(200) + 1
                     return !http_GET("/todos/{id}", id).isEmpty()
                 }
-        
+
                 boolean onStop() {
                     return true
                 }
-        
+
                 Logger logger() {
                     return logger
                 }
-        
+
                 // Logger
                 static Logger logger = LoggerFactory.getLogger(GroovyHttpUser.class)
-        
+
             }
             """;
 
@@ -773,14 +773,14 @@ public class TulipCli {
             //> using dep org.springframework.boot:spring-boot-starter-web:3.5.6
             //> using javaOpt __TULIP_JAVA_OPTIONS__
             //> using repositories m2local
-        
+
             // https://yadukrishnan.live/developing-java-applications-with-scala-cli
             // https://www.baeldung.com/scala/scala-cli-intro
-        
+
             package io.tulip
-        
+
             import io.github.wfouche.tulip.api.TulipApi
-        
+
             object App {
               def main(args: Array[String]): Unit = {
                 TulipApi.runTulip("benchmark_config.json")
@@ -791,14 +791,14 @@ public class TulipCli {
     static String scalaUser =
             """
             package io.tulip
-        
+
             import io.github.wfouche.tulip.user.HttpUser
             import java.util.concurrent.ThreadLocalRandom
             import org.slf4j.Logger
             import org.slf4j.LoggerFactory
-        
+
             class ScalaHttpUser(userId: Int, threadId: Int) extends HttpUser(userId, threadId) {
-        
+
               override def onStart(): Boolean = {
                 // Initialize the shared RestClient object only once
                 if (getUserId == 0) {
@@ -807,33 +807,33 @@ public class TulipCli {
                 }
                 true
               }
-        
+
               // Action 1: GET /posts/{id}
               override def action1(): Boolean = {
                 val id = ThreadLocalRandom.current().nextInt(100) + 1
                 !http_GET("/posts/{id}", id).isEmpty()
               }
-        
+
               // Action 2: GET /comments/{id}
               override def action2(): Boolean = {
                 val id = ThreadLocalRandom.current().nextInt(500) + 1
                 !http_GET("/comments/{id}", id).isEmpty()
               }
-        
+
               // Action 3: GET /todos/{id}
               override def action3(): Boolean = {
                 val id = ThreadLocalRandom.current().nextInt(200) + 1
                 !http_GET("/todos/{id}", id).isEmpty()
               }
-        
+
               override def onStop(): Boolean = true
-        
+
               override def logger(): Logger = {
                 return loggerz
               }
-        
+
             }
-        
+
             // Logger
             val loggerz: Logger = LoggerFactory.getLogger(classOf[ScalaHttpUser])
             """;
@@ -909,7 +909,7 @@ public class TulipCli {
     static String JythonJava =
             """
             ///usr/bin/env jbang "$0" "$@" ; exit $?
-        
+
             //DEPS org.python:jython-standalone:2.7.4
             //DEPS io.github.wfouche.tulip:tulip-runtime:__TULIP_VERSION__
             //DEPS org.slf4j:slf4j-api:2.0.17
@@ -918,9 +918,9 @@ public class TulipCli {
             //DEPS org.springframework.boot:spring-boot-starter-web:3.5.6
             //JAVA 21+
             //RUNTIME_OPTIONS __TULIP_JAVA_OPTIONS__
-        
+
             import org.python.util.jython;
-        
+
             public class Jython {
                 public static void main(String[] args) {
                     jython.main(args);
@@ -931,7 +931,7 @@ public class TulipCli {
     static String JythonBenchmark =
             """
             from __future__ import print_function
-        
+
             # /// jbang
             # requires-jython = "2.7.4"
             # requires-java = "21"
@@ -946,45 +946,45 @@ public class TulipCli {
             #   "-server", "-Xmx2g", "-XX:+UseZGC", "-XX:+ZGenerational"
             # ]
             # ///
-        
+
             import io.github.wfouche.tulip.user.HttpUser as HttpUser
             import io.github.wfouche.tulip.api.TulipUserFactory as TulipUserFactory
             import io.github.wfouche.tulip.api.TulipApi as TulipApi
             import java.util.concurrent.ThreadLocalRandom as ThreadLocalRandom
-        
+
             class JythonHttpUser(HttpUser):
-        
+
                 def __init__(self, userId, threadId):
                     HttpUser.__init__(self, userId, threadId)
-        
+
                 def onStart(self):
                     if self.userId == 0:
                         print("Jython")
                         HttpUser.onStart(self)
                     return True
-        
+
                 def action1(self):
                     id = ThreadLocalRandom.current().nextInt(100) + 1
                     return len(self.http_GET("/posts/{id}", id)) > 0
-        
+
                 def action2(self):
                     id = ThreadLocalRandom.current().nextInt(500) + 1
                     return len(self.http_GET("/comments/{id}", id)) > 0
-        
+
                 def action3(self):
                     id = ThreadLocalRandom.current().nextInt(200) + 1
                     return len(self.http_GET("/todos/{id}", id)) > 0
-        
+
                 def onStop(self):
                     return True
-        
+
             class UserFactory(TulipUserFactory):
-        
+
                 def getUser(self, userId, className, threadId):
                     return JythonHttpUser(userId, threadId)
-        
+
             TulipApi.runTulip("benchmark_config.json", UserFactory())
-        
+
             """;
 
     static String runBenchShJython =
