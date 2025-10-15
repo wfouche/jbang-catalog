@@ -182,7 +182,7 @@ class KwrkCli : CliktCommand() {
         displayAppInfo()
         println("")
 
-        var json = benchmarkConfig
+        var json = benchmarkConfig.trimIndent()
 
         json = json.replace("__P_HTTP_VERSION__", p_version.toString())
         json = json.replace("__P_RATE__", p_rate.toString())
@@ -294,13 +294,15 @@ class KwrkCli : CliktCommand() {
         new_lines.add("<tr>")
         new_lines.add("  <td>duration</th>")
         new_lines.add(
-            "  <td>__P_DURATION__ seconds</th>".replace("__P_DURATION__", p_duration.toString()))
+            "  <td>__P_DURATION__ seconds</th>".replace("__P_DURATION__", p_duration.toString())
+        )
         new_lines.add("</tr>")
 
         new_lines.add("<tr>")
         new_lines.add("  <td>iterations</th>")
         new_lines.add(
-            "  <td>__P_ITERATIONS__</th>".replace("__P_ITERATIONS__", p_iterations.toString()))
+            "  <td>__P_ITERATIONS__</th>".replace("__P_ITERATIONS__", p_iterations.toString())
+        )
         new_lines.add("</tr>")
         new_lines.add("</table>")
 

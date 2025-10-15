@@ -3,7 +3,7 @@ plugins {
     // id 'java'
     // id 'org.jetbrains.kotlin.jvm' version '2.1.21'
     // Apply the Spotless plugin (using the same version as in the Kotlin DSL)
-    id 'com.diffplug.spotless' version '7.2.1'
+    id 'com.diffplug.spotless' version '8.0.0'
 }
 
 // Standard repository configuration
@@ -35,12 +35,11 @@ spotless {
 
         // Use ktlint for formatting. Spotless automatically downloads the correct version.
         // It's recommended to explicitly set the version for consistency.
-        ktfmt('0.54').googleStyle().configure {
+        ktfmt('0.59').googleStyle().configure {
             it.setMaxWidth(100)
             it.setBlockIndent(4)
             it.setContinuationIndent(4)
             it.setRemoveUnusedImports(true)
-            it.setManageTrailingCommas(false)
         }
         toggleOffOn()
     }
