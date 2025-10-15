@@ -18,7 +18,7 @@ spotless {
         // Target all Java files in any src subfolder (main, test, etc.)
         target 'src/*.java'
 
-        googleJavaFormat("1.28.0").aosp()
+        googleJavaFormat("1.30.0").aosp()
         // eclipse().configFile('eclipse-java-formatter.xml')
 
         // 2. Add standard import organization (ensuring consistent imports)
