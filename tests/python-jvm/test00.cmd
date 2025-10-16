@@ -1,0 +1,1 @@
+call jbang run ..\..\src\python_jvm.java restclient_graalpy.py

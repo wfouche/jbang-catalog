@@ -6,10 +6,10 @@
 #
 
 # /// jbang
-# requires-graalpy = "==24.2.1"
+# requires-graalpy = "==24.2.2"
 # requires-java = ">=21"
 # dependencies = [
-#   "org.springframework.boot:spring-boot-starter-web:3.4.4"
+#   "org.springframework.boot:spring-boot-starter-web:3.5.6"
 # ]
 # [graalpy]
 #   allowAllAccess = true
