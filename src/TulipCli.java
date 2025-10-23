@@ -300,6 +300,14 @@ public class TulipCli {
             rd/q/s benchmark_report
             del wfd0.svg
             del json_report.py
+            set "TARGET_FOLDER=io\\tulip\\.bsp"
+            if exist "%TARGET_FOLDER%" (
+                rmdir /s /q "%TARGET_FOLDER%"
+            )
+            set "TARGET_FOLDER=io\\tulip\\.scala-build"
+            if exist "%TARGET_FOLDER%" (
+                rmdir /s /q "%TARGET_FOLDER%"
+            )
             """;
 
     static String sdkmanConfig =
@@ -902,6 +910,7 @@ public class TulipCli {
         writeToFile("json_report.py", jsonReportPy, false);
         writeToFile("view_report.sh", viewBenchReportSh, false);
         writeToFile("view_report.cmd", viewBenchReportCmd, false);
+        writeToFile("clean.cmd", cleanCmd, false);
 
         chmod();
     }
