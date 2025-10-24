@@ -52,7 +52,8 @@ val benchmarkConfig: String =
                 "jsonBody": "__JSON_BODY__"
             },
             "user_actions": {
-                "1": "GET:url"
+                "1": "GET:url",
+                "2": "POST:url"
             }
         },
         "benchmarks": {
@@ -105,8 +106,6 @@ fun writeToFile(path: String, content: String, append: Boolean) {
 
 class KwrkHttpUser(userId: Int, threadId: Int) : HttpUser(userId, threadId) {
 
-    private var jsonBody: String = ""
-
     override fun onStart(): Boolean {
         if (userId == 0) {
             super.onStart()
@@ -114,9 +113,7 @@ class KwrkHttpUser(userId: Int, threadId: Int) : HttpUser(userId, threadId) {
             val L = h.split(":")
             http_header_key = L[0].trim()
             http_header_val = L[1].trim()
-            jsonBody = getUserParamValue("jsonBody")
-            jsonBody = jsonBody.replace("\\", "")
-            println("jsonBody = ${jsonBody}")
+            jsonBody = getUserParamValue("jsonBody").replace("\\", "")
         }
         return true
     }
@@ -143,6 +140,7 @@ class KwrkHttpUser(userId: Int, threadId: Int) : HttpUser(userId, threadId) {
         private val logger = LoggerFactory.getLogger(KwrkHttpUser::class.java)
         private lateinit var http_header_key: String
         private lateinit var http_header_val: String
+        private lateinit var jsonBody: String
     }
 }
 
