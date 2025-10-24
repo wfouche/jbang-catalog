@@ -151,7 +151,8 @@ class KwrkCli : CliktCommand() {
     private val p_method by option("--method").default("GET")
     private val p_url by option("--url").default("--")
     private val p_rpt_suffix by option("--name").default("test")
-    private val p_json_body by option("--jsonBody").default("")
+    private val p_json_body by
+        option("--jsonBody").default("{\"title\": \"foo\", \"body\": \"bar\", \"userId\": 1}")
 
     override fun run() {
         displayAppInfo()
@@ -197,6 +198,9 @@ class KwrkCli : CliktCommand() {
             println("    --header ${p_header}")
             println("    --method ${p_method}")
             println("    --url ${p_url}")
+            if (p_method.uppercase() == "POST") {
+                println("    --jsonBody ${p_json_body}")
+            }
             println("    --name ${p_rpt_suffix}")
         }
         println("")
