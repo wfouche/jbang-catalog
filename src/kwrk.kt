@@ -40,8 +40,8 @@ val benchmarkConfig: String =
     {
         "actions": {
             "description": "kwrk",
-            "output_filename": "kwrk_output.json",
-            "report_filename": "kwrk_report.html",
+            "output_filename": "kwrk___P_RPT_SUFFIX___output.json",
+            "report_filename": "kwrk___P_RPT_SUFFIX___report.html",
             "user_class": "KwrkHttpUser",
             "user_params": {
                 "url": "__P_URL__",
@@ -180,6 +180,7 @@ class KwrkCli : CliktCommand() {
     private val p_iterations by option("--iterations").int().default(3)
     private val p_header by option("--header").default("User-Agent: kwrk")
     private val p_url by option("--url").default("--")
+    private val p_rpt_suffix by option("--reportSuffix").default("test")
 
     override fun run() {
         displayAppInfo()
@@ -197,6 +198,7 @@ class KwrkCli : CliktCommand() {
         json = json.replace("__P_ITERATIONS__", p_iterations.toString())
         json = json.replace("__P_URL__", p_url)
         json = json.replace("__P_HEADER__", p_header)
+        json = json.replace("__P_RPT_SUFFIX__", p_rpt_suffix)
 
         var warmup = p_warmup
         if (p_rate < 1.0) {
@@ -221,6 +223,7 @@ class KwrkCli : CliktCommand() {
             println("    --http ${p_version}")
             println("    --header ${p_header}")
             println("    --url ${p_url}")
+            println("    --reportSuffix ${p_rpt_suffix}")
         }
         println("  java options:")
         var runtimeMxBean = ManagementFactory.getRuntimeMXBean();
@@ -236,10 +239,11 @@ class KwrkCli : CliktCommand() {
         }
 
         // TulipApi.runTulip(json)
-        writeToFile("kwrk_config.json", json, false)
-        TulipApi.runTulip("kwrk_config.json")
+        val configFilename = "kwrk_${p_rpt_suffix}_config.json"
+        writeToFile(configFilename, json, false)
+        TulipApi.runTulip(configFilename)
 
-        val old_lines: List<String> = File("kwrk_report.html").readLines()
+        val old_lines: List<String> = File("kwrk_${p_rpt_suffix}_report.html").readLines()
         val new_lines: MutableList<String> = mutableListOf()
         var i = 0
         for (line in old_lines) {
@@ -383,7 +387,7 @@ class KwrkCli : CliktCommand() {
         new_lines.add("</body>")
         new_lines.add("</html>")
 
-        val br: BufferedWriter = BufferedWriter(FileWriter("kwrk_report.html"))
+        val br: BufferedWriter = BufferedWriter(FileWriter("kwrk_${p_rpt_suffix}.html"))
         for (str in new_lines) {
             br.write(str + java.lang.System.lineSeparator())
         }
