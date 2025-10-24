@@ -21,6 +21,8 @@ import org.slf4j.LoggerFactory
 import org.springframework.http.MediaType
 import org.springframework.web.client.RestClient
 import org.springframework.web.client.RestClientException
+import java.lang.management.ManagementFactory;
+import java.lang.management.RuntimeMXBean;
 
 const val appName: String = "kwrk"
 const val appVersion: String = "__JBANG_SNAPSHOT_ID__/__JBANG_SNAPSHOT_TIMESTAMP__"
@@ -208,17 +210,23 @@ class KwrkCli : CliktCommand() {
             println("url: not defined, please specify a value using the --url option")
             System.exit(1)
         } else {
-            println("kwrk options:")
-            println("  --rate ${p_rate}")
-            println("  --rateStepChange ${p_rate_step_change}")
-            println("  --rateStepCount ${p_rate_step_count}")
-            println("  --threads ${p_threads}")
-            println("  --warmup ${p_warmup}")
-            println("  --duration ${p_duration}")
-            println("  --iterations ${p_iterations}")
-            println("  --http ${p_version}")
-            println("  --header ${p_header}")
-            println("  --url ${p_url}")
+            println("  kwrk options:")
+            println("    --rate ${p_rate}")
+            println("    --rateStepChange ${p_rate_step_change}")
+            println("    --rateStepCount ${p_rate_step_count}")
+            println("    --threads ${p_threads}")
+            println("    --warmup ${p_warmup}")
+            println("    --duration ${p_duration}")
+            println("    --iterations ${p_iterations}")
+            println("    --http ${p_version}")
+            println("    --header ${p_header}")
+            println("    --url ${p_url}")
+        }
+        println("  java options:")
+        var runtimeMxBean = ManagementFactory.getRuntimeMXBean();
+        var jvmArgs = runtimeMxBean.getInputArguments();
+        for (arg in jvmArgs) {
+            println("    $arg")
         }
 
         if (p_debug == "true") {
@@ -356,13 +364,16 @@ class KwrkCli : CliktCommand() {
         new_lines.add("  <td>${System.getProperty("java.runtime.version")}</th>")
         new_lines.add("</tr>")
 
-        val env: String? = System.getenv("JBANG_JAVA_OPTIONS")
-        val java_options: String
-        if (env != null) {
-            java_options = env
-        } else {
-            java_options = ""
+        System.out.println("JVM Input Arguments:");
+        var java_options: String = ""
+        for (arg in jvmArgs) {
+            if (java_options.length == 0) {
+                java_options += arg
+            } else {
+                java_options += " " + arg
+            }
         }
+
         new_lines.add("<tr>")
         new_lines.add("  <td>JBANG_JAVA_OPTIONS</th>")
         new_lines.add("  <td>${java_options}</th>")
