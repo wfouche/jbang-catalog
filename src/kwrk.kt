@@ -119,38 +119,28 @@ class KwrkHttpUser(userId: Int, threadId: Int) : HttpUser(userId, threadId) {
 
     // Action 1: GET ${url}
     override fun action1(): Boolean {
-        return try {
-            val rsp: String? =
-                restClient()
-                    .get()
-                    .uri(getUrlPath())
-                    .header(http_header_key, http_header_val)
-                    .retrieve()
-                    .body(String::class.java)
-            // Postcondition
-            (rsp != null && rsp.length > 0)
-        } catch (e: RestClientException) {
-            false
-        }
+        val rsp: String? =
+            restClient()
+                .get()
+                .uri(getUrlPath())
+                .header(http_header_key, http_header_val)
+                .retrieve()
+                .body(String::class.java)
+        return (rsp != null && rsp.length > 0)
     }
 
     // Action 2: POST ${url}
     override fun action2(): Boolean {
-        return try {
-            val rsp: String? =
-                restClient()
-                    .post()
-                    .uri(getUrlPath())
-                    .header(http_header_key, http_header_val)
-                    .contentType(MediaType.APPLICATION_JSON)
-                    .body("")
-                    .retrieve()
-                    .body(String::class.java)
-            // Postcondition
-            (rsp != null && rsp.length > 0)
-        } catch (e: RestClientException) {
-            false
-        }
+        val rsp: String? =
+            restClient()
+                .post()
+                .uri(getUrlPath())
+                .header(http_header_key, http_header_val)
+                .contentType(MediaType.APPLICATION_JSON)
+                .body("")
+                .retrieve()
+                .body(String::class.java)
+        return (rsp != null && rsp.length > 0)
     }
 
     // Action 100
@@ -160,7 +150,6 @@ class KwrkHttpUser(userId: Int, threadId: Int) : HttpUser(userId, threadId) {
 
     // RestClient object
     companion object {
-        private lateinit var restClient: RestClient
         private val logger = LoggerFactory.getLogger(KwrkHttpUser::class.java)
         private lateinit var http_header_key: String
         private lateinit var http_header_val: String
@@ -180,7 +169,7 @@ class KwrkCli : CliktCommand() {
     private val p_iterations by option("--iterations").int().default(3)
     private val p_header by option("--header").default("User-Agent: kwrk")
     private val p_url by option("--url").default("--")
-    private val p_rpt_suffix by option("--reportSuffix").default("test")
+    private val p_rpt_suffix by option("--name").default("test")
 
     override fun run() {
         displayAppInfo()
@@ -223,8 +212,9 @@ class KwrkCli : CliktCommand() {
             println("    --http ${p_version}")
             println("    --header ${p_header}")
             println("    --url ${p_url}")
-            println("    --reportSuffix ${p_rpt_suffix}")
+            println("    --name ${p_rpt_suffix}")
         }
+        println("")
         println("  java options:")
         var runtimeMxBean = ManagementFactory.getRuntimeMXBean();
         var jvmArgs = runtimeMxBean.getInputArguments();
@@ -368,7 +358,6 @@ class KwrkCli : CliktCommand() {
         new_lines.add("  <td>${System.getProperty("java.runtime.version")}</th>")
         new_lines.add("</tr>")
 
-        System.out.println("JVM Input Arguments:");
         var java_options: String = ""
         for (arg in jvmArgs) {
             if (java_options.length == 0) {
@@ -387,7 +376,7 @@ class KwrkCli : CliktCommand() {
         new_lines.add("</body>")
         new_lines.add("</html>")
 
-        val br: BufferedWriter = BufferedWriter(FileWriter("kwrk_${p_rpt_suffix}.html"))
+        val br: BufferedWriter = BufferedWriter(FileWriter("kwrk_${p_rpt_suffix}_report.html"))
         for (str in new_lines) {
             br.write(str + java.lang.System.lineSeparator())
         }
