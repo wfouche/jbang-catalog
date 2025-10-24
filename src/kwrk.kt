@@ -48,7 +48,8 @@ val benchmarkConfig: String =
                 "httpVersion": "__P_HTTP_VERSION__",
                 "httpHeader": "__P_HEADER__",
                 "connectTimeoutMillis": 1000,
-                "readTimeoutMillis": 10000
+                "readTimeoutMillis": 10000,
+                "jsonBody": "__JSON_BODY__"
             },
             "user_actions": {
                 "1": "GET:url"
@@ -67,7 +68,7 @@ val benchmarkConfig: String =
                 "worker_thread_queue_size": __P_QSIZE__,
                 "scenario_actions": [
                     {
-                        "id": 1
+                        "id": __ACTION_ID__
                     }
                 ],
                 "time": {
@@ -104,6 +105,8 @@ fun writeToFile(path: String, content: String, append: Boolean) {
 
 class KwrkHttpUser(userId: Int, threadId: Int) : HttpUser(userId, threadId) {
 
+    private var jsonBody: String = ""
+
     override fun onStart(): Boolean {
         if (userId == 0) {
             super.onStart()
@@ -111,6 +114,9 @@ class KwrkHttpUser(userId: Int, threadId: Int) : HttpUser(userId, threadId) {
             val L = h.split(":")
             http_header_key = L[0].trim()
             http_header_val = L[1].trim()
+            jsonBody = getUserParamValue("jsonBody")
+            jsonBody = jsonBody.replace("\\", "")
+            println("jsonBody = ${jsonBody}")
         }
         return true
     }
@@ -119,28 +125,12 @@ class KwrkHttpUser(userId: Int, threadId: Int) : HttpUser(userId, threadId) {
 
     // Action 1: GET ${url}
     override fun action1(): Boolean {
-        val rsp: String? =
-            restClient()
-                .get()
-                .uri(getUrlPath())
-                .header(http_header_key, http_header_val)
-                .retrieve()
-                .body(String::class.java)
-        return (rsp != null && rsp.length > 0)
+        return !http_GET(getUrlPath()).isEmpty()
     }
 
     // Action 2: POST ${url}
     override fun action2(): Boolean {
-        val rsp: String? =
-            restClient()
-                .post()
-                .uri(getUrlPath())
-                .header(http_header_key, http_header_val)
-                .contentType(MediaType.APPLICATION_JSON)
-                .body("")
-                .retrieve()
-                .body(String::class.java)
-        return (rsp != null && rsp.length > 0)
+        return !http_POST(jsonBody, getUrlPath()).isEmpty()
     }
 
     // Action 100
@@ -168,8 +158,10 @@ class KwrkCli : CliktCommand() {
     private val p_duration by option("--duration").int().default(30)
     private val p_iterations by option("--iterations").int().default(3)
     private val p_header by option("--header").default("User-Agent: kwrk")
+    private val p_method by option("--method").default("GET")
     private val p_url by option("--url").default("--")
     private val p_rpt_suffix by option("--name").default("test")
+    private val p_json_body by option("--jsonBody").default("")
 
     override fun run() {
         displayAppInfo()
@@ -188,6 +180,8 @@ class KwrkCli : CliktCommand() {
         json = json.replace("__P_URL__", p_url)
         json = json.replace("__P_HEADER__", p_header)
         json = json.replace("__P_RPT_SUFFIX__", p_rpt_suffix)
+        json = json.replace("__ACTION_ID__", "${if (p_method.uppercase() == "GET") 1 else 2}")
+        json = json.replace("__JSON_BODY__", p_json_body.replace("\"","\\\""))
 
         var warmup = p_warmup
         if (p_rate < 1.0) {
@@ -211,6 +205,7 @@ class KwrkCli : CliktCommand() {
             println("    --iterations ${p_iterations}")
             println("    --http ${p_version}")
             println("    --header ${p_header}")
+            println("    --method ${p_method}")
             println("    --url ${p_url}")
             println("    --name ${p_rpt_suffix}")
         }
