@@ -105,10 +105,6 @@ class KwrkHttpUser(userId: Int, threadId: Int) : HttpUser(userId, threadId) {
     override fun onStart(): Boolean {
         if (userId == 0) {
             super.onStart()
-            val h: String = getUserParamValue("httpHeader")
-            val L = h.split(":")
-            http_header_key = L[0].trim()
-            http_header_val = L[1].trim()
             jsonBody = getUserParamValue("jsonBody").replace("\\", "")
         }
         return true
