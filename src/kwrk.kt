@@ -16,13 +16,9 @@ import java.io.BufferedWriter
 import java.io.File
 import java.io.FileWriter
 import java.io.IOException
+import java.lang.management.ManagementFactory
 import java.util.Locale
 import org.slf4j.LoggerFactory
-import org.springframework.http.MediaType
-import org.springframework.web.client.RestClient
-import org.springframework.web.client.RestClientException
-import java.lang.management.ManagementFactory;
-import java.lang.management.RuntimeMXBean;
 
 const val appName: String = "kwrk"
 const val appVersion: String = "__JBANG_SNAPSHOT_ID__/__JBANG_SNAPSHOT_TIMESTAMP__"
@@ -179,7 +175,7 @@ class KwrkCli : CliktCommand() {
         json = json.replace("__P_HEADER__", p_header)
         json = json.replace("__P_RPT_SUFFIX__", p_rpt_suffix)
         json = json.replace("__ACTION_ID__", "${if (p_method.uppercase() == "GET") 1 else 2}")
-        json = json.replace("__JSON_BODY__", p_json_body.replace("\"","\\\""))
+        json = json.replace("__JSON_BODY__", p_json_body.replace("\"", "\\\""))
 
         var warmup = p_warmup
         if (p_rate < 1.0) {
@@ -209,8 +205,8 @@ class KwrkCli : CliktCommand() {
         }
         println("")
         println("  java options:")
-        var runtimeMxBean = ManagementFactory.getRuntimeMXBean();
-        var jvmArgs = runtimeMxBean.getInputArguments();
+        var runtimeMxBean = ManagementFactory.getRuntimeMXBean()
+        var jvmArgs = runtimeMxBean.getInputArguments()
         for (arg in jvmArgs) {
             println("    $arg")
         }
