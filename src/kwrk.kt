@@ -1,6 +1,6 @@
 // spotless:off
 //DEPS com.github.ajalt.clikt:clikt-jvm:5.0.3
-//DEPS io.github.wfouche.tulip:tulip-runtime:2.1.12
+//DEPS io.github.wfouche.tulip:tulip-runtime:2.1.13
 //JAVA 21
 //KOTLIN 2.1.21
 // spotless:on
@@ -105,10 +105,6 @@ class KwrkHttpUser(userId: Int, threadId: Int) : HttpUser(userId, threadId) {
     override fun onStart(): Boolean {
         if (userId == 0) {
             super.onStart()
-            val h: String = getUserParamValue("httpHeader")
-            val L = h.split(":")
-            http_header_key = L[0].trim()
-            http_header_val = L[1].trim()
             jsonBody = getUserParamValue("jsonBody").replace("\\", "")
         }
         return true
@@ -155,7 +151,8 @@ class KwrkCli : CliktCommand() {
     private val p_method by option("--method").default("GET")
     private val p_url by option("--url").default("--")
     private val p_rpt_suffix by option("--name").default("test")
-    private val p_json_body by option("--jsonBody").default("")
+    private val p_json_body by
+        option("--jsonBody").default("{\"title\": \"foo\", \"body\": \"bar\", \"userId\": 1}")
 
     override fun run() {
         displayAppInfo()
@@ -201,6 +198,9 @@ class KwrkCli : CliktCommand() {
             println("    --header ${p_header}")
             println("    --method ${p_method}")
             println("    --url ${p_url}")
+            if (p_method.uppercase() == "POST") {
+                println("    --jsonBody ${p_json_body}")
+            }
             println("    --name ${p_rpt_suffix}")
         }
         println("")
