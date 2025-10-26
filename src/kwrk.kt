@@ -247,6 +247,11 @@ class KwrkCli : CliktCommand() {
         new_lines.add("</tr>")
 
         new_lines.add("<tr>")
+        new_lines.add("  <td>method</th>")
+        new_lines.add("  <td>__P_METHOD__</th>".replace("__P_METHOD__", p_method.toString()))
+        new_lines.add("</tr>")
+
+        new_lines.add("<tr>")
         new_lines.add("  <td>url</th>")
         new_lines.add("  <td>__P_URL__</th>".replace("__P_URL__", p_url.toString()))
         new_lines.add("</tr>")
