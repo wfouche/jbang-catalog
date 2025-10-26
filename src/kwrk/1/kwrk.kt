@@ -21,7 +21,7 @@ import java.util.Locale
 import org.slf4j.LoggerFactory
 
 const val appName: String = "kwrk"
-const val appVersion: String = "1/2025-10-25T21:02:20"
+const val appVersion: String = "1/2025-10-26T11:04:55"
 
 private fun displayAppInfo() {
     var version: String = appVersion
@@ -244,6 +244,11 @@ class KwrkCli : CliktCommand() {
         new_lines.add("<tr>")
         new_lines.add("  <th>name</th>")
         new_lines.add("  <th>value</th>")
+        new_lines.add("</tr>")
+
+        new_lines.add("<tr>")
+        new_lines.add("  <td>method</th>")
+        new_lines.add("  <td>__P_METHOD__</th>".replace("__P_METHOD__", p_method.toString()))
         new_lines.add("</tr>")
 
         new_lines.add("<tr>")
