@@ -16,14 +16,12 @@ import java.io.BufferedWriter
 import java.io.File
 import java.io.FileWriter
 import java.io.IOException
+import java.lang.management.ManagementFactory
 import java.util.Locale
 import org.slf4j.LoggerFactory
-import org.springframework.http.MediaType
-import org.springframework.web.client.RestClient
-import org.springframework.web.client.RestClientException
 
 const val appName: String = "kwrk"
-const val appVersion: String = "1/2025-10-17T14:38:54"
+const val appVersion: String = "1/2025-10-26T11:04:55"
 
 private fun displayAppInfo() {
     var version: String = appVersion
@@ -38,18 +36,20 @@ val benchmarkConfig: String =
     {
         "actions": {
             "description": "kwrk",
-            "output_filename": "kwrk_output.json",
-            "report_filename": "kwrk_report.html",
+            "output_filename": "kwrk___P_RPT_SUFFIX___output.json",
+            "report_filename": "kwrk___P_RPT_SUFFIX___report.html",
             "user_class": "KwrkHttpUser",
             "user_params": {
                 "url": "__P_URL__",
                 "httpVersion": "__P_HTTP_VERSION__",
                 "httpHeader": "__P_HEADER__",
                 "connectTimeoutMillis": 1000,
-                "readTimeoutMillis": 10000
+                "readTimeoutMillis": 10000,
+                "jsonBody": "__JSON_BODY__"
             },
             "user_actions": {
-                "1": "GET:url"
+                "1": "GET:url",
+                "2": "POST:url"
             }
         },
         "benchmarks": {
@@ -65,12 +65,12 @@ val benchmarkConfig: String =
                 "worker_thread_queue_size": __P_QSIZE__,
                 "scenario_actions": [
                     {
-                        "id": 1
+                        "id": __ACTION_ID__
                     }
                 ],
                 "time": {
                     "pre_warmup_duration": __P_WARMUP__,
-                    "warmup_duration": __P_WARMUP__,
+                    "warmup_duration": 30,
                     "benchmark_duration": __P_DURATION__,
                     "benchmark_iterations": __P_ITERATIONS__
                 }
@@ -105,10 +105,7 @@ class KwrkHttpUser(userId: Int, threadId: Int) : HttpUser(userId, threadId) {
     override fun onStart(): Boolean {
         if (userId == 0) {
             super.onStart()
-            val h: String = getUserParamValue("httpHeader")
-            val L = h.split(":")
-            http_header_key = L[0].trim()
-            http_header_val = L[1].trim()
+            jsonBody = getUserParamValue("jsonBody").replace("\\", "")
         }
         return true
     }
@@ -117,38 +114,12 @@ class KwrkHttpUser(userId: Int, threadId: Int) : HttpUser(userId, threadId) {
 
     // Action 1: GET ${url}
     override fun action1(): Boolean {
-        return try {
-            val rsp: String? =
-                restClient()
-                    .get()
-                    .uri(getUrlPath())
-                    .header(http_header_key, http_header_val)
-                    .retrieve()
-                    .body(String::class.java)
-            // Postcondition
-            (rsp != null && rsp.length > 0)
-        } catch (e: RestClientException) {
-            false
-        }
+        return !http_GET(getUrlPath()).isEmpty()
     }
 
     // Action 2: POST ${url}
     override fun action2(): Boolean {
-        return try {
-            val rsp: String? =
-                restClient()
-                    .post()
-                    .uri(getUrlPath())
-                    .header(http_header_key, http_header_val)
-                    .contentType(MediaType.APPLICATION_JSON)
-                    .body("")
-                    .retrieve()
-                    .body(String::class.java)
-            // Postcondition
-            (rsp != null && rsp.length > 0)
-        } catch (e: RestClientException) {
-            false
-        }
+        return !http_POST(jsonBody, getUrlPath()).isEmpty()
     }
 
     // Action 100
@@ -158,10 +129,10 @@ class KwrkHttpUser(userId: Int, threadId: Int) : HttpUser(userId, threadId) {
 
     // RestClient object
     companion object {
-        private lateinit var restClient: RestClient
         private val logger = LoggerFactory.getLogger(KwrkHttpUser::class.java)
         private lateinit var http_header_key: String
         private lateinit var http_header_val: String
+        private lateinit var jsonBody: String
     }
 }
 
@@ -177,7 +148,11 @@ class KwrkCli : CliktCommand() {
     private val p_duration by option("--duration").int().default(30)
     private val p_iterations by option("--iterations").int().default(3)
     private val p_header by option("--header").default("User-Agent: kwrk")
+    private val p_method by option("--method").default("GET")
     private val p_url by option("--url").default("--")
+    private val p_rpt_suffix by option("--name").default("test")
+    private val p_json_body by
+        option("--jsonBody").default("{\"title\": \"foo\", \"body\": \"bar\", \"userId\": 1}")
 
     override fun run() {
         displayAppInfo()
@@ -195,6 +170,9 @@ class KwrkCli : CliktCommand() {
         json = json.replace("__P_ITERATIONS__", p_iterations.toString())
         json = json.replace("__P_URL__", p_url)
         json = json.replace("__P_HEADER__", p_header)
+        json = json.replace("__P_RPT_SUFFIX__", p_rpt_suffix)
+        json = json.replace("__ACTION_ID__", "${if (p_method.uppercase() == "GET") 1 else 2}")
+        json = json.replace("__JSON_BODY__", p_json_body.replace("\"", "\\\""))
 
         var warmup = p_warmup
         if (p_rate < 1.0) {
@@ -208,17 +186,29 @@ class KwrkCli : CliktCommand() {
             println("url: not defined, please specify a value using the --url option")
             System.exit(1)
         } else {
-            println("kwrk options:")
-            println("  --rate ${p_rate}")
-            println("  --rateStepChange ${p_rate_step_change}")
-            println("  --rateStepCount ${p_rate_step_count}")
-            println("  --threads ${p_threads}")
-            println("  --warmup ${p_warmup}")
-            println("  --duration ${p_duration}")
-            println("  --iterations ${p_iterations}")
-            println("  --http ${p_version}")
-            println("  --header ${p_header}")
-            println("  --url ${p_url}")
+            println("  kwrk options:")
+            println("    --rate ${p_rate}")
+            println("    --rateStepChange ${p_rate_step_change}")
+            println("    --rateStepCount ${p_rate_step_count}")
+            println("    --threads ${p_threads}")
+            println("    --warmup ${p_warmup}")
+            println("    --duration ${p_duration}")
+            println("    --iterations ${p_iterations}")
+            println("    --http ${p_version}")
+            println("    --header ${p_header}")
+            println("    --method ${p_method}")
+            println("    --url ${p_url}")
+            if (p_method.uppercase() == "POST") {
+                println("    --jsonBody ${p_json_body}")
+            }
+            println("    --name ${p_rpt_suffix}")
+        }
+        println("")
+        println("  java options:")
+        var runtimeMxBean = ManagementFactory.getRuntimeMXBean()
+        var jvmArgs = runtimeMxBean.getInputArguments()
+        for (arg in jvmArgs) {
+            println("    $arg")
         }
 
         if (p_debug == "true") {
@@ -228,10 +218,11 @@ class KwrkCli : CliktCommand() {
         }
 
         // TulipApi.runTulip(json)
-        writeToFile("kwrk_config.json", json, false)
-        TulipApi.runTulip("kwrk_config.json")
+        val configFilename = "kwrk_${p_rpt_suffix}_config.json"
+        writeToFile(configFilename, json, false)
+        TulipApi.runTulip(configFilename)
 
-        val old_lines: List<String> = File("kwrk_report.html").readLines()
+        val old_lines: List<String> = File("kwrk_${p_rpt_suffix}_report.html").readLines()
         val new_lines: MutableList<String> = mutableListOf()
         var i = 0
         for (line in old_lines) {
@@ -253,6 +244,11 @@ class KwrkCli : CliktCommand() {
         new_lines.add("<tr>")
         new_lines.add("  <th>name</th>")
         new_lines.add("  <th>value</th>")
+        new_lines.add("</tr>")
+
+        new_lines.add("<tr>")
+        new_lines.add("  <td>method</th>")
+        new_lines.add("  <td>__P_METHOD__</th>".replace("__P_METHOD__", p_method.toString()))
         new_lines.add("</tr>")
 
         new_lines.add("<tr>")
@@ -356,13 +352,15 @@ class KwrkCli : CliktCommand() {
         new_lines.add("  <td>${System.getProperty("java.runtime.version")}</th>")
         new_lines.add("</tr>")
 
-        val env: String? = System.getenv("JBANG_JAVA_OPTIONS")
-        val java_options: String
-        if (env != null) {
-            java_options = env
-        } else {
-            java_options = ""
+        var java_options: String = ""
+        for (arg in jvmArgs) {
+            if (java_options.length == 0) {
+                java_options += arg
+            } else {
+                java_options += " " + arg
+            }
         }
+
         new_lines.add("<tr>")
         new_lines.add("  <td>JBANG_JAVA_OPTIONS</th>")
         new_lines.add("  <td>${java_options}</th>")
@@ -372,7 +370,7 @@ class KwrkCli : CliktCommand() {
         new_lines.add("</body>")
         new_lines.add("</html>")
 
-        val br: BufferedWriter = BufferedWriter(FileWriter("kwrk_report.html"))
+        val br: BufferedWriter = BufferedWriter(FileWriter("kwrk_${p_rpt_suffix}_report.html"))
         for (str in new_lines) {
             br.write(str + java.lang.System.lineSeparator())
         }

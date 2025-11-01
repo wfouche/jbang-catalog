@@ -1,6 +1,6 @@
 // spotless:off
 //DEPS com.github.ajalt.clikt:clikt-jvm:5.0.3
-//DEPS io.github.wfouche.tulip:tulip-runtime:2.1.13
+//DEPS io.github.wfouche.tulip:tulip-runtime:2.1.12
 //JAVA 21
 //KOTLIN 2.1.21
 // spotless:on
@@ -70,7 +70,7 @@ val benchmarkConfig: String =
                 ],
                 "time": {
                     "pre_warmup_duration": __P_WARMUP__,
-                    "warmup_duration": __P_WARMUP__,
+                    "warmup_duration": 30,
                     "benchmark_duration": __P_DURATION__,
                     "benchmark_iterations": __P_ITERATIONS__
                 }
@@ -244,6 +244,11 @@ class KwrkCli : CliktCommand() {
         new_lines.add("<tr>")
         new_lines.add("  <th>name</th>")
         new_lines.add("  <th>value</th>")
+        new_lines.add("</tr>")
+
+        new_lines.add("<tr>")
+        new_lines.add("  <td>method</th>")
+        new_lines.add("  <td>__P_METHOD__</th>".replace("__P_METHOD__", p_method.toString()))
         new_lines.add("</tr>")
 
         new_lines.add("<tr>")
