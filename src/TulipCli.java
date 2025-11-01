@@ -179,7 +179,7 @@ public class TulipCli {
             //DEPS org.slf4j:slf4j-api:2.0.17
             //DEPS ch.qos.logback:logback-core:1.5.20
             //DEPS ch.qos.logback:logback-classic:1.5.20
-            //DEPS org.springframework.boot:spring-boot-starter-web:3.5.6
+            //DEPS org.springframework.boot:spring-boot-starter-web:3.5.7
             //SOURCES JavaHttpUser.java
             //JAVA 21+
             //PREVIEW
@@ -459,7 +459,7 @@ public class TulipCli {
             //DEPS org.slf4j:slf4j-api:2.0.17
             //DEPS ch.qos.logback:logback-core:1.5.20
             //DEPS ch.qos.logback:logback-classic:1.5.20
-            //DEPS org.springframework.boot:spring-boot-starter-web:3.5.6
+            //DEPS org.springframework.boot:spring-boot-starter-web:3.5.7
             //SOURCES KotlinHttpUser.kt
             //JAVA 21+
             //KOTLIN 2.1.21
@@ -616,7 +616,7 @@ public class TulipCli {
             @Grab('org.slf4j:slf4j-api:2.0.17')
             @Grab('ch.qos.logback:logback-core:1.5.20')
             @Grab('ch.qos.logback:logback-classic:1.5.20')
-            @Grab('org.springframework.boot:spring-boot-starter-web:3.5.6')
+            @Grab('org.springframework.boot:spring-boot-starter-web:3.5.7')
 
             //package io.tulip
 
@@ -770,7 +770,7 @@ public class TulipCli {
             //> using dep org.slf4j:slf4j-api:2.0.17
             //> using dep ch.qos.logback:logback-core:1.5.20
             //> using dep ch.qos.logback:logback-classic:1.5.20
-            //> using dep org.springframework.boot:spring-boot-starter-web:3.5.6
+            //> using dep org.springframework.boot:spring-boot-starter-web:3.5.7
             //> using javaOpt __TULIP_JAVA_OPTIONS__
             //> using repositories m2local
 
@@ -916,7 +916,7 @@ public class TulipCli {
             //DEPS org.slf4j:slf4j-api:2.0.17
             //DEPS ch.qos.logback:logback-core:1.5.20
             //DEPS ch.qos.logback:logback-classic:1.5.20
-            //DEPS org.springframework.boot:spring-boot-starter-web:3.5.6
+            //DEPS org.springframework.boot:spring-boot-starter-web:3.5.7
             //JAVA 21+
             //RUNTIME_OPTIONS __TULIP_JAVA_OPTIONS__
 
