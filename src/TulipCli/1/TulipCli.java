@@ -13,7 +13,7 @@ import java.util.List;
 public class TulipCli {
 
     static String appName = "tulip-cli";
-    static String appVersion = "1/2025-10-17T14:33:14";
+    static String appVersion = "1/2025-11-01T11:07:45";
 
     static void displayAppInfo() {
         String version = appVersion;
@@ -28,7 +28,7 @@ public class TulipCli {
             String.valueOf(io.github.wfouche.tulip.api.TulipApi.NUM_ACTIONS - 1).toString();
     static String lang = "Java";
     static String url = "http://jsonplaceholder.typicode.com";
-    static String TULIP_JAVA_OPTIONS = "-server -Xmx2g -XX:+UseZGC -XX:+ZGenerational";
+    static String TULIP_JAVA_OPTIONS = "-Xmx2g -XX:+UseZGC -XX:+ZGenerational";
     static String avgAPS = "10.0";
     static String tulipVersion = io.github.wfouche.tulip.api.TulipApi.VERSION;
     static String httpVersion = "HTTP";
@@ -177,8 +177,8 @@ public class TulipCli {
             ///usr/bin/env jbang "$0" "$@" ; exit $?
             //DEPS io.github.wfouche.tulip:tulip-runtime:__TULIP_VERSION__
             //DEPS org.slf4j:slf4j-api:2.0.17
-            //DEPS ch.qos.logback:logback-core:1.5.19
-            //DEPS ch.qos.logback:logback-classic:1.5.19
+            //DEPS ch.qos.logback:logback-core:1.5.20
+            //DEPS ch.qos.logback:logback-classic:1.5.20
             //DEPS org.springframework.boot:spring-boot-starter-web:3.5.6
             //SOURCES JavaHttpUser.java
             //JAVA 21+
@@ -300,6 +300,14 @@ public class TulipCli {
             rd/q/s benchmark_report
             del wfd0.svg
             del json_report.py
+            set "TARGET_FOLDER=io\\tulip\\.bsp"
+            if exist "%TARGET_FOLDER%" (
+                rmdir /s /q "%TARGET_FOLDER%"
+            )
+            set "TARGET_FOLDER=io\\tulip\\.scala-build"
+            if exist "%TARGET_FOLDER%" (
+                rmdir /s /q "%TARGET_FOLDER%"
+            )
             """;
 
     static String sdkmanConfig =
@@ -449,8 +457,8 @@ public class TulipCli {
             ///usr/bin/env jbang "$0" "$@" ; exit $?
             //DEPS io.github.wfouche.tulip:tulip-runtime:__TULIP_VERSION__
             //DEPS org.slf4j:slf4j-api:2.0.17
-            //DEPS ch.qos.logback:logback-core:1.5.19
-            //DEPS ch.qos.logback:logback-classic:1.5.19
+            //DEPS ch.qos.logback:logback-core:1.5.20
+            //DEPS ch.qos.logback:logback-classic:1.5.20
             //DEPS org.springframework.boot:spring-boot-starter-web:3.5.6
             //SOURCES KotlinHttpUser.kt
             //JAVA 21+
@@ -607,8 +615,8 @@ public class TulipCli {
             ///usr/bin/env jbang "$0" "$@" ; exit $?
             //DEPS io.github.wfouche.tulip:tulip-runtime:__TULIP_VERSION__
             //DEPS org.slf4j:slf4j-api:2.0.17
-            //DEPS ch.qos.logback:logback-core:1.5.19
-            //DEPS ch.qos.logback:logback-classic:1.5.19
+            //DEPS ch.qos.logback:logback-core:1.5.20
+            //DEPS ch.qos.logback:logback-classic:1.5.20
             //DEPS org.springframework.boot:spring-boot-starter-web:3.5.6
             //SOURCES GroovyHttpUser.groovy
             //JAVA 21+
@@ -768,8 +776,8 @@ public class TulipCli {
             //> using jvm 21
             //> using dep io.github.wfouche.tulip:tulip-runtime:__TULIP_VERSION__
             //> using dep org.slf4j:slf4j-api:2.0.17
-            //> using dep ch.qos.logback:logback-core:1.5.19
-            //> using dep ch.qos.logback:logback-classic:1.5.19
+            //> using dep ch.qos.logback:logback-core:1.5.20
+            //> using dep ch.qos.logback:logback-classic:1.5.20
             //> using dep org.springframework.boot:spring-boot-starter-web:3.5.6
             //> using javaOpt __TULIP_JAVA_OPTIONS__
             //> using repositories m2local
@@ -902,6 +910,7 @@ public class TulipCli {
         writeToFile("json_report.py", jsonReportPy, false);
         writeToFile("view_report.sh", viewBenchReportSh, false);
         writeToFile("view_report.cmd", viewBenchReportCmd, false);
+        writeToFile("clean.cmd", cleanCmd, false);
 
         chmod();
     }
@@ -913,8 +922,8 @@ public class TulipCli {
             //DEPS org.python:jython-standalone:2.7.4
             //DEPS io.github.wfouche.tulip:tulip-runtime:__TULIP_VERSION__
             //DEPS org.slf4j:slf4j-api:2.0.17
-            //DEPS ch.qos.logback:logback-core:1.5.19
-            //DEPS ch.qos.logback:logback-classic:1.5.19
+            //DEPS ch.qos.logback:logback-core:1.5.20
+            //DEPS ch.qos.logback:logback-classic:1.5.20
             //DEPS org.springframework.boot:spring-boot-starter-web:3.5.6
             //JAVA 21+
             //RUNTIME_OPTIONS __TULIP_JAVA_OPTIONS__
@@ -938,12 +947,12 @@ public class TulipCli {
             # dependencies = [
             #   "io.github.wfouche.tulip:tulip-runtime:__TULIP_VERSION__",
             #   "org.slf4j:slf4j-api:2.0.17",
-            #   "ch.qos.logback:logback-core:1.5.19",
-            #   "ch.qos.logback:logback-classic:1.5.19",
+            #   "ch.qos.logback:logback-core:1.5.20",
+            #   "ch.qos.logback:logback-classic:1.5.20",
             #   "org.springframework.boot:spring-boot-starter-web:3.5.6"
             # ]
             # runtime-options = [
-            #   "-server", "-Xmx2g", "-XX:+UseZGC", "-XX:+ZGenerational"
+            #   "-Xmx2g", "-XX:+UseZGC", "-XX:+ZGenerational"
             # ]
             # ///
 

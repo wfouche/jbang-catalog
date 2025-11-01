@@ -1,4 +1,4 @@
 {
-    "description": "Update to Tulip 2.1.12",
-    "timestamp": "2025-10-17T14:33:14"
+    "description": "Remove JVM option -server",
+    "timestamp": "2025-11-01T11:07:45"
 }
