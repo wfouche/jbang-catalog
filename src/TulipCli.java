@@ -1099,6 +1099,8 @@ public class TulipCli {
 
         if (lang.equals("Scala")) {
             System.out.println("\nCreating a " + lang + " benchmark with Scala-CLI support");
+        else if (lang.equals("Groovy")) {
+            System.out.println("\nCreating a " + lang + " benchmark");
         } else {
             System.out.println("\nCreating a " + lang + " benchmark with JBang support");
         }
