@@ -28,7 +28,7 @@ public class TulipCli {
             String.valueOf(io.github.wfouche.tulip.api.TulipApi.NUM_ACTIONS - 1).toString();
     static String lang = "Java";
     static String url = "http://jsonplaceholder.typicode.com";
-    static String TULIP_JAVA_OPTIONS = "-server -Xmx2g -XX:+UseZGC -XX:+ZGenerational";
+    static String TULIP_JAVA_OPTIONS = "-Xmx2g -XX:+UseZGC -XX:+ZGenerational";
     static String avgAPS = "10.0";
     static String tulipVersion = io.github.wfouche.tulip.api.TulipApi.VERSION;
     static String httpVersion = "HTTP";
@@ -952,7 +952,7 @@ public class TulipCli {
             #   "org.springframework.boot:spring-boot-starter-web:3.5.6"
             # ]
             # runtime-options = [
-            #   "-server", "-Xmx2g", "-XX:+UseZGC", "-XX:+ZGenerational"
+            #   "-Xmx2g", "-XX:+UseZGC", "-XX:+ZGenerational"
             # ]
             # ///
 
