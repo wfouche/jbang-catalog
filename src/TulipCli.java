@@ -612,21 +612,13 @@ public class TulipCli {
 
     static String groovyApp =
             """
-            ///usr/bin/env jbang "$0" "$@" ; exit $?
-            //DEPS io.github.wfouche.tulip:tulip-runtime:__TULIP_VERSION__
-            //DEPS org.slf4j:slf4j-api:2.0.17
-            //DEPS ch.qos.logback:logback-core:1.5.20
-            //DEPS ch.qos.logback:logback-classic:1.5.20
-            //DEPS org.springframework.boot:spring-boot-starter-web:3.5.6
-            //SOURCES GroovyHttpUser.groovy
-            //JAVA 21+
-            //GROOVY 5.0.1
-            //RUNTIME_OPTIONS __TULIP_JAVA_OPTIONS__
-            //COMPILE_OPTIONS --tolerance=5
-            //FILES ../../benchmark_config.json
-            //FILES ../../logback.xml
+            @Grab('io.github.wfouche.tulip:tulip-runtime:__TULIP_VERSION__')
+            @Grab('org.slf4j:slf4j-api:2.0.17')
+            @Grab('ch.qos.logback:logback-core:1.5.20')
+            @Grab('ch.qos.logback:logback-classic:1.5.20')
+            @Grab('org.springframework.boot:spring-boot-starter-web:3.5.6')
 
-            package io.tulip
+            //package io.tulip
 
             import io.github.wfouche.tulip.api.TulipApi
 
@@ -698,7 +690,7 @@ public class TulipCli {
             #!/bin/bash
             rm -f benchmark_report.html
             #export JBANG_JAVA_OPTIONS="__TULIP_JAVA_OPTIONS__"
-            jbang run io/tulip/App.groovy
+            groovy io/tulip/App.groovy
             echo ""
             #w3m -dump -cols 205 benchmark_report.html
             lynx -dump -width 205 benchmark_report.html
@@ -712,14 +704,14 @@ public class TulipCli {
             REM JBang / Groovy / Tulip is not supported on Windows
             REM Try running the benchmark on Linux or macOS
             REM
-            REM if exist benchmark_report.html del benchmark_report.html
+            if exist benchmark_report.html del benchmark_report.html
             REM JBANG_JAVA_OPTIONS=__TULIP_JAVA_OPTIONS__
-            REM call jbang run io\\tulip\\App.groovy
-            REM @echo off
-            REM echo.
+            call groovy io\\tulip\\App.groovy
+            @echo off
+            echo.
             REM call w3m.exe -dump -cols 205 benchmark_report.html
-            REM lynx.exe -dump -width 205 benchmark_report.html
-            REM start benchmark_report.html
+            lynx.exe -dump -width 205 benchmark_report.html
+            start benchmark_report.html
             REM jbang run asciidoctorj@asciidoctor benchmark_config.adoc
             REM start benchmark_config.html
             REM jbang export fatjar io\\tulip\\App.groovy
