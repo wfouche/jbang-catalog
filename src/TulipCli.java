@@ -705,7 +705,7 @@ public class TulipCli {
             REM Try running the benchmark on Linux or macOS
             REM
             if exist benchmark_report.html del benchmark_report.html
-            JAVA_OPTS=__TULIP_JAVA_OPTIONS__
+            set JAVA_OPTS=__TULIP_JAVA_OPTIONS__
             call groovy io\\tulip\\App.groovy
             @echo off
             echo.
