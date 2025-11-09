@@ -944,7 +944,7 @@ public class TulipCli {
             #   "org.springframework.boot:spring-boot-starter-web:3.5.6"
             # ]
             # runtime-options = [
-            #   "-Xmx2g", "-XX:+UseZGC", "-XX:+ZGenerational"
+            #   "-Dpython.console.encoding=UTF-8", "-Xmx2g", "-XX:+UseZGC", "-XX:+ZGenerational"
             # ]
             # ///
 
