@@ -1,4 +1,4 @@
 {
-    "description": "Remove JVM option -server",
-    "timestamp": "2025-11-01T11:07:45"
+    "description": "Set python.console.encoding to UTF-8",
+    "timestamp": "2025-11-09T21:12:52"
 }

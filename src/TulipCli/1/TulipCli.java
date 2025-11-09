@@ -13,7 +13,7 @@ import java.util.List;
 public class TulipCli {
 
     static String appName = "tulip-cli";
-    static String appVersion = "1/2025-11-01T11:07:45";
+    static String appVersion = "1/2025-11-09T21:12:52";
 
     static void displayAppInfo() {
         String version = appVersion;
@@ -179,7 +179,7 @@ public class TulipCli {
             //DEPS org.slf4j:slf4j-api:2.0.17
             //DEPS ch.qos.logback:logback-core:1.5.20
             //DEPS ch.qos.logback:logback-classic:1.5.20
-            //DEPS org.springframework.boot:spring-boot-starter-web:3.5.6
+            //DEPS org.springframework.boot:spring-boot-starter-web:3.5.7
             //SOURCES JavaHttpUser.java
             //JAVA 21+
             //PREVIEW
@@ -459,7 +459,7 @@ public class TulipCli {
             //DEPS org.slf4j:slf4j-api:2.0.17
             //DEPS ch.qos.logback:logback-core:1.5.20
             //DEPS ch.qos.logback:logback-classic:1.5.20
-            //DEPS org.springframework.boot:spring-boot-starter-web:3.5.6
+            //DEPS org.springframework.boot:spring-boot-starter-web:3.5.7
             //SOURCES KotlinHttpUser.kt
             //JAVA 21+
             //KOTLIN 2.1.21
@@ -612,21 +612,13 @@ public class TulipCli {
 
     static String groovyApp =
             """
-            ///usr/bin/env jbang "$0" "$@" ; exit $?
-            //DEPS io.github.wfouche.tulip:tulip-runtime:__TULIP_VERSION__
-            //DEPS org.slf4j:slf4j-api:2.0.17
-            //DEPS ch.qos.logback:logback-core:1.5.20
-            //DEPS ch.qos.logback:logback-classic:1.5.20
-            //DEPS org.springframework.boot:spring-boot-starter-web:3.5.6
-            //SOURCES GroovyHttpUser.groovy
-            //JAVA 21+
-            //GROOVY 5.0.1
-            //RUNTIME_OPTIONS __TULIP_JAVA_OPTIONS__
-            //COMPILE_OPTIONS --tolerance=5
-            //FILES ../../benchmark_config.json
-            //FILES ../../logback.xml
+            @Grab('io.github.wfouche.tulip:tulip-runtime:__TULIP_VERSION__')
+            @Grab('org.slf4j:slf4j-api:2.0.17')
+            @Grab('ch.qos.logback:logback-core:1.5.20')
+            @Grab('ch.qos.logback:logback-classic:1.5.20')
+            @Grab('org.springframework.boot:spring-boot-starter-web:3.5.7')
 
-            package io.tulip
+            //package io.tulip
 
             import io.github.wfouche.tulip.api.TulipApi
 
@@ -697,8 +689,8 @@ public class TulipCli {
             """
             #!/bin/bash
             rm -f benchmark_report.html
-            #export JBANG_JAVA_OPTIONS="__TULIP_JAVA_OPTIONS__"
-            jbang run io/tulip/App.groovy
+            export JAVA_OPTS="__TULIP_JAVA_OPTIONS__"
+            groovy io/tulip/App.groovy
             echo ""
             #w3m -dump -cols 205 benchmark_report.html
             lynx -dump -width 205 benchmark_report.html
@@ -712,14 +704,14 @@ public class TulipCli {
             REM JBang / Groovy / Tulip is not supported on Windows
             REM Try running the benchmark on Linux or macOS
             REM
-            REM if exist benchmark_report.html del benchmark_report.html
-            REM JBANG_JAVA_OPTIONS=__TULIP_JAVA_OPTIONS__
-            REM call jbang run io\\tulip\\App.groovy
-            REM @echo off
-            REM echo.
+            if exist benchmark_report.html del benchmark_report.html
+            set JAVA_OPTS=__TULIP_JAVA_OPTIONS__
+            call groovy io\\tulip\\App.groovy
+            @echo off
+            echo.
             REM call w3m.exe -dump -cols 205 benchmark_report.html
-            REM lynx.exe -dump -width 205 benchmark_report.html
-            REM start benchmark_report.html
+            lynx.exe -dump -width 205 benchmark_report.html
+            start benchmark_report.html
             REM jbang run asciidoctorj@asciidoctor benchmark_config.adoc
             REM start benchmark_config.html
             REM jbang export fatjar io\\tulip\\App.groovy
@@ -778,7 +770,7 @@ public class TulipCli {
             //> using dep org.slf4j:slf4j-api:2.0.17
             //> using dep ch.qos.logback:logback-core:1.5.20
             //> using dep ch.qos.logback:logback-classic:1.5.20
-            //> using dep org.springframework.boot:spring-boot-starter-web:3.5.6
+            //> using dep org.springframework.boot:spring-boot-starter-web:3.5.7
             //> using javaOpt __TULIP_JAVA_OPTIONS__
             //> using repositories m2local
 
@@ -924,7 +916,7 @@ public class TulipCli {
             //DEPS org.slf4j:slf4j-api:2.0.17
             //DEPS ch.qos.logback:logback-core:1.5.20
             //DEPS ch.qos.logback:logback-classic:1.5.20
-            //DEPS org.springframework.boot:spring-boot-starter-web:3.5.6
+            //DEPS org.springframework.boot:spring-boot-starter-web:3.5.7
             //JAVA 21+
             //RUNTIME_OPTIONS __TULIP_JAVA_OPTIONS__
 
@@ -952,7 +944,7 @@ public class TulipCli {
             #   "org.springframework.boot:spring-boot-starter-web:3.5.6"
             # ]
             # runtime-options = [
-            #   "-Xmx2g", "-XX:+UseZGC", "-XX:+ZGenerational"
+            #   "-Dpython.console.encoding=UTF-8", "-Xmx2g", "-XX:+UseZGC", "-XX:+ZGenerational"
             # ]
             # ///
 
@@ -1107,6 +1099,8 @@ public class TulipCli {
 
         if (lang.equals("Scala")) {
             System.out.println("\nCreating a " + lang + " benchmark with Scala-CLI support");
+        } else if (lang.equals("Groovy")) {
+            System.out.println("\nCreating a " + lang + " benchmark");
         } else {
             System.out.println("\nCreating a " + lang + " benchmark with JBang support");
         }
