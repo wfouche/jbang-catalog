@@ -25,6 +25,9 @@
     "java-cli": {
       "script-ref": "src/JavaCli.java"
     },
+    "jgit": {
+      "script-ref": "src/jgit.java"
+    },
     "jython-jpm": {
       "script-ref": "src/JythonJpm.java"
     },
