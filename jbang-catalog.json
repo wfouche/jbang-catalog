@@ -58,6 +58,9 @@
     "wrapper-cli": {
       "script-ref": "src/WrapperCli.java"
     },
+    "pong": {
+      "script-ref": "src/Pong.java"
+    },
     "python-jvm-dev": {
       "script-ref": "src/python_jvm.java"
     },
