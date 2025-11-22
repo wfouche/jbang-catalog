@@ -28,6 +28,8 @@
 //DEPS org.lwjgl:lwjgl:3.3.6:natives-macos-arm64
 //DEPS org.lwjgl:lwjgl-glfw:3.3.6:natives-macos-arm64
 //DEPS org.lwjgl:lwjgl-opengl:3.3.6:natives-macos-arm64
+
+//RUNTIME_OPTIONS -XX:+IgnoreUnrecognizedVMOptions -XstartOnFirstThread
 // spotless:on
 
 import static org.lwjgl.glfw.Callbacks.*;
