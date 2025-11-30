@@ -183,7 +183,6 @@ public class TulipCli {
             //SOURCES JavaHttpUser.java
             //JAVA 21+
             //PREVIEW
-            //RUNTIME_OPTIONS __TULIP_JAVA_OPTIONS__
             //COMPILE_OPTIONS -g
             //FILES ../../benchmark_config.json
             //FILES ../../logback.xml
@@ -261,7 +260,8 @@ public class TulipCli {
             """
             #!/bin/bash
             rm -f benchmark_report.html
-            #export JBANG_JAVA_OPTIONS="__TULIP_JAVA_OPTIONS__"
+            export     JBANG_JAVA_OPTIONS=-XX:TieredStopAtLevel=1
+            export JBANG_APP_JAVA_OPTIONS="__TULIP_JAVA_OPTIONS__"
             jbang run io/tulip/App.java
             echo ""
             #w3m -dump -cols 205 benchmark_report.html
@@ -273,7 +273,8 @@ public class TulipCli {
     static String runBenchCmdJava =
             """
             if exist benchmark_report.html del benchmark_report.html
-            REM JBANG_JAVA_OPTIONS=__TULIP_JAVA_OPTIONS__
+            set     JBANG_JAVA_OPTIONS=-XX:TieredStopAtLevel=1
+            set JBANG_APP_JAVA_OPTIONS=__TULIP_JAVA_OPTIONS__
             call jbang run io\\tulip\\App.java
             @echo off
             echo.
@@ -463,7 +464,6 @@ public class TulipCli {
             //SOURCES KotlinHttpUser.kt
             //JAVA 21+
             //KOTLIN 2.1.21
-            //RUNTIME_OPTIONS __TULIP_JAVA_OPTIONS__
             //COMPILE_OPTIONS -progressive
             //FILES ../../benchmark_config.json
             //FILES ../../logback.xml
@@ -540,7 +540,8 @@ public class TulipCli {
             """
             #!/bin/bash
             rm -f benchmark_report.html
-            #export JBANG_JAVA_OPTIONS="__TULIP_JAVA_OPTIONS__"
+            export     JBANG_JAVA_OPTIONS=-XX:TieredStopAtLevel=1
+            export JBANG_APP_JAVA_OPTIONS="__TULIP_JAVA_OPTIONS__"
             jbang run io/tulip/App.kt
             echo ""
             #w3m -dump -cols 205 benchmark_report.html
@@ -552,7 +553,8 @@ public class TulipCli {
     static String runBenchCmdKotlin =
             """
             if exist benchmark_report.html del benchmark_report.html
-            REM JBANG_JAVA_OPTIONS=__TULIP_JAVA_OPTIONS__
+            set     JBANG_JAVA_OPTIONS=-XX:TieredStopAtLevel=1
+            set JBANG_APP_JAVA_OPTIONS=__TULIP_JAVA_OPTIONS__
             call jbang run io\\tulip\\App.kt
             @echo off
             echo.
@@ -992,7 +994,7 @@ public class TulipCli {
             """
             #!/bin/bash
             rm -f benchmark_report.html
-            #export JBANG_JAVA_OPTIONS="__TULIP_JAVA_OPTIONS__"
+            export JBANG_JAVA_OPTIONS=-XX:TieredStopAtLevel=1
             #jbang run Jython.java benchmark.py
             jbang run jython-cli@jython benchmark.py
             echo ""
@@ -1004,7 +1006,7 @@ public class TulipCli {
     static String runBenchCmdJython =
             """
             if exist benchmark_report.html del benchmark_report.html
-            REM JBANG_JAVA_OPTIONS=__TULIP_JAVA_OPTIONS__
+            set JBANG_JAVA_OPTIONS=-XX:TieredStopAtLevel=1
             REM call jbang run Jython.java benchmark.py
             call jbang run jython-cli@jython benchmark.py
             @echo off
