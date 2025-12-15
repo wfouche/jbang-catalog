@@ -1,6 +1,6 @@
 // spotless:off
 //DEPS com.github.ajalt.clikt:clikt-jvm:5.0.3
-//DEPS io.github.wfouche.tulip:tulip-runtime:2.1.13
+//DEPS io.github.wfouche.tulip:tulip-runtime:2.1.14
 //JAVA 21
 //KOTLIN 2.1.21
 // spotless:on
