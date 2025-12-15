@@ -1,5 +1,5 @@
 // spotless:off
-//DEPS io.github.wfouche.tulip:tulip-runtime:2.1.13
+//DEPS io.github.wfouche.tulip:tulip-runtime:2.1.14
 //JAVA 21+
 // spotless:on
 
@@ -13,7 +13,7 @@ import java.util.List;
 public class TulipCli {
 
     static String appName = "tulip-cli";
-    static String appVersion = "1/2025-11-23T08:40:22";
+    static String appVersion = "1/2025-12-15T21:36:08";
 
     static void displayAppInfo() {
         String version = appVersion;
@@ -177,13 +177,12 @@ public class TulipCli {
             ///usr/bin/env jbang "$0" "$@" ; exit $?
             //DEPS io.github.wfouche.tulip:tulip-runtime:__TULIP_VERSION__
             //DEPS org.slf4j:slf4j-api:2.0.17
-            //DEPS ch.qos.logback:logback-core:1.5.21
-            //DEPS ch.qos.logback:logback-classic:1.5.21
+            //DEPS ch.qos.logback:logback-core:1.5.22
+            //DEPS ch.qos.logback:logback-classic:1.5.22
             //DEPS org.springframework.boot:spring-boot-starter-web:3.5.8
             //SOURCES JavaHttpUser.java
             //JAVA 21+
             //PREVIEW
-            //RUNTIME_OPTIONS __TULIP_JAVA_OPTIONS__
             //COMPILE_OPTIONS -g
             //FILES ../../benchmark_config.json
             //FILES ../../logback.xml
@@ -261,7 +260,8 @@ public class TulipCli {
             """
             #!/bin/bash
             rm -f benchmark_report.html
-            #export JBANG_JAVA_OPTIONS="__TULIP_JAVA_OPTIONS__"
+            export     JBANG_JAVA_OPTIONS=-XX:TieredStopAtLevel=1
+            export JBANG_APP_JAVA_OPTIONS="__TULIP_JAVA_OPTIONS__"
             jbang run io/tulip/App.java
             echo ""
             #w3m -dump -cols 205 benchmark_report.html
@@ -272,8 +272,10 @@ public class TulipCli {
 
     static String runBenchCmdJava =
             """
+            chcp 65001 > nul
             if exist benchmark_report.html del benchmark_report.html
-            REM JBANG_JAVA_OPTIONS=__TULIP_JAVA_OPTIONS__
+            set     JBANG_JAVA_OPTIONS=-XX:TieredStopAtLevel=1
+            set JBANG_APP_JAVA_OPTIONS=__TULIP_JAVA_OPTIONS__
             call jbang run io\\tulip\\App.java
             @echo off
             echo.
@@ -457,13 +459,12 @@ public class TulipCli {
             ///usr/bin/env jbang "$0" "$@" ; exit $?
             //DEPS io.github.wfouche.tulip:tulip-runtime:__TULIP_VERSION__
             //DEPS org.slf4j:slf4j-api:2.0.17
-            //DEPS ch.qos.logback:logback-core:1.5.21
-            //DEPS ch.qos.logback:logback-classic:1.5.21
+            //DEPS ch.qos.logback:logback-core:1.5.22
+            //DEPS ch.qos.logback:logback-classic:1.5.22
             //DEPS org.springframework.boot:spring-boot-starter-web:3.5.8
             //SOURCES KotlinHttpUser.kt
             //JAVA 21+
             //KOTLIN 2.1.21
-            //RUNTIME_OPTIONS __TULIP_JAVA_OPTIONS__
             //COMPILE_OPTIONS -progressive
             //FILES ../../benchmark_config.json
             //FILES ../../logback.xml
@@ -540,7 +541,8 @@ public class TulipCli {
             """
             #!/bin/bash
             rm -f benchmark_report.html
-            #export JBANG_JAVA_OPTIONS="__TULIP_JAVA_OPTIONS__"
+            export     JBANG_JAVA_OPTIONS=-XX:TieredStopAtLevel=1
+            export JBANG_APP_JAVA_OPTIONS="__TULIP_JAVA_OPTIONS__"
             jbang run io/tulip/App.kt
             echo ""
             #w3m -dump -cols 205 benchmark_report.html
@@ -551,8 +553,10 @@ public class TulipCli {
 
     static String runBenchCmdKotlin =
             """
+            chcp 65001 > nul
             if exist benchmark_report.html del benchmark_report.html
-            REM JBANG_JAVA_OPTIONS=__TULIP_JAVA_OPTIONS__
+            set     JBANG_JAVA_OPTIONS=-XX:TieredStopAtLevel=1
+            set JBANG_APP_JAVA_OPTIONS=__TULIP_JAVA_OPTIONS__
             call jbang run io\\tulip\\App.kt
             @echo off
             echo.
@@ -614,8 +618,8 @@ public class TulipCli {
             """
             @Grab('io.github.wfouche.tulip:tulip-runtime:__TULIP_VERSION__')
             @Grab('org.slf4j:slf4j-api:2.0.17')
-            @Grab('ch.qos.logback:logback-core:1.5.21')
-            @Grab('ch.qos.logback:logback-classic:1.5.21')
+            @Grab('ch.qos.logback:logback-core:1.5.22')
+            @Grab('ch.qos.logback:logback-classic:1.5.22')
             @Grab('org.springframework.boot:spring-boot-starter-web:3.5.8')
 
             //package io.tulip
@@ -700,6 +704,7 @@ public class TulipCli {
 
     static String runBenchCmdGroovy =
             """
+            chcp 65001 > nul
             REM
             REM JBang / Groovy / Tulip is not supported on Windows
             REM Try running the benchmark on Linux or macOS
@@ -768,8 +773,8 @@ public class TulipCli {
             //> using jvm 21
             //> using dep io.github.wfouche.tulip:tulip-runtime:__TULIP_VERSION__
             //> using dep org.slf4j:slf4j-api:2.0.17
-            //> using dep ch.qos.logback:logback-core:1.5.21
-            //> using dep ch.qos.logback:logback-classic:1.5.21
+            //> using dep ch.qos.logback:logback-core:1.5.22
+            //> using dep ch.qos.logback:logback-classic:1.5.22
             //> using dep org.springframework.boot:spring-boot-starter-web:3.5.8
             //> using javaOpt __TULIP_JAVA_OPTIONS__
             //> using repositories m2local
@@ -851,6 +856,7 @@ public class TulipCli {
 
     static String runBenchCmdScala =
             """
+            chcp 65001 > nul
             if exist benchmark_report.html del benchmark_report.html
             scala-cli io\\tulip\\App.scala io\\tulip\\ScalaHttpUser.scala
             @echo off
@@ -914,8 +920,8 @@ public class TulipCli {
             //DEPS org.python:jython-standalone:2.7.4
             //DEPS io.github.wfouche.tulip:tulip-runtime:__TULIP_VERSION__
             //DEPS org.slf4j:slf4j-api:2.0.17
-            //DEPS ch.qos.logback:logback-core:1.5.21
-            //DEPS ch.qos.logback:logback-classic:1.5.21
+            //DEPS ch.qos.logback:logback-core:1.5.22
+            //DEPS ch.qos.logback:logback-classic:1.5.22
             //DEPS org.springframework.boot:spring-boot-starter-web:3.5.8
             //JAVA 21+
             //RUNTIME_OPTIONS __TULIP_JAVA_OPTIONS__
@@ -939,8 +945,8 @@ public class TulipCli {
             # dependencies = [
             #   "io.github.wfouche.tulip:tulip-runtime:__TULIP_VERSION__",
             #   "org.slf4j:slf4j-api:2.0.17",
-            #   "ch.qos.logback:logback-core:1.5.21",
-            #   "ch.qos.logback:logback-classic:1.5.21",
+            #   "ch.qos.logback:logback-core:1.5.22",
+            #   "ch.qos.logback:logback-classic:1.5.22",
             #   "org.springframework.boot:spring-boot-starter-web:3.5.8"
             # ]
             # runtime-options = [
@@ -992,7 +998,7 @@ public class TulipCli {
             """
             #!/bin/bash
             rm -f benchmark_report.html
-            #export JBANG_JAVA_OPTIONS="__TULIP_JAVA_OPTIONS__"
+            export JBANG_JAVA_OPTIONS=-XX:TieredStopAtLevel=1
             #jbang run Jython.java benchmark.py
             jbang run jython-cli@jython benchmark.py
             echo ""
@@ -1003,8 +1009,9 @@ public class TulipCli {
 
     static String runBenchCmdJython =
             """
+            chcp 65001 > nul
             if exist benchmark_report.html del benchmark_report.html
-            REM JBANG_JAVA_OPTIONS=__TULIP_JAVA_OPTIONS__
+            set JBANG_JAVA_OPTIONS=-XX:TieredStopAtLevel=1
             REM call jbang run Jython.java benchmark.py
             call jbang run jython-cli@jython benchmark.py
             @echo off

@@ -1,5 +1,5 @@
 // spotless:off
-//DEPS io.github.wfouche.tulip:tulip-runtime:2.1.13
+//DEPS io.github.wfouche.tulip:tulip-runtime:2.1.14
 //JAVA 21+
 // spotless:on
 
