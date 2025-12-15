@@ -203,19 +203,18 @@ class KwrkCli : CliktCommand() {
             }
             println("    --name ${p_rpt_suffix}")
         }
-        println("")
-        println("  java options:")
-        var runtimeMxBean = ManagementFactory.getRuntimeMXBean()
-        var jvmArgs = runtimeMxBean.getInputArguments()
-        for (arg in jvmArgs) {
-            println("    $arg")
-        }
-
+//        println("")
+//        println("  java options:")
+        val runtimeMxBean = ManagementFactory.getRuntimeMXBean()
+        val jvmArgs = runtimeMxBean.getInputArguments()
+//        for (arg in jvmArgs) {
+//            println("    $arg")
+//        }
         if (p_debug == "true") {
             println("")
             println(json)
-            println("")
         }
+        println("")
 
         // TulipApi.runTulip(json)
         val configFilename = "kwrk_${p_rpt_suffix}_config.json"
