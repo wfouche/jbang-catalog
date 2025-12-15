@@ -1,6 +1,6 @@
 // spotless:off
 //DEPS com.github.ajalt.clikt:clikt-jvm:5.0.3
-//DEPS io.github.wfouche.tulip:tulip-runtime:2.1.13
+//DEPS io.github.wfouche.tulip:tulip-runtime:2.1.14
 //JAVA 21
 //KOTLIN 2.1.21
 // spotless:on
@@ -21,7 +21,7 @@ import java.util.Locale
 import org.slf4j.LoggerFactory
 
 const val appName: String = "kwrk"
-const val appVersion: String = "1/2025-11-23T08:39:02"
+const val appVersion: String = "1/2025-12-15T21:41:27"
 
 private fun displayAppInfo() {
     var version: String = appVersion
