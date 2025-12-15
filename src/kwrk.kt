@@ -361,7 +361,7 @@ class KwrkCli : CliktCommand() {
         }
 
         new_lines.add("<tr>")
-        new_lines.add("  <td>JBANG_JAVA_OPTIONS</th>")
+        new_lines.add("  <td>JBANG_APP_JAVA_OPTIONS</th>")
         new_lines.add("  <td>${java_options}</th>")
         new_lines.add("</tr>")
 
