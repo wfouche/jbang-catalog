@@ -182,8 +182,6 @@ public class TulipCli {
             //DEPS org.springframework.boot:spring-boot-starter-web:3.5.8
             //SOURCES JavaHttpUser.java
             //JAVA 21+
-            //PREVIEW
-            //COMPILE_OPTIONS -g
             //FILES ../../benchmark_config.json
             //FILES ../../logback.xml
 
@@ -464,8 +462,7 @@ public class TulipCli {
             //DEPS org.springframework.boot:spring-boot-starter-web:3.5.8
             //SOURCES KotlinHttpUser.kt
             //JAVA 21+
-            //KOTLIN 2.1.21
-            //COMPILE_OPTIONS -progressive
+            //KOTLIN 2.3.0
             //FILES ../../benchmark_config.json
             //FILES ../../logback.xml
 
