@@ -920,11 +920,7 @@ public class TulipCli {
             # requires-jython = "2.7.4"
             # requires-java = "21"
             # dependencies = [
-            #   "io.github.wfouche.tulip:tulip-runtime:__TULIP_VERSION__",
-            #   "org.slf4j:slf4j-api:2.0.17",
-            #   "ch.qos.logback:logback-core:1.5.22",
-            #   "ch.qos.logback:logback-classic:1.5.22",
-            #   "org.springframework.boot:spring-boot-starter-web:3.5.8"
+            #   "io.github.wfouche.tulip:tulip-runtime:__TULIP_VERSION__"
             # ]
             # runtime-options = [
             #   "-Dpython.console.encoding=UTF-8", "-Xmx2g", "-XX:+UseZGC", "-XX:+ZGenerational"
