@@ -176,10 +176,6 @@ public class TulipCli {
             """
             ///usr/bin/env jbang "$0" "$@" ; exit $?
             //DEPS io.github.wfouche.tulip:tulip-runtime:__TULIP_VERSION__
-            //DEPS org.slf4j:slf4j-api:2.0.17
-            //DEPS ch.qos.logback:logback-core:1.5.22
-            //DEPS ch.qos.logback:logback-classic:1.5.22
-            //DEPS org.springframework.boot:spring-boot-starter-web:3.5.8
             //SOURCES JavaHttpUser.java
             //JAVA 21+
             //FILES ../../benchmark_config.json
@@ -456,10 +452,6 @@ public class TulipCli {
             """
             ///usr/bin/env jbang "$0" "$@" ; exit $?
             //DEPS io.github.wfouche.tulip:tulip-runtime:__TULIP_VERSION__
-            //DEPS org.slf4j:slf4j-api:2.0.17
-            //DEPS ch.qos.logback:logback-core:1.5.22
-            //DEPS ch.qos.logback:logback-classic:1.5.22
-            //DEPS org.springframework.boot:spring-boot-starter-web:3.5.8
             //SOURCES KotlinHttpUser.kt
             //JAVA 21+
             //KOTLIN 2.3.0
@@ -614,10 +606,6 @@ public class TulipCli {
     static String groovyApp =
             """
             @Grab('io.github.wfouche.tulip:tulip-runtime:__TULIP_VERSION__')
-            @Grab('org.slf4j:slf4j-api:2.0.17')
-            @Grab('ch.qos.logback:logback-core:1.5.22')
-            @Grab('ch.qos.logback:logback-classic:1.5.22')
-            @Grab('org.springframework.boot:spring-boot-starter-web:3.5.8')
 
             //package io.tulip
 
@@ -769,10 +757,6 @@ public class TulipCli {
             """
             //> using jvm 21
             //> using dep io.github.wfouche.tulip:tulip-runtime:__TULIP_VERSION__
-            //> using dep org.slf4j:slf4j-api:2.0.17
-            //> using dep ch.qos.logback:logback-core:1.5.22
-            //> using dep ch.qos.logback:logback-classic:1.5.22
-            //> using dep org.springframework.boot:spring-boot-starter-web:3.5.8
             //> using javaOpt __TULIP_JAVA_OPTIONS__
             //> using repositories m2local
 
@@ -916,10 +900,6 @@ public class TulipCli {
 
             //DEPS org.python:jython-standalone:2.7.4
             //DEPS io.github.wfouche.tulip:tulip-runtime:__TULIP_VERSION__
-            //DEPS org.slf4j:slf4j-api:2.0.17
-            //DEPS ch.qos.logback:logback-core:1.5.22
-            //DEPS ch.qos.logback:logback-classic:1.5.22
-            //DEPS org.springframework.boot:spring-boot-starter-web:3.5.8
             //JAVA 21+
             //RUNTIME_OPTIONS __TULIP_JAVA_OPTIONS__
 
