@@ -607,9 +607,15 @@ public class TulipCli {
 
     static String groovyApp =
             """
-            @Grab('io.github.wfouche.tulip:tulip-runtime:__TULIP_VERSION__')
+            ///usr/bin/env jbang "$0" "$@" ; exit $?
+            //DEPS io.github.wfouche.tulip:tulip-runtime:__TULIP_VERSION__
+            //SOURCES GroovyHttpUser.groovy
+            //JAVA __TULIP_JAVA_VERSION__
+            //GROOVY 5.0.3
+            //FILES ../../benchmark_config.json
+            //FILES ../../logback.xml
 
-            //package io.tulip
+            package io.tulip
 
             import io.github.wfouche.tulip.api.TulipApi
 
