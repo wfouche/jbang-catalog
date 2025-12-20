@@ -964,7 +964,7 @@ public class TulipCli {
 
             class UserFactory(TulipUserFactory):
 
-                def getUser(self, userId, className, threadId):
+                def getUser(self, className, userId, threadId):
                     return JythonHttpUser(userId, threadId)
 
             TulipApi.runTulip("benchmark_config.json", UserFactory())
