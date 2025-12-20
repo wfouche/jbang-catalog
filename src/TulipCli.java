@@ -419,7 +419,7 @@ public class TulipCli {
         writeToFile(
                 path + "App.java",
                 javaApp.replace("__TULIP_VERSION__", tulipVersion)
-                        .replace("__TULIP_JAVA_VERSION__", javaApp)
+                        .replace("__TULIP_JAVA_VERSION__", javaVersion)
                         .replace("__TULIP_JAVA_OPTIONS__", TULIP_JAVA_OPTIONS),
                 false);
 
@@ -575,7 +575,7 @@ public class TulipCli {
                 path + "App.kt",
                 kotlinApp
                         .replace("__TULIP_VERSION__", tulipVersion)
-                        .replace("__TULIP_JAVA_VERSION__", javaApp)
+                        .replace("__TULIP_JAVA_VERSION__", javaVersion)
                         .replace("__TULIP_JAVA_OPTIONS__", TULIP_JAVA_OPTIONS),
                 false);
 
@@ -726,7 +726,7 @@ public class TulipCli {
                 path + "App.groovy",
                 groovyApp
                         .replace("__TULIP_VERSION__", tulipVersion)
-                        .replace("__TULIP_JAVA_VERSION__", javaApp)
+                        .replace("__TULIP_JAVA_VERSION__", javaVersion)
                         .replace("__TULIP_JAVA_OPTIONS__", TULIP_JAVA_OPTIONS),
                 false);
 
@@ -868,7 +868,7 @@ public class TulipCli {
         writeToFile(
                 path + "App.scala",
                 scalaApp.replace("__TULIP_VERSION__", tulipVersion)
-                        .replace("__TULIP_JAVA_VERSION__", javaApp)
+                        .replace("__TULIP_JAVA_VERSION__", javaVersion)
                         .replace("__TULIP_JAVA_OPTIONS__", TULIP_JAVA_OPTIONS),
                 false);
 
@@ -1024,7 +1024,7 @@ public class TulipCli {
         writeToFile(
                 "benchmark.py",
                 JythonBenchmark.replace("__TULIP_VERSION__", tulipVersion)
-                        .replace("__TULIP_JAVA_VERSION__", javaApp)
+                        .replace("__TULIP_JAVA_VERSION__", javaVersion)
                         .replace("__TULIP_JAVA_OPTIONS__", TULIP_JAVA_OPTIONS),
                 false);
 
