@@ -1,6 +1,5 @@
 // spotless:off
 //DEPS io.github.wfouche.tulip:tulip-runtime:2.1.14
-//JAVA 21+
 // spotless:on
 
 import java.io.FileWriter;
@@ -32,6 +31,7 @@ public class TulipCli {
     static String avgAPS = "10.0";
     static String tulipVersion = io.github.wfouche.tulip.api.TulipApi.VERSION;
     static String httpVersion = "HTTP";
+    static String javaVersion = "21";
     static String path = "io/tulip/";
 
     static void writeToFile(String path, String content, Boolean append) {
@@ -177,7 +177,7 @@ public class TulipCli {
             ///usr/bin/env jbang "$0" "$@" ; exit $?
             //DEPS io.github.wfouche.tulip:tulip-runtime:__TULIP_VERSION__
             //SOURCES JavaHttpUser.java
-            //JAVA 21+
+            //JAVA __TULIP_JAVA_VERSION__
             //FILES ../../benchmark_config.json
             //FILES ../../logback.xml
 
@@ -324,7 +324,7 @@ public class TulipCli {
             jbang=0.131.0
 
             # Kotlin
-            kotlin=2.1.21
+            kotlin=2.3.0
 
             # Scala
             scalacli=1.9.1
@@ -419,6 +419,7 @@ public class TulipCli {
         writeToFile(
                 path + "App.java",
                 javaApp.replace("__TULIP_VERSION__", tulipVersion)
+                        .replace("__TULIP_JAVA_VERSION__", javaApp)
                         .replace("__TULIP_JAVA_OPTIONS__", TULIP_JAVA_OPTIONS),
                 false);
 
@@ -453,7 +454,7 @@ public class TulipCli {
             ///usr/bin/env jbang "$0" "$@" ; exit $?
             //DEPS io.github.wfouche.tulip:tulip-runtime:__TULIP_VERSION__
             //SOURCES KotlinHttpUser.kt
-            //JAVA 21+
+            //JAVA __TULIP_JAVA_VERSION__
             //KOTLIN 2.3.0
             //FILES ../../benchmark_config.json
             //FILES ../../logback.xml
@@ -574,6 +575,7 @@ public class TulipCli {
                 path + "App.kt",
                 kotlinApp
                         .replace("__TULIP_VERSION__", tulipVersion)
+                        .replace("__TULIP_JAVA_VERSION__", javaApp)
                         .replace("__TULIP_JAVA_OPTIONS__", TULIP_JAVA_OPTIONS),
                 false);
 
@@ -724,6 +726,7 @@ public class TulipCli {
                 path + "App.groovy",
                 groovyApp
                         .replace("__TULIP_VERSION__", tulipVersion)
+                        .replace("__TULIP_JAVA_VERSION__", javaApp)
                         .replace("__TULIP_JAVA_OPTIONS__", TULIP_JAVA_OPTIONS),
                 false);
 
@@ -755,7 +758,7 @@ public class TulipCli {
 
     static String scalaApp =
             """
-            //> using jvm 21
+            //> using jvm __TULIP_JAVA_VERSION__
             //> using dep io.github.wfouche.tulip:tulip-runtime:__TULIP_VERSION__
             //> using javaOpt __TULIP_JAVA_OPTIONS__
             //> using repositories m2local
@@ -865,6 +868,7 @@ public class TulipCli {
         writeToFile(
                 path + "App.scala",
                 scalaApp.replace("__TULIP_VERSION__", tulipVersion)
+                        .replace("__TULIP_JAVA_VERSION__", javaApp)
                         .replace("__TULIP_JAVA_OPTIONS__", TULIP_JAVA_OPTIONS),
                 false);
 
@@ -900,7 +904,7 @@ public class TulipCli {
 
             //DEPS org.python:jython-standalone:2.7.4
             //DEPS io.github.wfouche.tulip:tulip-runtime:__TULIP_VERSION__
-            //JAVA 21+
+            //JAVA __TULIP_JAVA_VERSION__
             //RUNTIME_OPTIONS __TULIP_JAVA_OPTIONS__
 
             import org.python.util.jython;
@@ -918,7 +922,7 @@ public class TulipCli {
 
             # /// jbang
             # requires-jython = "2.7.4"
-            # requires-java = "21"
+            # requires-java = "__TULIP_JAVA_VERSION__"
             # dependencies = [
             #   "io.github.wfouche.tulip:tulip-runtime:__TULIP_VERSION__"
             # ]
@@ -1020,6 +1024,7 @@ public class TulipCli {
         writeToFile(
                 "benchmark.py",
                 JythonBenchmark.replace("__TULIP_VERSION__", tulipVersion)
+                        .replace("__TULIP_JAVA_VERSION__", javaApp)
                         .replace("__TULIP_JAVA_OPTIONS__", TULIP_JAVA_OPTIONS),
                 false);
 
@@ -1099,6 +1104,10 @@ public class TulipCli {
 
         if (args.length > 5) {
             httpVersion = args[5];
+        }
+
+        if (args.length > 6) {
+            javaVersion = args[6];
         }
 
         if (lang.equals("Java")) {
