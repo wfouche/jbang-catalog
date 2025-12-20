@@ -686,8 +686,11 @@ public class TulipCli {
             """
             #!/bin/bash
             rm -f benchmark_report.html
-            export JAVA_OPTS="__TULIP_JAVA_OPTIONS__"
-            groovy io/tulip/App.groovy
+            # export JAVA_OPTS="__TULIP_JAVA_OPTIONS__"
+            # groovy io/tulip/App.groovy
+            export     JBANG_JAVA_OPTIONS=-XX:TieredStopAtLevel=1
+            export JBANG_APP_JAVA_OPTIONS="__TULIP_JAVA_OPTIONS__"
+            jbang run io/tulip/App.java
             echo ""
             #w3m -dump -cols 205 benchmark_report.html
             lynx -dump -width 205 benchmark_report.html
