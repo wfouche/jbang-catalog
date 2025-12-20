@@ -690,7 +690,7 @@ public class TulipCli {
             # groovy io/tulip/App.groovy
             export     JBANG_JAVA_OPTIONS=-XX:TieredStopAtLevel=1
             export JBANG_APP_JAVA_OPTIONS="__TULIP_JAVA_OPTIONS__"
-            jbang run io/tulip/App.java
+            jbang run io/tulip/App.groovy
             echo ""
             #w3m -dump -cols 205 benchmark_report.html
             lynx -dump -width 205 benchmark_report.html
