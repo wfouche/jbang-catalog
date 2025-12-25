@@ -275,7 +275,7 @@ public class TulipCli {
             echo.
             REM w3m.exe -dump -cols 205 benchmark_report.html
             REM lynx.exe -dump -width 205 benchmark_report.html
-            start benchmark_report.html
+            REM start benchmark_report.html
             REM jbang run asciidoctorj@asciidoctor benchmark_config.adoc
             REM start benchmark_config.html
             REM jbang export fatjar io\\tulip\\App.java
@@ -552,7 +552,7 @@ public class TulipCli {
             echo.
             REM call w3m.exe -dump -cols 205 benchmark_report.html
             REM lynx.exe -dump -width 205 benchmark_report.html
-            start benchmark_report.html
+            REM start benchmark_report.html
             REM jbang run asciidoctorj@asciidoctor benchmark_config.adoc
             REM start benchmark_config.html
             REM jbang export fatjar io\\tulip\\App.kt
@@ -711,8 +711,8 @@ public class TulipCli {
             @echo off
             echo.
             REM call w3m.exe -dump -cols 205 benchmark_report.html
-            lynx.exe -dump -width 205 benchmark_report.html
-            start benchmark_report.html
+            REM lynx.exe -dump -width 205 benchmark_report.html
+            REM start benchmark_report.html
             REM jbang run asciidoctorj@asciidoctor benchmark_config.adoc
             REM start benchmark_config.html
             REM jbang export fatjar io\\tulip\\App.groovy
@@ -856,7 +856,7 @@ public class TulipCli {
             echo.
             REM call w3m.exe -dump -cols 205 benchmark_report.html
             REM lynx.exe -dump -width 205 benchmark_report.html
-            start benchmark_report.html
+            REM start benchmark_report.html
             REM jbang asciidoctorj@asciidoctor benchmark_config.adoc
             REM start benchmark_config.html
             """;
@@ -1004,7 +1004,7 @@ public class TulipCli {
             echo.
             REM call w3m.exe -dump -cols 205 benchmark_report.html
             REM lynx.exe -dump -width 205 benchmark_report.html
-            start benchmark_report.html
+            REM start benchmark_report.html
             REM jbang run asciidoctorj@asciidoctor benchmark_config.adoc
             REM start benchmark_config.html
             """;
