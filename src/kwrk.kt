@@ -185,7 +185,7 @@ val indexHtml: String =
             <nav class="sidebar" id="menu">
                 <h2>Benchmark Reports</h2>
                 <ul>
-                    <li><a href="__REPORT_FILENAME__" target="reportFrame" class="active">kwrk</a></li>
+                    <li><a href="__REPORT_FILENAME__" target="reportFrame" class="active">kwrk - __RPT_ALIAS__</a></li>
                 </ul>
             </nav>
 
@@ -343,7 +343,13 @@ class KwrkCli : CliktCommand() {
         TulipApi.runTulip(configFilename)
 
         val indexFilename = "kwrk_${p_rpt_suffix}_index.html"
-        writeToFile(indexFilename, indexHtml.replace("__REPORT_FILENAME__", "kwrk_${p_rpt_suffix}_report.html"), false)
+        writeToFile(
+            indexFilename,
+            indexHtml
+                .replace("__REPORT_FILENAME__", "kwrk_${p_rpt_suffix}_report.html")
+                .replace("__RPT_ALIAS__", "${p_rpt_suffix}"),
+            false,
+        )
 
         val old_lines: List<String> = File("kwrk_${p_rpt_suffix}_report.html").readLines()
         val new_lines: MutableList<String> = mutableListOf()
