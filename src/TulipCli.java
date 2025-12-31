@@ -172,6 +172,126 @@ public class TulipCli {
             }
             """;
 
+    static String indexHtml =
+            """
+            <!DOCTYPE html>
+            <html lang="en">
+            <head>
+                <meta charset="UTF-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <title>Benchmark Reports Dashboard</title>
+                <style>
+                    * {
+                        margin: 0;
+                        padding: 0;
+                        box-sizing: border-box;
+                    }
+
+                    body, html {
+                        height: 100%;
+                        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                        overflow: hidden;
+                    }
+
+                    .container {
+                        display: flex;
+                        height: 100vh;
+                    }
+
+                    /* Left Side Panel */
+                    .sidebar {
+                        width: 260px;
+                        background-color: #1a1a2e;
+                        color: white;
+                        padding: 20px 0;
+                        display: flex;
+                        flex-direction: column;
+                        border-right: 1px solid #333;
+                    }
+
+                    .sidebar h2 {
+                        font-size: 1.1rem;
+                        margin-bottom: 25px;
+                        padding: 0 20px;
+                        color: #4ecca3;
+                        text-transform: uppercase;
+                        letter-spacing: 1px;
+                    }
+
+                    .sidebar ul {
+                        list-style: none;
+                    }
+
+                    .sidebar li {
+                        margin: 4px 0;
+                    }
+
+                    .sidebar a {
+                        color: #94a3b8;
+                        text-decoration: none;
+                        display: block;
+                        padding: 12px 20px;
+                        transition: all 0.2s ease;
+                    }
+
+                    .sidebar a:hover {
+                        background-color: #16213e;
+                        color: #fff;
+                    }
+
+                    /* Style for the currently active link */
+                    .sidebar a.active {
+                        background-color: #4ecca3;
+                        color: #1a1a2e;
+                        font-weight: bold;
+                    }
+
+                    /* Right Side Display Panel */
+                    .content-panel {
+                        flex-grow: 1;
+                        background-color: #ffffff;
+                    }
+
+                    iframe {
+                        width: 100%;
+                        height: 100%;
+                        border: none;
+                    }
+                </style>
+            </head>
+            <body>
+
+                <div class="container">
+                    <nav class="sidebar" id="menu">
+                        <h2>Benchmark Reports</h2>
+                        <ul>
+                            <li><a href="benchmark_report.html" target="reportFrame" class="active">http</a></li>
+                        </ul>
+                    </nav>
+
+                    <main class="content-panel">
+                        <iframe name="reportFrame" src="benchmark_report.html"></iframe>
+                    </main>
+                </div>
+
+                <script>
+                    // Optional JavaScript to highlight the clicked link
+                    const links = document.querySelectorAll('#menu a');
+
+                    links.forEach(link => {
+                        link.addEventListener('click', function() {
+                            // Remove 'active' class from all links
+                            links.forEach(l => l.classList.remove('active'));
+                            // Add 'active' class to the clicked link
+                            this.classList.add('active');
+                        });
+                    });
+                </script>
+
+            </body>
+            </html>
+            """;
+
     static String javaApp =
             """
             ///usr/bin/env jbang "$0" "$@" ; exit $?
@@ -406,6 +526,7 @@ public class TulipCli {
 
     static void generateJavaApp() throws IOException, InterruptedException {
         Files.createDirectories(Paths.get(path));
+        writeToFile("index.html", indexHtml, false);
         writeToFile(
                 "benchmark_config.json",
                 benchmarkConfig
@@ -560,7 +681,7 @@ public class TulipCli {
 
     static void generateKotlinApp() throws IOException, InterruptedException {
         Files.createDirectories(Paths.get(path));
-
+        writeToFile("index.html", indexHtml, false);
         writeToFile(
                 "benchmark_config.json",
                 benchmarkConfig
@@ -720,7 +841,7 @@ public class TulipCli {
 
     static void generateGroovyApp() throws IOException, InterruptedException {
         Files.createDirectories(Paths.get(path));
-
+        writeToFile("index.html", indexHtml, false);
         writeToFile(
                 "benchmark_config.json",
                 benchmarkConfig
@@ -863,7 +984,7 @@ public class TulipCli {
 
     static void generateScalaApp() throws IOException, InterruptedException {
         Files.createDirectories(Paths.get(path));
-
+        writeToFile("index.html", indexHtml, false);
         writeToFile(
                 "benchmark_config.json",
                 benchmarkConfig
@@ -1011,7 +1132,7 @@ public class TulipCli {
 
     static void generateJythonApp() throws IOException, InterruptedException {
         // Files.createDirectories(Paths.get(path));
-
+        writeToFile("index.html", indexHtml, false);
         writeToFile(
                 "benchmark_config.json",
                 benchmarkConfig
