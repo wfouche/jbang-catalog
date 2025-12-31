@@ -1,6 +1,5 @@
 // spotless:off
-//DEPS io.github.wfouche.tulip:tulip-runtime:2.1.14
-//JAVA 21+
+//DEPS io.github.wfouche.tulip:tulip-runtime:2.1.15
 // spotless:on
 
 import java.io.FileWriter;
@@ -13,7 +12,7 @@ import java.util.List;
 public class TulipCli {
 
     static String appName = "tulip-cli";
-    static String appVersion = "1/2025-12-15T21:36:08";
+    static String appVersion = "1/2025-12-31T13:41:42";
 
     static void displayAppInfo() {
         String version = appVersion;
@@ -32,6 +31,7 @@ public class TulipCli {
     static String avgAPS = "10.0";
     static String tulipVersion = io.github.wfouche.tulip.api.TulipApi.VERSION;
     static String httpVersion = "HTTP";
+    static String javaVersion = "21";
     static String path = "io/tulip/";
 
     static void writeToFile(String path, String content, Boolean append) {
@@ -176,14 +176,8 @@ public class TulipCli {
             """
             ///usr/bin/env jbang "$0" "$@" ; exit $?
             //DEPS io.github.wfouche.tulip:tulip-runtime:__TULIP_VERSION__
-            //DEPS org.slf4j:slf4j-api:2.0.17
-            //DEPS ch.qos.logback:logback-core:1.5.22
-            //DEPS ch.qos.logback:logback-classic:1.5.22
-            //DEPS org.springframework.boot:spring-boot-starter-web:3.5.8
             //SOURCES JavaHttpUser.java
-            //JAVA 21+
-            //PREVIEW
-            //COMPILE_OPTIONS -g
+            //JAVA __TULIP_JAVA_VERSION__
             //FILES ../../benchmark_config.json
             //FILES ../../logback.xml
 
@@ -281,7 +275,7 @@ public class TulipCli {
             echo.
             REM w3m.exe -dump -cols 205 benchmark_report.html
             REM lynx.exe -dump -width 205 benchmark_report.html
-            start benchmark_report.html
+            REM start benchmark_report.html
             REM jbang run asciidoctorj@asciidoctor benchmark_config.adoc
             REM start benchmark_config.html
             REM jbang export fatjar io\\tulip\\App.java
@@ -330,7 +324,7 @@ public class TulipCli {
             jbang=0.131.0
 
             # Kotlin
-            kotlin=2.1.21
+            kotlin=2.3.0
 
             # Scala
             scalacli=1.9.1
@@ -425,6 +419,7 @@ public class TulipCli {
         writeToFile(
                 path + "App.java",
                 javaApp.replace("__TULIP_VERSION__", tulipVersion)
+                        .replace("__TULIP_JAVA_VERSION__", javaVersion)
                         .replace("__TULIP_JAVA_OPTIONS__", TULIP_JAVA_OPTIONS),
                 false);
 
@@ -458,14 +453,9 @@ public class TulipCli {
             """
             ///usr/bin/env jbang "$0" "$@" ; exit $?
             //DEPS io.github.wfouche.tulip:tulip-runtime:__TULIP_VERSION__
-            //DEPS org.slf4j:slf4j-api:2.0.17
-            //DEPS ch.qos.logback:logback-core:1.5.22
-            //DEPS ch.qos.logback:logback-classic:1.5.22
-            //DEPS org.springframework.boot:spring-boot-starter-web:3.5.8
             //SOURCES KotlinHttpUser.kt
-            //JAVA 21+
-            //KOTLIN 2.1.21
-            //COMPILE_OPTIONS -progressive
+            //JAVA __TULIP_JAVA_VERSION__
+            //KOTLIN 2.3.0
             //FILES ../../benchmark_config.json
             //FILES ../../logback.xml
 
@@ -562,7 +552,7 @@ public class TulipCli {
             echo.
             REM call w3m.exe -dump -cols 205 benchmark_report.html
             REM lynx.exe -dump -width 205 benchmark_report.html
-            start benchmark_report.html
+            REM start benchmark_report.html
             REM jbang run asciidoctorj@asciidoctor benchmark_config.adoc
             REM start benchmark_config.html
             REM jbang export fatjar io\\tulip\\App.kt
@@ -585,6 +575,7 @@ public class TulipCli {
                 path + "App.kt",
                 kotlinApp
                         .replace("__TULIP_VERSION__", tulipVersion)
+                        .replace("__TULIP_JAVA_VERSION__", javaVersion)
                         .replace("__TULIP_JAVA_OPTIONS__", TULIP_JAVA_OPTIONS),
                 false);
 
@@ -616,13 +607,15 @@ public class TulipCli {
 
     static String groovyApp =
             """
-            @Grab('io.github.wfouche.tulip:tulip-runtime:__TULIP_VERSION__')
-            @Grab('org.slf4j:slf4j-api:2.0.17')
-            @Grab('ch.qos.logback:logback-core:1.5.22')
-            @Grab('ch.qos.logback:logback-classic:1.5.22')
-            @Grab('org.springframework.boot:spring-boot-starter-web:3.5.8')
+            ///usr/bin/env jbang "$0" "$@" ; exit $?
+            //DEPS io.github.wfouche.tulip:tulip-runtime:__TULIP_VERSION__
+            //SOURCES GroovyHttpUser.groovy
+            //JAVA __TULIP_JAVA_VERSION__
+            //GROOVY 5.0.3
+            //FILES ../../benchmark_config.json
+            //FILES ../../logback.xml
 
-            //package io.tulip
+            package io.tulip
 
             import io.github.wfouche.tulip.api.TulipApi
 
@@ -693,8 +686,11 @@ public class TulipCli {
             """
             #!/bin/bash
             rm -f benchmark_report.html
-            export JAVA_OPTS="__TULIP_JAVA_OPTIONS__"
-            groovy io/tulip/App.groovy
+            # export JAVA_OPTS="__TULIP_JAVA_OPTIONS__"
+            # groovy io/tulip/App.groovy
+            export     JBANG_JAVA_OPTIONS=-XX:TieredStopAtLevel=1
+            export JBANG_APP_JAVA_OPTIONS="__TULIP_JAVA_OPTIONS__"
+            jbang run io/tulip/App.groovy
             echo ""
             #w3m -dump -cols 205 benchmark_report.html
             lynx -dump -width 205 benchmark_report.html
@@ -715,8 +711,8 @@ public class TulipCli {
             @echo off
             echo.
             REM call w3m.exe -dump -cols 205 benchmark_report.html
-            lynx.exe -dump -width 205 benchmark_report.html
-            start benchmark_report.html
+            REM lynx.exe -dump -width 205 benchmark_report.html
+            REM start benchmark_report.html
             REM jbang run asciidoctorj@asciidoctor benchmark_config.adoc
             REM start benchmark_config.html
             REM jbang export fatjar io\\tulip\\App.groovy
@@ -739,6 +735,7 @@ public class TulipCli {
                 path + "App.groovy",
                 groovyApp
                         .replace("__TULIP_VERSION__", tulipVersion)
+                        .replace("__TULIP_JAVA_VERSION__", javaVersion)
                         .replace("__TULIP_JAVA_OPTIONS__", TULIP_JAVA_OPTIONS),
                 false);
 
@@ -770,12 +767,8 @@ public class TulipCli {
 
     static String scalaApp =
             """
-            //> using jvm 21
+            //> using jvm __TULIP_JAVA_VERSION__
             //> using dep io.github.wfouche.tulip:tulip-runtime:__TULIP_VERSION__
-            //> using dep org.slf4j:slf4j-api:2.0.17
-            //> using dep ch.qos.logback:logback-core:1.5.22
-            //> using dep ch.qos.logback:logback-classic:1.5.22
-            //> using dep org.springframework.boot:spring-boot-starter-web:3.5.8
             //> using javaOpt __TULIP_JAVA_OPTIONS__
             //> using repositories m2local
 
@@ -863,7 +856,7 @@ public class TulipCli {
             echo.
             REM call w3m.exe -dump -cols 205 benchmark_report.html
             REM lynx.exe -dump -width 205 benchmark_report.html
-            start benchmark_report.html
+            REM start benchmark_report.html
             REM jbang asciidoctorj@asciidoctor benchmark_config.adoc
             REM start benchmark_config.html
             """;
@@ -884,6 +877,7 @@ public class TulipCli {
         writeToFile(
                 path + "App.scala",
                 scalaApp.replace("__TULIP_VERSION__", tulipVersion)
+                        .replace("__TULIP_JAVA_VERSION__", javaVersion)
                         .replace("__TULIP_JAVA_OPTIONS__", TULIP_JAVA_OPTIONS),
                 false);
 
@@ -919,11 +913,7 @@ public class TulipCli {
 
             //DEPS org.python:jython-standalone:2.7.4
             //DEPS io.github.wfouche.tulip:tulip-runtime:__TULIP_VERSION__
-            //DEPS org.slf4j:slf4j-api:2.0.17
-            //DEPS ch.qos.logback:logback-core:1.5.22
-            //DEPS ch.qos.logback:logback-classic:1.5.22
-            //DEPS org.springframework.boot:spring-boot-starter-web:3.5.8
-            //JAVA 21+
+            //JAVA __TULIP_JAVA_VERSION__
             //RUNTIME_OPTIONS __TULIP_JAVA_OPTIONS__
 
             import org.python.util.jython;
@@ -941,13 +931,9 @@ public class TulipCli {
 
             # /// jbang
             # requires-jython = "2.7.4"
-            # requires-java = "21"
+            # requires-java = "__TULIP_JAVA_VERSION__"
             # dependencies = [
-            #   "io.github.wfouche.tulip:tulip-runtime:__TULIP_VERSION__",
-            #   "org.slf4j:slf4j-api:2.0.17",
-            #   "ch.qos.logback:logback-core:1.5.22",
-            #   "ch.qos.logback:logback-classic:1.5.22",
-            #   "org.springframework.boot:spring-boot-starter-web:3.5.8"
+            #   "io.github.wfouche.tulip:tulip-runtime:__TULIP_VERSION__"
             # ]
             # runtime-options = [
             #   "-Dpython.console.encoding=UTF-8", "-Xmx2g", "-XX:+UseZGC", "-XX:+ZGenerational"
@@ -987,7 +973,7 @@ public class TulipCli {
 
             class UserFactory(TulipUserFactory):
 
-                def getUser(self, userId, className, threadId):
+                def getUser(self, className, userId, threadId):
                     return JythonHttpUser(userId, threadId)
 
             TulipApi.runTulip("benchmark_config.json", UserFactory())
@@ -1018,7 +1004,7 @@ public class TulipCli {
             echo.
             REM call w3m.exe -dump -cols 205 benchmark_report.html
             REM lynx.exe -dump -width 205 benchmark_report.html
-            start benchmark_report.html
+            REM start benchmark_report.html
             REM jbang run asciidoctorj@asciidoctor benchmark_config.adoc
             REM start benchmark_config.html
             """;
@@ -1047,6 +1033,7 @@ public class TulipCli {
         writeToFile(
                 "benchmark.py",
                 JythonBenchmark.replace("__TULIP_VERSION__", tulipVersion)
+                        .replace("__TULIP_JAVA_VERSION__", javaVersion)
                         .replace("__TULIP_JAVA_OPTIONS__", TULIP_JAVA_OPTIONS),
                 false);
 
@@ -1126,6 +1113,10 @@ public class TulipCli {
 
         if (args.length > 5) {
             httpVersion = args[5];
+        }
+
+        if (args.length > 6) {
+            javaVersion = args[6];
         }
 
         if (lang.equals("Java")) {
