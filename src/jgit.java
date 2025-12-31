@@ -1,5 +1,5 @@
-///usr/bin/env jbang "$0" "$@" ; exit $?
-//DEPS org.eclipse.jgit:org.eclipse.jgit.pgm:7.4.0.202509020913-r
+/// usr/bin/env jbang "$0" "$@" ; exit $?
+// DEPS org.eclipse.jgit:org.eclipse.jgit.pgm:7.4.0.202509020913-r
 
 import static java.lang.System.*;
 
@@ -9,7 +9,7 @@ public class jgit {
 
         try {
             org.eclipse.jgit.pgm.Main.main(args);
-        } catch(Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
             throw e;
         }
