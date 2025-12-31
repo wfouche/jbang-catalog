@@ -1,8 +1,8 @@
 // spotless:off
 //DEPS com.github.ajalt.clikt:clikt-jvm:5.0.3
-//DEPS io.github.wfouche.tulip:tulip-runtime:2.1.14
+//DEPS io.github.wfouche.tulip:tulip-runtime:2.1.15
 //JAVA 21
-//KOTLIN 2.1.21
+//KOTLIN 2.3.0
 // spotless:on
 
 import com.github.ajalt.clikt.core.*
@@ -21,7 +21,7 @@ import java.util.Locale
 import org.slf4j.LoggerFactory
 
 const val appName: String = "kwrk"
-const val appVersion: String = "1/2025-12-15T21:55:41"
+const val appVersion: String = "1/2025-12-31T13:40:34"
 
 private fun displayAppInfo() {
     var version: String = appVersion
@@ -160,7 +160,7 @@ class KwrkCli : CliktCommand() {
 
         var json = benchmarkConfig
 
-        json = json.replace("__P_HTTP_VERSION__", p_version.toString())
+        json = json.replace("__P_HTTP_VERSION__", p_version)
         json = json.replace("__P_RATE__", p_rate.toString())
         json = json.replace("__P_RATE_STEP_CHANGE__", p_rate_step_change.toString())
         json = json.replace("__P_RATE_STEP_COUNT__", p_rate_step_count.toString())
@@ -247,22 +247,22 @@ class KwrkCli : CliktCommand() {
 
         new_lines.add("<tr>")
         new_lines.add("  <td>method</th>")
-        new_lines.add("  <td>__P_METHOD__</th>".replace("__P_METHOD__", p_method.toString()))
+        new_lines.add("  <td>__P_METHOD__</th>".replace("__P_METHOD__", p_method))
         new_lines.add("</tr>")
 
         new_lines.add("<tr>")
         new_lines.add("  <td>url</th>")
-        new_lines.add("  <td>__P_URL__</th>".replace("__P_URL__", p_url.toString()))
+        new_lines.add("  <td>__P_URL__</th>".replace("__P_URL__", p_url))
         new_lines.add("</tr>")
 
         new_lines.add("<tr>")
         new_lines.add("  <td>version</th>")
-        new_lines.add("  <td>__P_HTTP__</th>".replace("__P_HTTP__", p_version.toString()))
+        new_lines.add("  <td>__P_HTTP__</th>".replace("__P_HTTP__", p_version))
         new_lines.add("</tr>")
 
         new_lines.add("<tr>")
         new_lines.add("  <td>header</th>")
-        new_lines.add("  <td>__P_HEADER__</th>".replace("__P_HEADER__", p_header.toString()))
+        new_lines.add("  <td>__P_HEADER__</th>".replace("__P_HEADER__", p_header))
         new_lines.add("</tr>")
 
         new_lines.add("<tr>")
