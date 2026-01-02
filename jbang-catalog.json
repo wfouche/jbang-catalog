@@ -31,6 +31,9 @@
     "jython-jpm": {
       "script-ref": "src/JythonJpm.java"
     },
+    "hello": {
+      "script-ref": "src/hello.java"
+    },
     "import": {
       "script-ref": "src/JBangImport.java"
     },
