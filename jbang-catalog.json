@@ -90,6 +90,12 @@
         "4",
         "src"
       ]
+    },
+    "show-version": {
+      "script-ref": "src/ShowVersion.java"
+    },
+    "camel": {
+      "script-ref": "src/CamelJBang.java"
     }
   },
   "templates": {}
