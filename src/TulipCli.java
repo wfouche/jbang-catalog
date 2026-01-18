@@ -432,28 +432,28 @@ public class TulipCli {
             # Add key=value pairs of SDKs to use below
 
             # Java
-            java=21.0.8-tem
+            java=25.0.1-tem
 
             # Groovy
-            groovy=5.0.1
+            groovy=5.0.3
 
             # Gradle
-            gradle=9.1.0
+            gradle=9.3.0
 
             # JBang
-            jbang=0.131.0
+            jbang=0.135.1
 
             # Kotlin
             kotlin=2.3.0
 
             # Scala
-            scalacli=1.9.1
+            scalacli=1.11.0
 
             # MCS
-            mcs=0.9.0
+            mcs=0.9.3
 
             # Maven
-            maven=3.9.11
+            maven=3.9.12
 
             # VisualVM
             visualvm=2.2
