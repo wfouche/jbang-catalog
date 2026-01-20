@@ -108,8 +108,8 @@ public class TulipCli {
                             }
                         ],
                         "time": {
-                            "pre_warmup_duration": 30,
-                            "warmup_duration": 10,
+                            "warmup_duration1": 30,
+                            "warmup_duration2": 10,
                             "benchmark_duration": 30,
                             "benchmark_iterations": 3
                         }
@@ -129,8 +129,8 @@ public class TulipCli {
                             }
                         ],
                         "time": {
-                            "pre_warmup_duration": 30,
-                            "warmup_duration": 10,
+                            "warmup_duration1": 30,
+                            "warmup_duration2": 10,
                             "benchmark_duration": 30,
                             "benchmark_iterations": 3
                         }
@@ -140,8 +140,8 @@ public class TulipCli {
                         "aps_rate": __AVG_APS__,
                         "scenario_workflow": "ApiUser",
                         "time": {
-                            "pre_warmup_duration": 30,
-                            "warmup_duration": 10,
+                            "warmup_duration1": 30,
+                            "warmup_duration2": 10,
                             "benchmark_duration": 30,
                             "benchmark_iterations": 3
                         }
@@ -151,8 +151,8 @@ public class TulipCli {
                         "aps_rate": 0.0,
                         "scenario_workflow": "ApiUser",
                         "time": {
-                            "pre_warmup_duration": 30,
-                            "warmup_duration": 10,
+                            "warmup_duration1": 30,
+                            "warmup_duration2": 10,
                             "benchmark_duration": 30,
                             "benchmark_iterations": 3
                         }
