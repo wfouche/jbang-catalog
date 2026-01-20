@@ -1079,7 +1079,7 @@ public class TulipCli {
 
                 def action1(self):
                     id = ThreadLocalRandom.current().nextInt(100) + 1
-                    return self.get("/posts/{id}", id)).isSuccessful()
+                    return self.get("/posts/{id}", id).isSuccessful()
 
                 def action2(self):
                     id = ThreadLocalRandom.current().nextInt(500) + 1
