@@ -69,8 +69,8 @@ val benchmarkConfig: String =
                     }
                 ],
                 "time": {
-                    "pre_warmup_duration": __P_WARMUP__,
-                    "warmup_duration": 30,
+                    "warmup_duration1": __P_WARMUP__,
+                    "warmup_duration2": 30,
                     "benchmark_duration": __P_DURATION__,
                     "benchmark_iterations": __P_ITERATIONS__
                 }
