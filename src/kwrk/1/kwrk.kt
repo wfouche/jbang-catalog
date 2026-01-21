@@ -21,7 +21,7 @@ import java.util.Locale
 import org.slf4j.LoggerFactory
 
 const val appName: String = "kwrk"
-const val appVersion: String = "1/2026-01-21T21:45:16"
+const val appVersion: String = "1/2026-01-21T22:12:08"
 
 private fun displayAppInfo() {
     var version: String = appVersion
@@ -69,8 +69,8 @@ val benchmarkConfig: String =
                     }
                 ],
                 "time": {
-                    "pre_warmup_duration": __P_WARMUP__,
-                    "warmup_duration": 30,
+                    "warmup_duration1": __P_WARMUP__,
+                    "warmup_duration2": 30,
                     "benchmark_duration": __P_DURATION__,
                     "benchmark_iterations": __P_ITERATIONS__
                 }
@@ -452,33 +452,33 @@ class KwrkCli : CliktCommand() {
         val maximum_memory_jvm: String = "%.3f GB".format(Locale.US, mm / gb1)
 
         new_lines.add("<tr>")
-        new_lines.add("  <td>jvm_memory_used</th>")
-        new_lines.add("  <td>${memory_used_jvm}</th>")
+        new_lines.add("  <td>jvm_memory_used</td>")
+        new_lines.add("  <td>${memory_used_jvm}</td>")
         new_lines.add("</tr>")
 
         new_lines.add("<tr>")
-        new_lines.add("  <td>jvm_free_memory</th>")
-        new_lines.add("  <td>${free_memory_jvm}</th>")
+        new_lines.add("  <td>jvm_free_memory</td>")
+        new_lines.add("  <td>${free_memory_jvm}</td>")
         new_lines.add("</tr>")
 
         new_lines.add("<tr>")
-        new_lines.add("  <td>jvm_total_memory</th>")
-        new_lines.add("  <td>${total_memory_jvm}</th>")
+        new_lines.add("  <td>jvm_total_memory</td>")
+        new_lines.add("  <td>${total_memory_jvm}</td>")
         new_lines.add("</tr>")
 
         new_lines.add("<tr>")
-        new_lines.add("  <td>jvm_maximum_memory</th>")
-        new_lines.add("  <td>${maximum_memory_jvm}</th>")
+        new_lines.add("  <td>jvm_maximum_memory</td>")
+        new_lines.add("  <td>${maximum_memory_jvm}</td>")
         new_lines.add("</tr>")
 
         new_lines.add("<tr>")
         new_lines.add("  <td>java.vendor</th>")
-        new_lines.add("  <td>${System.getProperty("java.vendor")}</th>")
+        new_lines.add("  <td>${System.getProperty("java.vendor")}</td>")
         new_lines.add("</tr>")
 
         new_lines.add("<tr>")
-        new_lines.add("  <td>java.runtime.version</th>")
-        new_lines.add("  <td>${System.getProperty("java.runtime.version")}</th>")
+        new_lines.add("  <td>java.runtime.version</td>")
+        new_lines.add("  <td>${System.getProperty("java.runtime.version")}</td>")
         new_lines.add("</tr>")
 
         var java_options: String = ""
@@ -491,11 +491,11 @@ class KwrkCli : CliktCommand() {
         }
 
         new_lines.add("<tr>")
-        new_lines.add("  <td>JBANG_APP_JAVA_OPTIONS</th>")
-        new_lines.add("  <td>${java_options}</th>")
+        new_lines.add("  <td>JBANG_APP_JAVA_OPTIONS</td>")
+        new_lines.add("  <td>${java_options}</td>")
         new_lines.add("</tr>")
 
-        new_lines.add("</table>")
+        new_lines.add("")
         new_lines.add("</body>")
         new_lines.add("</html>")
 
