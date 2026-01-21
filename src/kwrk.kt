@@ -495,7 +495,7 @@ class KwrkCli : CliktCommand() {
         new_lines.add("  <td>${java_options}</th>")
         new_lines.add("</tr>")
 
-        new_lines.add("</table>")
+        new_lines.add("")
         new_lines.add("</body>")
         new_lines.add("</html>")
 
