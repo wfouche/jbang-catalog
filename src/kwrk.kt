@@ -235,12 +235,12 @@ class KwrkHttpUser(userId: Int, threadId: Int) : HttpUser(userId, threadId) {
 
     // Action 1: GET ${url}
     override fun action1(): Boolean {
-        return !http_GET(getUrlPath()).isEmpty()
+        return get(getUrlPath()).isSuccessful()
     }
 
     // Action 2: POST ${url}
     override fun action2(): Boolean {
-        return !http_POST(jsonBody, getUrlPath()).isEmpty()
+        return post(jsonBody, getUrlPath()).isSuccessful()
     }
 
     // Action 100
