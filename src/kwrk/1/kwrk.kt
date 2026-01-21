@@ -21,7 +21,7 @@ import java.util.Locale
 import org.slf4j.LoggerFactory
 
 const val appName: String = "kwrk"
-const val appVersion: String = "1/2026-01-21T21:42:17"
+const val appVersion: String = "1/2026-01-21T21:45:16"
 
 private fun displayAppInfo() {
     var version: String = appVersion
@@ -235,12 +235,12 @@ class KwrkHttpUser(userId: Int, threadId: Int) : HttpUser(userId, threadId) {
 
     // Action 1: GET ${url}
     override fun action1(): Boolean {
-        return !http_GET(getUrlPath()).isEmpty()
+        return get(getUrlPath()).isSuccessful()
     }
 
     // Action 2: POST ${url}
     override fun action2(): Boolean {
-        return !http_POST(jsonBody, getUrlPath()).isEmpty()
+        return post(jsonBody, getUrlPath()).isSuccessful()
     }
 
     // Action 100
