@@ -382,6 +382,7 @@ public class TulipCli {
 
     static String runBenchCmdJava =
             """
+            title Tulip Java Benchmark
             chcp 65001 > nul
             if exist benchmark_report.html del benchmark_report.html
             set     JBANG_JAVA_OPTIONS=-XX:TieredStopAtLevel=1
@@ -660,6 +661,7 @@ public class TulipCli {
 
     static String runBenchCmdKotlin =
             """
+            title Tulip Kotlin Benchmark
             chcp 65001 > nul
             if exist benchmark_report.html del benchmark_report.html
             set     JBANG_JAVA_OPTIONS=-XX:TieredStopAtLevel=1
@@ -813,6 +815,7 @@ public class TulipCli {
 
     static String runBenchCmdGroovy =
             """
+            title Tulip Groovy Benchmark
             chcp 65001 > nul
             REM
             REM JBang / Groovy / Tulip is not supported on Windows
@@ -962,6 +965,7 @@ public class TulipCli {
 
     static String runBenchCmdScala =
             """
+            title Tulip Scala Benchmark
             chcp 65001 > nul
             if exist benchmark_report.html del benchmark_report.html
             scala-cli io\\tulip\\App.scala io\\tulip\\ScalaHttpUser.scala
@@ -1107,6 +1111,7 @@ public class TulipCli {
 
     static String runBenchCmdJython =
             """
+            title Tulip Jython Benchmark
             chcp 65001 > nul
             if exist benchmark_report.html del benchmark_report.html
             set JBANG_JAVA_OPTIONS=-XX:TieredStopAtLevel=1
