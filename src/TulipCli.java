@@ -325,10 +325,6 @@ public class TulipCli {
 
                 private ThreadLocalRandom random = ThreadLocalRandom.current();
 
-                public JavaHttpUser(int userId, int threadId) {
-                    super(userId, threadId);
-                }
-
                 public boolean onStart() {
                     // Initialize the shared RestClient object only once
                     if (getUserId() == 0) {
@@ -603,7 +599,7 @@ public class TulipCli {
             import org.slf4j.Logger
             import org.slf4j.LoggerFactory
 
-            class KotlinHttpUser(userId: Int, threadId: Int) : HttpUser(userId, threadId) {
+            class KotlinHttpUser() : HttpUser() {
 
                 // Action 0
                 override fun onStart(): Boolean {
@@ -757,10 +753,6 @@ public class TulipCli {
             import org.slf4j.LoggerFactory
 
             class GroovyHttpUser extends HttpUser {
-
-                GroovyHttpUser(int userId, int threadId) {
-                    super(userId, threadId)
-                }
 
                 boolean onStart() {
                     // Initialize the shared RestClient object only once
@@ -916,7 +908,7 @@ public class TulipCli {
             import org.slf4j.Logger
             import org.slf4j.LoggerFactory
 
-            class ScalaHttpUser(userId: Int, threadId: Int) extends HttpUser(userId, threadId) {
+            class ScalaHttpUser() extends HttpUser() {
 
               override def onStart(): Boolean = {
                 // Initialize the shared RestClient object only once
@@ -1068,9 +1060,6 @@ public class TulipCli {
 
             class JythonHttpUser(HttpUser):
 
-                def __init__(self, userId, threadId):
-                    HttpUser.__init__(self, userId, threadId)
-
                 def onStart(self):
                     if self.userId == 0:
                         print("Jython")
@@ -1095,7 +1084,9 @@ public class TulipCli {
             class UserFactory(TulipUserFactory):
 
                 def getUser(self, className, userId, threadId):
-                    return JythonHttpUser(userId, threadId)
+                    obj = JythonHttpUser()
+                    obj.initRuntime(userId, threadId)
+                    return obj
 
             TulipApi.runTulip("benchmark_config.json", UserFactory())
 
