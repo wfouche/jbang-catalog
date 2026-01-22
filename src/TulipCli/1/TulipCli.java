@@ -1,5 +1,5 @@
 // spotless:off
-//DEPS io.github.wfouche.tulip:tulip-runtime:2.1.15
+//DEPS io.github.wfouche.tulip:tulip-runtime:2.1.16
 // spotless:on
 
 import java.io.FileWriter;
@@ -12,12 +12,12 @@ import java.util.List;
 public class TulipCli {
 
     static String appName = "tulip-cli";
-    static String appVersion = "1/2025-12-31T21:44:20";
+    static String appVersion = "1/2026-01-21T22:18:19";
 
     static void displayAppInfo() {
         String version = appVersion;
         if (appVersion.contains("JBANG_SNAPSHOT_ID")) {
-            version = "0/2025-09-23T17:38:17";
+            version = "0/2026-01-02T10:45:31";
         }
         System.err.println(
                 appName + "/" + version + "/" + io.github.wfouche.tulip.api.TulipApi.VERSION);
@@ -108,8 +108,8 @@ public class TulipCli {
                             }
                         ],
                         "time": {
-                            "pre_warmup_duration": 30,
-                            "warmup_duration": 10,
+                            "warmup_duration1": 30,
+                            "warmup_duration2": 10,
                             "benchmark_duration": 30,
                             "benchmark_iterations": 3
                         }
@@ -129,8 +129,8 @@ public class TulipCli {
                             }
                         ],
                         "time": {
-                            "pre_warmup_duration": 30,
-                            "warmup_duration": 10,
+                            "warmup_duration1": 30,
+                            "warmup_duration2": 10,
                             "benchmark_duration": 30,
                             "benchmark_iterations": 3
                         }
@@ -140,8 +140,8 @@ public class TulipCli {
                         "aps_rate": __AVG_APS__,
                         "scenario_workflow": "ApiUser",
                         "time": {
-                            "pre_warmup_duration": 30,
-                            "warmup_duration": 10,
+                            "warmup_duration1": 30,
+                            "warmup_duration2": 10,
                             "benchmark_duration": 30,
                             "benchmark_iterations": 3
                         }
@@ -151,8 +151,8 @@ public class TulipCli {
                         "aps_rate": 0.0,
                         "scenario_workflow": "ApiUser",
                         "time": {
-                            "pre_warmup_duration": 30,
-                            "warmup_duration": 10,
+                            "warmup_duration1": 30,
+                            "warmup_duration2": 10,
                             "benchmark_duration": 30,
                             "benchmark_iterations": 3
                         }
@@ -341,19 +341,19 @@ public class TulipCli {
                 // Action 1: GET /posts/{id}
                 public boolean action1() {
                     int id = random.nextInt(100)+1;
-                    return !http_GET("/posts/{id}", id).isEmpty();
+                    return get("/posts/{id}", id).isSuccessful();
                 }
 
                 // Action 2: GET /comments/{id}
                 public boolean action2() {
                     int id = random.nextInt(500)+1;
-                    return !http_GET("/comments/{id}", id).isEmpty();
+                    return get("/comments/{id}", id).isSuccessful();
                 }
 
                 // Action 3: GET /todos/{id}
                 public boolean action3() {
                     int id = random.nextInt(200)+1;
-                    return !http_GET("/todos/{id}", id).isEmpty();
+                    return get("/todos/{id}", id).isSuccessful();
                 }
 
                 public boolean onStop() {
@@ -432,28 +432,28 @@ public class TulipCli {
             # Add key=value pairs of SDKs to use below
 
             # Java
-            java=21.0.8-tem
+            java=25.0.1-tem
 
             # Groovy
-            groovy=5.0.1
+            groovy=5.0.3
 
             # Gradle
-            gradle=9.1.0
+            gradle=9.3.0
 
             # JBang
-            jbang=0.131.0
+            jbang=0.135.1
 
             # Kotlin
             kotlin=2.3.0
 
             # Scala
-            scalacli=1.9.1
+            scalacli=1.11.0
 
             # MCS
-            mcs=0.9.0
+            mcs=0.9.3
 
             # Maven
-            maven=3.9.11
+            maven=3.9.12
 
             # VisualVM
             visualvm=2.2
@@ -618,19 +618,19 @@ public class TulipCli {
                 // Action 1: GET /posts/{id}
                 override fun action1(): Boolean {
                     val id: Int = ThreadLocalRandom.current().nextInt(100)+1
-                    return !http_GET("/posts/{id}", id).isEmpty()
+                    return get("/posts/{id}", id).isSuccessful()
                 }
 
                 // Action 2: GET /comments/{id}
                 override fun action2(): Boolean {
                     val id: Int = ThreadLocalRandom.current().nextInt(500)+1
-                    return !http_GET("/comments/{id}", id).isEmpty()
+                    return get("/comments/{id}", id).isSuccessful()
                 }
 
                 // Action 3: GET /todos/{id}
                 override fun action3(): Boolean {
                     val id: Int = ThreadLocalRandom.current().nextInt(200)+1
-                    return !http_GET("/todos/{id}", id).isEmpty()
+                    return get("/todos/{id}", id).isSuccessful()
                 }
 
                 override fun onStop(): Boolean {
@@ -774,19 +774,19 @@ public class TulipCli {
                 // Action 1: GET /posts/{id}
                 boolean action1() {
                     int id = ThreadLocalRandom.current().nextInt(100) + 1
-                    return !http_GET("/posts/{id}", id).isEmpty()
+                    return get("/posts/{id}", id).isSuccessful()
                 }
 
                 // Action 2: GET /comments/{id}
                 boolean action2() {
                     int id = ThreadLocalRandom.current().nextInt(500) + 1
-                    return !http_GET("/comments/{id}", id).isEmpty()
+                    return get("/comments/{id}", id).isSuccessful()
                 }
 
                 // Action 3: GET /todos/{id}
                 boolean action3() {
                     int id = ThreadLocalRandom.current().nextInt(200) + 1
-                    return !http_GET("/todos/{id}", id).isEmpty()
+                    return get("/todos/{id}", id).isSuccessful()
                 }
 
                 boolean onStop() {
@@ -930,19 +930,19 @@ public class TulipCli {
               // Action 1: GET /posts/{id}
               override def action1(): Boolean = {
                 val id = ThreadLocalRandom.current().nextInt(100) + 1
-                !http_GET("/posts/{id}", id).isEmpty()
+                get("/posts/{id}", id).isSuccessful()
               }
 
               // Action 2: GET /comments/{id}
               override def action2(): Boolean = {
                 val id = ThreadLocalRandom.current().nextInt(500) + 1
-                !http_GET("/comments/{id}", id).isEmpty()
+                get("/comments/{id}", id).isSuccessful()
               }
 
               // Action 3: GET /todos/{id}
               override def action3(): Boolean = {
                 val id = ThreadLocalRandom.current().nextInt(200) + 1
-                !http_GET("/todos/{id}", id).isEmpty()
+                get("/todos/{id}", id).isSuccessful()
               }
 
               override def onStop(): Boolean = true
@@ -1079,15 +1079,15 @@ public class TulipCli {
 
                 def action1(self):
                     id = ThreadLocalRandom.current().nextInt(100) + 1
-                    return len(self.http_GET("/posts/{id}", id)) > 0
+                    return self.get("/posts/{id}", id).isSuccessful()
 
                 def action2(self):
                     id = ThreadLocalRandom.current().nextInt(500) + 1
-                    return len(self.http_GET("/comments/{id}", id)) > 0
+                    return self.get("/comments/{id}", id).isSuccessful()
 
                 def action3(self):
                     id = ThreadLocalRandom.current().nextInt(200) + 1
-                    return len(self.http_GET("/todos/{id}", id)) > 0
+                    return self.get("/todos/{id}", id).isSuccessful()
 
                 def onStop(self):
                     return True

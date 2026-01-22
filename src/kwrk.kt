@@ -1,6 +1,6 @@
 // spotless:off
 //DEPS com.github.ajalt.clikt:clikt-jvm:5.0.3
-//DEPS io.github.wfouche.tulip:tulip-runtime:2.1.15
+//DEPS io.github.wfouche.tulip:tulip-runtime:2.1.16
 //JAVA 21
 //KOTLIN 2.3.0
 // spotless:on
@@ -69,8 +69,8 @@ val benchmarkConfig: String =
                     }
                 ],
                 "time": {
-                    "pre_warmup_duration": __P_WARMUP__,
-                    "warmup_duration": 30,
+                    "warmup_duration1": __P_WARMUP__,
+                    "warmup_duration2": 30,
                     "benchmark_duration": __P_DURATION__,
                     "benchmark_iterations": __P_ITERATIONS__
                 }
@@ -235,12 +235,12 @@ class KwrkHttpUser(userId: Int, threadId: Int) : HttpUser(userId, threadId) {
 
     // Action 1: GET ${url}
     override fun action1(): Boolean {
-        return !http_GET(getUrlPath()).isEmpty()
+        return get(getUrlPath()).isSuccessful()
     }
 
     // Action 2: POST ${url}
     override fun action2(): Boolean {
-        return !http_POST(jsonBody, getUrlPath()).isEmpty()
+        return post(jsonBody, getUrlPath()).isSuccessful()
     }
 
     // Action 100
@@ -452,33 +452,33 @@ class KwrkCli : CliktCommand() {
         val maximum_memory_jvm: String = "%.3f GB".format(Locale.US, mm / gb1)
 
         new_lines.add("<tr>")
-        new_lines.add("  <td>jvm_memory_used</th>")
-        new_lines.add("  <td>${memory_used_jvm}</th>")
+        new_lines.add("  <td>jvm_memory_used</td>")
+        new_lines.add("  <td>${memory_used_jvm}</td>")
         new_lines.add("</tr>")
 
         new_lines.add("<tr>")
-        new_lines.add("  <td>jvm_free_memory</th>")
-        new_lines.add("  <td>${free_memory_jvm}</th>")
+        new_lines.add("  <td>jvm_free_memory</td>")
+        new_lines.add("  <td>${free_memory_jvm}</td>")
         new_lines.add("</tr>")
 
         new_lines.add("<tr>")
-        new_lines.add("  <td>jvm_total_memory</th>")
-        new_lines.add("  <td>${total_memory_jvm}</th>")
+        new_lines.add("  <td>jvm_total_memory</td>")
+        new_lines.add("  <td>${total_memory_jvm}</td>")
         new_lines.add("</tr>")
 
         new_lines.add("<tr>")
-        new_lines.add("  <td>jvm_maximum_memory</th>")
-        new_lines.add("  <td>${maximum_memory_jvm}</th>")
+        new_lines.add("  <td>jvm_maximum_memory</td>")
+        new_lines.add("  <td>${maximum_memory_jvm}</td>")
         new_lines.add("</tr>")
 
         new_lines.add("<tr>")
         new_lines.add("  <td>java.vendor</th>")
-        new_lines.add("  <td>${System.getProperty("java.vendor")}</th>")
+        new_lines.add("  <td>${System.getProperty("java.vendor")}</td>")
         new_lines.add("</tr>")
 
         new_lines.add("<tr>")
-        new_lines.add("  <td>java.runtime.version</th>")
-        new_lines.add("  <td>${System.getProperty("java.runtime.version")}</th>")
+        new_lines.add("  <td>java.runtime.version</td>")
+        new_lines.add("  <td>${System.getProperty("java.runtime.version")}</td>")
         new_lines.add("</tr>")
 
         var java_options: String = ""
@@ -491,11 +491,11 @@ class KwrkCli : CliktCommand() {
         }
 
         new_lines.add("<tr>")
-        new_lines.add("  <td>JBANG_APP_JAVA_OPTIONS</th>")
-        new_lines.add("  <td>${java_options}</th>")
+        new_lines.add("  <td>JBANG_APP_JAVA_OPTIONS</td>")
+        new_lines.add("  <td>${java_options}</td>")
         new_lines.add("</tr>")
 
-        new_lines.add("</table>")
+        new_lines.add("")
         new_lines.add("</body>")
         new_lines.add("</html>")
 
