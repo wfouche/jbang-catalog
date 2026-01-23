@@ -337,19 +337,19 @@ public class TulipCli {
                 // Action 1: GET /posts/{id}
                 public boolean action1() {
                     int id = random.nextInt(100)+1;
-                    return http_get("/posts/{id}", id).isSuccessful();
+                    return httpGet("/posts/{id}", id).isSuccessful();
                 }
 
                 // Action 2: GET /comments/{id}
                 public boolean action2() {
                     int id = random.nextInt(500)+1;
-                    return http_get("/comments/{id}", id).isSuccessful();
+                    return httpGet("/comments/{id}", id).isSuccessful();
                 }
 
                 // Action 3: GET /todos/{id}
                 public boolean action3() {
                     int id = random.nextInt(200)+1;
-                    return http_get("/todos/{id}", id).isSuccessful();
+                    return httpGet("/todos/{id}", id).isSuccessful();
                 }
 
                 public boolean onStop() {
@@ -615,19 +615,19 @@ public class TulipCli {
                 // Action 1: GET /posts/{id}
                 override fun action1(): Boolean {
                     val id: Int = ThreadLocalRandom.current().nextInt(100)+1
-                    return http_get("/posts/{id}", id).isSuccessful()
+                    return httpGet("/posts/{id}", id).isSuccessful()
                 }
 
                 // Action 2: GET /comments/{id}
                 override fun action2(): Boolean {
                     val id: Int = ThreadLocalRandom.current().nextInt(500)+1
-                    return http_get("/comments/{id}", id).isSuccessful()
+                    return httpGet("/comments/{id}", id).isSuccessful()
                 }
 
                 // Action 3: GET /todos/{id}
                 override fun action3(): Boolean {
                     val id: Int = ThreadLocalRandom.current().nextInt(200)+1
-                    return http_get("/todos/{id}", id).isSuccessful()
+                    return httpGet("/todos/{id}", id).isSuccessful()
                 }
 
                 override fun onStop(): Boolean {
@@ -768,19 +768,19 @@ public class TulipCli {
                 // Action 1: GET /posts/{id}
                 boolean action1() {
                     int id = ThreadLocalRandom.current().nextInt(100) + 1
-                    return http_get("/posts/{id}", id).isSuccessful()
+                    return httpGet("/posts/{id}", id).isSuccessful()
                 }
 
                 // Action 2: GET /comments/{id}
                 boolean action2() {
                     int id = ThreadLocalRandom.current().nextInt(500) + 1
-                    return http_get("/comments/{id}", id).isSuccessful()
+                    return httpGet("/comments/{id}", id).isSuccessful()
                 }
 
                 // Action 3: GET /todos/{id}
                 boolean action3() {
                     int id = ThreadLocalRandom.current().nextInt(200) + 1
-                    return http_get("/todos/{id}", id).isSuccessful()
+                    return httpGet("/todos/{id}", id).isSuccessful()
                 }
 
                 boolean onStop() {
@@ -925,19 +925,19 @@ public class TulipCli {
               // Action 1: GET /posts/{id}
               override def action1(): Boolean = {
                 val id = ThreadLocalRandom.current().nextInt(100) + 1
-                http_get("/posts/{id}", id).isSuccessful()
+                httpGet("/posts/{id}", id).isSuccessful()
               }
 
               // Action 2: GET /comments/{id}
               override def action2(): Boolean = {
                 val id = ThreadLocalRandom.current().nextInt(500) + 1
-                http_get("/comments/{id}", id).isSuccessful()
+                httpGet("/comments/{id}", id).isSuccessful()
               }
 
               // Action 3: GET /todos/{id}
               override def action3(): Boolean = {
                 val id = ThreadLocalRandom.current().nextInt(200) + 1
-                http_get("/todos/{id}", id).isSuccessful()
+                httpGet("/todos/{id}", id).isSuccessful()
               }
 
               override def onStop(): Boolean = true
@@ -1072,15 +1072,15 @@ public class TulipCli {
 
                 def action1(self):
                     id = ThreadLocalRandom.current().nextInt(100) + 1
-                    return self.http_get("/posts/{id}", id).isSuccessful()
+                    return self.httpGet("/posts/{id}", id).isSuccessful()
 
                 def action2(self):
                     id = ThreadLocalRandom.current().nextInt(500) + 1
-                    return self.http_get("/comments/{id}", id).isSuccessful()
+                    return self.httpGet("/comments/{id}", id).isSuccessful()
 
                 def action3(self):
                     id = ThreadLocalRandom.current().nextInt(200) + 1
-                    return self.http_get("/todos/{id}", id).isSuccessful()
+                    return self.httpGet("/todos/{id}", id).isSuccessful()
 
                 def onStop(self):
                     return True
