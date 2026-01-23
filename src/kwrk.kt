@@ -1,5 +1,5 @@
 // spotless:off
-//DEPS com.github.ajalt.clikt:clikt-jvm:5.0.3
+//DEPS com.github.ajalt.clikt:clikt-jvm:5.1.0
 //DEPS io.github.wfouche.tulip:tulip-runtime:2.1.17
 //JAVA 21
 //KOTLIN 2.3.0
