@@ -221,7 +221,7 @@ fun writeToFile(path: String, content: String, append: Boolean) {
     }
 }
 
-class KwrkHttpUser(userId: Int, threadId: Int) : HttpUser(userId, threadId) {
+class KwrkHttpUser() : HttpUser() {
 
     override fun onStart(): Boolean {
         if (userId == 0) {
@@ -270,7 +270,7 @@ class KwrkCli : CliktCommand() {
     private val p_iterations by option("--iterations").int().default(3)
     private val p_header by option("--header").default("User-Agent: kwrk")
     private val p_method by option("--method").default("GET")
-    private val p_url by option("--url").default("--")
+    private val p_url by option("--url").default("http://jsonplaceholder.typicode.com/posts/1")
     private val p_rpt_suffix by option("--name").default("test")
     private val p_json_body by
         option("--jsonBody").default("{\"title\": \"foo\", \"body\": \"bar\", \"userId\": 1}")
