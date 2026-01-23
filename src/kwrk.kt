@@ -1,6 +1,6 @@
 // spotless:off
 //DEPS com.github.ajalt.clikt:clikt-jvm:5.0.3
-//DEPS io.github.wfouche.tulip:tulip-runtime:2.1.16
+//DEPS io.github.wfouche.tulip:tulip-runtime:2.1.17
 //JAVA 21
 //KOTLIN 2.3.0
 // spotless:on
@@ -235,12 +235,12 @@ class KwrkHttpUser(userId: Int, threadId: Int) : HttpUser(userId, threadId) {
 
     // Action 1: GET ${url}
     override fun action1(): Boolean {
-        return get(getUrlPath()).isSuccessful()
+        return httpGet(getUrlPath()).isSuccessful()
     }
 
     // Action 2: POST ${url}
     override fun action2(): Boolean {
-        return post(jsonBody, getUrlPath()).isSuccessful()
+        return httpPost(jsonBody, getUrlPath()).isSuccessful()
     }
 
     // Action 100
