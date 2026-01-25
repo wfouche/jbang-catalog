@@ -1,5 +1,5 @@
 // spotless:off
-//DEPS io.github.wfouche.tulip:tulip-runtime:2.2.0
+//DEPS io.github.wfouche.tulip:tulip-runtime:2.1.17
 // spotless:on
 
 import java.io.FileWriter;
@@ -166,7 +166,7 @@ public class TulipCli {
                     "Context-1": {
                         "enabled": true,
                         "num_users": 128,
-                        "num_threads": 0
+                        "num_threads": 4
                     }
                 }
             }
@@ -325,10 +325,6 @@ public class TulipCli {
 
                 private ThreadLocalRandom random = ThreadLocalRandom.current();
 
-                public JavaHttpUser(int userId, int threadId) {
-                    super(userId, threadId);
-                }
-
                 public boolean onStart() {
                     // Initialize the shared RestClient object only once
                     if (getUserId() == 0) {
@@ -341,19 +337,19 @@ public class TulipCli {
                 // Action 1: GET /posts/{id}
                 public boolean action1() {
                     int id = random.nextInt(100)+1;
-                    return get("/posts/{id}", id).isSuccessful();
+                    return httpGet("/posts/{id}", id).isSuccessful();
                 }
 
                 // Action 2: GET /comments/{id}
                 public boolean action2() {
                     int id = random.nextInt(500)+1;
-                    return get("/comments/{id}", id).isSuccessful();
+                    return httpGet("/comments/{id}", id).isSuccessful();
                 }
 
                 // Action 3: GET /todos/{id}
                 public boolean action3() {
                     int id = random.nextInt(200)+1;
-                    return get("/todos/{id}", id).isSuccessful();
+                    return httpGet("/todos/{id}", id).isSuccessful();
                 }
 
                 public boolean onStop() {
@@ -386,6 +382,7 @@ public class TulipCli {
 
     static String runBenchCmdJava =
             """
+            title Tulip Java Benchmark
             chcp 65001 > nul
             if exist benchmark_report.html del benchmark_report.html
             set     JBANG_JAVA_OPTIONS=-XX:TieredStopAtLevel=1
@@ -603,7 +600,7 @@ public class TulipCli {
             import org.slf4j.Logger
             import org.slf4j.LoggerFactory
 
-            class KotlinHttpUser(userId: Int, threadId: Int) : HttpUser(userId, threadId) {
+            class KotlinHttpUser() : HttpUser() {
 
                 // Action 0
                 override fun onStart(): Boolean {
@@ -618,19 +615,19 @@ public class TulipCli {
                 // Action 1: GET /posts/{id}
                 override fun action1(): Boolean {
                     val id: Int = ThreadLocalRandom.current().nextInt(100)+1
-                    return get("/posts/{id}", id).isSuccessful()
+                    return httpGet("/posts/{id}", id).isSuccessful()
                 }
 
                 // Action 2: GET /comments/{id}
                 override fun action2(): Boolean {
                     val id: Int = ThreadLocalRandom.current().nextInt(500)+1
-                    return get("/comments/{id}", id).isSuccessful()
+                    return httpGet("/comments/{id}", id).isSuccessful()
                 }
 
                 // Action 3: GET /todos/{id}
                 override fun action3(): Boolean {
                     val id: Int = ThreadLocalRandom.current().nextInt(200)+1
-                    return get("/todos/{id}", id).isSuccessful()
+                    return httpGet("/todos/{id}", id).isSuccessful()
                 }
 
                 override fun onStop(): Boolean {
@@ -664,6 +661,7 @@ public class TulipCli {
 
     static String runBenchCmdKotlin =
             """
+            title Tulip Kotlin Benchmark
             chcp 65001 > nul
             if exist benchmark_report.html del benchmark_report.html
             set     JBANG_JAVA_OPTIONS=-XX:TieredStopAtLevel=1
@@ -758,10 +756,6 @@ public class TulipCli {
 
             class GroovyHttpUser extends HttpUser {
 
-                GroovyHttpUser(int userId, int threadId) {
-                    super(userId, threadId)
-                }
-
                 boolean onStart() {
                     // Initialize the shared RestClient object only once
                     if (userId == 0) {
@@ -774,19 +768,19 @@ public class TulipCli {
                 // Action 1: GET /posts/{id}
                 boolean action1() {
                     int id = ThreadLocalRandom.current().nextInt(100) + 1
-                    return get("/posts/{id}", id).isSuccessful()
+                    return httpGet("/posts/{id}", id).isSuccessful()
                 }
 
                 // Action 2: GET /comments/{id}
                 boolean action2() {
                     int id = ThreadLocalRandom.current().nextInt(500) + 1
-                    return get("/comments/{id}", id).isSuccessful()
+                    return httpGet("/comments/{id}", id).isSuccessful()
                 }
 
                 // Action 3: GET /todos/{id}
                 boolean action3() {
                     int id = ThreadLocalRandom.current().nextInt(200) + 1
-                    return get("/todos/{id}", id).isSuccessful()
+                    return httpGet("/todos/{id}", id).isSuccessful()
                 }
 
                 boolean onStop() {
@@ -821,6 +815,7 @@ public class TulipCli {
 
     static String runBenchCmdGroovy =
             """
+            title Tulip Groovy Benchmark
             chcp 65001 > nul
             REM
             REM JBang / Groovy / Tulip is not supported on Windows
@@ -916,7 +911,7 @@ public class TulipCli {
             import org.slf4j.Logger
             import org.slf4j.LoggerFactory
 
-            class ScalaHttpUser(userId: Int, threadId: Int) extends HttpUser(userId, threadId) {
+            class ScalaHttpUser() extends HttpUser() {
 
               override def onStart(): Boolean = {
                 // Initialize the shared RestClient object only once
@@ -930,19 +925,19 @@ public class TulipCli {
               // Action 1: GET /posts/{id}
               override def action1(): Boolean = {
                 val id = ThreadLocalRandom.current().nextInt(100) + 1
-                get("/posts/{id}", id).isSuccessful()
+                httpGet("/posts/{id}", id).isSuccessful()
               }
 
               // Action 2: GET /comments/{id}
               override def action2(): Boolean = {
                 val id = ThreadLocalRandom.current().nextInt(500) + 1
-                get("/comments/{id}", id).isSuccessful()
+                httpGet("/comments/{id}", id).isSuccessful()
               }
 
               // Action 3: GET /todos/{id}
               override def action3(): Boolean = {
                 val id = ThreadLocalRandom.current().nextInt(200) + 1
-                get("/todos/{id}", id).isSuccessful()
+                httpGet("/todos/{id}", id).isSuccessful()
               }
 
               override def onStop(): Boolean = true
@@ -970,6 +965,7 @@ public class TulipCli {
 
     static String runBenchCmdScala =
             """
+            title Tulip Scala Benchmark
             chcp 65001 > nul
             if exist benchmark_report.html del benchmark_report.html
             scala-cli io\\tulip\\App.scala io\\tulip\\ScalaHttpUser.scala
@@ -1068,9 +1064,6 @@ public class TulipCli {
 
             class JythonHttpUser(HttpUser):
 
-                def __init__(self, userId, threadId):
-                    HttpUser.__init__(self, userId, threadId)
-
                 def onStart(self):
                     if self.userId == 0:
                         print("Jython")
@@ -1079,15 +1072,15 @@ public class TulipCli {
 
                 def action1(self):
                     id = ThreadLocalRandom.current().nextInt(100) + 1
-                    return self.get("/posts/{id}", id).isSuccessful()
+                    return self.httpGet("/posts/{id}", id).isSuccessful()
 
                 def action2(self):
                     id = ThreadLocalRandom.current().nextInt(500) + 1
-                    return self.get("/comments/{id}", id).isSuccessful()
+                    return self.httpGet("/comments/{id}", id).isSuccessful()
 
                 def action3(self):
                     id = ThreadLocalRandom.current().nextInt(200) + 1
-                    return self.get("/todos/{id}", id).isSuccessful()
+                    return self.httpGet("/todos/{id}", id).isSuccessful()
 
                 def onStop(self):
                     return True
@@ -1095,7 +1088,9 @@ public class TulipCli {
             class UserFactory(TulipUserFactory):
 
                 def getUser(self, className, userId, threadId):
-                    return JythonHttpUser(userId, threadId)
+                    obj = JythonHttpUser()
+                    obj.initRuntime(userId, threadId)
+                    return obj
 
             TulipApi.runTulip("benchmark_config.json", UserFactory())
 
@@ -1116,6 +1111,7 @@ public class TulipCli {
 
     static String runBenchCmdJython =
             """
+            title Tulip Jython Benchmark
             chcp 65001 > nul
             if exist benchmark_report.html del benchmark_report.html
             set JBANG_JAVA_OPTIONS=-XX:TieredStopAtLevel=1
