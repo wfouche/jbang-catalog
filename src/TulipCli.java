@@ -165,7 +165,7 @@ public class TulipCli {
                 "contexts": {
                     "Context-1": {
                         "enabled": true,
-                        "num_users": 128,
+                        "num_users": 32,
                         "num_threads": 0
                     }
                 }
