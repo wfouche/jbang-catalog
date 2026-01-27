@@ -300,6 +300,9 @@ public class TulipCli {
             //JAVA __TULIP_JAVA_VERSION__
             //FILES ../../benchmark_config.json
             //FILES ../../logback.xml
+            //RUNTIME_OPTIONS -XX:+IgnoreUnrecognizedVMOptions
+            //RUNTIME_OPTIONS --enable-native-access=ALL-UNNAMED
+            //RUNTIME_OPTIONS --sun-misc-unsafe-memory-access=allow
 
             package io.tulip;
 
@@ -576,6 +579,9 @@ public class TulipCli {
             //KOTLIN 2.3.0
             //FILES ../../benchmark_config.json
             //FILES ../../logback.xml
+            //RUNTIME_OPTIONS -XX:+IgnoreUnrecognizedVMOptions
+            //RUNTIME_OPTIONS --enable-native-access=ALL-UNNAMED
+            //RUNTIME_OPTIONS --sun-misc-unsafe-memory-access=allow
 
             package io.tulip
 
@@ -733,6 +739,9 @@ public class TulipCli {
             //GROOVY 5.0.3
             //FILES ../../benchmark_config.json
             //FILES ../../logback.xml
+            //RUNTIME_OPTIONS -XX:+IgnoreUnrecognizedVMOptions
+            //RUNTIME_OPTIONS --enable-native-access=ALL-UNNAMED
+            //RUNTIME_OPTIONS --sun-misc-unsafe-memory-access=allow
 
             package io.tulip
 
@@ -886,6 +895,9 @@ public class TulipCli {
             //> using jvm __TULIP_JAVA_VERSION__
             //> using dep io.github.wfouche.tulip:tulip-runtime:__TULIP_VERSION__
             //> using javaOpt __TULIP_JAVA_OPTIONS__
+            //> using javaOpt -XX:+IgnoreUnrecognizedVMOptions
+            //> using javaOpt --enable-native-access=ALL-UNNAMED
+            //> using javaOpt --sun-misc-unsafe-memory-access=allow
             //> using repositories m2local
 
             // https://yadukrishnan.live/developing-java-applications-with-scala-cli
@@ -1032,6 +1044,9 @@ public class TulipCli {
             //DEPS io.github.wfouche.tulip:tulip-runtime:__TULIP_VERSION__
             //JAVA __TULIP_JAVA_VERSION__
             //RUNTIME_OPTIONS __TULIP_JAVA_OPTIONS__
+            //RUNTIME_OPTIONS -XX:+IgnoreUnrecognizedVMOptions
+            //RUNTIME_OPTIONS --enable-native-access=ALL-UNNAMED
+            //RUNTIME_OPTIONS --sun-misc-unsafe-memory-access=allow
 
             import org.python.util.jython;
 
@@ -1101,8 +1116,8 @@ public class TulipCli {
             #!/bin/bash
             rm -f benchmark_report.html
             export JBANG_JAVA_OPTIONS=-XX:TieredStopAtLevel=1
-            #jbang run Jython.java benchmark.py
-            jbang run jython-cli@jython benchmark.py
+            jbang run Jython.java benchmark.py
+            #jbang run jython-cli@jython benchmark.py
             echo ""
             #w3m -dump -cols 205 benchmark_report.html
             lynx -dump -width 205 benchmark_report.html
@@ -1115,8 +1130,8 @@ public class TulipCli {
             chcp 65001 > nul
             if exist benchmark_report.html del benchmark_report.html
             set JBANG_JAVA_OPTIONS=-XX:TieredStopAtLevel=1
-            REM call jbang run Jython.java benchmark.py
-            call jbang run jython-cli@jython benchmark.py
+            call jbang run Jython.java benchmark.py
+            REM call jbang run jython-cli@jython benchmark.py
             @echo off
             echo.
             REM call w3m.exe -dump -cols 205 benchmark_report.html
@@ -1139,13 +1154,13 @@ public class TulipCli {
                         .replace("__ONSTOP_ID__", osid),
                 false);
 
-        //        writeToFile(
-        //                "Jython.java",
-        //                JythonJava
-        //                        .replace("__TULIP_VERSION__", version)
-        //                        .replace("__TULIP_JAVA_OPTIONS__", TULIP_JAVA_OPTIONS),
-        //                false
-        //        );
+                writeToFile(
+                        "Jython.java",
+                        JythonJava
+                                .replace("__TULIP_VERSION__", version)
+                                .replace("__TULIP_JAVA_OPTIONS__", TULIP_JAVA_OPTIONS),
+                        false
+                );
 
         writeToFile(
                 "benchmark.py",
