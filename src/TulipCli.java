@@ -1157,7 +1157,7 @@ public class TulipCli {
                 writeToFile(
                         "Jython.java",
                         JythonJava
-                                .replace("__TULIP_VERSION__", version)
+                                .replace("__TULIP_VERSION__", tulipVersion)
                                 .replace("__TULIP_JAVA_OPTIONS__", TULIP_JAVA_OPTIONS),
                         false
                 );
