@@ -1,8 +1,11 @@
 // spotless:off
 //DEPS com.github.ajalt.clikt:clikt-jvm:5.1.0
-//DEPS io.github.wfouche.tulip:tulip-runtime:2.1.17
-//JAVA 21
+//DEPS io.github.wfouche.tulip:tulip-runtime:2.2.0
+//JAVA 25
 //KOTLIN 2.3.0
+//RUNTIME_OPTIONS -XX:+IgnoreUnrecognizedVMOptions
+//RUNTIME_OPTIONS --enable-native-access=ALL-UNNAMED
+//RUNTIME_OPTIONS --sun-misc-unsafe-memory-access=allow
 // spotless:on
 
 import com.github.ajalt.clikt.core.*
@@ -84,7 +87,7 @@ val benchmarkConfig: String =
         "contexts": {
             "Context-1": {
                 "enabled": true,
-                "num_users": __P_THREADS__,
+                "num_users": __P_CONNS__,
                 "num_threads": __P_THREADS__
             }
         }
@@ -264,7 +267,8 @@ class KwrkCli : CliktCommand() {
     private val p_rate_step_change by option("--rateStepChange").double().default(0.0)
     private val p_rate_step_count by option("--rateStepCount").int().default(1)
     private val p_qsize by option("--qsize").int().default(0)
-    private val p_threads by option("--threads").int().default(8)
+    private val p_conns by option("--conns").int().default(1)
+    private val p_threads by option("--threads").int().default(0)
     private val p_warmup by option("--warmup").int().default(5)
     private val p_duration by option("--duration").int().default(30)
     private val p_iterations by option("--iterations").int().default(3)
@@ -287,6 +291,7 @@ class KwrkCli : CliktCommand() {
         json = json.replace("__P_RATE_STEP_COUNT__", p_rate_step_count.toString())
         json = json.replace("__P_QSIZE__", p_qsize.toString())
         json = json.replace("__P_THREADS__", p_threads.toString())
+        json = json.replace("__P_CONNS__", p_conns.toString())
         json = json.replace("__P_DURATION__", p_duration.toString())
         json = json.replace("__P_ITERATIONS__", p_iterations.toString())
         json = json.replace("__P_URL__", p_url)
@@ -311,7 +316,10 @@ class KwrkCli : CliktCommand() {
             println("    --rate ${p_rate}")
             println("    --rateStepChange ${p_rate_step_change}")
             println("    --rateStepCount ${p_rate_step_count}")
-            println("    --threads ${p_threads}")
+            println("    --conns ${p_conns}")
+            if (p_threads != 0) {
+                println("    --threads ${p_threads}")
+            }
             println("    --warmup ${p_warmup}")
             println("    --duration ${p_duration}")
             println("    --iterations ${p_iterations}")
@@ -340,7 +348,8 @@ class KwrkCli : CliktCommand() {
         // TulipApi.runTulip(json)
         val configFilename = "kwrk_${p_rpt_suffix}_config.json"
         writeToFile(configFilename, json, false)
-        TulipApi.runTulip(configFilename)
+        val outputFilename = TulipApi.runTulip(configFilename)
+        TulipApi.generateReport(outputFilename)
 
         val indexFilename = "kwrk_${p_rpt_suffix}_index.html"
         writeToFile(
