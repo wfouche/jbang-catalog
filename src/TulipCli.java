@@ -307,7 +307,7 @@ public class TulipCli {
 
             public class App {
                public static void main(String[] args) {
-                  TulipApi.runTulip("benchmark_config.json");
+                  TulipApi.generateReport(TulipApi.runTulip("benchmark_config.json"));
                }
             }
             """;
@@ -585,7 +585,7 @@ public class TulipCli {
                 companion object {
                     @JvmStatic
                     fun main(args: Array<String>) {
-                        TulipApi.runTulip("benchmark_config.json")
+                        TulipApi.generateReport(TulipApi.runTulip("benchmark_config.json"))
                     }
                 }
             }
@@ -740,7 +740,7 @@ public class TulipCli {
 
             class App {
                 static void main(String[] args) {
-                    TulipApi.runTulip("benchmark_config.json")
+                    TulipApi.generateReport(TulipApi.runTulip("benchmark_config.json"))
                 }
             }
             """;
@@ -897,7 +897,7 @@ public class TulipCli {
 
             object App {
               def main(args: Array[String]): Unit = {
-                TulipApi.runTulip("benchmark_config.json")
+                TulipApi.generateReport(TulipApi.runTulip("benchmark_config.json"))
               }
             }
             """;
@@ -1092,7 +1092,7 @@ public class TulipCli {
                     obj.initRuntime(userId, threadId)
                     return obj
 
-            TulipApi.runTulip("benchmark_config.json", UserFactory())
+            TulipApi.generateReport(TulipApi.runTulip("benchmark_config.json", UserFactory()))
 
             """;
 
