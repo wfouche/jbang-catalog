@@ -1,5 +1,5 @@
 // spotless:off
-//DEPS io.github.wfouche.tulip:tulip-runtime:2.1.17
+//DEPS io.github.wfouche.tulip:tulip-runtime:2.2.0
 // spotless:on
 
 import java.io.FileWriter;
@@ -165,8 +165,8 @@ public class TulipCli {
                 "contexts": {
                     "Context-1": {
                         "enabled": true,
-                        "num_users": 128,
-                        "num_threads": 4
+                        "num_users": 32,
+                        "num_threads": 0
                     }
                 }
             }
