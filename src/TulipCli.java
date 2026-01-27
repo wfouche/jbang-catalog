@@ -1158,6 +1158,7 @@ public class TulipCli {
                         "Jython.java",
                         JythonJava
                                 .replace("__TULIP_VERSION__", tulipVersion)
+                                .replace("__TULIP_JAVA_VERSION__", javaVersion)
                                 .replace("__TULIP_JAVA_OPTIONS__", TULIP_JAVA_OPTIONS),
                         false
                 );
