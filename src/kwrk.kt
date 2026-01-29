@@ -3,6 +3,7 @@
 //DEPS io.github.wfouche.tulip:tulip-runtime:2.2.0
 //JAVA 25
 //KOTLIN 2.3.0
+//FILES kwrk_logback.xml
 //RUNTIME_OPTIONS -XX:+IgnoreUnrecognizedVMOptions
 //RUNTIME_OPTIONS --enable-native-access=ALL-UNNAMED
 //RUNTIME_OPTIONS --sun-misc-unsafe-memory-access=allow
@@ -21,6 +22,7 @@ import java.io.FileWriter
 import java.io.IOException
 import java.lang.management.ManagementFactory
 import java.util.Locale
+import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
 const val appName: String = "kwrk"
@@ -65,7 +67,6 @@ val benchmarkConfig: String =
                 "aps_rate": __P_RATE__,
                 "aps_rate_step_change": __P_RATE_STEP_CHANGE__,
                 "aps_rate_step_count" : __P_RATE_STEP_COUNT__,
-                "worker_thread_queue_size": __P_QSIZE__,
                 "scenario_actions": [
                     {
                         "id": __ACTION_ID__
@@ -88,6 +89,7 @@ val benchmarkConfig: String =
             "Context-1": {
                 "enabled": true,
                 "num_users": __P_CONNS__,
+                "num_tasks": __P_TASKS__,
                 "num_threads": __P_THREADS__
             }
         }
@@ -251,6 +253,10 @@ class KwrkHttpUser() : HttpUser() {
         return true
     }
 
+    override fun logger(): Logger {
+        return logger
+    }
+
     // RestClient object
     companion object {
         private val logger = LoggerFactory.getLogger(KwrkHttpUser::class.java)
@@ -266,8 +272,8 @@ class KwrkCli : CliktCommand() {
     private val p_rate by option("--rate").double().default(5.0)
     private val p_rate_step_change by option("--rateStepChange").double().default(0.0)
     private val p_rate_step_count by option("--rateStepCount").int().default(1)
-    private val p_qsize by option("--qsize").int().default(0)
     private val p_conns by option("--conns").int().default(1)
+    private val p_tasks by option("--tasks").int().default(1)
     private val p_threads by option("--threads").int().default(0)
     private val p_warmup by option("--warmup").int().default(5)
     private val p_duration by option("--duration").int().default(30)
@@ -289,7 +295,7 @@ class KwrkCli : CliktCommand() {
         json = json.replace("__P_RATE__", p_rate.toString())
         json = json.replace("__P_RATE_STEP_CHANGE__", p_rate_step_change.toString())
         json = json.replace("__P_RATE_STEP_COUNT__", p_rate_step_count.toString())
-        json = json.replace("__P_QSIZE__", p_qsize.toString())
+        json = json.replace("__P_TASKS__", p_tasks.toString())
         json = json.replace("__P_THREADS__", p_threads.toString())
         json = json.replace("__P_CONNS__", p_conns.toString())
         json = json.replace("__P_DURATION__", p_duration.toString())
@@ -317,6 +323,7 @@ class KwrkCli : CliktCommand() {
             println("    --rateStepChange ${p_rate_step_change}")
             println("    --rateStepCount ${p_rate_step_count}")
             println("    --conns ${p_conns}")
+            println("    --tasks ${p_tasks}")
             if (p_threads != 0) {
                 println("    --threads ${p_threads}")
             }
@@ -409,10 +416,10 @@ class KwrkCli : CliktCommand() {
         new_lines.add("  <td>__P_RATE__</th>".replace("__P_RATE__", p_rate.toString()))
         new_lines.add("</tr>")
 
-        if (p_qsize != 0) {
+        if (p_tasks != 0) {
             new_lines.add("<tr>")
-            new_lines.add("  <td>qsize</th>")
-            new_lines.add("  <td>__P_QSIZE__</th>".replace("__P_QSIZE__", p_qsize.toString()))
+            new_lines.add("  <td>tasks</th>")
+            new_lines.add("  <td>__P_TASKS__</th>".replace("__P_TASKS__", p_tasks.toString()))
             new_lines.add("</tr>")
         }
 
