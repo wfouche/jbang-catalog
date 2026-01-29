@@ -1,4 +1,4 @@
-///usr/bin/env jbang "$0" "$@ view" ; exit $?
+/// usr/bin/env jbang "$0" "$@ view" ; exit $?
 
 public class ShowVersion {
     public static void main(String[] args) {
@@ -9,7 +9,8 @@ public class ShowVersion {
             System.out.println("JBang Version: " + jbangVersion);
         } else {
             System.out.println("Property 'jbang.app.version' is not set.");
-            System.out.println("Note: This property is typically available when running via the JBang CLI.");
+            System.out.println(
+                    "Note: This property is typically available when running via the JBang CLI.");
         }
     }
 }
