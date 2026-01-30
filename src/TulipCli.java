@@ -1154,14 +1154,12 @@ public class TulipCli {
                         .replace("__ONSTOP_ID__", osid),
                 false);
 
-                writeToFile(
-                        "Jython.java",
-                        JythonJava
-                                .replace("__TULIP_VERSION__", tulipVersion)
-                                .replace("__TULIP_JAVA_VERSION__", javaVersion)
-                                .replace("__TULIP_JAVA_OPTIONS__", TULIP_JAVA_OPTIONS),
-                        false
-                );
+        writeToFile(
+                "Jython.java",
+                JythonJava.replace("__TULIP_VERSION__", tulipVersion)
+                        .replace("__TULIP_JAVA_VERSION__", javaVersion)
+                        .replace("__TULIP_JAVA_OPTIONS__", TULIP_JAVA_OPTIONS),
+                false);
 
         writeToFile(
                 "benchmark.py",
