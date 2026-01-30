@@ -30,7 +30,7 @@ public class TulipCli {
     static String TULIP_JAVA_OPTIONS = "-Xmx2g -XX:+UseZGC -XX:+ZGenerational";
     static String avgAPS = "10.0";
     static String tulipVersion = io.github.wfouche.tulip.api.TulipApi.VERSION;
-    static String httpVersion = "HTTP";
+    static String httpVersion = "HTTP_1_1";
     static String javaVersion = "21";
     static String path = "io/tulip/";
 
