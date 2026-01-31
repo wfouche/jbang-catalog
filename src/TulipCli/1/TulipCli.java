@@ -1,5 +1,5 @@
 // spotless:off
-//DEPS io.github.wfouche.tulip:tulip-runtime:2.1.17
+//DEPS io.github.wfouche.tulip:tulip-runtime:2.2.0
 // spotless:on
 
 import java.io.FileWriter;
@@ -12,7 +12,7 @@ import java.util.List;
 public class TulipCli {
 
     static String appName = "tulip-cli";
-    static String appVersion = "1/2026-01-23T20:58:40";
+    static String appVersion = "1/2026-01-31T13:09:46";
 
     static void displayAppInfo() {
         String version = appVersion;
@@ -30,7 +30,7 @@ public class TulipCli {
     static String TULIP_JAVA_OPTIONS = "-Xmx2g -XX:+UseZGC -XX:+ZGenerational";
     static String avgAPS = "10.0";
     static String tulipVersion = io.github.wfouche.tulip.api.TulipApi.VERSION;
-    static String httpVersion = "HTTP";
+    static String httpVersion = "HTTP_1_1";
     static String javaVersion = "21";
     static String path = "io/tulip/";
 
@@ -165,8 +165,8 @@ public class TulipCli {
                 "contexts": {
                     "Context-1": {
                         "enabled": true,
-                        "num_users": 128,
-                        "num_threads": 4
+                        "num_users": 32,
+                        "num_threads": 0
                     }
                 }
             }
@@ -300,6 +300,9 @@ public class TulipCli {
             //JAVA __TULIP_JAVA_VERSION__
             //FILES ../../benchmark_config.json
             //FILES ../../logback.xml
+            //RUNTIME_OPTIONS -XX:+IgnoreUnrecognizedVMOptions
+            //RUNTIME_OPTIONS --enable-native-access=ALL-UNNAMED
+            //RUNTIME_OPTIONS --sun-misc-unsafe-memory-access=allow
 
             package io.tulip;
 
@@ -307,7 +310,7 @@ public class TulipCli {
 
             public class App {
                public static void main(String[] args) {
-                  TulipApi.runTulip("benchmark_config.json");
+                  TulipApi.generateReport(TulipApi.runTulip("benchmark_config.json"));
                }
             }
             """;
@@ -576,6 +579,9 @@ public class TulipCli {
             //KOTLIN 2.3.0
             //FILES ../../benchmark_config.json
             //FILES ../../logback.xml
+            //RUNTIME_OPTIONS -XX:+IgnoreUnrecognizedVMOptions
+            //RUNTIME_OPTIONS --enable-native-access=ALL-UNNAMED
+            //RUNTIME_OPTIONS --sun-misc-unsafe-memory-access=allow
 
             package io.tulip
 
@@ -585,7 +591,7 @@ public class TulipCli {
                 companion object {
                     @JvmStatic
                     fun main(args: Array<String>) {
-                        TulipApi.runTulip("benchmark_config.json")
+                        TulipApi.generateReport(TulipApi.runTulip("benchmark_config.json"))
                     }
                 }
             }
@@ -733,6 +739,9 @@ public class TulipCli {
             //GROOVY 5.0.3
             //FILES ../../benchmark_config.json
             //FILES ../../logback.xml
+            //RUNTIME_OPTIONS -XX:+IgnoreUnrecognizedVMOptions
+            //RUNTIME_OPTIONS --enable-native-access=ALL-UNNAMED
+            //RUNTIME_OPTIONS --sun-misc-unsafe-memory-access=allow
 
             package io.tulip
 
@@ -740,7 +749,7 @@ public class TulipCli {
 
             class App {
                 static void main(String[] args) {
-                    TulipApi.runTulip("benchmark_config.json")
+                    TulipApi.generateReport(TulipApi.runTulip("benchmark_config.json"))
                 }
             }
             """;
@@ -886,6 +895,9 @@ public class TulipCli {
             //> using jvm __TULIP_JAVA_VERSION__
             //> using dep io.github.wfouche.tulip:tulip-runtime:__TULIP_VERSION__
             //> using javaOpt __TULIP_JAVA_OPTIONS__
+            //> using javaOpt -XX:+IgnoreUnrecognizedVMOptions
+            //> using javaOpt --enable-native-access=ALL-UNNAMED
+            //> using javaOpt --sun-misc-unsafe-memory-access=allow
             //> using repositories m2local
 
             // https://yadukrishnan.live/developing-java-applications-with-scala-cli
@@ -897,7 +909,7 @@ public class TulipCli {
 
             object App {
               def main(args: Array[String]): Unit = {
-                TulipApi.runTulip("benchmark_config.json")
+                TulipApi.generateReport(TulipApi.runTulip("benchmark_config.json"))
               }
             }
             """;
@@ -1032,6 +1044,9 @@ public class TulipCli {
             //DEPS io.github.wfouche.tulip:tulip-runtime:__TULIP_VERSION__
             //JAVA __TULIP_JAVA_VERSION__
             //RUNTIME_OPTIONS __TULIP_JAVA_OPTIONS__
+            //RUNTIME_OPTIONS -XX:+IgnoreUnrecognizedVMOptions
+            //RUNTIME_OPTIONS --enable-native-access=ALL-UNNAMED
+            //RUNTIME_OPTIONS --sun-misc-unsafe-memory-access=allow
 
             import org.python.util.jython;
 
@@ -1092,7 +1107,7 @@ public class TulipCli {
                     obj.initRuntime(userId, threadId)
                     return obj
 
-            TulipApi.runTulip("benchmark_config.json", UserFactory())
+            TulipApi.generateReport(TulipApi.runTulip("benchmark_config.json", UserFactory()))
 
             """;
 
@@ -1101,8 +1116,8 @@ public class TulipCli {
             #!/bin/bash
             rm -f benchmark_report.html
             export JBANG_JAVA_OPTIONS=-XX:TieredStopAtLevel=1
-            #jbang run Jython.java benchmark.py
-            jbang run jython-cli@jython benchmark.py
+            jbang run Jython.java benchmark.py
+            #jbang run jython-cli@jython benchmark.py
             echo ""
             #w3m -dump -cols 205 benchmark_report.html
             lynx -dump -width 205 benchmark_report.html
@@ -1115,8 +1130,8 @@ public class TulipCli {
             chcp 65001 > nul
             if exist benchmark_report.html del benchmark_report.html
             set JBANG_JAVA_OPTIONS=-XX:TieredStopAtLevel=1
-            REM call jbang run Jython.java benchmark.py
-            call jbang run jython-cli@jython benchmark.py
+            call jbang run Jython.java benchmark.py
+            REM call jbang run jython-cli@jython benchmark.py
             @echo off
             echo.
             REM call w3m.exe -dump -cols 205 benchmark_report.html
@@ -1139,13 +1154,12 @@ public class TulipCli {
                         .replace("__ONSTOP_ID__", osid),
                 false);
 
-        //        writeToFile(
-        //                "Jython.java",
-        //                JythonJava
-        //                        .replace("__TULIP_VERSION__", version)
-        //                        .replace("__TULIP_JAVA_OPTIONS__", TULIP_JAVA_OPTIONS),
-        //                false
-        //        );
+        writeToFile(
+                "Jython.java",
+                JythonJava.replace("__TULIP_VERSION__", tulipVersion)
+                        .replace("__TULIP_JAVA_VERSION__", javaVersion)
+                        .replace("__TULIP_JAVA_OPTIONS__", TULIP_JAVA_OPTIONS),
+                false);
 
         writeToFile(
                 "benchmark.py",
