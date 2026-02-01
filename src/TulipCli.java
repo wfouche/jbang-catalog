@@ -373,7 +373,7 @@ public class TulipCli {
             #!/bin/bash
             rm -f benchmark_report.html
             export     JBANG_JAVA_OPTIONS=-XX:TieredStopAtLevel=1
-            export JBANG_APP_JAVA_OPTIONS=""
+            #xport JBANG_APP_JAVA_OPTIONS=""
             jbang run io/tulip/App.java
             echo ""
             #w3m -dump -cols 205 benchmark_report.html
@@ -388,7 +388,7 @@ public class TulipCli {
             chcp 65001 > nul
             if exist benchmark_report.html del benchmark_report.html
             set     JBANG_JAVA_OPTIONS=-XX:TieredStopAtLevel=1
-            set JBANG_APP_JAVA_OPTIONS=
+            REM JBANG_APP_JAVA_OPTIONS=
             call jbang run io\\tulip\\App.java
             @echo off
             echo.
@@ -652,7 +652,7 @@ public class TulipCli {
             #!/bin/bash
             rm -f benchmark_report.html
             export     JBANG_JAVA_OPTIONS=-XX:TieredStopAtLevel=1
-            export JBANG_APP_JAVA_OPTIONS=""
+            #xport JBANG_APP_JAVA_OPTIONS=""
             jbang run io/tulip/App.kt
             echo ""
             #w3m -dump -cols 205 benchmark_report.html
@@ -667,7 +667,7 @@ public class TulipCli {
             chcp 65001 > nul
             if exist benchmark_report.html del benchmark_report.html
             set     JBANG_JAVA_OPTIONS=-XX:TieredStopAtLevel=1
-            set JBANG_APP_JAVA_OPTIONS=
+            REM JBANG_APP_JAVA_OPTIONS=
             call jbang run io\\tulip\\App.kt
             @echo off
             echo.
@@ -806,7 +806,7 @@ public class TulipCli {
             # export JAVA_OPTS="__TULIP_JAVA_OPTIONS__"
             # groovy io/tulip/App.groovy
             export     JBANG_JAVA_OPTIONS=-XX:TieredStopAtLevel=1
-            export JBANG_APP_JAVA_OPTIONS=""
+            #xport JBANG_APP_JAVA_OPTIONS=""
             jbang run io/tulip/App.groovy
             echo ""
             #w3m -dump -cols 205 benchmark_report.html
