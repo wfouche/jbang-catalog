@@ -27,7 +27,6 @@ public class TulipCli {
             String.valueOf(io.github.wfouche.tulip.api.TulipApi.NUM_ACTIONS - 1).toString();
     static String lang = "Java";
     static String url = "http://jsonplaceholder.typicode.com";
-    static String TULIP_JAVA_OPTIONS = "-Xmx2g -XX:+UseZGC -XX:+ZGenerational";
     static String avgAPS = "10.0";
     static String tulipVersion = io.github.wfouche.tulip.api.TulipApi.VERSION;
     static String httpVersion = "HTTP_1_1";
@@ -374,7 +373,7 @@ public class TulipCli {
             #!/bin/bash
             rm -f benchmark_report.html
             export     JBANG_JAVA_OPTIONS=-XX:TieredStopAtLevel=1
-            export JBANG_APP_JAVA_OPTIONS="__TULIP_JAVA_OPTIONS__"
+            export JBANG_APP_JAVA_OPTIONS=""
             jbang run io/tulip/App.java
             echo ""
             #w3m -dump -cols 205 benchmark_report.html
@@ -389,7 +388,7 @@ public class TulipCli {
             chcp 65001 > nul
             if exist benchmark_report.html del benchmark_report.html
             set     JBANG_JAVA_OPTIONS=-XX:TieredStopAtLevel=1
-            set JBANG_APP_JAVA_OPTIONS=__TULIP_JAVA_OPTIONS__
+            set JBANG_APP_JAVA_OPTIONS=
             call jbang run io\\tulip\\App.java
             @echo off
             echo.
@@ -540,8 +539,7 @@ public class TulipCli {
         writeToFile(
                 path + "App.java",
                 javaApp.replace("__TULIP_VERSION__", tulipVersion)
-                        .replace("__TULIP_JAVA_VERSION__", javaVersion)
-                        .replace("__TULIP_JAVA_OPTIONS__", TULIP_JAVA_OPTIONS),
+                        .replace("__TULIP_JAVA_VERSION__", javaVersion),
                 false);
 
         writeToFile(path + "JavaHttpUser.java", javaUser, false);
@@ -549,15 +547,13 @@ public class TulipCli {
         writeToFile(
                 "run_bench.sh",
                 runBenchShJava
-                        .replace("__TULIP_VERSION__", tulipVersion)
-                        .replace("__TULIP_JAVA_OPTIONS__", TULIP_JAVA_OPTIONS),
+                        .replace("__TULIP_VERSION__", tulipVersion),
                 false);
 
         writeToFile(
                 "run_bench.cmd",
                 runBenchCmdJava
-                        .replace("__TULIP_VERSION__", tulipVersion)
-                        .replace("__TULIP_JAVA_OPTIONS__", TULIP_JAVA_OPTIONS),
+                        .replace("__TULIP_VERSION__", tulipVersion),
                 false);
 
         writeToFile(".sdkmanrc", sdkmanConfig, false);
@@ -656,7 +652,7 @@ public class TulipCli {
             #!/bin/bash
             rm -f benchmark_report.html
             export     JBANG_JAVA_OPTIONS=-XX:TieredStopAtLevel=1
-            export JBANG_APP_JAVA_OPTIONS="__TULIP_JAVA_OPTIONS__"
+            export JBANG_APP_JAVA_OPTIONS=""
             jbang run io/tulip/App.kt
             echo ""
             #w3m -dump -cols 205 benchmark_report.html
@@ -671,7 +667,7 @@ public class TulipCli {
             chcp 65001 > nul
             if exist benchmark_report.html del benchmark_report.html
             set     JBANG_JAVA_OPTIONS=-XX:TieredStopAtLevel=1
-            set JBANG_APP_JAVA_OPTIONS=__TULIP_JAVA_OPTIONS__
+            set JBANG_APP_JAVA_OPTIONS=
             call jbang run io\\tulip\\App.kt
             @echo off
             echo.
@@ -700,8 +696,7 @@ public class TulipCli {
                 path + "App.kt",
                 kotlinApp
                         .replace("__TULIP_VERSION__", tulipVersion)
-                        .replace("__TULIP_JAVA_VERSION__", javaVersion)
-                        .replace("__TULIP_JAVA_OPTIONS__", TULIP_JAVA_OPTIONS),
+                        .replace("__TULIP_JAVA_VERSION__", javaVersion),
                 false);
 
         writeToFile(path + "KotlinHttpUser.kt", kotlinUser, false);
@@ -709,15 +704,13 @@ public class TulipCli {
         writeToFile(
                 "run_bench.sh",
                 runBenchShKotlin
-                        .replace("__TULIP_VERSION__", tulipVersion)
-                        .replace("__TULIP_JAVA_OPTIONS__", TULIP_JAVA_OPTIONS),
+                        .replace("__TULIP_VERSION__", tulipVersion),
                 false);
 
         writeToFile(
                 "run_bench.cmd",
                 runBenchCmdKotlin
-                        .replace("__TULIP_VERSION__", tulipVersion)
-                        .replace("__TULIP_JAVA_OPTIONS__", TULIP_JAVA_OPTIONS),
+                        .replace("__TULIP_VERSION__", tulipVersion),
                 false);
 
         writeToFile(".sdkmanrc", sdkmanConfig, false);
@@ -813,7 +806,7 @@ public class TulipCli {
             # export JAVA_OPTS="__TULIP_JAVA_OPTIONS__"
             # groovy io/tulip/App.groovy
             export     JBANG_JAVA_OPTIONS=-XX:TieredStopAtLevel=1
-            export JBANG_APP_JAVA_OPTIONS="__TULIP_JAVA_OPTIONS__"
+            export JBANG_APP_JAVA_OPTIONS=""
             jbang run io/tulip/App.groovy
             echo ""
             #w3m -dump -cols 205 benchmark_report.html
@@ -831,7 +824,7 @@ public class TulipCli {
             REM Try running the benchmark on Linux or macOS
             REM
             if exist benchmark_report.html del benchmark_report.html
-            set JAVA_OPTS=__TULIP_JAVA_OPTIONS__
+            set JAVA_OPTS=
             call groovy io\\tulip\\App.groovy
             @echo off
             echo.
@@ -860,8 +853,7 @@ public class TulipCli {
                 path + "App.groovy",
                 groovyApp
                         .replace("__TULIP_VERSION__", tulipVersion)
-                        .replace("__TULIP_JAVA_VERSION__", javaVersion)
-                        .replace("__TULIP_JAVA_OPTIONS__", TULIP_JAVA_OPTIONS),
+                        .replace("__TULIP_JAVA_VERSION__", javaVersion),
                 false);
 
         writeToFile(path + "GroovyHttpUser.groovy", groovyUser, false);
@@ -869,15 +861,13 @@ public class TulipCli {
         writeToFile(
                 "run_bench.sh",
                 runBenchShGroovy
-                        .replace("__TULIP_VERSION__", tulipVersion)
-                        .replace("__TULIP_JAVA_OPTIONS__", TULIP_JAVA_OPTIONS),
+                        .replace("__TULIP_VERSION__", tulipVersion),
                 false);
 
         writeToFile(
                 "run_bench.cmd",
                 runBenchCmdGroovy
-                        .replace("__TULIP_VERSION__", tulipVersion)
-                        .replace("__TULIP_JAVA_OPTIONS__", TULIP_JAVA_OPTIONS),
+                        .replace("__TULIP_VERSION__", tulipVersion),
                 false);
 
         writeToFile(".sdkmanrc", sdkmanConfig, false);
@@ -894,7 +884,6 @@ public class TulipCli {
             """
             //> using jvm __TULIP_JAVA_VERSION__
             //> using dep io.github.wfouche.tulip:tulip-runtime:__TULIP_VERSION__
-            //> using javaOpt __TULIP_JAVA_OPTIONS__
             //> using javaOpt -XX:+IgnoreUnrecognizedVMOptions
             //> using javaOpt --enable-native-access=ALL-UNNAMED
             //> using javaOpt --sun-misc-unsafe-memory-access=allow
@@ -1006,8 +995,7 @@ public class TulipCli {
         writeToFile(
                 path + "App.scala",
                 scalaApp.replace("__TULIP_VERSION__", tulipVersion)
-                        .replace("__TULIP_JAVA_VERSION__", javaVersion)
-                        .replace("__TULIP_JAVA_OPTIONS__", TULIP_JAVA_OPTIONS),
+                        .replace("__TULIP_JAVA_VERSION__", javaVersion),
                 false);
 
         writeToFile(path + "ScalaHttpUser.scala", scalaUser, false);
@@ -1015,15 +1003,13 @@ public class TulipCli {
         writeToFile(
                 "run_bench.sh",
                 runBenchShScala
-                        .replace("__TULIP_VERSION__", tulipVersion)
-                        .replace("__TULIP_JAVA_OPTIONS__", TULIP_JAVA_OPTIONS),
+                        .replace("__TULIP_VERSION__", tulipVersion),
                 false);
 
         writeToFile(
                 "run_bench.cmd",
                 runBenchCmdScala
-                        .replace("__TULIP_VERSION__", tulipVersion)
-                        .replace("__TULIP_JAVA_OPTIONS__", TULIP_JAVA_OPTIONS),
+                        .replace("__TULIP_VERSION__", tulipVersion),
                 false);
 
         writeToFile(".sdkmanrc", sdkmanConfig, false);
@@ -1043,7 +1029,6 @@ public class TulipCli {
             //DEPS org.python:jython-standalone:2.7.4
             //DEPS io.github.wfouche.tulip:tulip-runtime:__TULIP_VERSION__
             //JAVA __TULIP_JAVA_VERSION__
-            //RUNTIME_OPTIONS __TULIP_JAVA_OPTIONS__
             //RUNTIME_OPTIONS -XX:+IgnoreUnrecognizedVMOptions
             //RUNTIME_OPTIONS --enable-native-access=ALL-UNNAMED
             //RUNTIME_OPTIONS --sun-misc-unsafe-memory-access=allow
@@ -1116,6 +1101,7 @@ public class TulipCli {
             #!/bin/bash
             rm -f benchmark_report.html
             export JBANG_JAVA_OPTIONS=-XX:TieredStopAtLevel=1
+            export JBANG_APP_JAVA_OPTIONS=
             jbang run Jython.java benchmark.py
             #jbang run jython-cli@jython benchmark.py
             echo ""
@@ -1130,6 +1116,7 @@ public class TulipCli {
             chcp 65001 > nul
             if exist benchmark_report.html del benchmark_report.html
             set JBANG_JAVA_OPTIONS=-XX:TieredStopAtLevel=1
+            set JBANG_APP_JAVA_OPTIONS=
             call jbang run Jython.java benchmark.py
             REM call jbang run jython-cli@jython benchmark.py
             @echo off
@@ -1157,29 +1144,25 @@ public class TulipCli {
         writeToFile(
                 "Jython.java",
                 JythonJava.replace("__TULIP_VERSION__", tulipVersion)
-                        .replace("__TULIP_JAVA_VERSION__", javaVersion)
-                        .replace("__TULIP_JAVA_OPTIONS__", TULIP_JAVA_OPTIONS),
+                        .replace("__TULIP_JAVA_VERSION__", javaVersion),
                 false);
 
         writeToFile(
                 "benchmark.py",
                 JythonBenchmark.replace("__TULIP_VERSION__", tulipVersion)
-                        .replace("__TULIP_JAVA_VERSION__", javaVersion)
-                        .replace("__TULIP_JAVA_OPTIONS__", TULIP_JAVA_OPTIONS),
+                        .replace("__TULIP_JAVA_VERSION__", javaVersion),
                 false);
 
         writeToFile(
                 "run_bench.sh",
                 runBenchShJython
-                        .replace("__TULIP_VERSION__", tulipVersion)
-                        .replace("__TULIP_JAVA_OPTIONS__", TULIP_JAVA_OPTIONS),
+                        .replace("__TULIP_VERSION__", tulipVersion),
                 false);
 
         writeToFile(
                 "run_bench.cmd",
                 runBenchCmdJython
-                        .replace("__TULIP_VERSION__", tulipVersion)
-                        .replace("__TULIP_JAVA_OPTIONS__", TULIP_JAVA_OPTIONS),
+                        .replace("__TULIP_VERSION__", tulipVersion),
                 false);
 
         writeToFile(".sdkmanrc", sdkmanConfig, false);
@@ -1194,10 +1177,6 @@ public class TulipCli {
     public static void main(String[] args) throws IOException, InterruptedException {
 
         displayAppInfo();
-
-        if (java.lang.System.getenv("TULIP_JAVA_OPTIONS") != null) {
-            TULIP_JAVA_OPTIONS = java.lang.System.getenv("TULIP_JAVA_OPTIONS");
-        }
 
         String command = "";
         if (args.length > 0) {
