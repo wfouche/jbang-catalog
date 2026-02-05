@@ -1,5 +1,5 @@
 ///usr/bin/env jbang "$0" "$@" ; exit $?
-//DEPS io.github.wfouche.tulip:tulip-runtime:2.2.1
+//DEPS io.github.wfouche.tulip:tulip-runtime:2.2.0
 //SOURCES JavaHttpUser.java
 //JAVA 21
 //FILES ../../benchmark_config.json
@@ -14,6 +14,6 @@ import io.github.wfouche.tulip.api.TulipApi;
 
 public class App {
    public static void main(String[] args) {
-      TulipApi.generateReport(TulipApi.runTulip("benchmark_config.json"));
+      TulipApi.runTulip("benchmark_config.json");
    }
 }
