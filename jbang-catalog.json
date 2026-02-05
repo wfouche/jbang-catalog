@@ -49,6 +49,9 @@
     "snapshot-cli": {
       "script-ref": "src/SnapshotCli/1/SnapshotCli.java"
     },
+    "testapp": {
+      "script-ref": "src/testapp/io/tulip/App.java"
+    },
     "tulip-cli-dev": {
       "script-ref": "src/TulipCli.java"
     },
