@@ -1,0 +1,7 @@
+{
+    "aliases": {
+        "testapp2": {
+            "script-ref": "io/tulip/App.java"
+        }
+    }
+}
