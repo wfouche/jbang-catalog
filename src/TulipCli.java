@@ -760,6 +760,23 @@ public class TulipCli {
             }
             """;
 
+    static String groovyAppw =
+            """
+            @Grab('io.github.wfouche.tulip:tulip-runtime:__TULIP_VERSION__')
+            @Grab('org.springframework.boot:spring-boot-starter-restclient:4.0.2')
+            @Grab('org.slf4j:slf4j-api:2.0.17')
+
+            //package io.tulip
+
+            import io.github.wfouche.tulip.api.TulipApi
+
+            class Appw {
+                static void main(String[] args) {
+                    TulipApi.generateReport(TulipApi.runTulip("benchmark_config.json"))
+                }
+            }
+            """;
+
     static String groovyUser =
             """
             package io.tulip
@@ -838,7 +855,7 @@ public class TulipCli {
             REM
             if exist benchmark_report.html del benchmark_report.html
             set JAVA_OPTS=__TULIP_JAVA_OPTIONS__
-            call groovy io\\tulip\\App.groovy
+            call groovy io\\tulip\\Appw.groovy
             @echo off
             echo.
             REM call w3m.exe -dump -cols 205 benchmark_report.html
@@ -865,6 +882,14 @@ public class TulipCli {
         writeToFile(
                 path + "App.groovy",
                 groovyApp
+                        .replace("__TULIP_VERSION__", tulipVersion)
+                        .replace("__TULIP_JAVA_VERSION__", javaVersion)
+                        .replace("__TULIP_JAVA_OPTIONS__", TULIP_JAVA_OPTIONS),
+                false);
+
+        writeToFile(
+                path + "Appw.groovy",
+                groovyAppw
                         .replace("__TULIP_VERSION__", tulipVersion)
                         .replace("__TULIP_JAVA_VERSION__", javaVersion)
                         .replace("__TULIP_JAVA_OPTIONS__", TULIP_JAVA_OPTIONS),
