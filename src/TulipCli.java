@@ -1,5 +1,5 @@
 // spotless:off
-//DEPS io.github.wfouche.tulip:tulip-runtime:2.2.0
+//DEPS io.github.wfouche.tulip:tulip-runtime:2.2.1
 // spotless:on
 
 import java.io.FileWriter;
