@@ -1007,6 +1007,7 @@ public class TulipCli {
             chcp 65001 > nul
             if exist benchmark_report.html del benchmark_report.html
             scala-cli io\\tulip\\App.scala io\\tulip\\ScalaHttpUser.scala
+            call jbang run  io.github.wfouche.tulip:tulip-runtime:2.2.2 --report benchmark_output.json
             @echo off
             echo.
             REM call w3m.exe -dump -cols 205 benchmark_report.html
