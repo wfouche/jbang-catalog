@@ -17,7 +17,7 @@ public class TulipCli {
     static void displayAppInfo() {
         String version = appVersion;
         if (appVersion.contains("JBANG_SNAPSHOT_ID")) {
-            version = "0/2026-02-08T20:30:00";
+            version = "0/2026-02-08T20:33:00";
         }
         System.err.println(
                 appName + "/" + version + "/" + io.github.wfouche.tulip.api.TulipApi.VERSION);
@@ -994,6 +994,7 @@ public class TulipCli {
             rm -f benchmark_report.html
             rm -f -r ~/.m2/repository/com/github/jnr
             scala-cli io/tulip/App.scala io/tulip/ScalaHttpUser.scala
+            jbang run  io.github.wfouche.tulip:tulip-runtime:2.2.2 --report benchmark_output.json
             echo ""
             #w3m -dump -cols 205 benchmark_report.html
             lynx -dump -width 205 benchmark_report.html
