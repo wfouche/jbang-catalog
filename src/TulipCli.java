@@ -17,7 +17,7 @@ public class TulipCli {
     static void displayAppInfo() {
         String version = appVersion;
         if (appVersion.contains("JBANG_SNAPSHOT_ID")) {
-            version = "0/2026-02-08T20:15:00";
+            version = "0/2026-02-08T20:30:00";
         }
         System.err.println(
                 appName + "/" + version + "/" + io.github.wfouche.tulip.api.TulipApi.VERSION);
@@ -916,7 +916,7 @@ public class TulipCli {
     static String scalaApp =
             """
             //> using jvm __TULIP_JAVA_VERSION__
-            //> using scala 3.7.4
+            //> using scala 3.8.1
             //> using dep io.github.wfouche.tulip:tulip-runtime:__TULIP_VERSION__
             //> using javaOpt __TULIP_JAVA_OPTIONS__
             //> using javaOpt -XX:+IgnoreUnrecognizedVMOptions
@@ -933,7 +933,7 @@ public class TulipCli {
 
             object App {
               def main(args: Array[String]): Unit = {
-                TulipApi.generateReport(TulipApi.runTulip("benchmark_config.json"))
+                TulipApi.runTulip("benchmark_config.json")
               }
             }
             """;
