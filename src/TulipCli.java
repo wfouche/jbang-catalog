@@ -921,7 +921,8 @@ public class TulipCli {
             //> using javaOpt -XX:+IgnoreUnrecognizedVMOptions
             //> using javaOpt --enable-native-access=ALL-UNNAMED
             //> using javaOpt --sun-misc-unsafe-memory-access=allow
-            //> using repositories m2local
+            //> using repository m2local
+            //> using repository central
 
             // https://yadukrishnan.live/developing-java-applications-with-scala-cli
             // https://www.baeldung.com/scala/scala-cli-intro
