@@ -17,7 +17,7 @@ public class TulipCli {
     static void displayAppInfo() {
         String version = appVersion;
         if (appVersion.contains("JBANG_SNAPSHOT_ID")) {
-            version = "0/2026-02-08T19:38:17";
+            version = "0/2026-02-08T19:45:00";
         }
         System.err.println(
                 appName + "/" + version + "/" + io.github.wfouche.tulip.api.TulipApi.VERSION);
@@ -922,7 +922,6 @@ public class TulipCli {
             //> using javaOpt --enable-native-access=ALL-UNNAMED
             //> using javaOpt --sun-misc-unsafe-memory-access=allow
             //> using repository m2local
-            //> using repository central
 
             // https://yadukrishnan.live/developing-java-applications-with-scala-cli
             // https://www.baeldung.com/scala/scala-cli-intro
