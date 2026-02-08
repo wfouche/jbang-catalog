@@ -17,7 +17,7 @@ public class TulipCli {
     static void displayAppInfo() {
         String version = appVersion;
         if (appVersion.contains("JBANG_SNAPSHOT_ID")) {
-            version = "0/2026-02-08T20:33:00";
+            version = "0/2026-02-08T20:45:00";
         }
         System.err.println(
                 appName + "/" + version + "/" + io.github.wfouche.tulip.api.TulipApi.VERSION);
@@ -310,7 +310,7 @@ public class TulipCli {
 
             public class App {
                public static void main(String[] args) {
-                  TulipApi.generateReport(TulipApi.runTulip("benchmark_config.json"));
+                  TulipApi.runTulip("benchmark_config.json");
                }
             }
             """;
@@ -376,6 +376,7 @@ public class TulipCli {
             export     JBANG_JAVA_OPTIONS=-XX:TieredStopAtLevel=1
             export JBANG_APP_JAVA_OPTIONS="__TULIP_JAVA_OPTIONS__"
             jbang run io/tulip/App.java
+            jbang run io.github.wfouche.tulip:tulip-runtime:2.2.2 --report benchmark_output.json
             echo ""
             #w3m -dump -cols 205 benchmark_report.html
             lynx -dump -width 205 benchmark_report.html
@@ -391,6 +392,7 @@ public class TulipCli {
             set     JBANG_JAVA_OPTIONS=-XX:TieredStopAtLevel=1
             set JBANG_APP_JAVA_OPTIONS=__TULIP_JAVA_OPTIONS__
             call jbang run io\\tulip\\App.java
+            call jbang run io.github.wfouche.tulip:tulip-runtime:2.2.2 --report benchmark_output.json
             @echo off
             echo.
             REM w3m.exe -dump -cols 205 benchmark_report.html
@@ -591,7 +593,7 @@ public class TulipCli {
                 companion object {
                     @JvmStatic
                     fun main(args: Array<String>) {
-                        TulipApi.generateReport(TulipApi.runTulip("benchmark_config.json"))
+                        TulipApi.runTulip("benchmark_config.json")
                     }
                 }
             }
@@ -658,6 +660,7 @@ public class TulipCli {
             export     JBANG_JAVA_OPTIONS=-XX:TieredStopAtLevel=1
             export JBANG_APP_JAVA_OPTIONS="__TULIP_JAVA_OPTIONS__"
             jbang run io/tulip/App.kt
+            jbang run io.github.wfouche.tulip:tulip-runtime:2.2.2 --report benchmark_output.json
             echo ""
             #w3m -dump -cols 205 benchmark_report.html
             lynx -dump -width 205 benchmark_report.html
@@ -673,6 +676,7 @@ public class TulipCli {
             set     JBANG_JAVA_OPTIONS=-XX:TieredStopAtLevel=1
             set JBANG_APP_JAVA_OPTIONS=__TULIP_JAVA_OPTIONS__
             call jbang run io\\tulip\\App.kt
+            call jbang run io.github.wfouche.tulip:tulip-runtime:2.2.2 --report benchmark_output.json
             @echo off
             echo.
             REM call w3m.exe -dump -cols 205 benchmark_report.html
@@ -749,7 +753,7 @@ public class TulipCli {
 
             class App {
                 static void main(String[] args) {
-                    TulipApi.generateReport(TulipApi.runTulip("benchmark_config.json"))
+                    TulipApi.runTulip("benchmark_config.json")
                 }
             }
             """;
@@ -764,7 +768,7 @@ public class TulipCli {
 
             class Appw {
                 static void main(String[] args) {
-                    TulipApi.generateReport(TulipApi.runTulip("benchmark_config.json"))
+                    TulipApi.runTulip("benchmark_config.json")
                 }
             }
             """;
@@ -830,6 +834,7 @@ public class TulipCli {
             export     JBANG_JAVA_OPTIONS=-XX:TieredStopAtLevel=1
             export JBANG_APP_JAVA_OPTIONS="__TULIP_JAVA_OPTIONS__"
             jbang run io/tulip/App.groovy
+            jbang run io.github.wfouche.tulip:tulip-runtime:2.2.2 --report benchmark_output.json
             echo ""
             #w3m -dump -cols 205 benchmark_report.html
             lynx -dump -width 205 benchmark_report.html
@@ -848,6 +853,7 @@ public class TulipCli {
             if exist benchmark_report.html del benchmark_report.html
             set JAVA_OPTS=__TULIP_JAVA_OPTIONS__
             call groovy io\\tulip\\Appw.groovy
+            call jbang run io.github.wfouche.tulip:tulip-runtime:2.2.2 --report benchmark_output.json
             @echo off
             echo.
             REM call w3m.exe -dump -cols 205 benchmark_report.html
@@ -994,7 +1000,7 @@ public class TulipCli {
             rm -f benchmark_report.html
             rm -f -r ~/.m2/repository/com/github/jnr
             scala-cli io/tulip/App.scala io/tulip/ScalaHttpUser.scala
-            jbang run  io.github.wfouche.tulip:tulip-runtime:2.2.2 --report benchmark_output.json
+            jbang run io.github.wfouche.tulip:tulip-runtime:2.2.2 --report benchmark_output.json
             echo ""
             #w3m -dump -cols 205 benchmark_report.html
             lynx -dump -width 205 benchmark_report.html
@@ -1007,7 +1013,7 @@ public class TulipCli {
             chcp 65001 > nul
             if exist benchmark_report.html del benchmark_report.html
             scala-cli io\\tulip\\App.scala io\\tulip\\ScalaHttpUser.scala
-            call jbang run  io.github.wfouche.tulip:tulip-runtime:2.2.2 --report benchmark_output.json
+            call jbang run io.github.wfouche.tulip:tulip-runtime:2.2.2 --report benchmark_output.json
             @echo off
             echo.
             REM call w3m.exe -dump -cols 205 benchmark_report.html
@@ -1134,7 +1140,7 @@ public class TulipCli {
                     obj.initRuntime(userId, threadId)
                     return obj
 
-            TulipApi.generateReport(TulipApi.runTulip("benchmark_config.json", UserFactory()))
+            TulipApi.runTulip("benchmark_config.json", UserFactory())
 
             """;
 
@@ -1144,6 +1150,7 @@ public class TulipCli {
             rm -f benchmark_report.html
             export JBANG_JAVA_OPTIONS=-XX:TieredStopAtLevel=1
             jbang run Jython.java benchmark.py
+            jbang run io.github.wfouche.tulip:tulip-runtime:2.2.2 --report benchmark_output.json
             #jbang run jython-cli@jython benchmark.py
             echo ""
             #w3m -dump -cols 205 benchmark_report.html
@@ -1158,6 +1165,7 @@ public class TulipCli {
             if exist benchmark_report.html del benchmark_report.html
             set JBANG_JAVA_OPTIONS=-XX:TieredStopAtLevel=1
             call jbang run Jython.java benchmark.py
+            call jbang run io.github.wfouche.tulip:tulip-runtime:2.2.2 --report benchmark_output.json
             REM call jbang run jython-cli@jython benchmark.py
             @echo off
             echo.
