@@ -992,6 +992,7 @@ public class TulipCli {
             """
             #!/bin/bash
             rm -f benchmark_report.html
+            rm -f -r ~/.m2/repository/com/github/jnr
             scala-cli io/tulip/App.scala io/tulip/ScalaHttpUser.scala
             echo ""
             #w3m -dump -cols 205 benchmark_report.html
