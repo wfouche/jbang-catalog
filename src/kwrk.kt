@@ -31,7 +31,7 @@ const val appVersion: String = "__JBANG_SNAPSHOT_ID__/__JBANG_SNAPSHOT_TIMESTAMP
 private fun displayAppInfo() {
     var version: String = appVersion
     if (appVersion.contains("JBANG_SNAPSHOT_ID")) {
-        version = "0/2025-08-06T14:52:50"
+        version = "0/2026-02-10T17:32:19"
     }
     println(appName + "/" + version + "/" + TulipApi.VERSION)
 }

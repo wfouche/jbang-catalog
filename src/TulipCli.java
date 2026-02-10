@@ -17,7 +17,7 @@ public class TulipCli {
     static void displayAppInfo() {
         String version = appVersion;
         if (appVersion.contains("JBANG_SNAPSHOT_ID")) {
-            version = "0/2026-02-08T20:45:00";
+            version = "0/2026-02-10T17:32:19";
         }
         System.err.println(
                 appName + "/" + version + "/" + io.github.wfouche.tulip.api.TulipApi.VERSION);
