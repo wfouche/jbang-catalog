@@ -1,5 +1,5 @@
 // spotless:off
-//DEPS io.github.wfouche.tulip:tulip-runtime:2.2.4
+//DEPS io.github.wfouche.tulip:tulip-runtime:2.2.1
 // spotless:on
 
 import java.io.FileWriter;
@@ -17,7 +17,7 @@ public class TulipCli {
     static void displayAppInfo() {
         String version = appVersion;
         if (appVersion.contains("JBANG_SNAPSHOT_ID")) {
-            version = "0/2026-01-02T10:45:31";
+            version = "0/2026-02-08T20:45:00";
         }
         System.err.println(
                 appName + "/" + version + "/" + io.github.wfouche.tulip.api.TulipApi.VERSION);
@@ -95,6 +95,10 @@ public class TulipCli {
                     }
                 },
                 "benchmarks": {
+                    "onStart": {
+                        "save_stats": false,
+                        "scenario_actions": [ {"id": 0} ]
+                    },
                     "REST1": {
                         "enabled": true,
                         "aps_rate": __AVG_APS__,
@@ -152,6 +156,10 @@ public class TulipCli {
                             "benchmark_duration": 30,
                             "benchmark_iterations": 3
                         }
+                    },
+                    "onStop": {
+                        "save_stats": false,
+                        "scenario_actions": [ {"id": __ONSTOP_ID__} ]
                     }
                 },
                 "contexts": {
