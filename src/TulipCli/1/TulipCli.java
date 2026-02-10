@@ -1,5 +1,5 @@
 // spotless:off
-//DEPS io.github.wfouche.tulip:tulip-runtime:2.2.0
+//DEPS io.github.wfouche.tulip:tulip-runtime:2.2.3
 // spotless:on
 
 import java.io.FileWriter;
@@ -12,19 +12,17 @@ import java.util.List;
 public class TulipCli {
 
     static String appName = "tulip-cli";
-    static String appVersion = "1/2026-01-31T13:09:46";
+    static String appVersion = "1/2026-02-10T20:21:03";
 
     static void displayAppInfo() {
         String version = appVersion;
         if (appVersion.contains("JBANG_SNAPSHOT_ID")) {
-            version = "0/2026-01-02T10:45:31";
+            version = "0/2026-02-10T17:32:19";
         }
         System.err.println(
                 appName + "/" + version + "/" + io.github.wfouche.tulip.api.TulipApi.VERSION);
     }
 
-    static String osid =
-            String.valueOf(io.github.wfouche.tulip.api.TulipApi.NUM_ACTIONS - 1).toString();
     static String lang = "Java";
     static String url = "http://jsonplaceholder.typicode.com";
     static String TULIP_JAVA_OPTIONS = "-Xmx2g -XX:+UseZGC -XX:+ZGenerational";
@@ -95,10 +93,6 @@ public class TulipCli {
                     }
                 },
                 "benchmarks": {
-                    "onStart": {
-                        "save_stats": false,
-                        "scenario_actions": [ {"id": 0} ]
-                    },
                     "REST1": {
                         "enabled": true,
                         "aps_rate": __AVG_APS__,
@@ -156,10 +150,6 @@ public class TulipCli {
                             "benchmark_duration": 30,
                             "benchmark_iterations": 3
                         }
-                    },
-                    "onStop": {
-                        "save_stats": false,
-                        "scenario_actions": [ {"id": __ONSTOP_ID__} ]
                     }
                 },
                 "contexts": {
@@ -296,6 +286,8 @@ public class TulipCli {
             """
             ///usr/bin/env jbang "$0" "$@" ; exit $?
             //DEPS io.github.wfouche.tulip:tulip-runtime:__TULIP_VERSION__
+            //DEPS org.springframework.boot:spring-boot-starter-restclient:4.0.2
+            //DEPS org.slf4j:slf4j-api:2.0.17
             //SOURCES JavaHttpUser.java
             //JAVA __TULIP_JAVA_VERSION__
             //FILES ../../benchmark_config.json
@@ -533,8 +525,7 @@ public class TulipCli {
                         .replace("__TULIP_LANG__", lang)
                         .replace("__HTTP_VERSION__", httpVersion)
                         .replace("__AVG_APS__", avgAPS)
-                        .replace("__URL__", url)
-                        .replace("__ONSTOP_ID__", osid),
+                        .replace("__URL__", url),
                 false);
 
         writeToFile(
@@ -574,6 +565,8 @@ public class TulipCli {
             """
             ///usr/bin/env jbang "$0" "$@" ; exit $?
             //DEPS io.github.wfouche.tulip:tulip-runtime:__TULIP_VERSION__
+            //DEPS org.springframework.boot:spring-boot-starter-restclient:4.0.2
+            //DEPS org.slf4j:slf4j-api:2.0.17
             //SOURCES KotlinHttpUser.kt
             //JAVA __TULIP_JAVA_VERSION__
             //KOTLIN 2.3.0
@@ -692,8 +685,7 @@ public class TulipCli {
                         .replace("__TULIP_LANG__", lang)
                         .replace("__HTTP_VERSION__", httpVersion)
                         .replace("__AVG_APS__", avgAPS)
-                        .replace("__URL__", url)
-                        .replace("__ONSTOP_ID__", osid),
+                        .replace("__URL__", url),
                 false);
 
         writeToFile(
@@ -734,6 +726,8 @@ public class TulipCli {
             """
             ///usr/bin/env jbang "$0" "$@" ; exit $?
             //DEPS io.github.wfouche.tulip:tulip-runtime:__TULIP_VERSION__
+            //DEPS org.springframework.boot:spring-boot-starter-restclient:4.0.2
+            //DEPS org.slf4j:slf4j-api:2.0.17
             //SOURCES GroovyHttpUser.groovy
             //JAVA __TULIP_JAVA_VERSION__
             //GROOVY 5.0.3
@@ -748,6 +742,23 @@ public class TulipCli {
             import io.github.wfouche.tulip.api.TulipApi
 
             class App {
+                static void main(String[] args) {
+                    TulipApi.generateReport(TulipApi.runTulip("benchmark_config.json"))
+                }
+            }
+            """;
+
+    static String groovyAppw =
+            """
+            @Grab('io.github.wfouche.tulip:tulip-runtime:__TULIP_VERSION__')
+            @Grab('org.springframework.boot:spring-boot-starter-restclient:4.0.2')
+            @Grab('org.slf4j:slf4j-api:2.0.17')
+
+            //package io.tulip
+
+            import io.github.wfouche.tulip.api.TulipApi
+
+            class Appw {
                 static void main(String[] args) {
                     TulipApi.generateReport(TulipApi.runTulip("benchmark_config.json"))
                 }
@@ -832,7 +843,7 @@ public class TulipCli {
             REM
             if exist benchmark_report.html del benchmark_report.html
             set JAVA_OPTS=__TULIP_JAVA_OPTIONS__
-            call groovy io\\tulip\\App.groovy
+            call groovy io\\tulip\\Appw.groovy
             @echo off
             echo.
             REM call w3m.exe -dump -cols 205 benchmark_report.html
@@ -852,13 +863,20 @@ public class TulipCli {
                         .replace("__TULIP_LANG__", lang)
                         .replace("__HTTP_VERSION__", httpVersion)
                         .replace("__AVG_APS__", avgAPS)
-                        .replace("__URL__", url)
-                        .replace("__ONSTOP_ID__", osid),
+                        .replace("__URL__", url),
                 false);
 
         writeToFile(
                 path + "App.groovy",
                 groovyApp
+                        .replace("__TULIP_VERSION__", tulipVersion)
+                        .replace("__TULIP_JAVA_VERSION__", javaVersion)
+                        .replace("__TULIP_JAVA_OPTIONS__", TULIP_JAVA_OPTIONS),
+                false);
+
+        writeToFile(
+                path + "Appw.groovy",
+                groovyAppw
                         .replace("__TULIP_VERSION__", tulipVersion)
                         .replace("__TULIP_JAVA_VERSION__", javaVersion)
                         .replace("__TULIP_JAVA_OPTIONS__", TULIP_JAVA_OPTIONS),
@@ -894,6 +912,8 @@ public class TulipCli {
             """
             //> using jvm __TULIP_JAVA_VERSION__
             //> using dep io.github.wfouche.tulip:tulip-runtime:__TULIP_VERSION__
+            //> using dep org.springframework.boot:spring-boot-starter-restclient:4.0.2
+            //> using dep org.slf4j:slf4j-api:2.0.17
             //> using javaOpt __TULIP_JAVA_OPTIONS__
             //> using javaOpt -XX:+IgnoreUnrecognizedVMOptions
             //> using javaOpt --enable-native-access=ALL-UNNAMED
@@ -999,8 +1019,7 @@ public class TulipCli {
                         .replace("__TULIP_LANG__", lang)
                         .replace("__HTTP_VERSION__", httpVersion)
                         .replace("__AVG_APS__", avgAPS)
-                        .replace("__URL__", url)
-                        .replace("__ONSTOP_ID__", osid),
+                        .replace("__URL__", url),
                 false);
 
         writeToFile(
@@ -1042,6 +1061,8 @@ public class TulipCli {
 
             //DEPS org.python:jython-standalone:2.7.4
             //DEPS io.github.wfouche.tulip:tulip-runtime:__TULIP_VERSION__
+            //DEPS org.springframework.boot:spring-boot-starter-restclient:4.0.2
+            //DEPS org.slf4j:slf4j-api:2.0.17
             //JAVA __TULIP_JAVA_VERSION__
             //RUNTIME_OPTIONS __TULIP_JAVA_OPTIONS__
             //RUNTIME_OPTIONS -XX:+IgnoreUnrecognizedVMOptions
@@ -1150,8 +1171,7 @@ public class TulipCli {
                         .replace("__TULIP_LANG__", lang)
                         .replace("__HTTP_VERSION__", httpVersion)
                         .replace("__AVG_APS__", avgAPS)
-                        .replace("__URL__", url)
-                        .replace("__ONSTOP_ID__", osid),
+                        .replace("__URL__", url),
                 false);
 
         writeToFile(
