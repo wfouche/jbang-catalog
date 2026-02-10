@@ -439,69 +439,6 @@ class KwrkCli : CliktCommand() {
         new_lines.add("</tr>")
         new_lines.add("</table>")
 
-        new_lines.add("<h3>Java Options</h3>")
-        new_lines.add("<table style=\"width:40%\">")
-
-        new_lines.add("<tr>")
-        new_lines.add("  <th>name</th>")
-        new_lines.add("  <th>value</th>")
-        new_lines.add("</tr>")
-
-        val rt = Runtime.getRuntime()
-        val fm = rt.freeMemory()
-        val tm = rt.totalMemory()
-        val mm = rt.maxMemory()
-
-        val gb1 = 1073741824.0
-        val memory_used_jvm: String = "%.3f GB".format(Locale.US, (tm - fm) / gb1)
-        val free_memory_jvm: String = "%.3f GB".format(Locale.US, fm / gb1)
-        val total_memory_jvm: String = "%.3f GB".format(Locale.US, tm / gb1)
-        val maximum_memory_jvm: String = "%.3f GB".format(Locale.US, mm / gb1)
-
-        new_lines.add("<tr>")
-        new_lines.add("  <td>jvm_memory_used</td>")
-        new_lines.add("  <td>${memory_used_jvm}</td>")
-        new_lines.add("</tr>")
-
-        new_lines.add("<tr>")
-        new_lines.add("  <td>jvm_free_memory</td>")
-        new_lines.add("  <td>${free_memory_jvm}</td>")
-        new_lines.add("</tr>")
-
-        new_lines.add("<tr>")
-        new_lines.add("  <td>jvm_total_memory</td>")
-        new_lines.add("  <td>${total_memory_jvm}</td>")
-        new_lines.add("</tr>")
-
-        new_lines.add("<tr>")
-        new_lines.add("  <td>jvm_maximum_memory</td>")
-        new_lines.add("  <td>${maximum_memory_jvm}</td>")
-        new_lines.add("</tr>")
-
-        new_lines.add("<tr>")
-        new_lines.add("  <td>java.vendor</th>")
-        new_lines.add("  <td>${System.getProperty("java.vendor")}</td>")
-        new_lines.add("</tr>")
-
-        new_lines.add("<tr>")
-        new_lines.add("  <td>java.runtime.version</td>")
-        new_lines.add("  <td>${System.getProperty("java.runtime.version")}</td>")
-        new_lines.add("</tr>")
-
-        var java_options: String = ""
-        for (arg in jvmArgs) {
-            if (java_options.length == 0) {
-                java_options += arg
-            } else {
-                java_options += " " + arg
-            }
-        }
-
-        new_lines.add("<tr>")
-        new_lines.add("  <td>java.runtime.options</td>")
-        new_lines.add("  <td>${java_options}</td>")
-        new_lines.add("</tr>")
-
         new_lines.add("")
         new_lines.add("</body>")
         new_lines.add("</html>")
