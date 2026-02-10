@@ -1,6 +1,6 @@
 // spotless:off
 //DEPS com.github.ajalt.clikt:clikt-jvm:5.1.0
-//DEPS io.github.wfouche.tulip:tulip-runtime:2.2.0
+//DEPS io.github.wfouche.tulip:tulip-runtime:2.2.4
 //JAVA 25
 //KOTLIN 2.3.0
 //FILES kwrk_logback.xml
@@ -58,10 +58,6 @@ val benchmarkConfig: String =
             }
         },
         "benchmarks": {
-            "onStart": {
-                "save_stats": false,
-                "scenario_actions": [ {"id": 0} ]
-            },
              "HTTP": {
                 "enabled": true,
                 "aps_rate": __P_RATE__,
@@ -78,11 +74,6 @@ val benchmarkConfig: String =
                     "benchmark_duration": __P_DURATION__,
                     "benchmark_iterations": __P_ITERATIONS__
                 }
-            },
-            "onStop": {
-                "enabled": false,
-                "save_stats": false,
-                "scenario_actions": [ {"id": 100} ]
             }
         },
         "contexts": {
