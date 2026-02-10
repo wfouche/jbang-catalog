@@ -1,6 +1,6 @@
 // spotless:off
 //DEPS com.github.ajalt.clikt:clikt-jvm:5.1.0
-//DEPS io.github.wfouche.tulip:tulip-runtime:2.2.0
+//DEPS io.github.wfouche.tulip:tulip-runtime:2.2.3
 //JAVA 25
 //KOTLIN 2.3.0
 //FILES kwrk_logback.xml
@@ -26,12 +26,12 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
 const val appName: String = "kwrk"
-const val appVersion: String = "1/2026-01-31T13:00:01"
+const val appVersion: String = "1/2026-02-10T20:19:45"
 
 private fun displayAppInfo() {
     var version: String = appVersion
     if (appVersion.contains("JBANG_SNAPSHOT_ID")) {
-        version = "0/2025-08-06T14:52:50"
+        version = "0/2026-02-10T17:32:19"
     }
     println(appName + "/" + version + "/" + TulipApi.VERSION)
 }
@@ -58,10 +58,6 @@ val benchmarkConfig: String =
             }
         },
         "benchmarks": {
-            "onStart": {
-                "save_stats": false,
-                "scenario_actions": [ {"id": 0} ]
-            },
              "HTTP": {
                 "enabled": true,
                 "aps_rate": __P_RATE__,
@@ -78,11 +74,6 @@ val benchmarkConfig: String =
                     "benchmark_duration": __P_DURATION__,
                     "benchmark_iterations": __P_ITERATIONS__
                 }
-            },
-            "onStop": {
-                "enabled": false,
-                "save_stats": false,
-                "scenario_actions": [ {"id": 100} ]
             }
         },
         "contexts": {
@@ -339,20 +330,12 @@ class KwrkCli : CliktCommand() {
             }
             println("    --name ${p_rpt_suffix}")
         }
-        //        println("")
-        //        println("  java options:")
-        val runtimeMxBean = ManagementFactory.getRuntimeMXBean()
-        val jvmArgs = runtimeMxBean.getInputArguments()
-        //        for (arg in jvmArgs) {
-        //            println("    $arg")
-        //        }
         if (p_debug == "true") {
             println("")
             println(json)
         }
         println("")
 
-        // TulipApi.runTulip(json)
         val configFilename = "kwrk_${p_rpt_suffix}_config.json"
         writeToFile(configFilename, json, false)
         val outputFilename = TulipApi.runTulip(configFilename)
@@ -381,8 +364,7 @@ class KwrkCli : CliktCommand() {
             new_lines.add(line)
             i += 1
         }
-        // println(old_lines.size)
-        // println(new_lines.size)
+
         new_lines.add("<h3>Benchmark Options</h3>")
         new_lines.add("<table style=\"width:40%\">")
 
@@ -447,69 +429,6 @@ class KwrkCli : CliktCommand() {
         )
         new_lines.add("</tr>")
         new_lines.add("</table>")
-
-        new_lines.add("<h3>Java Options</h3>")
-        new_lines.add("<table style=\"width:40%\">")
-
-        new_lines.add("<tr>")
-        new_lines.add("  <th>name</th>")
-        new_lines.add("  <th>value</th>")
-        new_lines.add("</tr>")
-
-        val rt = Runtime.getRuntime()
-        val fm = rt.freeMemory()
-        val tm = rt.totalMemory()
-        val mm = rt.maxMemory()
-
-        val gb1 = 1073741824.0
-        val memory_used_jvm: String = "%.3f GB".format(Locale.US, (tm - fm) / gb1)
-        val free_memory_jvm: String = "%.3f GB".format(Locale.US, fm / gb1)
-        val total_memory_jvm: String = "%.3f GB".format(Locale.US, tm / gb1)
-        val maximum_memory_jvm: String = "%.3f GB".format(Locale.US, mm / gb1)
-
-        new_lines.add("<tr>")
-        new_lines.add("  <td>jvm_memory_used</td>")
-        new_lines.add("  <td>${memory_used_jvm}</td>")
-        new_lines.add("</tr>")
-
-        new_lines.add("<tr>")
-        new_lines.add("  <td>jvm_free_memory</td>")
-        new_lines.add("  <td>${free_memory_jvm}</td>")
-        new_lines.add("</tr>")
-
-        new_lines.add("<tr>")
-        new_lines.add("  <td>jvm_total_memory</td>")
-        new_lines.add("  <td>${total_memory_jvm}</td>")
-        new_lines.add("</tr>")
-
-        new_lines.add("<tr>")
-        new_lines.add("  <td>jvm_maximum_memory</td>")
-        new_lines.add("  <td>${maximum_memory_jvm}</td>")
-        new_lines.add("</tr>")
-
-        new_lines.add("<tr>")
-        new_lines.add("  <td>java.vendor</th>")
-        new_lines.add("  <td>${System.getProperty("java.vendor")}</td>")
-        new_lines.add("</tr>")
-
-        new_lines.add("<tr>")
-        new_lines.add("  <td>java.runtime.version</td>")
-        new_lines.add("  <td>${System.getProperty("java.runtime.version")}</td>")
-        new_lines.add("</tr>")
-
-        var java_options: String = ""
-        for (arg in jvmArgs) {
-            if (java_options.length == 0) {
-                java_options += arg
-            } else {
-                java_options += " " + arg
-            }
-        }
-
-        new_lines.add("<tr>")
-        new_lines.add("  <td>java.runtime.options</td>")
-        new_lines.add("  <td>${java_options}</td>")
-        new_lines.add("</tr>")
 
         new_lines.add("")
         new_lines.add("</body>")
