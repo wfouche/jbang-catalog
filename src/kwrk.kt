@@ -1,6 +1,6 @@
 // spotless:off
 //DEPS com.github.ajalt.clikt:clikt-jvm:5.1.0
-//DEPS io.github.wfouche.tulip:tulip-runtime:2.2.4
+//DEPS io.github.wfouche.tulip:tulip-runtime:2.2.3
 //JAVA 25
 //KOTLIN 2.3.0
 //FILES kwrk_logback.xml

@@ -1,5 +1,5 @@
 // spotless:off
-//DEPS io.github.wfouche.tulip:tulip-runtime:2.2.1
+//DEPS io.github.wfouche.tulip:tulip-runtime:2.2.3
 // spotless:on
 
 import java.io.FileWriter;
@@ -23,8 +23,6 @@ public class TulipCli {
                 appName + "/" + version + "/" + io.github.wfouche.tulip.api.TulipApi.VERSION);
     }
 
-    static String osid =
-            String.valueOf(io.github.wfouche.tulip.api.TulipApi.NUM_ACTIONS - 1).toString();
     static String lang = "Java";
     static String url = "http://jsonplaceholder.typicode.com";
     static String TULIP_JAVA_OPTIONS = "-Xmx2g -XX:+UseZGC -XX:+ZGenerational";
@@ -95,10 +93,6 @@ public class TulipCli {
                     }
                 },
                 "benchmarks": {
-                    "onStart": {
-                        "save_stats": false,
-                        "scenario_actions": [ {"id": 0} ]
-                    },
                     "REST1": {
                         "enabled": true,
                         "aps_rate": __AVG_APS__,
@@ -156,10 +150,6 @@ public class TulipCli {
                             "benchmark_duration": 30,
                             "benchmark_iterations": 3
                         }
-                    },
-                    "onStop": {
-                        "save_stats": false,
-                        "scenario_actions": [ {"id": __ONSTOP_ID__} ]
                     }
                 },
                 "contexts": {
@@ -535,8 +525,7 @@ public class TulipCli {
                         .replace("__TULIP_LANG__", lang)
                         .replace("__HTTP_VERSION__", httpVersion)
                         .replace("__AVG_APS__", avgAPS)
-                        .replace("__URL__", url)
-                        .replace("__ONSTOP_ID__", osid),
+                        .replace("__URL__", url),
                 false);
 
         writeToFile(
@@ -696,8 +685,7 @@ public class TulipCli {
                         .replace("__TULIP_LANG__", lang)
                         .replace("__HTTP_VERSION__", httpVersion)
                         .replace("__AVG_APS__", avgAPS)
-                        .replace("__URL__", url)
-                        .replace("__ONSTOP_ID__", osid),
+                        .replace("__URL__", url),
                 false);
 
         writeToFile(
@@ -875,8 +863,7 @@ public class TulipCli {
                         .replace("__TULIP_LANG__", lang)
                         .replace("__HTTP_VERSION__", httpVersion)
                         .replace("__AVG_APS__", avgAPS)
-                        .replace("__URL__", url)
-                        .replace("__ONSTOP_ID__", osid),
+                        .replace("__URL__", url),
                 false);
 
         writeToFile(
@@ -1032,8 +1019,7 @@ public class TulipCli {
                         .replace("__TULIP_LANG__", lang)
                         .replace("__HTTP_VERSION__", httpVersion)
                         .replace("__AVG_APS__", avgAPS)
-                        .replace("__URL__", url)
-                        .replace("__ONSTOP_ID__", osid),
+                        .replace("__URL__", url),
                 false);
 
         writeToFile(
@@ -1185,8 +1171,7 @@ public class TulipCli {
                         .replace("__TULIP_LANG__", lang)
                         .replace("__HTTP_VERSION__", httpVersion)
                         .replace("__AVG_APS__", avgAPS)
-                        .replace("__URL__", url)
-                        .replace("__ONSTOP_ID__", osid),
+                        .replace("__URL__", url),
                 false);
 
         writeToFile(
