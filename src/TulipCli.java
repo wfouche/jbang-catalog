@@ -1,5 +1,5 @@
 // spotless:off
-//DEPS io.github.wfouche.tulip:tulip-runtime:2.2.1
+//DEPS io.github.wfouche.tulip:tulip-runtime:2.2.4
 // spotless:on
 
 import java.io.FileWriter;
@@ -95,10 +95,6 @@ public class TulipCli {
                     }
                 },
                 "benchmarks": {
-                    "onStart": {
-                        "save_stats": false,
-                        "scenario_actions": [ {"id": 0} ]
-                    },
                     "REST1": {
                         "enabled": true,
                         "aps_rate": __AVG_APS__,
@@ -156,10 +152,6 @@ public class TulipCli {
                             "benchmark_duration": 30,
                             "benchmark_iterations": 3
                         }
-                    },
-                    "onStop": {
-                        "save_stats": false,
-                        "scenario_actions": [ {"id": __ONSTOP_ID__} ]
                     }
                 },
                 "contexts": {
