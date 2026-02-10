@@ -286,8 +286,6 @@ public class TulipCli {
             """
             ///usr/bin/env jbang "$0" "$@" ; exit $?
             //DEPS io.github.wfouche.tulip:tulip-runtime:__TULIP_VERSION__
-            //DEPS org.springframework.boot:spring-boot-starter-restclient:4.0.2
-            //DEPS org.slf4j:slf4j-api:2.0.17
             //SOURCES JavaHttpUser.java
             //JAVA __TULIP_JAVA_VERSION__
             //FILES ../../benchmark_config.json
@@ -565,8 +563,6 @@ public class TulipCli {
             """
             ///usr/bin/env jbang "$0" "$@" ; exit $?
             //DEPS io.github.wfouche.tulip:tulip-runtime:__TULIP_VERSION__
-            //DEPS org.springframework.boot:spring-boot-starter-restclient:4.0.2
-            //DEPS org.slf4j:slf4j-api:2.0.17
             //SOURCES KotlinHttpUser.kt
             //JAVA __TULIP_JAVA_VERSION__
             //KOTLIN 2.3.0
@@ -726,8 +722,6 @@ public class TulipCli {
             """
             ///usr/bin/env jbang "$0" "$@" ; exit $?
             //DEPS io.github.wfouche.tulip:tulip-runtime:__TULIP_VERSION__
-            //DEPS org.springframework.boot:spring-boot-starter-restclient:4.0.2
-            //DEPS org.slf4j:slf4j-api:2.0.17
             //SOURCES GroovyHttpUser.groovy
             //JAVA __TULIP_JAVA_VERSION__
             //GROOVY 5.0.3
@@ -751,8 +745,6 @@ public class TulipCli {
     static String groovyAppw =
             """
             @Grab('io.github.wfouche.tulip:tulip-runtime:__TULIP_VERSION__')
-            @Grab('org.springframework.boot:spring-boot-starter-restclient:4.0.2')
-            @Grab('org.slf4j:slf4j-api:2.0.17')
 
             //package io.tulip
 
@@ -912,8 +904,6 @@ public class TulipCli {
             """
             //> using jvm __TULIP_JAVA_VERSION__
             //> using dep io.github.wfouche.tulip:tulip-runtime:__TULIP_VERSION__
-            //> using dep org.springframework.boot:spring-boot-starter-restclient:4.0.2
-            //> using dep org.slf4j:slf4j-api:2.0.17
             //> using javaOpt __TULIP_JAVA_OPTIONS__
             //> using javaOpt -XX:+IgnoreUnrecognizedVMOptions
             //> using javaOpt --enable-native-access=ALL-UNNAMED
@@ -1061,8 +1051,6 @@ public class TulipCli {
 
             //DEPS org.python:jython-standalone:2.7.4
             //DEPS io.github.wfouche.tulip:tulip-runtime:__TULIP_VERSION__
-            //DEPS org.springframework.boot:spring-boot-starter-restclient:4.0.2
-            //DEPS org.slf4j:slf4j-api:2.0.17
             //JAVA __TULIP_JAVA_VERSION__
             //RUNTIME_OPTIONS __TULIP_JAVA_OPTIONS__
             //RUNTIME_OPTIONS -XX:+IgnoreUnrecognizedVMOptions
