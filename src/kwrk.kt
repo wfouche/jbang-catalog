@@ -330,20 +330,12 @@ class KwrkCli : CliktCommand() {
             }
             println("    --name ${p_rpt_suffix}")
         }
-        //        println("")
-        //        println("  java options:")
-        val runtimeMxBean = ManagementFactory.getRuntimeMXBean()
-        val jvmArgs = runtimeMxBean.getInputArguments()
-        //        for (arg in jvmArgs) {
-        //            println("    $arg")
-        //        }
         if (p_debug == "true") {
             println("")
             println(json)
         }
         println("")
 
-        // TulipApi.runTulip(json)
         val configFilename = "kwrk_${p_rpt_suffix}_config.json"
         writeToFile(configFilename, json, false)
         val outputFilename = TulipApi.runTulip(configFilename)
@@ -372,8 +364,7 @@ class KwrkCli : CliktCommand() {
             new_lines.add(line)
             i += 1
         }
-        // println(old_lines.size)
-        // println(new_lines.size)
+
         new_lines.add("<h3>Benchmark Options</h3>")
         new_lines.add("<table style=\"width:40%\">")
 
