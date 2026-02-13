@@ -5,6 +5,6 @@ import static java.lang.System.*;
 public class hello {
 
     public static void main(String... args) {
-        out.println("Hello World, 1.0.0");
+        out.println("Hello World: " + System.getProperty("jbang.app.version"));
     }
 }
