@@ -1,7 +1,7 @@
 {
     "aliases": {
         "hello": {
-            "script-ref": "hello.java"
+            "script-ref": "src/hello.java"
         }
     }
 }
