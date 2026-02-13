@@ -8,7 +8,9 @@ import picocli.CommandLine.Parameters;
 
 import java.util.concurrent.Callable;
 
-@Command(name = "hello", mixinStandardHelpOptions = true, version = "${sys:jbang.app.version:-0.0.0}",
+@Command(
+        name = "hello", mixinStandardHelpOptions = true,
+        version = "${sys:jbang.app.version:-0.0.0}",
         description = "")
 public class hello implements Callable<Integer> {
 
