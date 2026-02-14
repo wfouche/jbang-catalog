@@ -1,7 +1,10 @@
 {
     "aliases": {
         "hello": {
-            "script-ref": "src/hello.java"
+            "script-ref": "src/hello.java",
+            "properties": {
+                "jbang.app.version": "1.0.1"
+            }
         }
     }
 }
