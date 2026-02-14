@@ -16,3 +16,4 @@ public class CamelJBang {
     public static void main(String... args) {
         CamelJBangMain.run(args);
     }
+}
