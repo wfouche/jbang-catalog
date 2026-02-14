@@ -1,0 +1,11 @@
+{
+    "aliases": {
+        "camel": {
+            "script-ref": "../CamelJBang.java",
+            "properties": {
+                "camel.jbang.version": "4.17.0",
+                "camel-kamelets.version": "4.17.0"
+            }
+        }
+    }
+}
