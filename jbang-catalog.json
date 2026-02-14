@@ -10,6 +10,9 @@
     "asciidoctorj-cli": {
       "script-ref": "src/asciidoctorj_cli.java"
     },
+    "camel": {
+        "script-ref": "apps/camel/CamelJBang.java"
+    },
     "clojure": {
       "script-ref": "src/Clojure.java"
     },
@@ -97,7 +100,7 @@
     "show-version": {
       "script-ref": "src/ShowVersion.java"
     },
-    "camel": {
+    "camel-dev": {
       "script-ref": "src/CamelJBang.java"
     }
   },
