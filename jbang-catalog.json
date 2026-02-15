@@ -11,7 +11,7 @@
       "script-ref": "src/asciidoctorj_cli.java"
     },
     "camel": {
-        "script-ref": "apps/camel/CamelJBang.java"
+        "script-ref": "camel@wfouche~/apps/camel/${jbang.app.version:4.16.0}"
     },
     "clojure": {
       "script-ref": "src/Clojure.java"
