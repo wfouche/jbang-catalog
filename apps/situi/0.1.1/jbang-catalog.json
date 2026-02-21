@@ -1,0 +1,11 @@
+{
+    "aliases": {
+        "situi": {
+            "script-ref": "./spring-initializr-tui-0.1.1.jar",
+            "runtime-options": [
+                "--enable-native-access=ALL-UNNAMED"
+            ]
+        }
+    }
+}
+
