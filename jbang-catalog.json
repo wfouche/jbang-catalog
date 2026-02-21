@@ -48,6 +48,7 @@
     },
     "situi": {
       "script-ref": "apps/situi/0.1.1/spring-initializr-tui-0.1.1.jar",
+      "java": "25+",
       "runtime-options": [
         "--enable-native-access=ALL-UNNAMED"
       ]
