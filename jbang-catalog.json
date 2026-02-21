@@ -46,6 +46,12 @@
     "kwrk": {
       "script-ref": "src/kwrk/1/kwrk.kt"
     },
+    "situi": {
+      "script-ref": "apps/situi/0.1.1/spring-initializr-tui-0.1.1.jar",
+      "runtime-options": [
+        "--enable-native-access=ALL-UNNAMED"
+      ]
+    },
     "snapshot-cli-dev": {
       "script-ref": "src/SnapshotCli.java"
     },
