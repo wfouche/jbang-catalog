@@ -434,7 +434,7 @@ public class TulipCli {
             jbang=0.135.1
 
             # Kotlin
-            kotlin=2.3.0
+            kotlin=2.3.10
 
             # Scala
             scalacli=1.11.0
@@ -565,7 +565,7 @@ public class TulipCli {
             //DEPS io.github.wfouche.tulip:tulip-runtime:__TULIP_VERSION__
             //SOURCES KotlinHttpUser.kt
             //JAVA __TULIP_JAVA_VERSION__
-            //KOTLIN 2.3.0
+            //KOTLIN 2.3.10
             //FILES ../../benchmark_config.json
             //FILES ../../logback.xml
             //RUNTIME_OPTIONS -XX:+IgnoreUnrecognizedVMOptions
