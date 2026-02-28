@@ -10,7 +10,7 @@ import java.util.*;
 
 public class SchemaSpy {
 
-    private static String getDatbaseType(String[] args) {
+    private static String getDatabaseType(String[] args) {
         for (int i = 0; i < args.length; i++) {
             if (args[i].equals("-t")) {
                 return args[i + 1];
@@ -52,7 +52,7 @@ public class SchemaSpy {
 
         List<String> cmd = new LinkedList<>();
         Map<String, List<String>> drivers = setupDrivers();
-        String databaseType = getDatbaseType(args);
+        String databaseType = getDatabaseType(args);
         if (!drivers.containsKey(databaseType)) {
             throw new IllegalArgumentException("Unsupported database type: " + databaseType);
         }
@@ -61,9 +61,6 @@ public class SchemaSpy {
         boolean windows = System.getProperty("os.name").toLowerCase().startsWith("win");
         cmd.add("jbang" + (windows ? ".cmd" : ""));
         cmd.add("run");
-
-        //cmd.add("--java");
-        //cmd.add("21");
 
         for (String dep: deps) {
             cmd.add("--deps");
