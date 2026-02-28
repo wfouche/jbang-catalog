@@ -27,6 +27,7 @@ public class SchemaSpy {
         return type.toLowerCase();
     }
 
+    // https://github.com/maxandersen/jbang-catalog/blob/master/jdbc.java
     private static Map<String, List<String>> setupDrivers() {
         Map<String, List<String>> drivers = new HashMap<>();
         //https://mariadb.com/kb/en/mariadb-connector-j/
