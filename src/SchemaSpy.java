@@ -11,12 +11,20 @@ import java.util.*;
 public class SchemaSpy {
 
     private static String getDatabaseType(String[] args) {
+        String type = null;
         for (int i = 0; i < args.length; i++) {
             if (args[i].equals("-t")) {
-                return args[i + 1];
+                type = args[i + 1];
             }
         }
-        throw new IllegalArgumentException("Database type not specified. Use -t <databaseType>");
+        if (type == null) {
+            throw new IllegalArgumentException("Database type not specified. Use -t <databaseType>");
+        }
+        // type can be null or "mysql", or "mysql.properties", etc.
+        if (type.contains(".")) {
+            type = type.substring(0, type.indexOf("."));
+        }
+        return type.toLowerCase();
     }
 
     private static Map<String, List<String>> setupDrivers() {
