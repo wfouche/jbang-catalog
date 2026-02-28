@@ -107,6 +107,9 @@
         "src"
       ]
     },
+    "schemaspy": {
+      "script-ref": "src/SchemaSpy.java"
+    },
     "show-version": {
       "script-ref": "src/ShowVersion.java"
     },
