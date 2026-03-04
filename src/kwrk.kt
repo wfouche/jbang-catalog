@@ -1,12 +1,13 @@
 // spotless:off
 //DEPS com.github.ajalt.clikt:clikt-jvm:5.1.0
-//DEPS io.github.wfouche.tulip:tulip-runtime:2.2.3
-//JAVA 25
+//DEPS io.github.wfouche.tulip:tulip-runtime:2.2.5
+//JAVA 21+
 //KOTLIN 2.3.0
 //FILES kwrk_logback.xml
 //RUNTIME_OPTIONS -XX:+IgnoreUnrecognizedVMOptions
 //RUNTIME_OPTIONS --enable-native-access=ALL-UNNAMED
 //RUNTIME_OPTIONS --sun-misc-unsafe-memory-access=allow
+//RUNTIME_OPTIONS -XX:+UseZGC
 // spotless:on
 
 import com.github.ajalt.clikt.core.*
