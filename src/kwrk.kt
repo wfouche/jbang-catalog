@@ -8,6 +8,7 @@
 //RUNTIME_OPTIONS --enable-native-access=ALL-UNNAMED
 //RUNTIME_OPTIONS --sun-misc-unsafe-memory-access=allow
 //RUNTIME_OPTIONS -XX:+UseZGC
+//RUNTIME_OPTIONS -Xmx1g
 // spotless:on
 
 import com.github.ajalt.clikt.core.*
