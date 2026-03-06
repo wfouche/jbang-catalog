@@ -3,19 +3,19 @@
 //DEPS dev.jbang:jash:0.0.3
 
 // https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind
-//DEPS com.fasterxml.jackson.core:jackson-databind:2.20.1
+//DEPS com.fasterxml.jackson.core:jackson-databind:2.21.1
 
 // https://mvnrepository.com/artifact/info.picocli/picocli
 //DEPS info.picocli:picocli:4.7.7
 
 // https://mvnrepository.com/artifact/eu.maveniverse.maven.plugins/toolbox
-//DEPS eu.maveniverse.maven.plugins:toolbox:0.15.0
+//DEPS eu.maveniverse.maven.plugins:toolbox:0.15.4
 
 // https://mvnrepository.com/artifact/org.apache.maven/maven-plugin-api
-//DEPS org.apache.maven:maven-plugin-api:3.9.12
+//DEPS org.apache.maven:maven-plugin-api:3.9.13
 
 // https://mvnrepository.com/artifact/org.apache.maven/maven-settings
-//DEPS org.apache.maven:maven-settings:3.9.12
+//DEPS org.apache.maven:maven-settings:3.9.13
 
 // https://mvnrepository.com/artifact/eu.maveniverse.maven.mima.runtime/standalone-static
 //DEPS eu.maveniverse.maven.mima.runtime:standalone-static:2.4.39
