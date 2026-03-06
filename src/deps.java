@@ -18,9 +18,13 @@
 //DEPS org.apache.maven:maven-settings:3.9.13
 
 // https://mvnrepository.com/artifact/eu.maveniverse.maven.mima.runtime/standalone-static
-//DEPS eu.maveniverse.maven.mima.runtime:standalone-static:2.4.39
+//DEPS eu.maveniverse.maven.mima.runtime:standalone-static:2.4.41
 
-// https://mvnrepository.com/artifact/org.slf4j/slf4j-simple
+// https://mvnrepository.com/artifact/eu.maveniverse.maven.mima/context
+//DEPS eu.maveniverse.maven.mima:context:2.4.41
+
+// https://mvnrepository.com/artifact
+// /org.slf4j/slf4j-simple
 //DEPS org.slf4j:slf4j-simple:2.0.17
 // spotless:on
 
@@ -34,6 +38,7 @@ import java.util.concurrent.Callable;
 import picocli.CommandLine;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Parameters;
+import eu.maveniverse.maven.toolbox.plugin.CLI;
 
 @Command(
         name = "deps",
@@ -83,7 +88,7 @@ public class deps implements Callable<Integer> {
             }
             // Check for version updates
             String[] toolbox_args = {"versions", String.join(",", gavList)};
-            eu.maveniverse.maven.toolbox.plugin.CLI.main(toolbox_args);
+            CLI.main(toolbox_args);
         } catch (dev.jbang.jash.ProcessException e) {
             // script file or alias do not contain any //DEPS
             return 2;
