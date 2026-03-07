@@ -1,5 +1,5 @@
 // spotless:off
-//DEPS io.github.wfouche.tulip:tulip-runtime:2.2.3
+//DEPS io.github.tulipltt.tulip:tulip-runtime:2.2.3
 // spotless:on
 
 import java.io.FileWriter;
@@ -20,14 +20,14 @@ public class TulipCli {
             version = "0/2026-02-10T17:32:19";
         }
         System.err.println(
-                appName + "/" + version + "/" + io.github.wfouche.tulip.api.TulipApi.VERSION);
+                appName + "/" + version + "/" + io.github.tulipltt.tulip.api.TulipApi.VERSION);
     }
 
     static String lang = "Java";
     static String url = "http://jsonplaceholder.typicode.com";
     static String TULIP_JAVA_OPTIONS = "-Xmx2g -XX:+UseZGC -XX:+ZGenerational";
     static String avgAPS = "10.0";
-    static String tulipVersion = io.github.wfouche.tulip.api.TulipApi.VERSION;
+    static String tulipVersion = io.github.tulipltt.tulip.api.TulipApi.VERSION;
     static String httpVersion = "HTTP_1_1";
     static String javaVersion = "21";
     static String path = "io/tulip/";
@@ -285,7 +285,7 @@ public class TulipCli {
     static String javaApp =
             """
             ///usr/bin/env jbang "$0" "$@" ; exit $?
-            //DEPS io.github.wfouche.tulip:tulip-runtime:__TULIP_VERSION__
+            //DEPS io.github.tulipltt.tulip:tulip-runtime:__TULIP_VERSION__
             //SOURCES JavaHttpUser.java
             //JAVA __TULIP_JAVA_VERSION__
             //FILES ../../benchmark_config.json
@@ -296,7 +296,7 @@ public class TulipCli {
 
             package io.tulip;
 
-            import io.github.wfouche.tulip.api.TulipApi;
+            import io.github.tulipltt.tulip.api.TulipApi;
 
             public class App {
                public static void main(String[] args) {
@@ -309,7 +309,7 @@ public class TulipCli {
             """
             package io.tulip;
 
-            import io.github.wfouche.tulip.user.HttpUser;
+            import io.github.tulipltt.tulip.user.HttpUser;
             import java.util.concurrent.ThreadLocalRandom;
             import org.slf4j.Logger;
             import org.slf4j.LoggerFactory;
@@ -562,7 +562,7 @@ public class TulipCli {
     static String kotlinApp =
             """
             ///usr/bin/env jbang "$0" "$@" ; exit $?
-            //DEPS io.github.wfouche.tulip:tulip-runtime:__TULIP_VERSION__
+            //DEPS io.github.tulipltt.tulip:tulip-runtime:__TULIP_VERSION__
             //SOURCES KotlinHttpUser.kt
             //JAVA __TULIP_JAVA_VERSION__
             //KOTLIN 2.3.10
@@ -574,7 +574,7 @@ public class TulipCli {
 
             package io.tulip
 
-            import io.github.wfouche.tulip.api.TulipApi
+            import io.github.tulipltt.tulip.api.TulipApi
 
             class App() {
                 companion object {
@@ -590,7 +590,7 @@ public class TulipCli {
             """
             package io.tulip
 
-            import io.github.wfouche.tulip.user.HttpUser
+            import io.github.tulipltt.tulip.user.HttpUser
             import java.util.concurrent.ThreadLocalRandom
             import org.slf4j.Logger
             import org.slf4j.LoggerFactory
@@ -721,7 +721,7 @@ public class TulipCli {
     static String groovyApp =
             """
             ///usr/bin/env jbang "$0" "$@" ; exit $?
-            //DEPS io.github.wfouche.tulip:tulip-runtime:__TULIP_VERSION__
+            //DEPS io.github.tulipltt.tulip:tulip-runtime:__TULIP_VERSION__
             //SOURCES GroovyHttpUser.groovy
             //JAVA __TULIP_JAVA_VERSION__
             //GROOVY 5.0.3
@@ -733,7 +733,7 @@ public class TulipCli {
 
             package io.tulip
 
-            import io.github.wfouche.tulip.api.TulipApi
+            import io.github.tulipltt.tulip.api.TulipApi
 
             class App {
                 static void main(String[] args) {
@@ -744,11 +744,11 @@ public class TulipCli {
 
     static String groovyAppw =
             """
-            @Grab('io.github.wfouche.tulip:tulip-runtime:__TULIP_VERSION__')
+            @Grab('io.github.tulipltt.tulip:tulip-runtime:__TULIP_VERSION__')
 
             //package io.tulip
 
-            import io.github.wfouche.tulip.api.TulipApi
+            import io.github.tulipltt.tulip.api.TulipApi
 
             class Appw {
                 static void main(String[] args) {
@@ -761,7 +761,7 @@ public class TulipCli {
             """
             package io.tulip
 
-            import io.github.wfouche.tulip.user.HttpUser
+            import io.github.tulipltt.tulip.user.HttpUser
             import java.util.concurrent.ThreadLocalRandom
             import org.slf4j.Logger
             import org.slf4j.LoggerFactory
@@ -903,7 +903,7 @@ public class TulipCli {
     static String scalaApp =
             """
             //> using jvm __TULIP_JAVA_VERSION__
-            //> using dep io.github.wfouche.tulip:tulip-runtime:__TULIP_VERSION__
+            //> using dep io.github.tulipltt.tulip:tulip-runtime:__TULIP_VERSION__
             //> using javaOpt __TULIP_JAVA_OPTIONS__
             //> using javaOpt -XX:+IgnoreUnrecognizedVMOptions
             //> using javaOpt --enable-native-access=ALL-UNNAMED
@@ -915,7 +915,7 @@ public class TulipCli {
 
             package io.tulip
 
-            import io.github.wfouche.tulip.api.TulipApi
+            import io.github.tulipltt.tulip.api.TulipApi
 
             object App {
               def main(args: Array[String]): Unit = {
@@ -928,7 +928,7 @@ public class TulipCli {
             """
             package io.tulip
 
-            import io.github.wfouche.tulip.user.HttpUser
+            import io.github.tulipltt.tulip.user.HttpUser
             import java.util.concurrent.ThreadLocalRandom
             import org.slf4j.Logger
             import org.slf4j.LoggerFactory
@@ -1050,7 +1050,7 @@ public class TulipCli {
             ///usr/bin/env jbang "$0" "$@" ; exit $?
 
             //DEPS org.python:jython-standalone:2.7.4
-            //DEPS io.github.wfouche.tulip:tulip-runtime:__TULIP_VERSION__
+            //DEPS io.github.tulipltt.tulip:tulip-runtime:__TULIP_VERSION__
             //JAVA __TULIP_JAVA_VERSION__
             //RUNTIME_OPTIONS __TULIP_JAVA_OPTIONS__
             //RUNTIME_OPTIONS -XX:+IgnoreUnrecognizedVMOptions
@@ -1074,16 +1074,16 @@ public class TulipCli {
             # requires-jython = "2.7.4"
             # requires-java = "__TULIP_JAVA_VERSION__"
             # dependencies = [
-            #   "io.github.wfouche.tulip:tulip-runtime:__TULIP_VERSION__"
+            #   "io.github.tulipltt.tulip:tulip-runtime:__TULIP_VERSION__"
             # ]
             # runtime-options = [
             #   "-Dpython.console.encoding=UTF-8", "-Xmx2g", "-XX:+UseZGC", "-XX:+ZGenerational"
             # ]
             # ///
 
-            import io.github.wfouche.tulip.user.HttpUser as HttpUser
-            import io.github.wfouche.tulip.api.TulipUserFactory as TulipUserFactory
-            import io.github.wfouche.tulip.api.TulipApi as TulipApi
+            import io.github.tulipltt.tulip.user.HttpUser as HttpUser
+            import io.github.tulipltt.tulip.api.TulipUserFactory as TulipUserFactory
+            import io.github.tulipltt.tulip.api.TulipApi as TulipApi
             import java.util.concurrent.ThreadLocalRandom as ThreadLocalRandom
 
             class JythonHttpUser(HttpUser):
