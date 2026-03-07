@@ -2,7 +2,7 @@
 //DEPS com.github.ajalt.clikt:clikt-jvm:5.1.0
 //DEPS io.github.wfouche.tulip:tulip-runtime:2.2.5
 //JAVA 21+
-//KOTLIN 2.3.0
+//KOTLIN 2.3.10
 //FILES kwrk_logback.xml
 //RUNTIME_OPTIONS -XX:+IgnoreUnrecognizedVMOptions
 //RUNTIME_OPTIONS --enable-native-access=ALL-UNNAMED
