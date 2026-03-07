@@ -2,7 +2,7 @@
 //DEPS com.github.ajalt.clikt:clikt-jvm:5.1.0
 //DEPS io.github.wfouche.tulip:tulip-runtime:2.2.5
 //JAVA 21+
-//KOTLIN 2.3.0
+//KOTLIN 2.3.10
 //FILES kwrk_logback.xml
 //RUNTIME_OPTIONS -XX:+IgnoreUnrecognizedVMOptions
 //RUNTIME_OPTIONS --enable-native-access=ALL-UNNAMED
@@ -26,7 +26,7 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
 const val appName: String = "kwrk"
-const val appVersion: String = "1/2026-03-05T17:05:46"
+const val appVersion: String = "1/2026-03-07T12:07:18"
 
 private fun displayAppInfo() {
     var version: String = appVersion
