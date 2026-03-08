@@ -1,5 +1,5 @@
 // spotless:off
-//DEPS io.github.tulipltt.tulip:tulip-runtime:2.3.0
+//DEPS io.github.tulipltt:tulip-runtime:2.3.0
 // spotless:on
 
 import java.io.FileWriter;
@@ -285,7 +285,7 @@ public class TulipCli {
     static String javaApp =
             """
             ///usr/bin/env jbang "$0" "$@" ; exit $?
-            //DEPS io.github.tulipltt.tulip:tulip-runtime:__TULIP_VERSION__
+            //DEPS io.github.tulipltt:tulip-runtime:__TULIP_VERSION__
             //SOURCES JavaHttpUser.java
             //JAVA __TULIP_JAVA_VERSION__
             //FILES ../../benchmark_config.json
@@ -562,7 +562,7 @@ public class TulipCli {
     static String kotlinApp =
             """
             ///usr/bin/env jbang "$0" "$@" ; exit $?
-            //DEPS io.github.tulipltt.tulip:tulip-runtime:__TULIP_VERSION__
+            //DEPS io.github.tulipltt:tulip-runtime:__TULIP_VERSION__
             //SOURCES KotlinHttpUser.kt
             //JAVA __TULIP_JAVA_VERSION__
             //KOTLIN 2.3.10
@@ -721,7 +721,7 @@ public class TulipCli {
     static String groovyApp =
             """
             ///usr/bin/env jbang "$0" "$@" ; exit $?
-            //DEPS io.github.tulipltt.tulip:tulip-runtime:__TULIP_VERSION__
+            //DEPS io.github.tulipltt:tulip-runtime:__TULIP_VERSION__
             //SOURCES GroovyHttpUser.groovy
             //JAVA __TULIP_JAVA_VERSION__
             //GROOVY 5.0.3
@@ -744,7 +744,7 @@ public class TulipCli {
 
     static String groovyAppw =
             """
-            @Grab('io.github.tulipltt.tulip:tulip-runtime:__TULIP_VERSION__')
+            @Grab('io.github.tulipltt:tulip-runtime:__TULIP_VERSION__')
 
             //package io.tulip
 
@@ -903,7 +903,7 @@ public class TulipCli {
     static String scalaApp =
             """
             //> using jvm __TULIP_JAVA_VERSION__
-            //> using dep io.github.tulipltt.tulip:tulip-runtime:__TULIP_VERSION__
+            //> using dep io.github.tulipltt:tulip-runtime:__TULIP_VERSION__
             //> using javaOpt __TULIP_JAVA_OPTIONS__
             //> using javaOpt -XX:+IgnoreUnrecognizedVMOptions
             //> using javaOpt --enable-native-access=ALL-UNNAMED
@@ -1050,7 +1050,7 @@ public class TulipCli {
             ///usr/bin/env jbang "$0" "$@" ; exit $?
 
             //DEPS org.python:jython-standalone:2.7.4
-            //DEPS io.github.tulipltt.tulip:tulip-runtime:__TULIP_VERSION__
+            //DEPS io.github.tulipltt:tulip-runtime:__TULIP_VERSION__
             //JAVA __TULIP_JAVA_VERSION__
             //RUNTIME_OPTIONS __TULIP_JAVA_OPTIONS__
             //RUNTIME_OPTIONS -XX:+IgnoreUnrecognizedVMOptions
@@ -1074,7 +1074,7 @@ public class TulipCli {
             # requires-jython = "2.7.4"
             # requires-java = "__TULIP_JAVA_VERSION__"
             # dependencies = [
-            #   "io.github.tulipltt.tulip:tulip-runtime:__TULIP_VERSION__"
+            #   "io.github.tulipltt:tulip-runtime:__TULIP_VERSION__"
             # ]
             # runtime-options = [
             #   "-Dpython.console.encoding=UTF-8", "-Xmx2g", "-XX:+UseZGC", "-XX:+ZGenerational"
