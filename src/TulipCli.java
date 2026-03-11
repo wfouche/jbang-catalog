@@ -120,12 +120,10 @@ public class TulipCli {
                                 "id": 3, "weight": 50
                             }
                         ],
-                        "time": {
-                            "warmup_duration1": 30,
-                            "warmup_duration2": 10,
-                            "benchmark_duration": 30,
-                            "benchmark_iterations": 3
-                        }
+                        "warmup_duration1": 30,
+                        "warmup_duration2": 10,
+                        "benchmark_duration": 30,
+                        "benchmark_iterations": 3
                     },
                     "REST3": {
                         "enabled": true,
@@ -134,7 +132,7 @@ public class TulipCli {
                         "warmup_duration1": 30,
                         "warmup_duration2": 10,
                         "benchmark_duration": 30,
-                        "benchmark_iterations": 3,
+                        "benchmark_iterations": 3
                     },
                     "REST3.max": {
                         "enabled": true,
@@ -143,8 +141,7 @@ public class TulipCli {
                         "warmup_duration1": 30,
                         "warmup_duration2": 10,
                         "benchmark_duration": 30,
-                        "benchmark_iterations": 3,
-                        }
+                        "benchmark_iterations": 3
                     }
                 },
                 "contexts": {
