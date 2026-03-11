@@ -16,8 +16,8 @@ import com.github.ajalt.clikt.parameters.options.default
 import com.github.ajalt.clikt.parameters.options.option
 import com.github.ajalt.clikt.parameters.types.double
 import com.github.ajalt.clikt.parameters.types.int
-import io.github.wfouche.tulip.api.TulipApi
-import io.github.wfouche.tulip.user.HttpUser
+import io.github.tulipltt.tulip.api.TulipApi
+import io.github.tulipltt.tulip.user.HttpUser
 import java.io.BufferedWriter
 import java.io.File
 import java.io.FileWriter
