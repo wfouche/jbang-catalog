@@ -101,12 +101,10 @@ public class TulipCli {
                                 "id": 1
                             }
                         ],
-                        "time": {
-                            "warmup_duration1": 30,
-                            "warmup_duration2": 10,
-                            "benchmark_duration": 30,
-                            "benchmark_iterations": 3
-                        }
+                        "warmup_duration1": 30,
+                        "warmup_duration2": 10,
+                        "benchmark_duration": 30,
+                        "benchmark_iterations": 3
                     },
                     "REST2": {
                         "enabled": true,
