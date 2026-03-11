@@ -131,22 +131,19 @@ public class TulipCli {
                         "enabled": true,
                         "aps_rate": __AVG_APS__,
                         "scenario_workflow": "ApiUser",
-                        "time": {
-                            "warmup_duration1": 30,
-                            "warmup_duration2": 10,
-                            "benchmark_duration": 30,
-                            "benchmark_iterations": 3
-                        }
+                        "warmup_duration1": 30,
+                        "warmup_duration2": 10,
+                        "benchmark_duration": 30,
+                        "benchmark_iterations": 3,
                     },
                     "REST3.max": {
                         "enabled": true,
                         "aps_rate": 0.0,
                         "scenario_workflow": "ApiUser",
-                        "time": {
-                            "warmup_duration1": 30,
-                            "warmup_duration2": 10,
-                            "benchmark_duration": 30,
-                            "benchmark_iterations": 3
+                        "warmup_duration1": 30,
+                        "warmup_duration2": 10,
+                        "benchmark_duration": 30,
+                        "benchmark_iterations": 3,
                         }
                     }
                 },
