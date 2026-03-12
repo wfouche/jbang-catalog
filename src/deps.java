@@ -12,16 +12,16 @@
 //DEPS eu.maveniverse.maven.plugins:toolbox:0.15.4
 
 // https://mvnrepository.com/artifact/org.apache.maven/maven-plugin-api
-//DEPS org.apache.maven:maven-plugin-api:3.9.13
+//DEPS org.apache.maven:maven-plugin-api:3.9.14
 
 // https://mvnrepository.com/artifact/org.apache.maven/maven-settings
-//DEPS org.apache.maven:maven-settings:3.9.13
+//DEPS org.apache.maven:maven-settings:3.9.14
 
 // https://mvnrepository.com/artifact/eu.maveniverse.maven.mima.runtime/standalone-static
-//DEPS eu.maveniverse.maven.mima.runtime:standalone-static:2.4.41
+//DEPS eu.maveniverse.maven.mima.runtime:standalone-static:2.4.42
 
 // https://mvnrepository.com/artifact/eu.maveniverse.maven.mima/context
-//DEPS eu.maveniverse.maven.mima:context:2.4.41
+//DEPS eu.maveniverse.maven.mima:context:2.4.42
 
 // https://mvnrepository.com/artifact
 // /org.slf4j/slf4j-simple
