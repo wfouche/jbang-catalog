@@ -37,6 +37,9 @@
     "jython-jpm": {
       "script-ref": "src/JythonJpm.java"
     },
+    "gitconfig": {
+      "script-ref": "src/CreateGitConfig.java"
+    },
     "hello": {
       "script-ref": "src/hello.java"
     },
