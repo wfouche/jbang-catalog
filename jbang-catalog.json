@@ -68,6 +68,19 @@
     "testapp": {
       "script-ref": "src/testapp/io/tulip/App.java"
     },
+    "ttcli": {
+      "script-ref":  "https://github.com/wimdeblauwe/ttcli/releases/download/1.12.0/ttcli-1.12.0.jar",
+      "description": "ttcli 1.12.0",
+      "java": "25+"
+    },
+    "ttcli-1.11.0": {
+      "script-ref":  "https://github.com/wimdeblauwe/ttcli/releases/download/1.11.0/ttcli-1.11.0.jar",
+      "description": "ttcli 1.11.0",
+      "java": "25+",
+      "runtime-options": [
+        "--enable-native-access=ALL-UNNAMED"
+      ]
+    },
     "tulip-cli-dev": {
       "script-ref": "src/TulipCli.java"
     },
