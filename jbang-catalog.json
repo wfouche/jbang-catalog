@@ -75,12 +75,6 @@
         "--enable-native-access=ALL-UNNAMED"
       ]
     },
-    "tulip-cli-dev": {
-      "script-ref": "src/TulipCli.java"
-    },
-    "tulip-cli"     : {
-      "script-ref": "src/TulipCli/1/TulipCli.java"
-    },
     "timestamp": {
       "script-ref": "src/timestamp.java"
     },
