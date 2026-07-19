@@ -67,6 +67,7 @@ public class deps implements Callable<Integer> {
 
         // Get dependencies
         String jbang_launch_cmd = System.getenv("JBANG_LAUNCH_CMD");
+        System.out.println("JBANG_LAUNCH_CMD = " + jbang_launch_cmd);
         try {
             List<String> gavList = new LinkedList<>();
 
