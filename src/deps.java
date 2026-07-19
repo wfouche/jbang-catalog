@@ -58,6 +58,23 @@ public class deps implements Callable<Integer> {
         System.exit(exitCode);
     }
 
+    public static String removeExtension(String filename) {
+        if (filename == null) {
+            return null;
+        }
+
+        // Find the last dot and last directory separator
+        int lastDot = filename.lastIndexOf('.');
+        int lastSeparator = Math.max(filename.lastIndexOf('/'), filename.lastIndexOf('\\'));
+
+        // If the dot is after the last separator, slice the string before the dot
+        if (lastDot > lastSeparator) {
+            return filename.substring(0, lastDot);
+        }
+
+        return filename; // No extension found
+    }
+
     @Override
     public Integer call() throws Exception {
         if (name.equals("")) {
@@ -67,6 +84,7 @@ public class deps implements Callable<Integer> {
 
         // Get dependencies
         String jbang_launch_cmd = System.getenv("JBANG_LAUNCH_CMD");
+        jbang_launch_cmd = removeExtension(jbang_launch_cmd);
         System.out.println("JBANG_LAUNCH_CMD = " + jbang_launch_cmd);
         try {
             List<String> gavList = new LinkedList<>();
