@@ -14,7 +14,7 @@ public class JythonCli {
     /**
      * Default version of Jython to use.
      */
-    String jythonVersion = "2.7.4";
+    String jythonVersion = "RELEASE";
     /**
      * Default version of Java to use as determined by the JVM version running
      * {@code jython-cli}. Only Java 8 or higher is supported.
@@ -77,6 +77,12 @@ public class JythonCli {
      * @throws IOException
      */
     void initEnvironment(String[] args) throws IOException {
+        // Set Jython version to jbang.jython.version property if set, otherwise use default
+        String version = System.getProperty("jbang.jython.version");
+        if (version != null) {
+            jythonVersion = version;
+        }
+
         // Check that that Java 8 (1.8) or higher is used
         if (Integer.parseInt(javaVersion) < 8) {
             System.err.println("jython-cli: error, Java 8 or higher is required");
@@ -210,17 +216,21 @@ public class JythonCli {
         cmd.add("jbang" + (windows ? ".cmd" : ""));
         cmd.add("run");
 
-        cmd.add("--java=" + javaVersion);
+        cmd.add("--java");
+        cmd.add(javaVersion);
 
         for (String ropt : ropts) {
-            cmd.add("-R=" + ropt);
+            cmd.add("--runtime-option");
+            cmd.add(ropt);
         }
 
         for (String dep : deps) {
-            cmd.add("--deps=" + dep);
+            cmd.add("--deps");
+            cmd.add(dep);
         }
 
-        cmd.add("--main=org.python.util.jython");
+        cmd.add("--main");
+        cmd.add("org.python.util.jython");
 
         cmd.add("org.python:jython-slim:" + jythonVersion);
 
