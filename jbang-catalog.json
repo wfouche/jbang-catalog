@@ -93,7 +93,7 @@
     "python-cli": {
       "script-ref": "src/python_cli.java"
     },
-    "jython": {
+    "jython-cli": {
       "script-ref": "src/JythonCli.java"
     },
     "jython-java-fmt": {
