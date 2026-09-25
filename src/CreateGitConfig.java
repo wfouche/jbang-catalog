@@ -34,8 +34,10 @@ public class CreateGitConfig implements Callable<Integer> {
         String configContent = String.format(
                 "[user]\n" +
                 "\tname = %s\n" +
-                "\temail = %s\n", 
-                name, email
+                "\temail = %s\n" +
+                "[core]\n" +
+		"\tautocrlf = input\n",
+		name, email
         );
 
         try {
