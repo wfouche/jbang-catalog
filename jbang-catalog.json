@@ -94,7 +94,10 @@
       "script-ref": "src/python_cli.java"
     },
     "jython-cli": {
-      "script-ref": "src/JythonCli.java"
+      "script-ref": "src/JythonCli.java",
+      "properties": {
+        "jbang.app.version": "2.7.4"
+      }
     },
     "jython-java-fmt": {
       "script-ref": "jbang-fmt@jbangdev/jbang-fmt",
