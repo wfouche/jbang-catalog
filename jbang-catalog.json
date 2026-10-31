@@ -11,7 +11,7 @@
       "script-ref": "src/asciidoctorj_cli.java"
     },
     "camel": {
-        "script-ref": "camel@wfouche~/apps/camel/4.16.0" // comment
+        "script-ref": "camel@wfouche~/apps/camel/4.16.0"
     },
     "camel2": {
         "script-ref": "camel@apps/camel/4.17.0/jbang-catalog.json"  
@@ -96,7 +96,7 @@
     "jython-cli": {
       "script-ref": "src/JythonCli.java",
       "properties": {
-        "jbang.app.version": "2.7.4"
+        "jbang.app.version": "RELEASE"
       }
     },
     "jython-java-fmt": {

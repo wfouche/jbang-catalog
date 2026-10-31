@@ -14,7 +14,7 @@ public class JythonCli {
     /**
      * Default version of Jython to use.
      */
-    String jythonVersion = "RELEASE";
+    String jythonVersion = "2.7.4";
     /**
      * Default version of Java to use as determined by the JVM version running
      * {@code jython-cli}. Only Java 8 or higher is supported.
